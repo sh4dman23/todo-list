@@ -1,3 +1,5 @@
+import { format, parse, isValid } from 'date-fns';
+
 /*
     The first 3 functions below are responsible for creating and
     returning Todo items, sections and projects respectively
@@ -68,8 +70,17 @@ function checkForEmpty(...args) {
     return false;
 }
 
+// REMOVE: MOVE THIS TO UI MANAGER LATER
 function processDate(date) {
+    if (checkForEmpty(date) || date === 'none') {
+        return 'No Due Date';
+    }
+
+    // Check for validity here
     
+    const dateObject = new Date(date);
+
+    return format(dateObject, 'd MMM yyyy');
 }
 
 /*
