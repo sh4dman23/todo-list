@@ -7,57 +7,55 @@ import { format, parse, isValid } from 'date-fns';
         ex: exampleItem.update(...Array(3), 'high'); will only update the priority
 */
 
-function createTodoItem(title, description = '', dueDate = 'No Due Date', priority = 'low') {
-    const update = (newTitle, newDescription, newDueDate, newPriority, newStatus, newStarredStatus) => {
-        this.title = newTitle !== undefined ? newTitle: this.title;
-        this.description = newDescription !== undefined ? newDescription : this.description;
-        this.dueDate = newDueDate !== undefined ? newDueDate : this.dueDate;
-        this.priority = newPriority !== undefined ? newPriority : this.priority;
-        this.status = newStatus !== undefined ? newStatus : this. status;
-        this.starred = newStarredStatus !== undefined ? newStarredStatus : this.starred;
-    };
-
-    return {
+function createTodoItem(title, description = '', dueDate = null, priority = 'low') {
+    const todo = {
         title,
         description,
         dueDate,
         priority,
-        note,
-        // status = false means this todo has not been completed
-        status: false,
-        update,
+        status: false, // status = false means this todo has not been completed
     };
+    const update = (newTitle, newDescription, newDueDate, newPriority, newStatus, newStarredStatus) => {
+        todo.title = newTitle !== undefined ? newTitle: todo.title;
+        todo.description = newDescription !== undefined ? newDescription : todo.description;
+        todo.dueDate = newDueDate !== undefined ? newDueDate : todo.dueDate;
+        todo.priority = newPriority !== undefined ? newPriority : todo.priority;
+        todo.status = newStatus !== undefined ? newStatus : todo. status;
+        todo.starred = newStarredStatus !== undefined ? newStarredStatus : todo.starred;
+    };
+
+    return todo;
 }
 
 function createSection(name) {
-    const update = newName => {
-        this.name = newName !== undefined ? newName : this.name;
-    };
-
-    return {
+    const section = {
         name,
         items: [],
-        update,
     };
+    const update = newName => {
+        section.name = newName !== undefined ? newName : section.name;
+    };
+
+    return Object.assign(section, { update });
 }
 
 function createProject(name, description = '') {
-    // Finds section by name
-    const findSection = sectionName => this.sections.find(section => section.name === sectionName);
-
-    const update = (newName, newDescription) => {
-        this.name = newName !== undefined ? newName : this.name;
-        this.description = newDescription !== undefined ? newDescription : this.description;
-    }
-
-    return {
+    const project = {
         name,
         description,
         unlistedItems: [],
         sections: [],
-        findSection,
-        update,
     };
+
+    // Finds section by name
+    const findSection = sectionName => project.sections.find(section => section.name === sectionName);
+
+    const update = (newName, newDescription) => {
+        project.name = newName !== undefined ? newName : project.name;
+        project.description = newDescription !== undefined ? newDescription : project.description;
+    }
+
+    return Object.assign(project, { findSection, update });
 }
 
 function checkForEmpty(...args) {
@@ -73,14 +71,14 @@ function checkForEmpty(...args) {
 // REMOVE: MOVE THIS TO UI MANAGER LATER
 function processDate(date) {
     if (checkForEmpty(date) || date === 'none') {
-        return 'No Due Date';
+        return null;
     }
 
     // Check for validity
     const parsedDate = parse(date, 'yyyy-MM-dd', new Date());
 
     if (!isValid(parsedDate)) {
-        return 'No Due Date';
+        return null;
     }
 
     // This is for the UI manager
@@ -104,7 +102,7 @@ function processDate(date) {
     The todoManager below manages the todoObject and other functions related to it
 */
 
-export default todoManager = (function() {
+const todoManager = (function() {
     const todoObject = {
         // Projects contains an array of lists each of which has a name, an array of unlisted items,
         // and a sections array which contains dictionaries containing their names and a list of items
@@ -189,3 +187,5 @@ export default todoManager = (function() {
 
     return { getTodoObject, addProject, addSection, addTodoItem };
 })();
+
+export default todoManager;
