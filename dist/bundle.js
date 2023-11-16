@@ -1,709 +1,18 @@
 /******/ (() => { // webpackBootstrap
 /******/ 	"use strict";
-var __webpack_exports__ = {};
+/******/ 	var __webpack_modules__ = ({
 
-;// CONCATENATED MODULE: ./node_modules/@babel/runtime/helpers/esm/typeof.js
-function _typeof(o) {
-  "@babel/helpers - typeof";
+/***/ "./node_modules/date-fns/esm/_lib/assign/index.js":
+/*!********************************************************!*\
+  !*** ./node_modules/date-fns/esm/_lib/assign/index.js ***!
+  \********************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-  return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) {
-    return typeof o;
-  } : function (o) {
-    return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o;
-  }, _typeof(o);
-}
-;// CONCATENATED MODULE: ./node_modules/@babel/runtime/helpers/esm/arrayLikeToArray.js
-function _arrayLikeToArray(arr, len) {
-  if (len == null || len > arr.length) len = arr.length;
-  for (var i = 0, arr2 = new Array(len); i < len; i++) arr2[i] = arr[i];
-  return arr2;
-}
-;// CONCATENATED MODULE: ./node_modules/@babel/runtime/helpers/esm/unsupportedIterableToArray.js
-
-function _unsupportedIterableToArray(o, minLen) {
-  if (!o) return;
-  if (typeof o === "string") return _arrayLikeToArray(o, minLen);
-  var n = Object.prototype.toString.call(o).slice(8, -1);
-  if (n === "Object" && o.constructor) n = o.constructor.name;
-  if (n === "Map" || n === "Set") return Array.from(o);
-  if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen);
-}
-;// CONCATENATED MODULE: ./node_modules/@babel/runtime/helpers/esm/createForOfIteratorHelper.js
-
-function _createForOfIteratorHelper(o, allowArrayLike) {
-  var it = typeof Symbol !== "undefined" && o[Symbol.iterator] || o["@@iterator"];
-  if (!it) {
-    if (Array.isArray(o) || (it = _unsupportedIterableToArray(o)) || allowArrayLike && o && typeof o.length === "number") {
-      if (it) o = it;
-      var i = 0;
-      var F = function F() {};
-      return {
-        s: F,
-        n: function n() {
-          if (i >= o.length) return {
-            done: true
-          };
-          return {
-            done: false,
-            value: o[i++]
-          };
-        },
-        e: function e(_e) {
-          throw _e;
-        },
-        f: F
-      };
-    }
-    throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.");
-  }
-  var normalCompletion = true,
-    didErr = false,
-    err;
-  return {
-    s: function s() {
-      it = it.call(o);
-    },
-    n: function n() {
-      var step = it.next();
-      normalCompletion = step.done;
-      return step;
-    },
-    e: function e(_e2) {
-      didErr = true;
-      err = _e2;
-    },
-    f: function f() {
-      try {
-        if (!normalCompletion && it["return"] != null) it["return"]();
-      } finally {
-        if (didErr) throw err;
-      }
-    }
-  };
-}
-;// CONCATENATED MODULE: ./node_modules/date-fns/esm/locale/en-US/_lib/formatDistance/index.js
-var formatDistanceLocale = {
-  lessThanXSeconds: {
-    one: 'less than a second',
-    other: 'less than {{count}} seconds'
-  },
-  xSeconds: {
-    one: '1 second',
-    other: '{{count}} seconds'
-  },
-  halfAMinute: 'half a minute',
-  lessThanXMinutes: {
-    one: 'less than a minute',
-    other: 'less than {{count}} minutes'
-  },
-  xMinutes: {
-    one: '1 minute',
-    other: '{{count}} minutes'
-  },
-  aboutXHours: {
-    one: 'about 1 hour',
-    other: 'about {{count}} hours'
-  },
-  xHours: {
-    one: '1 hour',
-    other: '{{count}} hours'
-  },
-  xDays: {
-    one: '1 day',
-    other: '{{count}} days'
-  },
-  aboutXWeeks: {
-    one: 'about 1 week',
-    other: 'about {{count}} weeks'
-  },
-  xWeeks: {
-    one: '1 week',
-    other: '{{count}} weeks'
-  },
-  aboutXMonths: {
-    one: 'about 1 month',
-    other: 'about {{count}} months'
-  },
-  xMonths: {
-    one: '1 month',
-    other: '{{count}} months'
-  },
-  aboutXYears: {
-    one: 'about 1 year',
-    other: 'about {{count}} years'
-  },
-  xYears: {
-    one: '1 year',
-    other: '{{count}} years'
-  },
-  overXYears: {
-    one: 'over 1 year',
-    other: 'over {{count}} years'
-  },
-  almostXYears: {
-    one: 'almost 1 year',
-    other: 'almost {{count}} years'
-  }
-};
-var formatDistance = function formatDistance(token, count, options) {
-  var result;
-  var tokenValue = formatDistanceLocale[token];
-  if (typeof tokenValue === 'string') {
-    result = tokenValue;
-  } else if (count === 1) {
-    result = tokenValue.one;
-  } else {
-    result = tokenValue.other.replace('{{count}}', count.toString());
-  }
-  if (options !== null && options !== void 0 && options.addSuffix) {
-    if (options.comparison && options.comparison > 0) {
-      return 'in ' + result;
-    } else {
-      return result + ' ago';
-    }
-  }
-  return result;
-};
-/* harmony default export */ const _lib_formatDistance = (formatDistance);
-;// CONCATENATED MODULE: ./node_modules/date-fns/esm/locale/_lib/buildFormatLongFn/index.js
-function buildFormatLongFn(args) {
-  return function () {
-    var options = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
-    // TODO: Remove String()
-    var width = options.width ? String(options.width) : args.defaultWidth;
-    var format = args.formats[width] || args.formats[args.defaultWidth];
-    return format;
-  };
-}
-;// CONCATENATED MODULE: ./node_modules/date-fns/esm/locale/en-US/_lib/formatLong/index.js
-
-var dateFormats = {
-  full: 'EEEE, MMMM do, y',
-  long: 'MMMM do, y',
-  medium: 'MMM d, y',
-  short: 'MM/dd/yyyy'
-};
-var timeFormats = {
-  full: 'h:mm:ss a zzzz',
-  long: 'h:mm:ss a z',
-  medium: 'h:mm:ss a',
-  short: 'h:mm a'
-};
-var dateTimeFormats = {
-  full: "{{date}} 'at' {{time}}",
-  long: "{{date}} 'at' {{time}}",
-  medium: '{{date}}, {{time}}',
-  short: '{{date}}, {{time}}'
-};
-var formatLong = {
-  date: buildFormatLongFn({
-    formats: dateFormats,
-    defaultWidth: 'full'
-  }),
-  time: buildFormatLongFn({
-    formats: timeFormats,
-    defaultWidth: 'full'
-  }),
-  dateTime: buildFormatLongFn({
-    formats: dateTimeFormats,
-    defaultWidth: 'full'
-  })
-};
-/* harmony default export */ const _lib_formatLong = (formatLong);
-;// CONCATENATED MODULE: ./node_modules/date-fns/esm/locale/en-US/_lib/formatRelative/index.js
-var formatRelativeLocale = {
-  lastWeek: "'last' eeee 'at' p",
-  yesterday: "'yesterday at' p",
-  today: "'today at' p",
-  tomorrow: "'tomorrow at' p",
-  nextWeek: "eeee 'at' p",
-  other: 'P'
-};
-var formatRelative = function formatRelative(token, _date, _baseDate, _options) {
-  return formatRelativeLocale[token];
-};
-/* harmony default export */ const _lib_formatRelative = (formatRelative);
-;// CONCATENATED MODULE: ./node_modules/date-fns/esm/locale/_lib/buildLocalizeFn/index.js
-function buildLocalizeFn(args) {
-  return function (dirtyIndex, options) {
-    var context = options !== null && options !== void 0 && options.context ? String(options.context) : 'standalone';
-    var valuesArray;
-    if (context === 'formatting' && args.formattingValues) {
-      var defaultWidth = args.defaultFormattingWidth || args.defaultWidth;
-      var width = options !== null && options !== void 0 && options.width ? String(options.width) : defaultWidth;
-      valuesArray = args.formattingValues[width] || args.formattingValues[defaultWidth];
-    } else {
-      var _defaultWidth = args.defaultWidth;
-      var _width = options !== null && options !== void 0 && options.width ? String(options.width) : args.defaultWidth;
-      valuesArray = args.values[_width] || args.values[_defaultWidth];
-    }
-    var index = args.argumentCallback ? args.argumentCallback(dirtyIndex) : dirtyIndex;
-    // @ts-ignore: For some reason TypeScript just don't want to match it, no matter how hard we try. I challenge you to try to remove it!
-    return valuesArray[index];
-  };
-}
-;// CONCATENATED MODULE: ./node_modules/date-fns/esm/locale/en-US/_lib/localize/index.js
-
-var eraValues = {
-  narrow: ['B', 'A'],
-  abbreviated: ['BC', 'AD'],
-  wide: ['Before Christ', 'Anno Domini']
-};
-var quarterValues = {
-  narrow: ['1', '2', '3', '4'],
-  abbreviated: ['Q1', 'Q2', 'Q3', 'Q4'],
-  wide: ['1st quarter', '2nd quarter', '3rd quarter', '4th quarter']
-};
-
-// Note: in English, the names of days of the week and months are capitalized.
-// If you are making a new locale based on this one, check if the same is true for the language you're working on.
-// Generally, formatted dates should look like they are in the middle of a sentence,
-// e.g. in Spanish language the weekdays and months should be in the lowercase.
-var monthValues = {
-  narrow: ['J', 'F', 'M', 'A', 'M', 'J', 'J', 'A', 'S', 'O', 'N', 'D'],
-  abbreviated: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
-  wide: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December']
-};
-var dayValues = {
-  narrow: ['S', 'M', 'T', 'W', 'T', 'F', 'S'],
-  short: ['Su', 'Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa'],
-  abbreviated: ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'],
-  wide: ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday']
-};
-var dayPeriodValues = {
-  narrow: {
-    am: 'a',
-    pm: 'p',
-    midnight: 'mi',
-    noon: 'n',
-    morning: 'morning',
-    afternoon: 'afternoon',
-    evening: 'evening',
-    night: 'night'
-  },
-  abbreviated: {
-    am: 'AM',
-    pm: 'PM',
-    midnight: 'midnight',
-    noon: 'noon',
-    morning: 'morning',
-    afternoon: 'afternoon',
-    evening: 'evening',
-    night: 'night'
-  },
-  wide: {
-    am: 'a.m.',
-    pm: 'p.m.',
-    midnight: 'midnight',
-    noon: 'noon',
-    morning: 'morning',
-    afternoon: 'afternoon',
-    evening: 'evening',
-    night: 'night'
-  }
-};
-var formattingDayPeriodValues = {
-  narrow: {
-    am: 'a',
-    pm: 'p',
-    midnight: 'mi',
-    noon: 'n',
-    morning: 'in the morning',
-    afternoon: 'in the afternoon',
-    evening: 'in the evening',
-    night: 'at night'
-  },
-  abbreviated: {
-    am: 'AM',
-    pm: 'PM',
-    midnight: 'midnight',
-    noon: 'noon',
-    morning: 'in the morning',
-    afternoon: 'in the afternoon',
-    evening: 'in the evening',
-    night: 'at night'
-  },
-  wide: {
-    am: 'a.m.',
-    pm: 'p.m.',
-    midnight: 'midnight',
-    noon: 'noon',
-    morning: 'in the morning',
-    afternoon: 'in the afternoon',
-    evening: 'in the evening',
-    night: 'at night'
-  }
-};
-var ordinalNumber = function ordinalNumber(dirtyNumber, _options) {
-  var number = Number(dirtyNumber);
-
-  // If ordinal numbers depend on context, for example,
-  // if they are different for different grammatical genders,
-  // use `options.unit`.
-  //
-  // `unit` can be 'year', 'quarter', 'month', 'week', 'date', 'dayOfYear',
-  // 'day', 'hour', 'minute', 'second'.
-
-  var rem100 = number % 100;
-  if (rem100 > 20 || rem100 < 10) {
-    switch (rem100 % 10) {
-      case 1:
-        return number + 'st';
-      case 2:
-        return number + 'nd';
-      case 3:
-        return number + 'rd';
-    }
-  }
-  return number + 'th';
-};
-var localize = {
-  ordinalNumber: ordinalNumber,
-  era: buildLocalizeFn({
-    values: eraValues,
-    defaultWidth: 'wide'
-  }),
-  quarter: buildLocalizeFn({
-    values: quarterValues,
-    defaultWidth: 'wide',
-    argumentCallback: function argumentCallback(quarter) {
-      return quarter - 1;
-    }
-  }),
-  month: buildLocalizeFn({
-    values: monthValues,
-    defaultWidth: 'wide'
-  }),
-  day: buildLocalizeFn({
-    values: dayValues,
-    defaultWidth: 'wide'
-  }),
-  dayPeriod: buildLocalizeFn({
-    values: dayPeriodValues,
-    defaultWidth: 'wide',
-    formattingValues: formattingDayPeriodValues,
-    defaultFormattingWidth: 'wide'
-  })
-};
-/* harmony default export */ const _lib_localize = (localize);
-;// CONCATENATED MODULE: ./node_modules/date-fns/esm/locale/_lib/buildMatchFn/index.js
-function buildMatchFn(args) {
-  return function (string) {
-    var options = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
-    var width = options.width;
-    var matchPattern = width && args.matchPatterns[width] || args.matchPatterns[args.defaultMatchWidth];
-    var matchResult = string.match(matchPattern);
-    if (!matchResult) {
-      return null;
-    }
-    var matchedString = matchResult[0];
-    var parsePatterns = width && args.parsePatterns[width] || args.parsePatterns[args.defaultParseWidth];
-    var key = Array.isArray(parsePatterns) ? findIndex(parsePatterns, function (pattern) {
-      return pattern.test(matchedString);
-    }) : findKey(parsePatterns, function (pattern) {
-      return pattern.test(matchedString);
-    });
-    var value;
-    value = args.valueCallback ? args.valueCallback(key) : key;
-    value = options.valueCallback ? options.valueCallback(value) : value;
-    var rest = string.slice(matchedString.length);
-    return {
-      value: value,
-      rest: rest
-    };
-  };
-}
-function findKey(object, predicate) {
-  for (var key in object) {
-    if (object.hasOwnProperty(key) && predicate(object[key])) {
-      return key;
-    }
-  }
-  return undefined;
-}
-function findIndex(array, predicate) {
-  for (var key = 0; key < array.length; key++) {
-    if (predicate(array[key])) {
-      return key;
-    }
-  }
-  return undefined;
-}
-;// CONCATENATED MODULE: ./node_modules/date-fns/esm/locale/_lib/buildMatchPatternFn/index.js
-function buildMatchPatternFn(args) {
-  return function (string) {
-    var options = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
-    var matchResult = string.match(args.matchPattern);
-    if (!matchResult) return null;
-    var matchedString = matchResult[0];
-    var parseResult = string.match(args.parsePattern);
-    if (!parseResult) return null;
-    var value = args.valueCallback ? args.valueCallback(parseResult[0]) : parseResult[0];
-    value = options.valueCallback ? options.valueCallback(value) : value;
-    var rest = string.slice(matchedString.length);
-    return {
-      value: value,
-      rest: rest
-    };
-  };
-}
-;// CONCATENATED MODULE: ./node_modules/date-fns/esm/locale/en-US/_lib/match/index.js
-
-
-var matchOrdinalNumberPattern = /^(\d+)(th|st|nd|rd)?/i;
-var parseOrdinalNumberPattern = /\d+/i;
-var matchEraPatterns = {
-  narrow: /^(b|a)/i,
-  abbreviated: /^(b\.?\s?c\.?|b\.?\s?c\.?\s?e\.?|a\.?\s?d\.?|c\.?\s?e\.?)/i,
-  wide: /^(before christ|before common era|anno domini|common era)/i
-};
-var parseEraPatterns = {
-  any: [/^b/i, /^(a|c)/i]
-};
-var matchQuarterPatterns = {
-  narrow: /^[1234]/i,
-  abbreviated: /^q[1234]/i,
-  wide: /^[1234](th|st|nd|rd)? quarter/i
-};
-var parseQuarterPatterns = {
-  any: [/1/i, /2/i, /3/i, /4/i]
-};
-var matchMonthPatterns = {
-  narrow: /^[jfmasond]/i,
-  abbreviated: /^(jan|feb|mar|apr|may|jun|jul|aug|sep|oct|nov|dec)/i,
-  wide: /^(january|february|march|april|may|june|july|august|september|october|november|december)/i
-};
-var parseMonthPatterns = {
-  narrow: [/^j/i, /^f/i, /^m/i, /^a/i, /^m/i, /^j/i, /^j/i, /^a/i, /^s/i, /^o/i, /^n/i, /^d/i],
-  any: [/^ja/i, /^f/i, /^mar/i, /^ap/i, /^may/i, /^jun/i, /^jul/i, /^au/i, /^s/i, /^o/i, /^n/i, /^d/i]
-};
-var matchDayPatterns = {
-  narrow: /^[smtwf]/i,
-  short: /^(su|mo|tu|we|th|fr|sa)/i,
-  abbreviated: /^(sun|mon|tue|wed|thu|fri|sat)/i,
-  wide: /^(sunday|monday|tuesday|wednesday|thursday|friday|saturday)/i
-};
-var parseDayPatterns = {
-  narrow: [/^s/i, /^m/i, /^t/i, /^w/i, /^t/i, /^f/i, /^s/i],
-  any: [/^su/i, /^m/i, /^tu/i, /^w/i, /^th/i, /^f/i, /^sa/i]
-};
-var matchDayPeriodPatterns = {
-  narrow: /^(a|p|mi|n|(in the|at) (morning|afternoon|evening|night))/i,
-  any: /^([ap]\.?\s?m\.?|midnight|noon|(in the|at) (morning|afternoon|evening|night))/i
-};
-var parseDayPeriodPatterns = {
-  any: {
-    am: /^a/i,
-    pm: /^p/i,
-    midnight: /^mi/i,
-    noon: /^no/i,
-    morning: /morning/i,
-    afternoon: /afternoon/i,
-    evening: /evening/i,
-    night: /night/i
-  }
-};
-var match = {
-  ordinalNumber: buildMatchPatternFn({
-    matchPattern: matchOrdinalNumberPattern,
-    parsePattern: parseOrdinalNumberPattern,
-    valueCallback: function valueCallback(value) {
-      return parseInt(value, 10);
-    }
-  }),
-  era: buildMatchFn({
-    matchPatterns: matchEraPatterns,
-    defaultMatchWidth: 'wide',
-    parsePatterns: parseEraPatterns,
-    defaultParseWidth: 'any'
-  }),
-  quarter: buildMatchFn({
-    matchPatterns: matchQuarterPatterns,
-    defaultMatchWidth: 'wide',
-    parsePatterns: parseQuarterPatterns,
-    defaultParseWidth: 'any',
-    valueCallback: function valueCallback(index) {
-      return index + 1;
-    }
-  }),
-  month: buildMatchFn({
-    matchPatterns: matchMonthPatterns,
-    defaultMatchWidth: 'wide',
-    parsePatterns: parseMonthPatterns,
-    defaultParseWidth: 'any'
-  }),
-  day: buildMatchFn({
-    matchPatterns: matchDayPatterns,
-    defaultMatchWidth: 'wide',
-    parsePatterns: parseDayPatterns,
-    defaultParseWidth: 'any'
-  }),
-  dayPeriod: buildMatchFn({
-    matchPatterns: matchDayPeriodPatterns,
-    defaultMatchWidth: 'any',
-    parsePatterns: parseDayPeriodPatterns,
-    defaultParseWidth: 'any'
-  })
-};
-/* harmony default export */ const _lib_match = (match);
-;// CONCATENATED MODULE: ./node_modules/date-fns/esm/locale/en-US/index.js
-
-
-
-
-
-/**
- * @type {Locale}
- * @category Locales
- * @summary English locale (United States).
- * @language English
- * @iso-639-2 eng
- * @author Sasha Koss [@kossnocorp]{@link https://github.com/kossnocorp}
- * @author Lesha Koss [@leshakoss]{@link https://github.com/leshakoss}
- */
-var locale = {
-  code: 'en-US',
-  formatDistance: _lib_formatDistance,
-  formatLong: _lib_formatLong,
-  formatRelative: _lib_formatRelative,
-  localize: _lib_localize,
-  match: _lib_match,
-  options: {
-    weekStartsOn: 0 /* Sunday */,
-    firstWeekContainsDate: 1
-  }
-};
-/* harmony default export */ const en_US = (locale);
-;// CONCATENATED MODULE: ./node_modules/date-fns/esm/_lib/defaultLocale/index.js
-
-/* harmony default export */ const defaultLocale = (en_US);
-;// CONCATENATED MODULE: ./node_modules/date-fns/esm/_lib/toInteger/index.js
-function toInteger(dirtyNumber) {
-  if (dirtyNumber === null || dirtyNumber === true || dirtyNumber === false) {
-    return NaN;
-  }
-  var number = Number(dirtyNumber);
-  if (isNaN(number)) {
-    return number;
-  }
-  return number < 0 ? Math.ceil(number) : Math.floor(number);
-}
-;// CONCATENATED MODULE: ./node_modules/date-fns/esm/_lib/requiredArgs/index.js
-function requiredArgs(required, args) {
-  if (args.length < required) {
-    throw new TypeError(required + ' argument' + (required > 1 ? 's' : '') + ' required, but only ' + args.length + ' present');
-  }
-}
-;// CONCATENATED MODULE: ./node_modules/date-fns/esm/toDate/index.js
-
-
-/**
- * @name toDate
- * @category Common Helpers
- * @summary Convert the given argument to an instance of Date.
- *
- * @description
- * Convert the given argument to an instance of Date.
- *
- * If the argument is an instance of Date, the function returns its clone.
- *
- * If the argument is a number, it is treated as a timestamp.
- *
- * If the argument is none of the above, the function returns Invalid Date.
- *
- * **Note**: *all* Date arguments passed to any *date-fns* function is processed by `toDate`.
- *
- * @param {Date|Number} argument - the value to convert
- * @returns {Date} the parsed date in the local time zone
- * @throws {TypeError} 1 argument required
- *
- * @example
- * // Clone the date:
- * const result = toDate(new Date(2014, 1, 11, 11, 30, 30))
- * //=> Tue Feb 11 2014 11:30:30
- *
- * @example
- * // Convert the timestamp to date:
- * const result = toDate(1392098430000)
- * //=> Tue Feb 11 2014 11:30:30
- */
-function toDate(argument) {
-  requiredArgs(1, arguments);
-  var argStr = Object.prototype.toString.call(argument);
-
-  // Clone the date
-  if (argument instanceof Date || _typeof(argument) === 'object' && argStr === '[object Date]') {
-    // Prevent the date to lose the milliseconds when passed to new Date() in IE10
-    return new Date(argument.getTime());
-  } else if (typeof argument === 'number' || argStr === '[object Number]') {
-    return new Date(argument);
-  } else {
-    if ((typeof argument === 'string' || argStr === '[object String]') && typeof console !== 'undefined') {
-      // eslint-disable-next-line no-console
-      console.warn("Starting with v2.0.0-beta.1 date-fns doesn't accept strings as date arguments. Please use `parseISO` to parse strings. See: https://github.com/date-fns/date-fns/blob/master/docs/upgradeGuide.md#string-arguments");
-      // eslint-disable-next-line no-console
-      console.warn(new Error().stack);
-    }
-    return new Date(NaN);
-  }
-}
-;// CONCATENATED MODULE: ./node_modules/date-fns/esm/addMilliseconds/index.js
-
-
-
-/**
- * @name addMilliseconds
- * @category Millisecond Helpers
- * @summary Add the specified number of milliseconds to the given date.
- *
- * @description
- * Add the specified number of milliseconds to the given date.
- *
- * @param {Date|Number} date - the date to be changed
- * @param {Number} amount - the amount of milliseconds to be added. Positive decimals will be rounded using `Math.floor`, decimals less than zero will be rounded using `Math.ceil`.
- * @returns {Date} the new date with the milliseconds added
- * @throws {TypeError} 2 arguments required
- *
- * @example
- * // Add 750 milliseconds to 10 July 2014 12:45:30.000:
- * const result = addMilliseconds(new Date(2014, 6, 10, 12, 45, 30, 0), 750)
- * //=> Thu Jul 10 2014 12:45:30.750
- */
-function addMilliseconds(dirtyDate, dirtyAmount) {
-  requiredArgs(2, arguments);
-  var timestamp = toDate(dirtyDate).getTime();
-  var amount = toInteger(dirtyAmount);
-  return new Date(timestamp + amount);
-}
-;// CONCATENATED MODULE: ./node_modules/date-fns/esm/subMilliseconds/index.js
-
-
-
-/**
- * @name subMilliseconds
- * @category Millisecond Helpers
- * @summary Subtract the specified number of milliseconds from the given date.
- *
- * @description
- * Subtract the specified number of milliseconds from the given date.
- *
- * @param {Date|Number} date - the date to be changed
- * @param {Number} amount - the amount of milliseconds to be subtracted. Positive decimals will be rounded using `Math.floor`, decimals less than zero will be rounded using `Math.ceil`.
- * @returns {Date} the new date with the milliseconds subtracted
- * @throws {TypeError} 2 arguments required
- *
- * @example
- * // Subtract 750 milliseconds from 10 July 2014 12:45:30.000:
- * const result = subMilliseconds(new Date(2014, 6, 10, 12, 45, 30, 0), 750)
- * //=> Thu Jul 10 2014 12:45:29.250
- */
-function subMilliseconds(dirtyDate, dirtyAmount) {
-  requiredArgs(2, arguments);
-  var amount = toInteger(dirtyAmount);
-  return addMilliseconds(dirtyDate, -amount);
-}
-;// CONCATENATED MODULE: ./node_modules/date-fns/esm/_lib/assign/index.js
-function assign_assign(target, object) {
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (/* binding */ assign)
+/* harmony export */ });
+function assign(target, object) {
   if (target == null) {
     throw new TypeError('assign requires that input parameter not be null or undefined');
   }
@@ -715,7 +24,56 @@ function assign_assign(target, object) {
   }
   return target;
 }
-;// CONCATENATED MODULE: ./node_modules/date-fns/esm/_lib/format/longFormatters/index.js
+
+/***/ }),
+
+/***/ "./node_modules/date-fns/esm/_lib/defaultLocale/index.js":
+/*!***************************************************************!*\
+  !*** ./node_modules/date-fns/esm/_lib/defaultLocale/index.js ***!
+  \***************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _locale_en_US_index_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../locale/en-US/index.js */ "./node_modules/date-fns/esm/locale/en-US/index.js");
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (_locale_en_US_index_js__WEBPACK_IMPORTED_MODULE_0__["default"]);
+
+/***/ }),
+
+/***/ "./node_modules/date-fns/esm/_lib/defaultOptions/index.js":
+/*!****************************************************************!*\
+  !*** ./node_modules/date-fns/esm/_lib/defaultOptions/index.js ***!
+  \****************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   getDefaultOptions: () => (/* binding */ getDefaultOptions),
+/* harmony export */   setDefaultOptions: () => (/* binding */ setDefaultOptions)
+/* harmony export */ });
+var defaultOptions = {};
+function getDefaultOptions() {
+  return defaultOptions;
+}
+function setDefaultOptions(newOptions) {
+  defaultOptions = newOptions;
+}
+
+/***/ }),
+
+/***/ "./node_modules/date-fns/esm/_lib/format/longFormatters/index.js":
+/*!***********************************************************************!*\
+  !*** ./node_modules/date-fns/esm/_lib/format/longFormatters/index.js ***!
+  \***********************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
 var dateLongFormatter = function dateLongFormatter(pattern, formatLong) {
   switch (pattern) {
     case 'P':
@@ -795,8 +153,20 @@ var longFormatters = {
   p: timeLongFormatter,
   P: dateTimeLongFormatter
 };
-/* harmony default export */ const format_longFormatters = (longFormatters);
-;// CONCATENATED MODULE: ./node_modules/date-fns/esm/_lib/getTimezoneOffsetInMilliseconds/index.js
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (longFormatters);
+
+/***/ }),
+
+/***/ "./node_modules/date-fns/esm/_lib/getTimezoneOffsetInMilliseconds/index.js":
+/*!*********************************************************************************!*\
+  !*** ./node_modules/date-fns/esm/_lib/getTimezoneOffsetInMilliseconds/index.js ***!
+  \*********************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (/* binding */ getTimezoneOffsetInMilliseconds)
+/* harmony export */ });
 /**
  * Google Chrome as of 67.0.3396.87 introduced timezones with offset that includes seconds.
  * They usually appear for dates that denote time before the timezones were introduced
@@ -813,7 +183,175 @@ function getTimezoneOffsetInMilliseconds(date) {
   utcDate.setUTCFullYear(date.getFullYear());
   return date.getTime() - utcDate.getTime();
 }
-;// CONCATENATED MODULE: ./node_modules/date-fns/esm/_lib/protectedTokens/index.js
+
+/***/ }),
+
+/***/ "./node_modules/date-fns/esm/_lib/getUTCISOWeek/index.js":
+/*!***************************************************************!*\
+  !*** ./node_modules/date-fns/esm/_lib/getUTCISOWeek/index.js ***!
+  \***************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (/* binding */ getUTCISOWeek)
+/* harmony export */ });
+/* harmony import */ var _toDate_index_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../toDate/index.js */ "./node_modules/date-fns/esm/toDate/index.js");
+/* harmony import */ var _startOfUTCISOWeek_index_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../startOfUTCISOWeek/index.js */ "./node_modules/date-fns/esm/_lib/startOfUTCISOWeek/index.js");
+/* harmony import */ var _startOfUTCISOWeekYear_index_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../startOfUTCISOWeekYear/index.js */ "./node_modules/date-fns/esm/_lib/startOfUTCISOWeekYear/index.js");
+/* harmony import */ var _requiredArgs_index_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../requiredArgs/index.js */ "./node_modules/date-fns/esm/_lib/requiredArgs/index.js");
+
+
+
+
+var MILLISECONDS_IN_WEEK = 604800000;
+function getUTCISOWeek(dirtyDate) {
+  (0,_requiredArgs_index_js__WEBPACK_IMPORTED_MODULE_0__["default"])(1, arguments);
+  var date = (0,_toDate_index_js__WEBPACK_IMPORTED_MODULE_1__["default"])(dirtyDate);
+  var diff = (0,_startOfUTCISOWeek_index_js__WEBPACK_IMPORTED_MODULE_2__["default"])(date).getTime() - (0,_startOfUTCISOWeekYear_index_js__WEBPACK_IMPORTED_MODULE_3__["default"])(date).getTime();
+
+  // Round the number of days to the nearest integer
+  // because the number of milliseconds in a week is not constant
+  // (e.g. it's different in the week of the daylight saving time clock shift)
+  return Math.round(diff / MILLISECONDS_IN_WEEK) + 1;
+}
+
+/***/ }),
+
+/***/ "./node_modules/date-fns/esm/_lib/getUTCISOWeekYear/index.js":
+/*!*******************************************************************!*\
+  !*** ./node_modules/date-fns/esm/_lib/getUTCISOWeekYear/index.js ***!
+  \*******************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (/* binding */ getUTCISOWeekYear)
+/* harmony export */ });
+/* harmony import */ var _toDate_index_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../toDate/index.js */ "./node_modules/date-fns/esm/toDate/index.js");
+/* harmony import */ var _requiredArgs_index_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../requiredArgs/index.js */ "./node_modules/date-fns/esm/_lib/requiredArgs/index.js");
+/* harmony import */ var _startOfUTCISOWeek_index_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../startOfUTCISOWeek/index.js */ "./node_modules/date-fns/esm/_lib/startOfUTCISOWeek/index.js");
+
+
+
+function getUTCISOWeekYear(dirtyDate) {
+  (0,_requiredArgs_index_js__WEBPACK_IMPORTED_MODULE_0__["default"])(1, arguments);
+  var date = (0,_toDate_index_js__WEBPACK_IMPORTED_MODULE_1__["default"])(dirtyDate);
+  var year = date.getUTCFullYear();
+  var fourthOfJanuaryOfNextYear = new Date(0);
+  fourthOfJanuaryOfNextYear.setUTCFullYear(year + 1, 0, 4);
+  fourthOfJanuaryOfNextYear.setUTCHours(0, 0, 0, 0);
+  var startOfNextYear = (0,_startOfUTCISOWeek_index_js__WEBPACK_IMPORTED_MODULE_2__["default"])(fourthOfJanuaryOfNextYear);
+  var fourthOfJanuaryOfThisYear = new Date(0);
+  fourthOfJanuaryOfThisYear.setUTCFullYear(year, 0, 4);
+  fourthOfJanuaryOfThisYear.setUTCHours(0, 0, 0, 0);
+  var startOfThisYear = (0,_startOfUTCISOWeek_index_js__WEBPACK_IMPORTED_MODULE_2__["default"])(fourthOfJanuaryOfThisYear);
+  if (date.getTime() >= startOfNextYear.getTime()) {
+    return year + 1;
+  } else if (date.getTime() >= startOfThisYear.getTime()) {
+    return year;
+  } else {
+    return year - 1;
+  }
+}
+
+/***/ }),
+
+/***/ "./node_modules/date-fns/esm/_lib/getUTCWeek/index.js":
+/*!************************************************************!*\
+  !*** ./node_modules/date-fns/esm/_lib/getUTCWeek/index.js ***!
+  \************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (/* binding */ getUTCWeek)
+/* harmony export */ });
+/* harmony import */ var _toDate_index_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../toDate/index.js */ "./node_modules/date-fns/esm/toDate/index.js");
+/* harmony import */ var _startOfUTCWeek_index_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../startOfUTCWeek/index.js */ "./node_modules/date-fns/esm/_lib/startOfUTCWeek/index.js");
+/* harmony import */ var _startOfUTCWeekYear_index_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../startOfUTCWeekYear/index.js */ "./node_modules/date-fns/esm/_lib/startOfUTCWeekYear/index.js");
+/* harmony import */ var _requiredArgs_index_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../requiredArgs/index.js */ "./node_modules/date-fns/esm/_lib/requiredArgs/index.js");
+
+
+
+
+var MILLISECONDS_IN_WEEK = 604800000;
+function getUTCWeek(dirtyDate, options) {
+  (0,_requiredArgs_index_js__WEBPACK_IMPORTED_MODULE_0__["default"])(1, arguments);
+  var date = (0,_toDate_index_js__WEBPACK_IMPORTED_MODULE_1__["default"])(dirtyDate);
+  var diff = (0,_startOfUTCWeek_index_js__WEBPACK_IMPORTED_MODULE_2__["default"])(date, options).getTime() - (0,_startOfUTCWeekYear_index_js__WEBPACK_IMPORTED_MODULE_3__["default"])(date, options).getTime();
+
+  // Round the number of days to the nearest integer
+  // because the number of milliseconds in a week is not constant
+  // (e.g. it's different in the week of the daylight saving time clock shift)
+  return Math.round(diff / MILLISECONDS_IN_WEEK) + 1;
+}
+
+/***/ }),
+
+/***/ "./node_modules/date-fns/esm/_lib/getUTCWeekYear/index.js":
+/*!****************************************************************!*\
+  !*** ./node_modules/date-fns/esm/_lib/getUTCWeekYear/index.js ***!
+  \****************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (/* binding */ getUTCWeekYear)
+/* harmony export */ });
+/* harmony import */ var _toDate_index_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../toDate/index.js */ "./node_modules/date-fns/esm/toDate/index.js");
+/* harmony import */ var _requiredArgs_index_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../requiredArgs/index.js */ "./node_modules/date-fns/esm/_lib/requiredArgs/index.js");
+/* harmony import */ var _startOfUTCWeek_index_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../startOfUTCWeek/index.js */ "./node_modules/date-fns/esm/_lib/startOfUTCWeek/index.js");
+/* harmony import */ var _toInteger_index_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../toInteger/index.js */ "./node_modules/date-fns/esm/_lib/toInteger/index.js");
+/* harmony import */ var _defaultOptions_index_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../defaultOptions/index.js */ "./node_modules/date-fns/esm/_lib/defaultOptions/index.js");
+
+
+
+
+
+function getUTCWeekYear(dirtyDate, options) {
+  var _ref, _ref2, _ref3, _options$firstWeekCon, _options$locale, _options$locale$optio, _defaultOptions$local, _defaultOptions$local2;
+  (0,_requiredArgs_index_js__WEBPACK_IMPORTED_MODULE_0__["default"])(1, arguments);
+  var date = (0,_toDate_index_js__WEBPACK_IMPORTED_MODULE_1__["default"])(dirtyDate);
+  var year = date.getUTCFullYear();
+  var defaultOptions = (0,_defaultOptions_index_js__WEBPACK_IMPORTED_MODULE_2__.getDefaultOptions)();
+  var firstWeekContainsDate = (0,_toInteger_index_js__WEBPACK_IMPORTED_MODULE_3__["default"])((_ref = (_ref2 = (_ref3 = (_options$firstWeekCon = options === null || options === void 0 ? void 0 : options.firstWeekContainsDate) !== null && _options$firstWeekCon !== void 0 ? _options$firstWeekCon : options === null || options === void 0 ? void 0 : (_options$locale = options.locale) === null || _options$locale === void 0 ? void 0 : (_options$locale$optio = _options$locale.options) === null || _options$locale$optio === void 0 ? void 0 : _options$locale$optio.firstWeekContainsDate) !== null && _ref3 !== void 0 ? _ref3 : defaultOptions.firstWeekContainsDate) !== null && _ref2 !== void 0 ? _ref2 : (_defaultOptions$local = defaultOptions.locale) === null || _defaultOptions$local === void 0 ? void 0 : (_defaultOptions$local2 = _defaultOptions$local.options) === null || _defaultOptions$local2 === void 0 ? void 0 : _defaultOptions$local2.firstWeekContainsDate) !== null && _ref !== void 0 ? _ref : 1);
+
+  // Test if weekStartsOn is between 1 and 7 _and_ is not NaN
+  if (!(firstWeekContainsDate >= 1 && firstWeekContainsDate <= 7)) {
+    throw new RangeError('firstWeekContainsDate must be between 1 and 7 inclusively');
+  }
+  var firstWeekOfNextYear = new Date(0);
+  firstWeekOfNextYear.setUTCFullYear(year + 1, 0, firstWeekContainsDate);
+  firstWeekOfNextYear.setUTCHours(0, 0, 0, 0);
+  var startOfNextYear = (0,_startOfUTCWeek_index_js__WEBPACK_IMPORTED_MODULE_4__["default"])(firstWeekOfNextYear, options);
+  var firstWeekOfThisYear = new Date(0);
+  firstWeekOfThisYear.setUTCFullYear(year, 0, firstWeekContainsDate);
+  firstWeekOfThisYear.setUTCHours(0, 0, 0, 0);
+  var startOfThisYear = (0,_startOfUTCWeek_index_js__WEBPACK_IMPORTED_MODULE_4__["default"])(firstWeekOfThisYear, options);
+  if (date.getTime() >= startOfNextYear.getTime()) {
+    return year + 1;
+  } else if (date.getTime() >= startOfThisYear.getTime()) {
+    return year;
+  } else {
+    return year - 1;
+  }
+}
+
+/***/ }),
+
+/***/ "./node_modules/date-fns/esm/_lib/protectedTokens/index.js":
+/*!*****************************************************************!*\
+  !*** ./node_modules/date-fns/esm/_lib/protectedTokens/index.js ***!
+  \*****************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   isProtectedDayOfYearToken: () => (/* binding */ isProtectedDayOfYearToken),
+/* harmony export */   isProtectedWeekYearToken: () => (/* binding */ isProtectedWeekYearToken),
+/* harmony export */   throwProtectedError: () => (/* binding */ throwProtectedError)
+/* harmony export */ });
 var protectedDayOfYearTokens = ['D', 'DD'];
 var protectedWeekYearTokens = ['YY', 'YYYY'];
 function isProtectedDayOfYearToken(token) {
@@ -833,322 +371,380 @@ function throwProtectedError(token, format, input) {
     throw new RangeError("Use `dd` instead of `DD` (in `".concat(format, "`) for formatting days of the month to the input `").concat(input, "`; see: https://github.com/date-fns/date-fns/blob/master/docs/unicodeTokens.md"));
   }
 }
-;// CONCATENATED MODULE: ./node_modules/@babel/runtime/helpers/esm/assertThisInitialized.js
-function _assertThisInitialized(self) {
-  if (self === void 0) {
-    throw new ReferenceError("this hasn't been initialised - super() hasn't been called");
-  }
-  return self;
-}
-;// CONCATENATED MODULE: ./node_modules/@babel/runtime/helpers/esm/setPrototypeOf.js
-function _setPrototypeOf(o, p) {
-  _setPrototypeOf = Object.setPrototypeOf ? Object.setPrototypeOf.bind() : function _setPrototypeOf(o, p) {
-    o.__proto__ = p;
-    return o;
-  };
-  return _setPrototypeOf(o, p);
-}
-;// CONCATENATED MODULE: ./node_modules/@babel/runtime/helpers/esm/inherits.js
 
-function _inherits(subClass, superClass) {
-  if (typeof superClass !== "function" && superClass !== null) {
-    throw new TypeError("Super expression must either be null or a function");
-  }
-  subClass.prototype = Object.create(superClass && superClass.prototype, {
-    constructor: {
-      value: subClass,
-      writable: true,
-      configurable: true
-    }
-  });
-  Object.defineProperty(subClass, "prototype", {
-    writable: false
-  });
-  if (superClass) _setPrototypeOf(subClass, superClass);
-}
-;// CONCATENATED MODULE: ./node_modules/@babel/runtime/helpers/esm/getPrototypeOf.js
-function _getPrototypeOf(o) {
-  _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf.bind() : function _getPrototypeOf(o) {
-    return o.__proto__ || Object.getPrototypeOf(o);
-  };
-  return _getPrototypeOf(o);
-}
-;// CONCATENATED MODULE: ./node_modules/@babel/runtime/helpers/esm/isNativeReflectConstruct.js
-function _isNativeReflectConstruct() {
-  if (typeof Reflect === "undefined" || !Reflect.construct) return false;
-  if (Reflect.construct.sham) return false;
-  if (typeof Proxy === "function") return true;
-  try {
-    Boolean.prototype.valueOf.call(Reflect.construct(Boolean, [], function () {}));
-    return true;
-  } catch (e) {
-    return false;
+/***/ }),
+
+/***/ "./node_modules/date-fns/esm/_lib/requiredArgs/index.js":
+/*!**************************************************************!*\
+  !*** ./node_modules/date-fns/esm/_lib/requiredArgs/index.js ***!
+  \**************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (/* binding */ requiredArgs)
+/* harmony export */ });
+function requiredArgs(required, args) {
+  if (args.length < required) {
+    throw new TypeError(required + ' argument' + (required > 1 ? 's' : '') + ' required, but only ' + args.length + ' present');
   }
 }
-;// CONCATENATED MODULE: ./node_modules/@babel/runtime/helpers/esm/possibleConstructorReturn.js
+
+/***/ }),
+
+/***/ "./node_modules/date-fns/esm/_lib/setUTCDay/index.js":
+/*!***********************************************************!*\
+  !*** ./node_modules/date-fns/esm/_lib/setUTCDay/index.js ***!
+  \***********************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (/* binding */ setUTCDay)
+/* harmony export */ });
+/* harmony import */ var _toDate_index_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../toDate/index.js */ "./node_modules/date-fns/esm/toDate/index.js");
+/* harmony import */ var _requiredArgs_index_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../requiredArgs/index.js */ "./node_modules/date-fns/esm/_lib/requiredArgs/index.js");
+/* harmony import */ var _toInteger_index_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../toInteger/index.js */ "./node_modules/date-fns/esm/_lib/toInteger/index.js");
+/* harmony import */ var _defaultOptions_index_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../defaultOptions/index.js */ "./node_modules/date-fns/esm/_lib/defaultOptions/index.js");
 
 
-function _possibleConstructorReturn(self, call) {
-  if (call && (_typeof(call) === "object" || typeof call === "function")) {
-    return call;
-  } else if (call !== void 0) {
-    throw new TypeError("Derived constructors may only return object or undefined");
+
+
+function setUTCDay(dirtyDate, dirtyDay, options) {
+  var _ref, _ref2, _ref3, _options$weekStartsOn, _options$locale, _options$locale$optio, _defaultOptions$local, _defaultOptions$local2;
+  (0,_requiredArgs_index_js__WEBPACK_IMPORTED_MODULE_0__["default"])(2, arguments);
+  var defaultOptions = (0,_defaultOptions_index_js__WEBPACK_IMPORTED_MODULE_1__.getDefaultOptions)();
+  var weekStartsOn = (0,_toInteger_index_js__WEBPACK_IMPORTED_MODULE_2__["default"])((_ref = (_ref2 = (_ref3 = (_options$weekStartsOn = options === null || options === void 0 ? void 0 : options.weekStartsOn) !== null && _options$weekStartsOn !== void 0 ? _options$weekStartsOn : options === null || options === void 0 ? void 0 : (_options$locale = options.locale) === null || _options$locale === void 0 ? void 0 : (_options$locale$optio = _options$locale.options) === null || _options$locale$optio === void 0 ? void 0 : _options$locale$optio.weekStartsOn) !== null && _ref3 !== void 0 ? _ref3 : defaultOptions.weekStartsOn) !== null && _ref2 !== void 0 ? _ref2 : (_defaultOptions$local = defaultOptions.locale) === null || _defaultOptions$local === void 0 ? void 0 : (_defaultOptions$local2 = _defaultOptions$local.options) === null || _defaultOptions$local2 === void 0 ? void 0 : _defaultOptions$local2.weekStartsOn) !== null && _ref !== void 0 ? _ref : 0);
+
+  // Test if weekStartsOn is between 0 and 6 _and_ is not NaN
+  if (!(weekStartsOn >= 0 && weekStartsOn <= 6)) {
+    throw new RangeError('weekStartsOn must be between 0 and 6 inclusively');
   }
-  return _assertThisInitialized(self);
+  var date = (0,_toDate_index_js__WEBPACK_IMPORTED_MODULE_3__["default"])(dirtyDate);
+  var day = (0,_toInteger_index_js__WEBPACK_IMPORTED_MODULE_2__["default"])(dirtyDay);
+  var currentDay = date.getUTCDay();
+  var remainder = day % 7;
+  var dayIndex = (remainder + 7) % 7;
+  var diff = (dayIndex < weekStartsOn ? 7 : 0) + day - currentDay;
+  date.setUTCDate(date.getUTCDate() + diff);
+  return date;
 }
-;// CONCATENATED MODULE: ./node_modules/@babel/runtime/helpers/esm/createSuper.js
+
+/***/ }),
+
+/***/ "./node_modules/date-fns/esm/_lib/setUTCISODay/index.js":
+/*!**************************************************************!*\
+  !*** ./node_modules/date-fns/esm/_lib/setUTCISODay/index.js ***!
+  \**************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (/* binding */ setUTCISODay)
+/* harmony export */ });
+/* harmony import */ var _toDate_index_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../toDate/index.js */ "./node_modules/date-fns/esm/toDate/index.js");
+/* harmony import */ var _requiredArgs_index_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../requiredArgs/index.js */ "./node_modules/date-fns/esm/_lib/requiredArgs/index.js");
+/* harmony import */ var _toInteger_index_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../toInteger/index.js */ "./node_modules/date-fns/esm/_lib/toInteger/index.js");
 
 
 
-function _createSuper(Derived) {
-  var hasNativeReflectConstruct = _isNativeReflectConstruct();
-  return function _createSuperInternal() {
-    var Super = _getPrototypeOf(Derived),
-      result;
-    if (hasNativeReflectConstruct) {
-      var NewTarget = _getPrototypeOf(this).constructor;
-      result = Reflect.construct(Super, arguments, NewTarget);
-    } else {
-      result = Super.apply(this, arguments);
-    }
-    return _possibleConstructorReturn(this, result);
-  };
+function setUTCISODay(dirtyDate, dirtyDay) {
+  (0,_requiredArgs_index_js__WEBPACK_IMPORTED_MODULE_0__["default"])(2, arguments);
+  var day = (0,_toInteger_index_js__WEBPACK_IMPORTED_MODULE_1__["default"])(dirtyDay);
+  if (day % 7 === 0) {
+    day = day - 7;
+  }
+  var weekStartsOn = 1;
+  var date = (0,_toDate_index_js__WEBPACK_IMPORTED_MODULE_2__["default"])(dirtyDate);
+  var currentDay = date.getUTCDay();
+  var remainder = day % 7;
+  var dayIndex = (remainder + 7) % 7;
+  var diff = (dayIndex < weekStartsOn ? 7 : 0) + day - currentDay;
+  date.setUTCDate(date.getUTCDate() + diff);
+  return date;
 }
-;// CONCATENATED MODULE: ./node_modules/@babel/runtime/helpers/esm/classCallCheck.js
-function _classCallCheck(instance, Constructor) {
-  if (!(instance instanceof Constructor)) {
-    throw new TypeError("Cannot call a class as a function");
-  }
+
+/***/ }),
+
+/***/ "./node_modules/date-fns/esm/_lib/setUTCISOWeek/index.js":
+/*!***************************************************************!*\
+  !*** ./node_modules/date-fns/esm/_lib/setUTCISOWeek/index.js ***!
+  \***************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (/* binding */ setUTCISOWeek)
+/* harmony export */ });
+/* harmony import */ var _toInteger_index_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../toInteger/index.js */ "./node_modules/date-fns/esm/_lib/toInteger/index.js");
+/* harmony import */ var _toDate_index_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../toDate/index.js */ "./node_modules/date-fns/esm/toDate/index.js");
+/* harmony import */ var _getUTCISOWeek_index_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../getUTCISOWeek/index.js */ "./node_modules/date-fns/esm/_lib/getUTCISOWeek/index.js");
+/* harmony import */ var _requiredArgs_index_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../requiredArgs/index.js */ "./node_modules/date-fns/esm/_lib/requiredArgs/index.js");
+
+
+
+
+function setUTCISOWeek(dirtyDate, dirtyISOWeek) {
+  (0,_requiredArgs_index_js__WEBPACK_IMPORTED_MODULE_0__["default"])(2, arguments);
+  var date = (0,_toDate_index_js__WEBPACK_IMPORTED_MODULE_1__["default"])(dirtyDate);
+  var isoWeek = (0,_toInteger_index_js__WEBPACK_IMPORTED_MODULE_2__["default"])(dirtyISOWeek);
+  var diff = (0,_getUTCISOWeek_index_js__WEBPACK_IMPORTED_MODULE_3__["default"])(date) - isoWeek;
+  date.setUTCDate(date.getUTCDate() - diff * 7);
+  return date;
 }
-;// CONCATENATED MODULE: ./node_modules/@babel/runtime/helpers/esm/toPrimitive.js
 
-function _toPrimitive(input, hint) {
-  if (_typeof(input) !== "object" || input === null) return input;
-  var prim = input[Symbol.toPrimitive];
-  if (prim !== undefined) {
-    var res = prim.call(input, hint || "default");
-    if (_typeof(res) !== "object") return res;
-    throw new TypeError("@@toPrimitive must return a primitive value.");
-  }
-  return (hint === "string" ? String : Number)(input);
+/***/ }),
+
+/***/ "./node_modules/date-fns/esm/_lib/setUTCWeek/index.js":
+/*!************************************************************!*\
+  !*** ./node_modules/date-fns/esm/_lib/setUTCWeek/index.js ***!
+  \************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (/* binding */ setUTCWeek)
+/* harmony export */ });
+/* harmony import */ var _toInteger_index_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../toInteger/index.js */ "./node_modules/date-fns/esm/_lib/toInteger/index.js");
+/* harmony import */ var _toDate_index_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../toDate/index.js */ "./node_modules/date-fns/esm/toDate/index.js");
+/* harmony import */ var _getUTCWeek_index_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../getUTCWeek/index.js */ "./node_modules/date-fns/esm/_lib/getUTCWeek/index.js");
+/* harmony import */ var _requiredArgs_index_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../requiredArgs/index.js */ "./node_modules/date-fns/esm/_lib/requiredArgs/index.js");
+
+
+
+
+function setUTCWeek(dirtyDate, dirtyWeek, options) {
+  (0,_requiredArgs_index_js__WEBPACK_IMPORTED_MODULE_0__["default"])(2, arguments);
+  var date = (0,_toDate_index_js__WEBPACK_IMPORTED_MODULE_1__["default"])(dirtyDate);
+  var week = (0,_toInteger_index_js__WEBPACK_IMPORTED_MODULE_2__["default"])(dirtyWeek);
+  var diff = (0,_getUTCWeek_index_js__WEBPACK_IMPORTED_MODULE_3__["default"])(date, options) - week;
+  date.setUTCDate(date.getUTCDate() - diff * 7);
+  return date;
 }
-;// CONCATENATED MODULE: ./node_modules/@babel/runtime/helpers/esm/toPropertyKey.js
+
+/***/ }),
+
+/***/ "./node_modules/date-fns/esm/_lib/startOfUTCISOWeek/index.js":
+/*!*******************************************************************!*\
+  !*** ./node_modules/date-fns/esm/_lib/startOfUTCISOWeek/index.js ***!
+  \*******************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (/* binding */ startOfUTCISOWeek)
+/* harmony export */ });
+/* harmony import */ var _toDate_index_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../toDate/index.js */ "./node_modules/date-fns/esm/toDate/index.js");
+/* harmony import */ var _requiredArgs_index_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../requiredArgs/index.js */ "./node_modules/date-fns/esm/_lib/requiredArgs/index.js");
 
 
-function _toPropertyKey(arg) {
-  var key = _toPrimitive(arg, "string");
-  return _typeof(key) === "symbol" ? key : String(key);
+function startOfUTCISOWeek(dirtyDate) {
+  (0,_requiredArgs_index_js__WEBPACK_IMPORTED_MODULE_0__["default"])(1, arguments);
+  var weekStartsOn = 1;
+  var date = (0,_toDate_index_js__WEBPACK_IMPORTED_MODULE_1__["default"])(dirtyDate);
+  var day = date.getUTCDay();
+  var diff = (day < weekStartsOn ? 7 : 0) + day - weekStartsOn;
+  date.setUTCDate(date.getUTCDate() - diff);
+  date.setUTCHours(0, 0, 0, 0);
+  return date;
 }
-;// CONCATENATED MODULE: ./node_modules/@babel/runtime/helpers/esm/createClass.js
 
-function _defineProperties(target, props) {
-  for (var i = 0; i < props.length; i++) {
-    var descriptor = props[i];
-    descriptor.enumerable = descriptor.enumerable || false;
-    descriptor.configurable = true;
-    if ("value" in descriptor) descriptor.writable = true;
-    Object.defineProperty(target, _toPropertyKey(descriptor.key), descriptor);
-  }
+/***/ }),
+
+/***/ "./node_modules/date-fns/esm/_lib/startOfUTCISOWeekYear/index.js":
+/*!***********************************************************************!*\
+  !*** ./node_modules/date-fns/esm/_lib/startOfUTCISOWeekYear/index.js ***!
+  \***********************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (/* binding */ startOfUTCISOWeekYear)
+/* harmony export */ });
+/* harmony import */ var _getUTCISOWeekYear_index_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../getUTCISOWeekYear/index.js */ "./node_modules/date-fns/esm/_lib/getUTCISOWeekYear/index.js");
+/* harmony import */ var _startOfUTCISOWeek_index_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../startOfUTCISOWeek/index.js */ "./node_modules/date-fns/esm/_lib/startOfUTCISOWeek/index.js");
+/* harmony import */ var _requiredArgs_index_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../requiredArgs/index.js */ "./node_modules/date-fns/esm/_lib/requiredArgs/index.js");
+
+
+
+function startOfUTCISOWeekYear(dirtyDate) {
+  (0,_requiredArgs_index_js__WEBPACK_IMPORTED_MODULE_0__["default"])(1, arguments);
+  var year = (0,_getUTCISOWeekYear_index_js__WEBPACK_IMPORTED_MODULE_1__["default"])(dirtyDate);
+  var fourthOfJanuary = new Date(0);
+  fourthOfJanuary.setUTCFullYear(year, 0, 4);
+  fourthOfJanuary.setUTCHours(0, 0, 0, 0);
+  var date = (0,_startOfUTCISOWeek_index_js__WEBPACK_IMPORTED_MODULE_2__["default"])(fourthOfJanuary);
+  return date;
 }
-function _createClass(Constructor, protoProps, staticProps) {
-  if (protoProps) _defineProperties(Constructor.prototype, protoProps);
-  if (staticProps) _defineProperties(Constructor, staticProps);
-  Object.defineProperty(Constructor, "prototype", {
-    writable: false
-  });
-  return Constructor;
+
+/***/ }),
+
+/***/ "./node_modules/date-fns/esm/_lib/startOfUTCWeek/index.js":
+/*!****************************************************************!*\
+  !*** ./node_modules/date-fns/esm/_lib/startOfUTCWeek/index.js ***!
+  \****************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (/* binding */ startOfUTCWeek)
+/* harmony export */ });
+/* harmony import */ var _toDate_index_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../toDate/index.js */ "./node_modules/date-fns/esm/toDate/index.js");
+/* harmony import */ var _requiredArgs_index_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../requiredArgs/index.js */ "./node_modules/date-fns/esm/_lib/requiredArgs/index.js");
+/* harmony import */ var _toInteger_index_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../toInteger/index.js */ "./node_modules/date-fns/esm/_lib/toInteger/index.js");
+/* harmony import */ var _defaultOptions_index_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../defaultOptions/index.js */ "./node_modules/date-fns/esm/_lib/defaultOptions/index.js");
+
+
+
+
+function startOfUTCWeek(dirtyDate, options) {
+  var _ref, _ref2, _ref3, _options$weekStartsOn, _options$locale, _options$locale$optio, _defaultOptions$local, _defaultOptions$local2;
+  (0,_requiredArgs_index_js__WEBPACK_IMPORTED_MODULE_0__["default"])(1, arguments);
+  var defaultOptions = (0,_defaultOptions_index_js__WEBPACK_IMPORTED_MODULE_1__.getDefaultOptions)();
+  var weekStartsOn = (0,_toInteger_index_js__WEBPACK_IMPORTED_MODULE_2__["default"])((_ref = (_ref2 = (_ref3 = (_options$weekStartsOn = options === null || options === void 0 ? void 0 : options.weekStartsOn) !== null && _options$weekStartsOn !== void 0 ? _options$weekStartsOn : options === null || options === void 0 ? void 0 : (_options$locale = options.locale) === null || _options$locale === void 0 ? void 0 : (_options$locale$optio = _options$locale.options) === null || _options$locale$optio === void 0 ? void 0 : _options$locale$optio.weekStartsOn) !== null && _ref3 !== void 0 ? _ref3 : defaultOptions.weekStartsOn) !== null && _ref2 !== void 0 ? _ref2 : (_defaultOptions$local = defaultOptions.locale) === null || _defaultOptions$local === void 0 ? void 0 : (_defaultOptions$local2 = _defaultOptions$local.options) === null || _defaultOptions$local2 === void 0 ? void 0 : _defaultOptions$local2.weekStartsOn) !== null && _ref !== void 0 ? _ref : 0);
+
+  // Test if weekStartsOn is between 0 and 6 _and_ is not NaN
+  if (!(weekStartsOn >= 0 && weekStartsOn <= 6)) {
+    throw new RangeError('weekStartsOn must be between 0 and 6 inclusively');
+  }
+  var date = (0,_toDate_index_js__WEBPACK_IMPORTED_MODULE_3__["default"])(dirtyDate);
+  var day = date.getUTCDay();
+  var diff = (day < weekStartsOn ? 7 : 0) + day - weekStartsOn;
+  date.setUTCDate(date.getUTCDate() - diff);
+  date.setUTCHours(0, 0, 0, 0);
+  return date;
 }
-;// CONCATENATED MODULE: ./node_modules/@babel/runtime/helpers/esm/defineProperty.js
 
-function _defineProperty(obj, key, value) {
-  key = _toPropertyKey(key);
-  if (key in obj) {
-    Object.defineProperty(obj, key, {
-      value: value,
-      enumerable: true,
-      configurable: true,
-      writable: true
-    });
-  } else {
-    obj[key] = value;
-  }
-  return obj;
+/***/ }),
+
+/***/ "./node_modules/date-fns/esm/_lib/startOfUTCWeekYear/index.js":
+/*!********************************************************************!*\
+  !*** ./node_modules/date-fns/esm/_lib/startOfUTCWeekYear/index.js ***!
+  \********************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (/* binding */ startOfUTCWeekYear)
+/* harmony export */ });
+/* harmony import */ var _getUTCWeekYear_index_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../getUTCWeekYear/index.js */ "./node_modules/date-fns/esm/_lib/getUTCWeekYear/index.js");
+/* harmony import */ var _requiredArgs_index_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../requiredArgs/index.js */ "./node_modules/date-fns/esm/_lib/requiredArgs/index.js");
+/* harmony import */ var _startOfUTCWeek_index_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../startOfUTCWeek/index.js */ "./node_modules/date-fns/esm/_lib/startOfUTCWeek/index.js");
+/* harmony import */ var _toInteger_index_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../toInteger/index.js */ "./node_modules/date-fns/esm/_lib/toInteger/index.js");
+/* harmony import */ var _defaultOptions_index_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../defaultOptions/index.js */ "./node_modules/date-fns/esm/_lib/defaultOptions/index.js");
+
+
+
+
+
+function startOfUTCWeekYear(dirtyDate, options) {
+  var _ref, _ref2, _ref3, _options$firstWeekCon, _options$locale, _options$locale$optio, _defaultOptions$local, _defaultOptions$local2;
+  (0,_requiredArgs_index_js__WEBPACK_IMPORTED_MODULE_0__["default"])(1, arguments);
+  var defaultOptions = (0,_defaultOptions_index_js__WEBPACK_IMPORTED_MODULE_1__.getDefaultOptions)();
+  var firstWeekContainsDate = (0,_toInteger_index_js__WEBPACK_IMPORTED_MODULE_2__["default"])((_ref = (_ref2 = (_ref3 = (_options$firstWeekCon = options === null || options === void 0 ? void 0 : options.firstWeekContainsDate) !== null && _options$firstWeekCon !== void 0 ? _options$firstWeekCon : options === null || options === void 0 ? void 0 : (_options$locale = options.locale) === null || _options$locale === void 0 ? void 0 : (_options$locale$optio = _options$locale.options) === null || _options$locale$optio === void 0 ? void 0 : _options$locale$optio.firstWeekContainsDate) !== null && _ref3 !== void 0 ? _ref3 : defaultOptions.firstWeekContainsDate) !== null && _ref2 !== void 0 ? _ref2 : (_defaultOptions$local = defaultOptions.locale) === null || _defaultOptions$local === void 0 ? void 0 : (_defaultOptions$local2 = _defaultOptions$local.options) === null || _defaultOptions$local2 === void 0 ? void 0 : _defaultOptions$local2.firstWeekContainsDate) !== null && _ref !== void 0 ? _ref : 1);
+  var year = (0,_getUTCWeekYear_index_js__WEBPACK_IMPORTED_MODULE_3__["default"])(dirtyDate, options);
+  var firstWeek = new Date(0);
+  firstWeek.setUTCFullYear(year, 0, firstWeekContainsDate);
+  firstWeek.setUTCHours(0, 0, 0, 0);
+  var date = (0,_startOfUTCWeek_index_js__WEBPACK_IMPORTED_MODULE_4__["default"])(firstWeek, options);
+  return date;
 }
-;// CONCATENATED MODULE: ./node_modules/date-fns/esm/parse/_lib/Setter.js
 
+/***/ }),
 
+/***/ "./node_modules/date-fns/esm/_lib/toInteger/index.js":
+/*!***********************************************************!*\
+  !*** ./node_modules/date-fns/esm/_lib/toInteger/index.js ***!
+  \***********************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-
-
-
-var TIMEZONE_UNIT_PRIORITY = 10;
-var Setter = /*#__PURE__*/function () {
-  function Setter() {
-    _classCallCheck(this, Setter);
-    _defineProperty(this, "priority", void 0);
-    _defineProperty(this, "subPriority", 0);
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (/* binding */ toInteger)
+/* harmony export */ });
+function toInteger(dirtyNumber) {
+  if (dirtyNumber === null || dirtyNumber === true || dirtyNumber === false) {
+    return NaN;
   }
-  _createClass(Setter, [{
-    key: "validate",
-    value: function validate(_utcDate, _options) {
-      return true;
-    }
-  }]);
-  return Setter;
-}();
-var ValueSetter = /*#__PURE__*/function (_Setter) {
-  _inherits(ValueSetter, _Setter);
-  var _super = _createSuper(ValueSetter);
-  function ValueSetter(value, validateValue, setValue, priority, subPriority) {
-    var _this;
-    _classCallCheck(this, ValueSetter);
-    _this = _super.call(this);
-    _this.value = value;
-    _this.validateValue = validateValue;
-    _this.setValue = setValue;
-    _this.priority = priority;
-    if (subPriority) {
-      _this.subPriority = subPriority;
-    }
-    return _this;
+  var number = Number(dirtyNumber);
+  if (isNaN(number)) {
+    return number;
   }
-  _createClass(ValueSetter, [{
-    key: "validate",
-    value: function validate(utcDate, options) {
-      return this.validateValue(utcDate, this.value, options);
-    }
-  }, {
-    key: "set",
-    value: function set(utcDate, flags, options) {
-      return this.setValue(utcDate, flags, this.value, options);
-    }
-  }]);
-  return ValueSetter;
-}(Setter);
-var DateToSystemTimezoneSetter = /*#__PURE__*/function (_Setter2) {
-  _inherits(DateToSystemTimezoneSetter, _Setter2);
-  var _super2 = _createSuper(DateToSystemTimezoneSetter);
-  function DateToSystemTimezoneSetter() {
-    var _this2;
-    _classCallCheck(this, DateToSystemTimezoneSetter);
-    for (var _len = arguments.length, args = new Array(_len), _key = 0; _key < _len; _key++) {
-      args[_key] = arguments[_key];
-    }
-    _this2 = _super2.call.apply(_super2, [this].concat(args));
-    _defineProperty(_assertThisInitialized(_this2), "priority", TIMEZONE_UNIT_PRIORITY);
-    _defineProperty(_assertThisInitialized(_this2), "subPriority", -1);
-    return _this2;
-  }
-  _createClass(DateToSystemTimezoneSetter, [{
-    key: "set",
-    value: function set(date, flags) {
-      if (flags.timestampIsSet) {
-        return date;
-      }
-      var convertedDate = new Date(0);
-      convertedDate.setFullYear(date.getUTCFullYear(), date.getUTCMonth(), date.getUTCDate());
-      convertedDate.setHours(date.getUTCHours(), date.getUTCMinutes(), date.getUTCSeconds(), date.getUTCMilliseconds());
-      return convertedDate;
-    }
-  }]);
-  return DateToSystemTimezoneSetter;
-}(Setter);
-;// CONCATENATED MODULE: ./node_modules/date-fns/esm/parse/_lib/Parser.js
+  return number < 0 ? Math.ceil(number) : Math.floor(number);
+}
+
+/***/ }),
+
+/***/ "./node_modules/date-fns/esm/addMilliseconds/index.js":
+/*!************************************************************!*\
+  !*** ./node_modules/date-fns/esm/addMilliseconds/index.js ***!
+  \************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (/* binding */ addMilliseconds)
+/* harmony export */ });
+/* harmony import */ var _lib_toInteger_index_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../_lib/toInteger/index.js */ "./node_modules/date-fns/esm/_lib/toInteger/index.js");
+/* harmony import */ var _toDate_index_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../toDate/index.js */ "./node_modules/date-fns/esm/toDate/index.js");
+/* harmony import */ var _lib_requiredArgs_index_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../_lib/requiredArgs/index.js */ "./node_modules/date-fns/esm/_lib/requiredArgs/index.js");
 
 
 
+/**
+ * @name addMilliseconds
+ * @category Millisecond Helpers
+ * @summary Add the specified number of milliseconds to the given date.
+ *
+ * @description
+ * Add the specified number of milliseconds to the given date.
+ *
+ * @param {Date|Number} date - the date to be changed
+ * @param {Number} amount - the amount of milliseconds to be added. Positive decimals will be rounded using `Math.floor`, decimals less than zero will be rounded using `Math.ceil`.
+ * @returns {Date} the new date with the milliseconds added
+ * @throws {TypeError} 2 arguments required
+ *
+ * @example
+ * // Add 750 milliseconds to 10 July 2014 12:45:30.000:
+ * const result = addMilliseconds(new Date(2014, 6, 10, 12, 45, 30, 0), 750)
+ * //=> Thu Jul 10 2014 12:45:30.750
+ */
+function addMilliseconds(dirtyDate, dirtyAmount) {
+  (0,_lib_requiredArgs_index_js__WEBPACK_IMPORTED_MODULE_0__["default"])(2, arguments);
+  var timestamp = (0,_toDate_index_js__WEBPACK_IMPORTED_MODULE_1__["default"])(dirtyDate).getTime();
+  var amount = (0,_lib_toInteger_index_js__WEBPACK_IMPORTED_MODULE_2__["default"])(dirtyAmount);
+  return new Date(timestamp + amount);
+}
 
-var Parser = /*#__PURE__*/function () {
-  function Parser() {
-    _classCallCheck(this, Parser);
-    _defineProperty(this, "incompatibleTokens", void 0);
-    _defineProperty(this, "priority", void 0);
-    _defineProperty(this, "subPriority", void 0);
-  }
-  _createClass(Parser, [{
-    key: "run",
-    value: function run(dateString, token, match, options) {
-      var result = this.parse(dateString, token, match, options);
-      if (!result) {
-        return null;
-      }
-      return {
-        setter: new ValueSetter(result.value, this.validate, this.set, this.priority, this.subPriority),
-        rest: result.rest
-      };
-    }
-  }, {
-    key: "validate",
-    value: function validate(_utcDate, _value, _options) {
-      return true;
-    }
-  }]);
-  return Parser;
-}();
-;// CONCATENATED MODULE: ./node_modules/date-fns/esm/parse/_lib/parsers/EraParser.js
+/***/ }),
 
+/***/ "./node_modules/date-fns/esm/constants/index.js":
+/*!******************************************************!*\
+  !*** ./node_modules/date-fns/esm/constants/index.js ***!
+  \******************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-
-
-
-
-
-var EraParser = /*#__PURE__*/function (_Parser) {
-  _inherits(EraParser, _Parser);
-  var _super = _createSuper(EraParser);
-  function EraParser() {
-    var _this;
-    _classCallCheck(this, EraParser);
-    for (var _len = arguments.length, args = new Array(_len), _key = 0; _key < _len; _key++) {
-      args[_key] = arguments[_key];
-    }
-    _this = _super.call.apply(_super, [this].concat(args));
-    _defineProperty(_assertThisInitialized(_this), "priority", 140);
-    _defineProperty(_assertThisInitialized(_this), "incompatibleTokens", ['R', 'u', 't', 'T']);
-    return _this;
-  }
-  _createClass(EraParser, [{
-    key: "parse",
-    value: function parse(dateString, token, match) {
-      switch (token) {
-        // AD, BC
-        case 'G':
-        case 'GG':
-        case 'GGG':
-          return match.era(dateString, {
-            width: 'abbreviated'
-          }) || match.era(dateString, {
-            width: 'narrow'
-          });
-        // A, B
-        case 'GGGGG':
-          return match.era(dateString, {
-            width: 'narrow'
-          });
-        // Anno Domini, Before Christ
-        case 'GGGG':
-        default:
-          return match.era(dateString, {
-            width: 'wide'
-          }) || match.era(dateString, {
-            width: 'abbreviated'
-          }) || match.era(dateString, {
-            width: 'narrow'
-          });
-      }
-    }
-  }, {
-    key: "set",
-    value: function set(date, flags, value) {
-      flags.era = value;
-      date.setUTCFullYear(value, 0, 1);
-      date.setUTCHours(0, 0, 0, 0);
-      return date;
-    }
-  }]);
-  return EraParser;
-}(Parser);
-;// CONCATENATED MODULE: ./node_modules/date-fns/esm/constants/index.js
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   daysInWeek: () => (/* binding */ daysInWeek),
+/* harmony export */   daysInYear: () => (/* binding */ daysInYear),
+/* harmony export */   maxTime: () => (/* binding */ maxTime),
+/* harmony export */   millisecondsInHour: () => (/* binding */ millisecondsInHour),
+/* harmony export */   millisecondsInMinute: () => (/* binding */ millisecondsInMinute),
+/* harmony export */   millisecondsInSecond: () => (/* binding */ millisecondsInSecond),
+/* harmony export */   minTime: () => (/* binding */ minTime),
+/* harmony export */   minutesInHour: () => (/* binding */ minutesInHour),
+/* harmony export */   monthsInQuarter: () => (/* binding */ monthsInQuarter),
+/* harmony export */   monthsInYear: () => (/* binding */ monthsInYear),
+/* harmony export */   quartersInYear: () => (/* binding */ quartersInYear),
+/* harmony export */   secondsInDay: () => (/* binding */ secondsInDay),
+/* harmony export */   secondsInHour: () => (/* binding */ secondsInHour),
+/* harmony export */   secondsInMinute: () => (/* binding */ secondsInMinute),
+/* harmony export */   secondsInMonth: () => (/* binding */ secondsInMonth),
+/* harmony export */   secondsInQuarter: () => (/* binding */ secondsInQuarter),
+/* harmony export */   secondsInWeek: () => (/* binding */ secondsInWeek),
+/* harmony export */   secondsInYear: () => (/* binding */ secondsInYear)
+/* harmony export */ });
 /**
  * Days in 1 week.
  *
@@ -1332,7 +928,900 @@ var secondsInMonth = secondsInYear / 12;
  * @default
  */
 var secondsInQuarter = secondsInMonth * 3;
-;// CONCATENATED MODULE: ./node_modules/date-fns/esm/parse/_lib/constants.js
+
+/***/ }),
+
+/***/ "./node_modules/date-fns/esm/isDate/index.js":
+/*!***************************************************!*\
+  !*** ./node_modules/date-fns/esm/isDate/index.js ***!
+  \***************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (/* binding */ isDate)
+/* harmony export */ });
+/* harmony import */ var _babel_runtime_helpers_esm_typeof__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/helpers/esm/typeof */ "./node_modules/@babel/runtime/helpers/esm/typeof.js");
+/* harmony import */ var _lib_requiredArgs_index_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../_lib/requiredArgs/index.js */ "./node_modules/date-fns/esm/_lib/requiredArgs/index.js");
+
+
+/**
+ * @name isDate
+ * @category Common Helpers
+ * @summary Is the given value a date?
+ *
+ * @description
+ * Returns true if the given value is an instance of Date. The function works for dates transferred across iframes.
+ *
+ * @param {*} value - the value to check
+ * @returns {boolean} true if the given value is a date
+ * @throws {TypeError} 1 arguments required
+ *
+ * @example
+ * // For a valid date:
+ * const result = isDate(new Date())
+ * //=> true
+ *
+ * @example
+ * // For an invalid date:
+ * const result = isDate(new Date(NaN))
+ * //=> true
+ *
+ * @example
+ * // For some value:
+ * const result = isDate('2014-02-31')
+ * //=> false
+ *
+ * @example
+ * // For an object:
+ * const result = isDate({})
+ * //=> false
+ */
+function isDate(value) {
+  (0,_lib_requiredArgs_index_js__WEBPACK_IMPORTED_MODULE_1__["default"])(1, arguments);
+  return value instanceof Date || (0,_babel_runtime_helpers_esm_typeof__WEBPACK_IMPORTED_MODULE_0__["default"])(value) === 'object' && Object.prototype.toString.call(value) === '[object Date]';
+}
+
+/***/ }),
+
+/***/ "./node_modules/date-fns/esm/isValid/index.js":
+/*!****************************************************!*\
+  !*** ./node_modules/date-fns/esm/isValid/index.js ***!
+  \****************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (/* binding */ isValid)
+/* harmony export */ });
+/* harmony import */ var _isDate_index_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../isDate/index.js */ "./node_modules/date-fns/esm/isDate/index.js");
+/* harmony import */ var _toDate_index_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../toDate/index.js */ "./node_modules/date-fns/esm/toDate/index.js");
+/* harmony import */ var _lib_requiredArgs_index_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../_lib/requiredArgs/index.js */ "./node_modules/date-fns/esm/_lib/requiredArgs/index.js");
+
+
+
+/**
+ * @name isValid
+ * @category Common Helpers
+ * @summary Is the given date valid?
+ *
+ * @description
+ * Returns false if argument is Invalid Date and true otherwise.
+ * Argument is converted to Date using `toDate`. See [toDate]{@link https://date-fns.org/docs/toDate}
+ * Invalid Date is a Date, whose time value is NaN.
+ *
+ * Time value of Date: http://es5.github.io/#x15.9.1.1
+ *
+ * @param {*} date - the date to check
+ * @returns {Boolean} the date is valid
+ * @throws {TypeError} 1 argument required
+ *
+ * @example
+ * // For the valid date:
+ * const result = isValid(new Date(2014, 1, 31))
+ * //=> true
+ *
+ * @example
+ * // For the value, convertable into a date:
+ * const result = isValid(1393804800000)
+ * //=> true
+ *
+ * @example
+ * // For the invalid date:
+ * const result = isValid(new Date(''))
+ * //=> false
+ */
+function isValid(dirtyDate) {
+  (0,_lib_requiredArgs_index_js__WEBPACK_IMPORTED_MODULE_0__["default"])(1, arguments);
+  if (!(0,_isDate_index_js__WEBPACK_IMPORTED_MODULE_1__["default"])(dirtyDate) && typeof dirtyDate !== 'number') {
+    return false;
+  }
+  var date = (0,_toDate_index_js__WEBPACK_IMPORTED_MODULE_2__["default"])(dirtyDate);
+  return !isNaN(Number(date));
+}
+
+/***/ }),
+
+/***/ "./node_modules/date-fns/esm/locale/_lib/buildFormatLongFn/index.js":
+/*!**************************************************************************!*\
+  !*** ./node_modules/date-fns/esm/locale/_lib/buildFormatLongFn/index.js ***!
+  \**************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (/* binding */ buildFormatLongFn)
+/* harmony export */ });
+function buildFormatLongFn(args) {
+  return function () {
+    var options = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
+    // TODO: Remove String()
+    var width = options.width ? String(options.width) : args.defaultWidth;
+    var format = args.formats[width] || args.formats[args.defaultWidth];
+    return format;
+  };
+}
+
+/***/ }),
+
+/***/ "./node_modules/date-fns/esm/locale/_lib/buildLocalizeFn/index.js":
+/*!************************************************************************!*\
+  !*** ./node_modules/date-fns/esm/locale/_lib/buildLocalizeFn/index.js ***!
+  \************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (/* binding */ buildLocalizeFn)
+/* harmony export */ });
+function buildLocalizeFn(args) {
+  return function (dirtyIndex, options) {
+    var context = options !== null && options !== void 0 && options.context ? String(options.context) : 'standalone';
+    var valuesArray;
+    if (context === 'formatting' && args.formattingValues) {
+      var defaultWidth = args.defaultFormattingWidth || args.defaultWidth;
+      var width = options !== null && options !== void 0 && options.width ? String(options.width) : defaultWidth;
+      valuesArray = args.formattingValues[width] || args.formattingValues[defaultWidth];
+    } else {
+      var _defaultWidth = args.defaultWidth;
+      var _width = options !== null && options !== void 0 && options.width ? String(options.width) : args.defaultWidth;
+      valuesArray = args.values[_width] || args.values[_defaultWidth];
+    }
+    var index = args.argumentCallback ? args.argumentCallback(dirtyIndex) : dirtyIndex;
+    // @ts-ignore: For some reason TypeScript just don't want to match it, no matter how hard we try. I challenge you to try to remove it!
+    return valuesArray[index];
+  };
+}
+
+/***/ }),
+
+/***/ "./node_modules/date-fns/esm/locale/_lib/buildMatchFn/index.js":
+/*!*********************************************************************!*\
+  !*** ./node_modules/date-fns/esm/locale/_lib/buildMatchFn/index.js ***!
+  \*********************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (/* binding */ buildMatchFn)
+/* harmony export */ });
+function buildMatchFn(args) {
+  return function (string) {
+    var options = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
+    var width = options.width;
+    var matchPattern = width && args.matchPatterns[width] || args.matchPatterns[args.defaultMatchWidth];
+    var matchResult = string.match(matchPattern);
+    if (!matchResult) {
+      return null;
+    }
+    var matchedString = matchResult[0];
+    var parsePatterns = width && args.parsePatterns[width] || args.parsePatterns[args.defaultParseWidth];
+    var key = Array.isArray(parsePatterns) ? findIndex(parsePatterns, function (pattern) {
+      return pattern.test(matchedString);
+    }) : findKey(parsePatterns, function (pattern) {
+      return pattern.test(matchedString);
+    });
+    var value;
+    value = args.valueCallback ? args.valueCallback(key) : key;
+    value = options.valueCallback ? options.valueCallback(value) : value;
+    var rest = string.slice(matchedString.length);
+    return {
+      value: value,
+      rest: rest
+    };
+  };
+}
+function findKey(object, predicate) {
+  for (var key in object) {
+    if (object.hasOwnProperty(key) && predicate(object[key])) {
+      return key;
+    }
+  }
+  return undefined;
+}
+function findIndex(array, predicate) {
+  for (var key = 0; key < array.length; key++) {
+    if (predicate(array[key])) {
+      return key;
+    }
+  }
+  return undefined;
+}
+
+/***/ }),
+
+/***/ "./node_modules/date-fns/esm/locale/_lib/buildMatchPatternFn/index.js":
+/*!****************************************************************************!*\
+  !*** ./node_modules/date-fns/esm/locale/_lib/buildMatchPatternFn/index.js ***!
+  \****************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (/* binding */ buildMatchPatternFn)
+/* harmony export */ });
+function buildMatchPatternFn(args) {
+  return function (string) {
+    var options = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
+    var matchResult = string.match(args.matchPattern);
+    if (!matchResult) return null;
+    var matchedString = matchResult[0];
+    var parseResult = string.match(args.parsePattern);
+    if (!parseResult) return null;
+    var value = args.valueCallback ? args.valueCallback(parseResult[0]) : parseResult[0];
+    value = options.valueCallback ? options.valueCallback(value) : value;
+    var rest = string.slice(matchedString.length);
+    return {
+      value: value,
+      rest: rest
+    };
+  };
+}
+
+/***/ }),
+
+/***/ "./node_modules/date-fns/esm/locale/en-US/_lib/formatDistance/index.js":
+/*!*****************************************************************************!*\
+  !*** ./node_modules/date-fns/esm/locale/en-US/_lib/formatDistance/index.js ***!
+  \*****************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+var formatDistanceLocale = {
+  lessThanXSeconds: {
+    one: 'less than a second',
+    other: 'less than {{count}} seconds'
+  },
+  xSeconds: {
+    one: '1 second',
+    other: '{{count}} seconds'
+  },
+  halfAMinute: 'half a minute',
+  lessThanXMinutes: {
+    one: 'less than a minute',
+    other: 'less than {{count}} minutes'
+  },
+  xMinutes: {
+    one: '1 minute',
+    other: '{{count}} minutes'
+  },
+  aboutXHours: {
+    one: 'about 1 hour',
+    other: 'about {{count}} hours'
+  },
+  xHours: {
+    one: '1 hour',
+    other: '{{count}} hours'
+  },
+  xDays: {
+    one: '1 day',
+    other: '{{count}} days'
+  },
+  aboutXWeeks: {
+    one: 'about 1 week',
+    other: 'about {{count}} weeks'
+  },
+  xWeeks: {
+    one: '1 week',
+    other: '{{count}} weeks'
+  },
+  aboutXMonths: {
+    one: 'about 1 month',
+    other: 'about {{count}} months'
+  },
+  xMonths: {
+    one: '1 month',
+    other: '{{count}} months'
+  },
+  aboutXYears: {
+    one: 'about 1 year',
+    other: 'about {{count}} years'
+  },
+  xYears: {
+    one: '1 year',
+    other: '{{count}} years'
+  },
+  overXYears: {
+    one: 'over 1 year',
+    other: 'over {{count}} years'
+  },
+  almostXYears: {
+    one: 'almost 1 year',
+    other: 'almost {{count}} years'
+  }
+};
+var formatDistance = function formatDistance(token, count, options) {
+  var result;
+  var tokenValue = formatDistanceLocale[token];
+  if (typeof tokenValue === 'string') {
+    result = tokenValue;
+  } else if (count === 1) {
+    result = tokenValue.one;
+  } else {
+    result = tokenValue.other.replace('{{count}}', count.toString());
+  }
+  if (options !== null && options !== void 0 && options.addSuffix) {
+    if (options.comparison && options.comparison > 0) {
+      return 'in ' + result;
+    } else {
+      return result + ' ago';
+    }
+  }
+  return result;
+};
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (formatDistance);
+
+/***/ }),
+
+/***/ "./node_modules/date-fns/esm/locale/en-US/_lib/formatLong/index.js":
+/*!*************************************************************************!*\
+  !*** ./node_modules/date-fns/esm/locale/en-US/_lib/formatLong/index.js ***!
+  \*************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _lib_buildFormatLongFn_index_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../../_lib/buildFormatLongFn/index.js */ "./node_modules/date-fns/esm/locale/_lib/buildFormatLongFn/index.js");
+
+var dateFormats = {
+  full: 'EEEE, MMMM do, y',
+  long: 'MMMM do, y',
+  medium: 'MMM d, y',
+  short: 'MM/dd/yyyy'
+};
+var timeFormats = {
+  full: 'h:mm:ss a zzzz',
+  long: 'h:mm:ss a z',
+  medium: 'h:mm:ss a',
+  short: 'h:mm a'
+};
+var dateTimeFormats = {
+  full: "{{date}} 'at' {{time}}",
+  long: "{{date}} 'at' {{time}}",
+  medium: '{{date}}, {{time}}',
+  short: '{{date}}, {{time}}'
+};
+var formatLong = {
+  date: (0,_lib_buildFormatLongFn_index_js__WEBPACK_IMPORTED_MODULE_0__["default"])({
+    formats: dateFormats,
+    defaultWidth: 'full'
+  }),
+  time: (0,_lib_buildFormatLongFn_index_js__WEBPACK_IMPORTED_MODULE_0__["default"])({
+    formats: timeFormats,
+    defaultWidth: 'full'
+  }),
+  dateTime: (0,_lib_buildFormatLongFn_index_js__WEBPACK_IMPORTED_MODULE_0__["default"])({
+    formats: dateTimeFormats,
+    defaultWidth: 'full'
+  })
+};
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (formatLong);
+
+/***/ }),
+
+/***/ "./node_modules/date-fns/esm/locale/en-US/_lib/formatRelative/index.js":
+/*!*****************************************************************************!*\
+  !*** ./node_modules/date-fns/esm/locale/en-US/_lib/formatRelative/index.js ***!
+  \*****************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+var formatRelativeLocale = {
+  lastWeek: "'last' eeee 'at' p",
+  yesterday: "'yesterday at' p",
+  today: "'today at' p",
+  tomorrow: "'tomorrow at' p",
+  nextWeek: "eeee 'at' p",
+  other: 'P'
+};
+var formatRelative = function formatRelative(token, _date, _baseDate, _options) {
+  return formatRelativeLocale[token];
+};
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (formatRelative);
+
+/***/ }),
+
+/***/ "./node_modules/date-fns/esm/locale/en-US/_lib/localize/index.js":
+/*!***********************************************************************!*\
+  !*** ./node_modules/date-fns/esm/locale/en-US/_lib/localize/index.js ***!
+  \***********************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _lib_buildLocalizeFn_index_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../../_lib/buildLocalizeFn/index.js */ "./node_modules/date-fns/esm/locale/_lib/buildLocalizeFn/index.js");
+
+var eraValues = {
+  narrow: ['B', 'A'],
+  abbreviated: ['BC', 'AD'],
+  wide: ['Before Christ', 'Anno Domini']
+};
+var quarterValues = {
+  narrow: ['1', '2', '3', '4'],
+  abbreviated: ['Q1', 'Q2', 'Q3', 'Q4'],
+  wide: ['1st quarter', '2nd quarter', '3rd quarter', '4th quarter']
+};
+
+// Note: in English, the names of days of the week and months are capitalized.
+// If you are making a new locale based on this one, check if the same is true for the language you're working on.
+// Generally, formatted dates should look like they are in the middle of a sentence,
+// e.g. in Spanish language the weekdays and months should be in the lowercase.
+var monthValues = {
+  narrow: ['J', 'F', 'M', 'A', 'M', 'J', 'J', 'A', 'S', 'O', 'N', 'D'],
+  abbreviated: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
+  wide: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December']
+};
+var dayValues = {
+  narrow: ['S', 'M', 'T', 'W', 'T', 'F', 'S'],
+  short: ['Su', 'Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa'],
+  abbreviated: ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'],
+  wide: ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday']
+};
+var dayPeriodValues = {
+  narrow: {
+    am: 'a',
+    pm: 'p',
+    midnight: 'mi',
+    noon: 'n',
+    morning: 'morning',
+    afternoon: 'afternoon',
+    evening: 'evening',
+    night: 'night'
+  },
+  abbreviated: {
+    am: 'AM',
+    pm: 'PM',
+    midnight: 'midnight',
+    noon: 'noon',
+    morning: 'morning',
+    afternoon: 'afternoon',
+    evening: 'evening',
+    night: 'night'
+  },
+  wide: {
+    am: 'a.m.',
+    pm: 'p.m.',
+    midnight: 'midnight',
+    noon: 'noon',
+    morning: 'morning',
+    afternoon: 'afternoon',
+    evening: 'evening',
+    night: 'night'
+  }
+};
+var formattingDayPeriodValues = {
+  narrow: {
+    am: 'a',
+    pm: 'p',
+    midnight: 'mi',
+    noon: 'n',
+    morning: 'in the morning',
+    afternoon: 'in the afternoon',
+    evening: 'in the evening',
+    night: 'at night'
+  },
+  abbreviated: {
+    am: 'AM',
+    pm: 'PM',
+    midnight: 'midnight',
+    noon: 'noon',
+    morning: 'in the morning',
+    afternoon: 'in the afternoon',
+    evening: 'in the evening',
+    night: 'at night'
+  },
+  wide: {
+    am: 'a.m.',
+    pm: 'p.m.',
+    midnight: 'midnight',
+    noon: 'noon',
+    morning: 'in the morning',
+    afternoon: 'in the afternoon',
+    evening: 'in the evening',
+    night: 'at night'
+  }
+};
+var ordinalNumber = function ordinalNumber(dirtyNumber, _options) {
+  var number = Number(dirtyNumber);
+
+  // If ordinal numbers depend on context, for example,
+  // if they are different for different grammatical genders,
+  // use `options.unit`.
+  //
+  // `unit` can be 'year', 'quarter', 'month', 'week', 'date', 'dayOfYear',
+  // 'day', 'hour', 'minute', 'second'.
+
+  var rem100 = number % 100;
+  if (rem100 > 20 || rem100 < 10) {
+    switch (rem100 % 10) {
+      case 1:
+        return number + 'st';
+      case 2:
+        return number + 'nd';
+      case 3:
+        return number + 'rd';
+    }
+  }
+  return number + 'th';
+};
+var localize = {
+  ordinalNumber: ordinalNumber,
+  era: (0,_lib_buildLocalizeFn_index_js__WEBPACK_IMPORTED_MODULE_0__["default"])({
+    values: eraValues,
+    defaultWidth: 'wide'
+  }),
+  quarter: (0,_lib_buildLocalizeFn_index_js__WEBPACK_IMPORTED_MODULE_0__["default"])({
+    values: quarterValues,
+    defaultWidth: 'wide',
+    argumentCallback: function argumentCallback(quarter) {
+      return quarter - 1;
+    }
+  }),
+  month: (0,_lib_buildLocalizeFn_index_js__WEBPACK_IMPORTED_MODULE_0__["default"])({
+    values: monthValues,
+    defaultWidth: 'wide'
+  }),
+  day: (0,_lib_buildLocalizeFn_index_js__WEBPACK_IMPORTED_MODULE_0__["default"])({
+    values: dayValues,
+    defaultWidth: 'wide'
+  }),
+  dayPeriod: (0,_lib_buildLocalizeFn_index_js__WEBPACK_IMPORTED_MODULE_0__["default"])({
+    values: dayPeriodValues,
+    defaultWidth: 'wide',
+    formattingValues: formattingDayPeriodValues,
+    defaultFormattingWidth: 'wide'
+  })
+};
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (localize);
+
+/***/ }),
+
+/***/ "./node_modules/date-fns/esm/locale/en-US/_lib/match/index.js":
+/*!********************************************************************!*\
+  !*** ./node_modules/date-fns/esm/locale/en-US/_lib/match/index.js ***!
+  \********************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _lib_buildMatchFn_index_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../../_lib/buildMatchFn/index.js */ "./node_modules/date-fns/esm/locale/_lib/buildMatchFn/index.js");
+/* harmony import */ var _lib_buildMatchPatternFn_index_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../../_lib/buildMatchPatternFn/index.js */ "./node_modules/date-fns/esm/locale/_lib/buildMatchPatternFn/index.js");
+
+
+var matchOrdinalNumberPattern = /^(\d+)(th|st|nd|rd)?/i;
+var parseOrdinalNumberPattern = /\d+/i;
+var matchEraPatterns = {
+  narrow: /^(b|a)/i,
+  abbreviated: /^(b\.?\s?c\.?|b\.?\s?c\.?\s?e\.?|a\.?\s?d\.?|c\.?\s?e\.?)/i,
+  wide: /^(before christ|before common era|anno domini|common era)/i
+};
+var parseEraPatterns = {
+  any: [/^b/i, /^(a|c)/i]
+};
+var matchQuarterPatterns = {
+  narrow: /^[1234]/i,
+  abbreviated: /^q[1234]/i,
+  wide: /^[1234](th|st|nd|rd)? quarter/i
+};
+var parseQuarterPatterns = {
+  any: [/1/i, /2/i, /3/i, /4/i]
+};
+var matchMonthPatterns = {
+  narrow: /^[jfmasond]/i,
+  abbreviated: /^(jan|feb|mar|apr|may|jun|jul|aug|sep|oct|nov|dec)/i,
+  wide: /^(january|february|march|april|may|june|july|august|september|october|november|december)/i
+};
+var parseMonthPatterns = {
+  narrow: [/^j/i, /^f/i, /^m/i, /^a/i, /^m/i, /^j/i, /^j/i, /^a/i, /^s/i, /^o/i, /^n/i, /^d/i],
+  any: [/^ja/i, /^f/i, /^mar/i, /^ap/i, /^may/i, /^jun/i, /^jul/i, /^au/i, /^s/i, /^o/i, /^n/i, /^d/i]
+};
+var matchDayPatterns = {
+  narrow: /^[smtwf]/i,
+  short: /^(su|mo|tu|we|th|fr|sa)/i,
+  abbreviated: /^(sun|mon|tue|wed|thu|fri|sat)/i,
+  wide: /^(sunday|monday|tuesday|wednesday|thursday|friday|saturday)/i
+};
+var parseDayPatterns = {
+  narrow: [/^s/i, /^m/i, /^t/i, /^w/i, /^t/i, /^f/i, /^s/i],
+  any: [/^su/i, /^m/i, /^tu/i, /^w/i, /^th/i, /^f/i, /^sa/i]
+};
+var matchDayPeriodPatterns = {
+  narrow: /^(a|p|mi|n|(in the|at) (morning|afternoon|evening|night))/i,
+  any: /^([ap]\.?\s?m\.?|midnight|noon|(in the|at) (morning|afternoon|evening|night))/i
+};
+var parseDayPeriodPatterns = {
+  any: {
+    am: /^a/i,
+    pm: /^p/i,
+    midnight: /^mi/i,
+    noon: /^no/i,
+    morning: /morning/i,
+    afternoon: /afternoon/i,
+    evening: /evening/i,
+    night: /night/i
+  }
+};
+var match = {
+  ordinalNumber: (0,_lib_buildMatchPatternFn_index_js__WEBPACK_IMPORTED_MODULE_0__["default"])({
+    matchPattern: matchOrdinalNumberPattern,
+    parsePattern: parseOrdinalNumberPattern,
+    valueCallback: function valueCallback(value) {
+      return parseInt(value, 10);
+    }
+  }),
+  era: (0,_lib_buildMatchFn_index_js__WEBPACK_IMPORTED_MODULE_1__["default"])({
+    matchPatterns: matchEraPatterns,
+    defaultMatchWidth: 'wide',
+    parsePatterns: parseEraPatterns,
+    defaultParseWidth: 'any'
+  }),
+  quarter: (0,_lib_buildMatchFn_index_js__WEBPACK_IMPORTED_MODULE_1__["default"])({
+    matchPatterns: matchQuarterPatterns,
+    defaultMatchWidth: 'wide',
+    parsePatterns: parseQuarterPatterns,
+    defaultParseWidth: 'any',
+    valueCallback: function valueCallback(index) {
+      return index + 1;
+    }
+  }),
+  month: (0,_lib_buildMatchFn_index_js__WEBPACK_IMPORTED_MODULE_1__["default"])({
+    matchPatterns: matchMonthPatterns,
+    defaultMatchWidth: 'wide',
+    parsePatterns: parseMonthPatterns,
+    defaultParseWidth: 'any'
+  }),
+  day: (0,_lib_buildMatchFn_index_js__WEBPACK_IMPORTED_MODULE_1__["default"])({
+    matchPatterns: matchDayPatterns,
+    defaultMatchWidth: 'wide',
+    parsePatterns: parseDayPatterns,
+    defaultParseWidth: 'any'
+  }),
+  dayPeriod: (0,_lib_buildMatchFn_index_js__WEBPACK_IMPORTED_MODULE_1__["default"])({
+    matchPatterns: matchDayPeriodPatterns,
+    defaultMatchWidth: 'any',
+    parsePatterns: parseDayPeriodPatterns,
+    defaultParseWidth: 'any'
+  })
+};
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (match);
+
+/***/ }),
+
+/***/ "./node_modules/date-fns/esm/locale/en-US/index.js":
+/*!*********************************************************!*\
+  !*** ./node_modules/date-fns/esm/locale/en-US/index.js ***!
+  \*********************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _lib_formatDistance_index_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./_lib/formatDistance/index.js */ "./node_modules/date-fns/esm/locale/en-US/_lib/formatDistance/index.js");
+/* harmony import */ var _lib_formatLong_index_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./_lib/formatLong/index.js */ "./node_modules/date-fns/esm/locale/en-US/_lib/formatLong/index.js");
+/* harmony import */ var _lib_formatRelative_index_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./_lib/formatRelative/index.js */ "./node_modules/date-fns/esm/locale/en-US/_lib/formatRelative/index.js");
+/* harmony import */ var _lib_localize_index_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./_lib/localize/index.js */ "./node_modules/date-fns/esm/locale/en-US/_lib/localize/index.js");
+/* harmony import */ var _lib_match_index_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./_lib/match/index.js */ "./node_modules/date-fns/esm/locale/en-US/_lib/match/index.js");
+
+
+
+
+
+/**
+ * @type {Locale}
+ * @category Locales
+ * @summary English locale (United States).
+ * @language English
+ * @iso-639-2 eng
+ * @author Sasha Koss [@kossnocorp]{@link https://github.com/kossnocorp}
+ * @author Lesha Koss [@leshakoss]{@link https://github.com/leshakoss}
+ */
+var locale = {
+  code: 'en-US',
+  formatDistance: _lib_formatDistance_index_js__WEBPACK_IMPORTED_MODULE_0__["default"],
+  formatLong: _lib_formatLong_index_js__WEBPACK_IMPORTED_MODULE_1__["default"],
+  formatRelative: _lib_formatRelative_index_js__WEBPACK_IMPORTED_MODULE_2__["default"],
+  localize: _lib_localize_index_js__WEBPACK_IMPORTED_MODULE_3__["default"],
+  match: _lib_match_index_js__WEBPACK_IMPORTED_MODULE_4__["default"],
+  options: {
+    weekStartsOn: 0 /* Sunday */,
+    firstWeekContainsDate: 1
+  }
+};
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (locale);
+
+/***/ }),
+
+/***/ "./node_modules/date-fns/esm/parse/_lib/Parser.js":
+/*!********************************************************!*\
+  !*** ./node_modules/date-fns/esm/parse/_lib/Parser.js ***!
+  \********************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   Parser: () => (/* binding */ Parser)
+/* harmony export */ });
+/* harmony import */ var _babel_runtime_helpers_esm_classCallCheck__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/helpers/esm/classCallCheck */ "./node_modules/@babel/runtime/helpers/esm/classCallCheck.js");
+/* harmony import */ var _babel_runtime_helpers_esm_createClass__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @babel/runtime/helpers/esm/createClass */ "./node_modules/@babel/runtime/helpers/esm/createClass.js");
+/* harmony import */ var _babel_runtime_helpers_esm_defineProperty__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @babel/runtime/helpers/esm/defineProperty */ "./node_modules/@babel/runtime/helpers/esm/defineProperty.js");
+/* harmony import */ var _Setter_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./Setter.js */ "./node_modules/date-fns/esm/parse/_lib/Setter.js");
+
+
+
+
+var Parser = /*#__PURE__*/function () {
+  function Parser() {
+    (0,_babel_runtime_helpers_esm_classCallCheck__WEBPACK_IMPORTED_MODULE_0__["default"])(this, Parser);
+    (0,_babel_runtime_helpers_esm_defineProperty__WEBPACK_IMPORTED_MODULE_2__["default"])(this, "incompatibleTokens", void 0);
+    (0,_babel_runtime_helpers_esm_defineProperty__WEBPACK_IMPORTED_MODULE_2__["default"])(this, "priority", void 0);
+    (0,_babel_runtime_helpers_esm_defineProperty__WEBPACK_IMPORTED_MODULE_2__["default"])(this, "subPriority", void 0);
+  }
+  (0,_babel_runtime_helpers_esm_createClass__WEBPACK_IMPORTED_MODULE_1__["default"])(Parser, [{
+    key: "run",
+    value: function run(dateString, token, match, options) {
+      var result = this.parse(dateString, token, match, options);
+      if (!result) {
+        return null;
+      }
+      return {
+        setter: new _Setter_js__WEBPACK_IMPORTED_MODULE_3__.ValueSetter(result.value, this.validate, this.set, this.priority, this.subPriority),
+        rest: result.rest
+      };
+    }
+  }, {
+    key: "validate",
+    value: function validate(_utcDate, _value, _options) {
+      return true;
+    }
+  }]);
+  return Parser;
+}();
+
+/***/ }),
+
+/***/ "./node_modules/date-fns/esm/parse/_lib/Setter.js":
+/*!********************************************************!*\
+  !*** ./node_modules/date-fns/esm/parse/_lib/Setter.js ***!
+  \********************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   DateToSystemTimezoneSetter: () => (/* binding */ DateToSystemTimezoneSetter),
+/* harmony export */   Setter: () => (/* binding */ Setter),
+/* harmony export */   ValueSetter: () => (/* binding */ ValueSetter)
+/* harmony export */ });
+/* harmony import */ var _babel_runtime_helpers_esm_assertThisInitialized__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/helpers/esm/assertThisInitialized */ "./node_modules/@babel/runtime/helpers/esm/assertThisInitialized.js");
+/* harmony import */ var _babel_runtime_helpers_esm_inherits__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @babel/runtime/helpers/esm/inherits */ "./node_modules/@babel/runtime/helpers/esm/inherits.js");
+/* harmony import */ var _babel_runtime_helpers_esm_createSuper__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @babel/runtime/helpers/esm/createSuper */ "./node_modules/@babel/runtime/helpers/esm/createSuper.js");
+/* harmony import */ var _babel_runtime_helpers_esm_classCallCheck__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @babel/runtime/helpers/esm/classCallCheck */ "./node_modules/@babel/runtime/helpers/esm/classCallCheck.js");
+/* harmony import */ var _babel_runtime_helpers_esm_createClass__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @babel/runtime/helpers/esm/createClass */ "./node_modules/@babel/runtime/helpers/esm/createClass.js");
+/* harmony import */ var _babel_runtime_helpers_esm_defineProperty__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @babel/runtime/helpers/esm/defineProperty */ "./node_modules/@babel/runtime/helpers/esm/defineProperty.js");
+
+
+
+
+
+
+var TIMEZONE_UNIT_PRIORITY = 10;
+var Setter = /*#__PURE__*/function () {
+  function Setter() {
+    (0,_babel_runtime_helpers_esm_classCallCheck__WEBPACK_IMPORTED_MODULE_3__["default"])(this, Setter);
+    (0,_babel_runtime_helpers_esm_defineProperty__WEBPACK_IMPORTED_MODULE_5__["default"])(this, "priority", void 0);
+    (0,_babel_runtime_helpers_esm_defineProperty__WEBPACK_IMPORTED_MODULE_5__["default"])(this, "subPriority", 0);
+  }
+  (0,_babel_runtime_helpers_esm_createClass__WEBPACK_IMPORTED_MODULE_4__["default"])(Setter, [{
+    key: "validate",
+    value: function validate(_utcDate, _options) {
+      return true;
+    }
+  }]);
+  return Setter;
+}();
+var ValueSetter = /*#__PURE__*/function (_Setter) {
+  (0,_babel_runtime_helpers_esm_inherits__WEBPACK_IMPORTED_MODULE_1__["default"])(ValueSetter, _Setter);
+  var _super = (0,_babel_runtime_helpers_esm_createSuper__WEBPACK_IMPORTED_MODULE_2__["default"])(ValueSetter);
+  function ValueSetter(value, validateValue, setValue, priority, subPriority) {
+    var _this;
+    (0,_babel_runtime_helpers_esm_classCallCheck__WEBPACK_IMPORTED_MODULE_3__["default"])(this, ValueSetter);
+    _this = _super.call(this);
+    _this.value = value;
+    _this.validateValue = validateValue;
+    _this.setValue = setValue;
+    _this.priority = priority;
+    if (subPriority) {
+      _this.subPriority = subPriority;
+    }
+    return _this;
+  }
+  (0,_babel_runtime_helpers_esm_createClass__WEBPACK_IMPORTED_MODULE_4__["default"])(ValueSetter, [{
+    key: "validate",
+    value: function validate(utcDate, options) {
+      return this.validateValue(utcDate, this.value, options);
+    }
+  }, {
+    key: "set",
+    value: function set(utcDate, flags, options) {
+      return this.setValue(utcDate, flags, this.value, options);
+    }
+  }]);
+  return ValueSetter;
+}(Setter);
+var DateToSystemTimezoneSetter = /*#__PURE__*/function (_Setter2) {
+  (0,_babel_runtime_helpers_esm_inherits__WEBPACK_IMPORTED_MODULE_1__["default"])(DateToSystemTimezoneSetter, _Setter2);
+  var _super2 = (0,_babel_runtime_helpers_esm_createSuper__WEBPACK_IMPORTED_MODULE_2__["default"])(DateToSystemTimezoneSetter);
+  function DateToSystemTimezoneSetter() {
+    var _this2;
+    (0,_babel_runtime_helpers_esm_classCallCheck__WEBPACK_IMPORTED_MODULE_3__["default"])(this, DateToSystemTimezoneSetter);
+    for (var _len = arguments.length, args = new Array(_len), _key = 0; _key < _len; _key++) {
+      args[_key] = arguments[_key];
+    }
+    _this2 = _super2.call.apply(_super2, [this].concat(args));
+    (0,_babel_runtime_helpers_esm_defineProperty__WEBPACK_IMPORTED_MODULE_5__["default"])((0,_babel_runtime_helpers_esm_assertThisInitialized__WEBPACK_IMPORTED_MODULE_0__["default"])(_this2), "priority", TIMEZONE_UNIT_PRIORITY);
+    (0,_babel_runtime_helpers_esm_defineProperty__WEBPACK_IMPORTED_MODULE_5__["default"])((0,_babel_runtime_helpers_esm_assertThisInitialized__WEBPACK_IMPORTED_MODULE_0__["default"])(_this2), "subPriority", -1);
+    return _this2;
+  }
+  (0,_babel_runtime_helpers_esm_createClass__WEBPACK_IMPORTED_MODULE_4__["default"])(DateToSystemTimezoneSetter, [{
+    key: "set",
+    value: function set(date, flags) {
+      if (flags.timestampIsSet) {
+        return date;
+      }
+      var convertedDate = new Date(0);
+      convertedDate.setFullYear(date.getUTCFullYear(), date.getUTCMonth(), date.getUTCDate());
+      convertedDate.setHours(date.getUTCHours(), date.getUTCMinutes(), date.getUTCSeconds(), date.getUTCMilliseconds());
+      return convertedDate;
+    }
+  }]);
+  return DateToSystemTimezoneSetter;
+}(Setter);
+
+/***/ }),
+
+/***/ "./node_modules/date-fns/esm/parse/_lib/constants.js":
+/*!***********************************************************!*\
+  !*** ./node_modules/date-fns/esm/parse/_lib/constants.js ***!
+  \***********************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   numericPatterns: () => (/* binding */ numericPatterns),
+/* harmony export */   timezonePatterns: () => (/* binding */ timezonePatterns)
+/* harmony export */ });
 var numericPatterns = {
   month: /^(1[0-2]|0?\d)/,
   // 0 to 12
@@ -1381,120 +1870,27 @@ var timezonePatterns = {
   extended: /^([+-])(\d{2}):(\d{2})|Z/,
   extendedOptionalSeconds: /^([+-])(\d{2}):(\d{2})(:(\d{2}))?|Z/
 };
-;// CONCATENATED MODULE: ./node_modules/date-fns/esm/parse/_lib/utils.js
 
+/***/ }),
 
-function mapValue(parseFnResult, mapFn) {
-  if (!parseFnResult) {
-    return parseFnResult;
-  }
-  return {
-    value: mapFn(parseFnResult.value),
-    rest: parseFnResult.rest
-  };
-}
-function parseNumericPattern(pattern, dateString) {
-  var matchResult = dateString.match(pattern);
-  if (!matchResult) {
-    return null;
-  }
-  return {
-    value: parseInt(matchResult[0], 10),
-    rest: dateString.slice(matchResult[0].length)
-  };
-}
-function parseTimezonePattern(pattern, dateString) {
-  var matchResult = dateString.match(pattern);
-  if (!matchResult) {
-    return null;
-  }
+/***/ "./node_modules/date-fns/esm/parse/_lib/parsers/AMPMMidnightParser.js":
+/*!****************************************************************************!*\
+  !*** ./node_modules/date-fns/esm/parse/_lib/parsers/AMPMMidnightParser.js ***!
+  \****************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-  // Input is 'Z'
-  if (matchResult[0] === 'Z') {
-    return {
-      value: 0,
-      rest: dateString.slice(1)
-    };
-  }
-  var sign = matchResult[1] === '+' ? 1 : -1;
-  var hours = matchResult[2] ? parseInt(matchResult[2], 10) : 0;
-  var minutes = matchResult[3] ? parseInt(matchResult[3], 10) : 0;
-  var seconds = matchResult[5] ? parseInt(matchResult[5], 10) : 0;
-  return {
-    value: sign * (hours * millisecondsInHour + minutes * millisecondsInMinute + seconds * millisecondsInSecond),
-    rest: dateString.slice(matchResult[0].length)
-  };
-}
-function parseAnyDigitsSigned(dateString) {
-  return parseNumericPattern(numericPatterns.anyDigitsSigned, dateString);
-}
-function parseNDigits(n, dateString) {
-  switch (n) {
-    case 1:
-      return parseNumericPattern(numericPatterns.singleDigit, dateString);
-    case 2:
-      return parseNumericPattern(numericPatterns.twoDigits, dateString);
-    case 3:
-      return parseNumericPattern(numericPatterns.threeDigits, dateString);
-    case 4:
-      return parseNumericPattern(numericPatterns.fourDigits, dateString);
-    default:
-      return parseNumericPattern(new RegExp('^\\d{1,' + n + '}'), dateString);
-  }
-}
-function parseNDigitsSigned(n, dateString) {
-  switch (n) {
-    case 1:
-      return parseNumericPattern(numericPatterns.singleDigitSigned, dateString);
-    case 2:
-      return parseNumericPattern(numericPatterns.twoDigitsSigned, dateString);
-    case 3:
-      return parseNumericPattern(numericPatterns.threeDigitsSigned, dateString);
-    case 4:
-      return parseNumericPattern(numericPatterns.fourDigitsSigned, dateString);
-    default:
-      return parseNumericPattern(new RegExp('^-?\\d{1,' + n + '}'), dateString);
-  }
-}
-function dayPeriodEnumToHours(dayPeriod) {
-  switch (dayPeriod) {
-    case 'morning':
-      return 4;
-    case 'evening':
-      return 17;
-    case 'pm':
-    case 'noon':
-    case 'afternoon':
-      return 12;
-    case 'am':
-    case 'midnight':
-    case 'night':
-    default:
-      return 0;
-  }
-}
-function normalizeTwoDigitYear(twoDigitYear, currentYear) {
-  var isCommonEra = currentYear > 0;
-  // Absolute number of the current year:
-  // 1 -> 1 AC
-  // 0 -> 1 BC
-  // -1 -> 2 BC
-  var absCurrentYear = isCommonEra ? currentYear : 1 - currentYear;
-  var result;
-  if (absCurrentYear <= 50) {
-    result = twoDigitYear || 100;
-  } else {
-    var rangeEnd = absCurrentYear + 50;
-    var rangeEndCentury = Math.floor(rangeEnd / 100) * 100;
-    var isPreviousCentury = twoDigitYear >= rangeEnd % 100;
-    result = twoDigitYear + rangeEndCentury - (isPreviousCentury ? 100 : 0);
-  }
-  return isCommonEra ? result : 1 - result;
-}
-function isLeapYearIndex(year) {
-  return year % 400 === 0 || year % 4 === 0 && year % 100 !== 0;
-}
-;// CONCATENATED MODULE: ./node_modules/date-fns/esm/parse/_lib/parsers/YearParser.js
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   AMPMMidnightParser: () => (/* binding */ AMPMMidnightParser)
+/* harmony export */ });
+/* harmony import */ var _babel_runtime_helpers_esm_classCallCheck__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/helpers/esm/classCallCheck */ "./node_modules/@babel/runtime/helpers/esm/classCallCheck.js");
+/* harmony import */ var _babel_runtime_helpers_esm_createClass__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @babel/runtime/helpers/esm/createClass */ "./node_modules/@babel/runtime/helpers/esm/createClass.js");
+/* harmony import */ var _babel_runtime_helpers_esm_assertThisInitialized__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @babel/runtime/helpers/esm/assertThisInitialized */ "./node_modules/@babel/runtime/helpers/esm/assertThisInitialized.js");
+/* harmony import */ var _babel_runtime_helpers_esm_inherits__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @babel/runtime/helpers/esm/inherits */ "./node_modules/@babel/runtime/helpers/esm/inherits.js");
+/* harmony import */ var _babel_runtime_helpers_esm_createSuper__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @babel/runtime/helpers/esm/createSuper */ "./node_modules/@babel/runtime/helpers/esm/createSuper.js");
+/* harmony import */ var _babel_runtime_helpers_esm_defineProperty__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @babel/runtime/helpers/esm/defineProperty */ "./node_modules/@babel/runtime/helpers/esm/defineProperty.js");
+/* harmony import */ var _Parser_js__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../Parser.js */ "./node_modules/date-fns/esm/parse/_lib/Parser.js");
+/* harmony import */ var _utils_js__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../utils.js */ "./node_modules/date-fns/esm/parse/_lib/utils.js");
 
 
 
@@ -1503,384 +1899,83 @@ function isLeapYearIndex(year) {
 
 
 
-// From http://www.unicode.org/reports/tr35/tr35-31/tr35-dates.html#Date_Format_Patterns
-// | Year     |     y | yy |   yyy |  yyyy | yyyyy |
-// |----------|-------|----|-------|-------|-------|
-// | AD 1     |     1 | 01 |   001 |  0001 | 00001 |
-// | AD 12    |    12 | 12 |   012 |  0012 | 00012 |
-// | AD 123   |   123 | 23 |   123 |  0123 | 00123 |
-// | AD 1234  |  1234 | 34 |  1234 |  1234 | 01234 |
-// | AD 12345 | 12345 | 45 | 12345 | 12345 | 12345 |
-var YearParser = /*#__PURE__*/function (_Parser) {
-  _inherits(YearParser, _Parser);
-  var _super = _createSuper(YearParser);
-  function YearParser() {
+var AMPMMidnightParser = /*#__PURE__*/function (_Parser) {
+  (0,_babel_runtime_helpers_esm_inherits__WEBPACK_IMPORTED_MODULE_3__["default"])(AMPMMidnightParser, _Parser);
+  var _super = (0,_babel_runtime_helpers_esm_createSuper__WEBPACK_IMPORTED_MODULE_4__["default"])(AMPMMidnightParser);
+  function AMPMMidnightParser() {
     var _this;
-    _classCallCheck(this, YearParser);
+    (0,_babel_runtime_helpers_esm_classCallCheck__WEBPACK_IMPORTED_MODULE_0__["default"])(this, AMPMMidnightParser);
     for (var _len = arguments.length, args = new Array(_len), _key = 0; _key < _len; _key++) {
       args[_key] = arguments[_key];
     }
     _this = _super.call.apply(_super, [this].concat(args));
-    _defineProperty(_assertThisInitialized(_this), "priority", 130);
-    _defineProperty(_assertThisInitialized(_this), "incompatibleTokens", ['Y', 'R', 'u', 'w', 'I', 'i', 'e', 'c', 't', 'T']);
+    (0,_babel_runtime_helpers_esm_defineProperty__WEBPACK_IMPORTED_MODULE_5__["default"])((0,_babel_runtime_helpers_esm_assertThisInitialized__WEBPACK_IMPORTED_MODULE_2__["default"])(_this), "priority", 80);
+    (0,_babel_runtime_helpers_esm_defineProperty__WEBPACK_IMPORTED_MODULE_5__["default"])((0,_babel_runtime_helpers_esm_assertThisInitialized__WEBPACK_IMPORTED_MODULE_2__["default"])(_this), "incompatibleTokens", ['a', 'B', 'H', 'k', 't', 'T']);
     return _this;
   }
-  _createClass(YearParser, [{
-    key: "parse",
-    value: function parse(dateString, token, match) {
-      var valueCallback = function valueCallback(year) {
-        return {
-          year: year,
-          isTwoDigitYear: token === 'yy'
-        };
-      };
-      switch (token) {
-        case 'y':
-          return mapValue(parseNDigits(4, dateString), valueCallback);
-        case 'yo':
-          return mapValue(match.ordinalNumber(dateString, {
-            unit: 'year'
-          }), valueCallback);
-        default:
-          return mapValue(parseNDigits(token.length, dateString), valueCallback);
-      }
-    }
-  }, {
-    key: "validate",
-    value: function validate(_date, value) {
-      return value.isTwoDigitYear || value.year > 0;
-    }
-  }, {
-    key: "set",
-    value: function set(date, flags, value) {
-      var currentYear = date.getUTCFullYear();
-      if (value.isTwoDigitYear) {
-        var normalizedTwoDigitYear = normalizeTwoDigitYear(value.year, currentYear);
-        date.setUTCFullYear(normalizedTwoDigitYear, 0, 1);
-        date.setUTCHours(0, 0, 0, 0);
-        return date;
-      }
-      var year = !('era' in flags) || flags.era === 1 ? value.year : 1 - value.year;
-      date.setUTCFullYear(year, 0, 1);
-      date.setUTCHours(0, 0, 0, 0);
-      return date;
-    }
-  }]);
-  return YearParser;
-}(Parser);
-;// CONCATENATED MODULE: ./node_modules/date-fns/esm/_lib/defaultOptions/index.js
-var defaultOptions = {};
-function getDefaultOptions() {
-  return defaultOptions;
-}
-function setDefaultOptions(newOptions) {
-  defaultOptions = newOptions;
-}
-;// CONCATENATED MODULE: ./node_modules/date-fns/esm/_lib/startOfUTCWeek/index.js
-
-
-
-
-function startOfUTCWeek(dirtyDate, options) {
-  var _ref, _ref2, _ref3, _options$weekStartsOn, _options$locale, _options$locale$optio, _defaultOptions$local, _defaultOptions$local2;
-  requiredArgs(1, arguments);
-  var defaultOptions = getDefaultOptions();
-  var weekStartsOn = toInteger((_ref = (_ref2 = (_ref3 = (_options$weekStartsOn = options === null || options === void 0 ? void 0 : options.weekStartsOn) !== null && _options$weekStartsOn !== void 0 ? _options$weekStartsOn : options === null || options === void 0 ? void 0 : (_options$locale = options.locale) === null || _options$locale === void 0 ? void 0 : (_options$locale$optio = _options$locale.options) === null || _options$locale$optio === void 0 ? void 0 : _options$locale$optio.weekStartsOn) !== null && _ref3 !== void 0 ? _ref3 : defaultOptions.weekStartsOn) !== null && _ref2 !== void 0 ? _ref2 : (_defaultOptions$local = defaultOptions.locale) === null || _defaultOptions$local === void 0 ? void 0 : (_defaultOptions$local2 = _defaultOptions$local.options) === null || _defaultOptions$local2 === void 0 ? void 0 : _defaultOptions$local2.weekStartsOn) !== null && _ref !== void 0 ? _ref : 0);
-
-  // Test if weekStartsOn is between 0 and 6 _and_ is not NaN
-  if (!(weekStartsOn >= 0 && weekStartsOn <= 6)) {
-    throw new RangeError('weekStartsOn must be between 0 and 6 inclusively');
-  }
-  var date = toDate(dirtyDate);
-  var day = date.getUTCDay();
-  var diff = (day < weekStartsOn ? 7 : 0) + day - weekStartsOn;
-  date.setUTCDate(date.getUTCDate() - diff);
-  date.setUTCHours(0, 0, 0, 0);
-  return date;
-}
-;// CONCATENATED MODULE: ./node_modules/date-fns/esm/_lib/getUTCWeekYear/index.js
-
-
-
-
-
-function getUTCWeekYear(dirtyDate, options) {
-  var _ref, _ref2, _ref3, _options$firstWeekCon, _options$locale, _options$locale$optio, _defaultOptions$local, _defaultOptions$local2;
-  requiredArgs(1, arguments);
-  var date = toDate(dirtyDate);
-  var year = date.getUTCFullYear();
-  var defaultOptions = getDefaultOptions();
-  var firstWeekContainsDate = toInteger((_ref = (_ref2 = (_ref3 = (_options$firstWeekCon = options === null || options === void 0 ? void 0 : options.firstWeekContainsDate) !== null && _options$firstWeekCon !== void 0 ? _options$firstWeekCon : options === null || options === void 0 ? void 0 : (_options$locale = options.locale) === null || _options$locale === void 0 ? void 0 : (_options$locale$optio = _options$locale.options) === null || _options$locale$optio === void 0 ? void 0 : _options$locale$optio.firstWeekContainsDate) !== null && _ref3 !== void 0 ? _ref3 : defaultOptions.firstWeekContainsDate) !== null && _ref2 !== void 0 ? _ref2 : (_defaultOptions$local = defaultOptions.locale) === null || _defaultOptions$local === void 0 ? void 0 : (_defaultOptions$local2 = _defaultOptions$local.options) === null || _defaultOptions$local2 === void 0 ? void 0 : _defaultOptions$local2.firstWeekContainsDate) !== null && _ref !== void 0 ? _ref : 1);
-
-  // Test if weekStartsOn is between 1 and 7 _and_ is not NaN
-  if (!(firstWeekContainsDate >= 1 && firstWeekContainsDate <= 7)) {
-    throw new RangeError('firstWeekContainsDate must be between 1 and 7 inclusively');
-  }
-  var firstWeekOfNextYear = new Date(0);
-  firstWeekOfNextYear.setUTCFullYear(year + 1, 0, firstWeekContainsDate);
-  firstWeekOfNextYear.setUTCHours(0, 0, 0, 0);
-  var startOfNextYear = startOfUTCWeek(firstWeekOfNextYear, options);
-  var firstWeekOfThisYear = new Date(0);
-  firstWeekOfThisYear.setUTCFullYear(year, 0, firstWeekContainsDate);
-  firstWeekOfThisYear.setUTCHours(0, 0, 0, 0);
-  var startOfThisYear = startOfUTCWeek(firstWeekOfThisYear, options);
-  if (date.getTime() >= startOfNextYear.getTime()) {
-    return year + 1;
-  } else if (date.getTime() >= startOfThisYear.getTime()) {
-    return year;
-  } else {
-    return year - 1;
-  }
-}
-;// CONCATENATED MODULE: ./node_modules/date-fns/esm/parse/_lib/parsers/LocalWeekYearParser.js
-
-
-
-
-
-
-
-
-
-
-// Local week-numbering year
-var LocalWeekYearParser = /*#__PURE__*/function (_Parser) {
-  _inherits(LocalWeekYearParser, _Parser);
-  var _super = _createSuper(LocalWeekYearParser);
-  function LocalWeekYearParser() {
-    var _this;
-    _classCallCheck(this, LocalWeekYearParser);
-    for (var _len = arguments.length, args = new Array(_len), _key = 0; _key < _len; _key++) {
-      args[_key] = arguments[_key];
-    }
-    _this = _super.call.apply(_super, [this].concat(args));
-    _defineProperty(_assertThisInitialized(_this), "priority", 130);
-    _defineProperty(_assertThisInitialized(_this), "incompatibleTokens", ['y', 'R', 'u', 'Q', 'q', 'M', 'L', 'I', 'd', 'D', 'i', 't', 'T']);
-    return _this;
-  }
-  _createClass(LocalWeekYearParser, [{
-    key: "parse",
-    value: function parse(dateString, token, match) {
-      var valueCallback = function valueCallback(year) {
-        return {
-          year: year,
-          isTwoDigitYear: token === 'YY'
-        };
-      };
-      switch (token) {
-        case 'Y':
-          return mapValue(parseNDigits(4, dateString), valueCallback);
-        case 'Yo':
-          return mapValue(match.ordinalNumber(dateString, {
-            unit: 'year'
-          }), valueCallback);
-        default:
-          return mapValue(parseNDigits(token.length, dateString), valueCallback);
-      }
-    }
-  }, {
-    key: "validate",
-    value: function validate(_date, value) {
-      return value.isTwoDigitYear || value.year > 0;
-    }
-  }, {
-    key: "set",
-    value: function set(date, flags, value, options) {
-      var currentYear = getUTCWeekYear(date, options);
-      if (value.isTwoDigitYear) {
-        var normalizedTwoDigitYear = normalizeTwoDigitYear(value.year, currentYear);
-        date.setUTCFullYear(normalizedTwoDigitYear, 0, options.firstWeekContainsDate);
-        date.setUTCHours(0, 0, 0, 0);
-        return startOfUTCWeek(date, options);
-      }
-      var year = !('era' in flags) || flags.era === 1 ? value.year : 1 - value.year;
-      date.setUTCFullYear(year, 0, options.firstWeekContainsDate);
-      date.setUTCHours(0, 0, 0, 0);
-      return startOfUTCWeek(date, options);
-    }
-  }]);
-  return LocalWeekYearParser;
-}(Parser);
-;// CONCATENATED MODULE: ./node_modules/date-fns/esm/_lib/startOfUTCISOWeek/index.js
-
-
-function startOfUTCISOWeek(dirtyDate) {
-  requiredArgs(1, arguments);
-  var weekStartsOn = 1;
-  var date = toDate(dirtyDate);
-  var day = date.getUTCDay();
-  var diff = (day < weekStartsOn ? 7 : 0) + day - weekStartsOn;
-  date.setUTCDate(date.getUTCDate() - diff);
-  date.setUTCHours(0, 0, 0, 0);
-  return date;
-}
-;// CONCATENATED MODULE: ./node_modules/date-fns/esm/parse/_lib/parsers/ISOWeekYearParser.js
-
-
-
-
-
-
-
-
- // ISO week-numbering year
-var ISOWeekYearParser = /*#__PURE__*/function (_Parser) {
-  _inherits(ISOWeekYearParser, _Parser);
-  var _super = _createSuper(ISOWeekYearParser);
-  function ISOWeekYearParser() {
-    var _this;
-    _classCallCheck(this, ISOWeekYearParser);
-    for (var _len = arguments.length, args = new Array(_len), _key = 0; _key < _len; _key++) {
-      args[_key] = arguments[_key];
-    }
-    _this = _super.call.apply(_super, [this].concat(args));
-    _defineProperty(_assertThisInitialized(_this), "priority", 130);
-    _defineProperty(_assertThisInitialized(_this), "incompatibleTokens", ['G', 'y', 'Y', 'u', 'Q', 'q', 'M', 'L', 'w', 'd', 'D', 'e', 'c', 't', 'T']);
-    return _this;
-  }
-  _createClass(ISOWeekYearParser, [{
-    key: "parse",
-    value: function parse(dateString, token) {
-      if (token === 'R') {
-        return parseNDigitsSigned(4, dateString);
-      }
-      return parseNDigitsSigned(token.length, dateString);
-    }
-  }, {
-    key: "set",
-    value: function set(_date, _flags, value) {
-      var firstWeekOfYear = new Date(0);
-      firstWeekOfYear.setUTCFullYear(value, 0, 4);
-      firstWeekOfYear.setUTCHours(0, 0, 0, 0);
-      return startOfUTCISOWeek(firstWeekOfYear);
-    }
-  }]);
-  return ISOWeekYearParser;
-}(Parser);
-;// CONCATENATED MODULE: ./node_modules/date-fns/esm/parse/_lib/parsers/ExtendedYearParser.js
-
-
-
-
-
-
-
-
-var ExtendedYearParser = /*#__PURE__*/function (_Parser) {
-  _inherits(ExtendedYearParser, _Parser);
-  var _super = _createSuper(ExtendedYearParser);
-  function ExtendedYearParser() {
-    var _this;
-    _classCallCheck(this, ExtendedYearParser);
-    for (var _len = arguments.length, args = new Array(_len), _key = 0; _key < _len; _key++) {
-      args[_key] = arguments[_key];
-    }
-    _this = _super.call.apply(_super, [this].concat(args));
-    _defineProperty(_assertThisInitialized(_this), "priority", 130);
-    _defineProperty(_assertThisInitialized(_this), "incompatibleTokens", ['G', 'y', 'Y', 'R', 'w', 'I', 'i', 'e', 'c', 't', 'T']);
-    return _this;
-  }
-  _createClass(ExtendedYearParser, [{
-    key: "parse",
-    value: function parse(dateString, token) {
-      if (token === 'u') {
-        return parseNDigitsSigned(4, dateString);
-      }
-      return parseNDigitsSigned(token.length, dateString);
-    }
-  }, {
-    key: "set",
-    value: function set(date, _flags, value) {
-      date.setUTCFullYear(value, 0, 1);
-      date.setUTCHours(0, 0, 0, 0);
-      return date;
-    }
-  }]);
-  return ExtendedYearParser;
-}(Parser);
-;// CONCATENATED MODULE: ./node_modules/date-fns/esm/parse/_lib/parsers/QuarterParser.js
-
-
-
-
-
-
-
-
-var QuarterParser = /*#__PURE__*/function (_Parser) {
-  _inherits(QuarterParser, _Parser);
-  var _super = _createSuper(QuarterParser);
-  function QuarterParser() {
-    var _this;
-    _classCallCheck(this, QuarterParser);
-    for (var _len = arguments.length, args = new Array(_len), _key = 0; _key < _len; _key++) {
-      args[_key] = arguments[_key];
-    }
-    _this = _super.call.apply(_super, [this].concat(args));
-    _defineProperty(_assertThisInitialized(_this), "priority", 120);
-    _defineProperty(_assertThisInitialized(_this), "incompatibleTokens", ['Y', 'R', 'q', 'M', 'L', 'w', 'I', 'd', 'D', 'i', 'e', 'c', 't', 'T']);
-    return _this;
-  }
-  _createClass(QuarterParser, [{
+  (0,_babel_runtime_helpers_esm_createClass__WEBPACK_IMPORTED_MODULE_1__["default"])(AMPMMidnightParser, [{
     key: "parse",
     value: function parse(dateString, token, match) {
       switch (token) {
-        // 1, 2, 3, 4
-        case 'Q':
-        case 'QQ':
-          // 01, 02, 03, 04
-          return parseNDigits(token.length, dateString);
-        // 1st, 2nd, 3rd, 4th
-        case 'Qo':
-          return match.ordinalNumber(dateString, {
-            unit: 'quarter'
-          });
-        // Q1, Q2, Q3, Q4
-        case 'QQQ':
-          return match.quarter(dateString, {
+        case 'b':
+        case 'bb':
+        case 'bbb':
+          return match.dayPeriod(dateString, {
             width: 'abbreviated',
             context: 'formatting'
-          }) || match.quarter(dateString, {
+          }) || match.dayPeriod(dateString, {
             width: 'narrow',
             context: 'formatting'
           });
-        // 1, 2, 3, 4 (narrow quarter; could be not numerical)
-        case 'QQQQQ':
-          return match.quarter(dateString, {
+        case 'bbbbb':
+          return match.dayPeriod(dateString, {
             width: 'narrow',
             context: 'formatting'
           });
-        // 1st quarter, 2nd quarter, ...
-        case 'QQQQ':
+        case 'bbbb':
         default:
-          return match.quarter(dateString, {
+          return match.dayPeriod(dateString, {
             width: 'wide',
             context: 'formatting'
-          }) || match.quarter(dateString, {
+          }) || match.dayPeriod(dateString, {
             width: 'abbreviated',
             context: 'formatting'
-          }) || match.quarter(dateString, {
+          }) || match.dayPeriod(dateString, {
             width: 'narrow',
             context: 'formatting'
           });
       }
     }
   }, {
-    key: "validate",
-    value: function validate(_date, value) {
-      return value >= 1 && value <= 4;
-    }
-  }, {
     key: "set",
     value: function set(date, _flags, value) {
-      date.setUTCMonth((value - 1) * 3, 1);
-      date.setUTCHours(0, 0, 0, 0);
+      date.setUTCHours((0,_utils_js__WEBPACK_IMPORTED_MODULE_6__.dayPeriodEnumToHours)(value), 0, 0, 0);
       return date;
     }
   }]);
-  return QuarterParser;
-}(Parser);
-;// CONCATENATED MODULE: ./node_modules/date-fns/esm/parse/_lib/parsers/StandAloneQuarterParser.js
+  return AMPMMidnightParser;
+}(_Parser_js__WEBPACK_IMPORTED_MODULE_7__.Parser);
+
+/***/ }),
+
+/***/ "./node_modules/date-fns/esm/parse/_lib/parsers/AMPMParser.js":
+/*!********************************************************************!*\
+  !*** ./node_modules/date-fns/esm/parse/_lib/parsers/AMPMParser.js ***!
+  \********************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   AMPMParser: () => (/* binding */ AMPMParser)
+/* harmony export */ });
+/* harmony import */ var _babel_runtime_helpers_esm_classCallCheck__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/helpers/esm/classCallCheck */ "./node_modules/@babel/runtime/helpers/esm/classCallCheck.js");
+/* harmony import */ var _babel_runtime_helpers_esm_createClass__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @babel/runtime/helpers/esm/createClass */ "./node_modules/@babel/runtime/helpers/esm/createClass.js");
+/* harmony import */ var _babel_runtime_helpers_esm_assertThisInitialized__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @babel/runtime/helpers/esm/assertThisInitialized */ "./node_modules/@babel/runtime/helpers/esm/assertThisInitialized.js");
+/* harmony import */ var _babel_runtime_helpers_esm_inherits__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @babel/runtime/helpers/esm/inherits */ "./node_modules/@babel/runtime/helpers/esm/inherits.js");
+/* harmony import */ var _babel_runtime_helpers_esm_createSuper__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @babel/runtime/helpers/esm/createSuper */ "./node_modules/@babel/runtime/helpers/esm/createSuper.js");
+/* harmony import */ var _babel_runtime_helpers_esm_defineProperty__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @babel/runtime/helpers/esm/defineProperty */ "./node_modules/@babel/runtime/helpers/esm/defineProperty.js");
+/* harmony import */ var _Parser_js__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../Parser.js */ "./node_modules/date-fns/esm/parse/_lib/Parser.js");
+/* harmony import */ var _utils_js__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../utils.js */ "./node_modules/date-fns/esm/parse/_lib/utils.js");
 
 
 
@@ -1889,473 +1984,84 @@ var QuarterParser = /*#__PURE__*/function (_Parser) {
 
 
 
-var StandAloneQuarterParser = /*#__PURE__*/function (_Parser) {
-  _inherits(StandAloneQuarterParser, _Parser);
-  var _super = _createSuper(StandAloneQuarterParser);
-  function StandAloneQuarterParser() {
+var AMPMParser = /*#__PURE__*/function (_Parser) {
+  (0,_babel_runtime_helpers_esm_inherits__WEBPACK_IMPORTED_MODULE_3__["default"])(AMPMParser, _Parser);
+  var _super = (0,_babel_runtime_helpers_esm_createSuper__WEBPACK_IMPORTED_MODULE_4__["default"])(AMPMParser);
+  function AMPMParser() {
     var _this;
-    _classCallCheck(this, StandAloneQuarterParser);
+    (0,_babel_runtime_helpers_esm_classCallCheck__WEBPACK_IMPORTED_MODULE_0__["default"])(this, AMPMParser);
     for (var _len = arguments.length, args = new Array(_len), _key = 0; _key < _len; _key++) {
       args[_key] = arguments[_key];
     }
     _this = _super.call.apply(_super, [this].concat(args));
-    _defineProperty(_assertThisInitialized(_this), "priority", 120);
-    _defineProperty(_assertThisInitialized(_this), "incompatibleTokens", ['Y', 'R', 'Q', 'M', 'L', 'w', 'I', 'd', 'D', 'i', 'e', 'c', 't', 'T']);
+    (0,_babel_runtime_helpers_esm_defineProperty__WEBPACK_IMPORTED_MODULE_5__["default"])((0,_babel_runtime_helpers_esm_assertThisInitialized__WEBPACK_IMPORTED_MODULE_2__["default"])(_this), "priority", 80);
+    (0,_babel_runtime_helpers_esm_defineProperty__WEBPACK_IMPORTED_MODULE_5__["default"])((0,_babel_runtime_helpers_esm_assertThisInitialized__WEBPACK_IMPORTED_MODULE_2__["default"])(_this), "incompatibleTokens", ['b', 'B', 'H', 'k', 't', 'T']);
     return _this;
   }
-  _createClass(StandAloneQuarterParser, [{
+  (0,_babel_runtime_helpers_esm_createClass__WEBPACK_IMPORTED_MODULE_1__["default"])(AMPMParser, [{
     key: "parse",
     value: function parse(dateString, token, match) {
       switch (token) {
-        // 1, 2, 3, 4
-        case 'q':
-        case 'qq':
-          // 01, 02, 03, 04
-          return parseNDigits(token.length, dateString);
-        // 1st, 2nd, 3rd, 4th
-        case 'qo':
-          return match.ordinalNumber(dateString, {
-            unit: 'quarter'
-          });
-        // Q1, Q2, Q3, Q4
-        case 'qqq':
-          return match.quarter(dateString, {
+        case 'a':
+        case 'aa':
+        case 'aaa':
+          return match.dayPeriod(dateString, {
             width: 'abbreviated',
-            context: 'standalone'
-          }) || match.quarter(dateString, {
+            context: 'formatting'
+          }) || match.dayPeriod(dateString, {
             width: 'narrow',
-            context: 'standalone'
+            context: 'formatting'
           });
-        // 1, 2, 3, 4 (narrow quarter; could be not numerical)
-        case 'qqqqq':
-          return match.quarter(dateString, {
+        case 'aaaaa':
+          return match.dayPeriod(dateString, {
             width: 'narrow',
-            context: 'standalone'
+            context: 'formatting'
           });
-        // 1st quarter, 2nd quarter, ...
-        case 'qqqq':
+        case 'aaaa':
         default:
-          return match.quarter(dateString, {
-            width: 'wide',
-            context: 'standalone'
-          }) || match.quarter(dateString, {
-            width: 'abbreviated',
-            context: 'standalone'
-          }) || match.quarter(dateString, {
-            width: 'narrow',
-            context: 'standalone'
-          });
-      }
-    }
-  }, {
-    key: "validate",
-    value: function validate(_date, value) {
-      return value >= 1 && value <= 4;
-    }
-  }, {
-    key: "set",
-    value: function set(date, _flags, value) {
-      date.setUTCMonth((value - 1) * 3, 1);
-      date.setUTCHours(0, 0, 0, 0);
-      return date;
-    }
-  }]);
-  return StandAloneQuarterParser;
-}(Parser);
-;// CONCATENATED MODULE: ./node_modules/date-fns/esm/parse/_lib/parsers/MonthParser.js
-
-
-
-
-
-
-
-
-
-var MonthParser = /*#__PURE__*/function (_Parser) {
-  _inherits(MonthParser, _Parser);
-  var _super = _createSuper(MonthParser);
-  function MonthParser() {
-    var _this;
-    _classCallCheck(this, MonthParser);
-    for (var _len = arguments.length, args = new Array(_len), _key = 0; _key < _len; _key++) {
-      args[_key] = arguments[_key];
-    }
-    _this = _super.call.apply(_super, [this].concat(args));
-    _defineProperty(_assertThisInitialized(_this), "incompatibleTokens", ['Y', 'R', 'q', 'Q', 'L', 'w', 'I', 'D', 'i', 'e', 'c', 't', 'T']);
-    _defineProperty(_assertThisInitialized(_this), "priority", 110);
-    return _this;
-  }
-  _createClass(MonthParser, [{
-    key: "parse",
-    value: function parse(dateString, token, match) {
-      var valueCallback = function valueCallback(value) {
-        return value - 1;
-      };
-      switch (token) {
-        // 1, 2, ..., 12
-        case 'M':
-          return mapValue(parseNumericPattern(numericPatterns.month, dateString), valueCallback);
-        // 01, 02, ..., 12
-        case 'MM':
-          return mapValue(parseNDigits(2, dateString), valueCallback);
-        // 1st, 2nd, ..., 12th
-        case 'Mo':
-          return mapValue(match.ordinalNumber(dateString, {
-            unit: 'month'
-          }), valueCallback);
-        // Jan, Feb, ..., Dec
-        case 'MMM':
-          return match.month(dateString, {
-            width: 'abbreviated',
-            context: 'formatting'
-          }) || match.month(dateString, {
-            width: 'narrow',
-            context: 'formatting'
-          });
-        // J, F, ..., D
-        case 'MMMMM':
-          return match.month(dateString, {
-            width: 'narrow',
-            context: 'formatting'
-          });
-        // January, February, ..., December
-        case 'MMMM':
-        default:
-          return match.month(dateString, {
+          return match.dayPeriod(dateString, {
             width: 'wide',
             context: 'formatting'
-          }) || match.month(dateString, {
+          }) || match.dayPeriod(dateString, {
             width: 'abbreviated',
             context: 'formatting'
-          }) || match.month(dateString, {
+          }) || match.dayPeriod(dateString, {
             width: 'narrow',
             context: 'formatting'
           });
       }
     }
   }, {
-    key: "validate",
-    value: function validate(_date, value) {
-      return value >= 0 && value <= 11;
-    }
-  }, {
     key: "set",
     value: function set(date, _flags, value) {
-      date.setUTCMonth(value, 1);
-      date.setUTCHours(0, 0, 0, 0);
+      date.setUTCHours((0,_utils_js__WEBPACK_IMPORTED_MODULE_6__.dayPeriodEnumToHours)(value), 0, 0, 0);
       return date;
     }
   }]);
-  return MonthParser;
-}(Parser);
-;// CONCATENATED MODULE: ./node_modules/date-fns/esm/parse/_lib/parsers/StandAloneMonthParser.js
+  return AMPMParser;
+}(_Parser_js__WEBPACK_IMPORTED_MODULE_7__.Parser);
 
+/***/ }),
 
+/***/ "./node_modules/date-fns/esm/parse/_lib/parsers/DateParser.js":
+/*!********************************************************************!*\
+  !*** ./node_modules/date-fns/esm/parse/_lib/parsers/DateParser.js ***!
+  \********************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-
-
-
-
-
-
-var StandAloneMonthParser = /*#__PURE__*/function (_Parser) {
-  _inherits(StandAloneMonthParser, _Parser);
-  var _super = _createSuper(StandAloneMonthParser);
-  function StandAloneMonthParser() {
-    var _this;
-    _classCallCheck(this, StandAloneMonthParser);
-    for (var _len = arguments.length, args = new Array(_len), _key = 0; _key < _len; _key++) {
-      args[_key] = arguments[_key];
-    }
-    _this = _super.call.apply(_super, [this].concat(args));
-    _defineProperty(_assertThisInitialized(_this), "priority", 110);
-    _defineProperty(_assertThisInitialized(_this), "incompatibleTokens", ['Y', 'R', 'q', 'Q', 'M', 'w', 'I', 'D', 'i', 'e', 'c', 't', 'T']);
-    return _this;
-  }
-  _createClass(StandAloneMonthParser, [{
-    key: "parse",
-    value: function parse(dateString, token, match) {
-      var valueCallback = function valueCallback(value) {
-        return value - 1;
-      };
-      switch (token) {
-        // 1, 2, ..., 12
-        case 'L':
-          return mapValue(parseNumericPattern(numericPatterns.month, dateString), valueCallback);
-        // 01, 02, ..., 12
-        case 'LL':
-          return mapValue(parseNDigits(2, dateString), valueCallback);
-        // 1st, 2nd, ..., 12th
-        case 'Lo':
-          return mapValue(match.ordinalNumber(dateString, {
-            unit: 'month'
-          }), valueCallback);
-        // Jan, Feb, ..., Dec
-        case 'LLL':
-          return match.month(dateString, {
-            width: 'abbreviated',
-            context: 'standalone'
-          }) || match.month(dateString, {
-            width: 'narrow',
-            context: 'standalone'
-          });
-        // J, F, ..., D
-        case 'LLLLL':
-          return match.month(dateString, {
-            width: 'narrow',
-            context: 'standalone'
-          });
-        // January, February, ..., December
-        case 'LLLL':
-        default:
-          return match.month(dateString, {
-            width: 'wide',
-            context: 'standalone'
-          }) || match.month(dateString, {
-            width: 'abbreviated',
-            context: 'standalone'
-          }) || match.month(dateString, {
-            width: 'narrow',
-            context: 'standalone'
-          });
-      }
-    }
-  }, {
-    key: "validate",
-    value: function validate(_date, value) {
-      return value >= 0 && value <= 11;
-    }
-  }, {
-    key: "set",
-    value: function set(date, _flags, value) {
-      date.setUTCMonth(value, 1);
-      date.setUTCHours(0, 0, 0, 0);
-      return date;
-    }
-  }]);
-  return StandAloneMonthParser;
-}(Parser);
-;// CONCATENATED MODULE: ./node_modules/date-fns/esm/_lib/startOfUTCWeekYear/index.js
-
-
-
-
-
-function startOfUTCWeekYear(dirtyDate, options) {
-  var _ref, _ref2, _ref3, _options$firstWeekCon, _options$locale, _options$locale$optio, _defaultOptions$local, _defaultOptions$local2;
-  requiredArgs(1, arguments);
-  var defaultOptions = getDefaultOptions();
-  var firstWeekContainsDate = toInteger((_ref = (_ref2 = (_ref3 = (_options$firstWeekCon = options === null || options === void 0 ? void 0 : options.firstWeekContainsDate) !== null && _options$firstWeekCon !== void 0 ? _options$firstWeekCon : options === null || options === void 0 ? void 0 : (_options$locale = options.locale) === null || _options$locale === void 0 ? void 0 : (_options$locale$optio = _options$locale.options) === null || _options$locale$optio === void 0 ? void 0 : _options$locale$optio.firstWeekContainsDate) !== null && _ref3 !== void 0 ? _ref3 : defaultOptions.firstWeekContainsDate) !== null && _ref2 !== void 0 ? _ref2 : (_defaultOptions$local = defaultOptions.locale) === null || _defaultOptions$local === void 0 ? void 0 : (_defaultOptions$local2 = _defaultOptions$local.options) === null || _defaultOptions$local2 === void 0 ? void 0 : _defaultOptions$local2.firstWeekContainsDate) !== null && _ref !== void 0 ? _ref : 1);
-  var year = getUTCWeekYear(dirtyDate, options);
-  var firstWeek = new Date(0);
-  firstWeek.setUTCFullYear(year, 0, firstWeekContainsDate);
-  firstWeek.setUTCHours(0, 0, 0, 0);
-  var date = startOfUTCWeek(firstWeek, options);
-  return date;
-}
-;// CONCATENATED MODULE: ./node_modules/date-fns/esm/_lib/getUTCWeek/index.js
-
-
-
-
-var MILLISECONDS_IN_WEEK = 604800000;
-function getUTCWeek(dirtyDate, options) {
-  requiredArgs(1, arguments);
-  var date = toDate(dirtyDate);
-  var diff = startOfUTCWeek(date, options).getTime() - startOfUTCWeekYear(date, options).getTime();
-
-  // Round the number of days to the nearest integer
-  // because the number of milliseconds in a week is not constant
-  // (e.g. it's different in the week of the daylight saving time clock shift)
-  return Math.round(diff / MILLISECONDS_IN_WEEK) + 1;
-}
-;// CONCATENATED MODULE: ./node_modules/date-fns/esm/_lib/setUTCWeek/index.js
-
-
-
-
-function setUTCWeek(dirtyDate, dirtyWeek, options) {
-  requiredArgs(2, arguments);
-  var date = toDate(dirtyDate);
-  var week = toInteger(dirtyWeek);
-  var diff = getUTCWeek(date, options) - week;
-  date.setUTCDate(date.getUTCDate() - diff * 7);
-  return date;
-}
-;// CONCATENATED MODULE: ./node_modules/date-fns/esm/parse/_lib/parsers/LocalWeekParser.js
-
-
-
-
-
-
-
-
-
-
- // Local week of year
-var LocalWeekParser = /*#__PURE__*/function (_Parser) {
-  _inherits(LocalWeekParser, _Parser);
-  var _super = _createSuper(LocalWeekParser);
-  function LocalWeekParser() {
-    var _this;
-    _classCallCheck(this, LocalWeekParser);
-    for (var _len = arguments.length, args = new Array(_len), _key = 0; _key < _len; _key++) {
-      args[_key] = arguments[_key];
-    }
-    _this = _super.call.apply(_super, [this].concat(args));
-    _defineProperty(_assertThisInitialized(_this), "priority", 100);
-    _defineProperty(_assertThisInitialized(_this), "incompatibleTokens", ['y', 'R', 'u', 'q', 'Q', 'M', 'L', 'I', 'd', 'D', 'i', 't', 'T']);
-    return _this;
-  }
-  _createClass(LocalWeekParser, [{
-    key: "parse",
-    value: function parse(dateString, token, match) {
-      switch (token) {
-        case 'w':
-          return parseNumericPattern(numericPatterns.week, dateString);
-        case 'wo':
-          return match.ordinalNumber(dateString, {
-            unit: 'week'
-          });
-        default:
-          return parseNDigits(token.length, dateString);
-      }
-    }
-  }, {
-    key: "validate",
-    value: function validate(_date, value) {
-      return value >= 1 && value <= 53;
-    }
-  }, {
-    key: "set",
-    value: function set(date, _flags, value, options) {
-      return startOfUTCWeek(setUTCWeek(date, value, options), options);
-    }
-  }]);
-  return LocalWeekParser;
-}(Parser);
-;// CONCATENATED MODULE: ./node_modules/date-fns/esm/_lib/getUTCISOWeekYear/index.js
-
-
-
-function getUTCISOWeekYear(dirtyDate) {
-  requiredArgs(1, arguments);
-  var date = toDate(dirtyDate);
-  var year = date.getUTCFullYear();
-  var fourthOfJanuaryOfNextYear = new Date(0);
-  fourthOfJanuaryOfNextYear.setUTCFullYear(year + 1, 0, 4);
-  fourthOfJanuaryOfNextYear.setUTCHours(0, 0, 0, 0);
-  var startOfNextYear = startOfUTCISOWeek(fourthOfJanuaryOfNextYear);
-  var fourthOfJanuaryOfThisYear = new Date(0);
-  fourthOfJanuaryOfThisYear.setUTCFullYear(year, 0, 4);
-  fourthOfJanuaryOfThisYear.setUTCHours(0, 0, 0, 0);
-  var startOfThisYear = startOfUTCISOWeek(fourthOfJanuaryOfThisYear);
-  if (date.getTime() >= startOfNextYear.getTime()) {
-    return year + 1;
-  } else if (date.getTime() >= startOfThisYear.getTime()) {
-    return year;
-  } else {
-    return year - 1;
-  }
-}
-;// CONCATENATED MODULE: ./node_modules/date-fns/esm/_lib/startOfUTCISOWeekYear/index.js
-
-
-
-function startOfUTCISOWeekYear(dirtyDate) {
-  requiredArgs(1, arguments);
-  var year = getUTCISOWeekYear(dirtyDate);
-  var fourthOfJanuary = new Date(0);
-  fourthOfJanuary.setUTCFullYear(year, 0, 4);
-  fourthOfJanuary.setUTCHours(0, 0, 0, 0);
-  var date = startOfUTCISOWeek(fourthOfJanuary);
-  return date;
-}
-;// CONCATENATED MODULE: ./node_modules/date-fns/esm/_lib/getUTCISOWeek/index.js
-
-
-
-
-var getUTCISOWeek_MILLISECONDS_IN_WEEK = 604800000;
-function getUTCISOWeek(dirtyDate) {
-  requiredArgs(1, arguments);
-  var date = toDate(dirtyDate);
-  var diff = startOfUTCISOWeek(date).getTime() - startOfUTCISOWeekYear(date).getTime();
-
-  // Round the number of days to the nearest integer
-  // because the number of milliseconds in a week is not constant
-  // (e.g. it's different in the week of the daylight saving time clock shift)
-  return Math.round(diff / getUTCISOWeek_MILLISECONDS_IN_WEEK) + 1;
-}
-;// CONCATENATED MODULE: ./node_modules/date-fns/esm/_lib/setUTCISOWeek/index.js
-
-
-
-
-function setUTCISOWeek(dirtyDate, dirtyISOWeek) {
-  requiredArgs(2, arguments);
-  var date = toDate(dirtyDate);
-  var isoWeek = toInteger(dirtyISOWeek);
-  var diff = getUTCISOWeek(date) - isoWeek;
-  date.setUTCDate(date.getUTCDate() - diff * 7);
-  return date;
-}
-;// CONCATENATED MODULE: ./node_modules/date-fns/esm/parse/_lib/parsers/ISOWeekParser.js
-
-
-
-
-
-
-
-
-
-
- // ISO week of year
-var ISOWeekParser = /*#__PURE__*/function (_Parser) {
-  _inherits(ISOWeekParser, _Parser);
-  var _super = _createSuper(ISOWeekParser);
-  function ISOWeekParser() {
-    var _this;
-    _classCallCheck(this, ISOWeekParser);
-    for (var _len = arguments.length, args = new Array(_len), _key = 0; _key < _len; _key++) {
-      args[_key] = arguments[_key];
-    }
-    _this = _super.call.apply(_super, [this].concat(args));
-    _defineProperty(_assertThisInitialized(_this), "priority", 100);
-    _defineProperty(_assertThisInitialized(_this), "incompatibleTokens", ['y', 'Y', 'u', 'q', 'Q', 'M', 'L', 'w', 'd', 'D', 'e', 'c', 't', 'T']);
-    return _this;
-  }
-  _createClass(ISOWeekParser, [{
-    key: "parse",
-    value: function parse(dateString, token, match) {
-      switch (token) {
-        case 'I':
-          return parseNumericPattern(numericPatterns.week, dateString);
-        case 'Io':
-          return match.ordinalNumber(dateString, {
-            unit: 'week'
-          });
-        default:
-          return parseNDigits(token.length, dateString);
-      }
-    }
-  }, {
-    key: "validate",
-    value: function validate(_date, value) {
-      return value >= 1 && value <= 53;
-    }
-  }, {
-    key: "set",
-    value: function set(date, _flags, value) {
-      return startOfUTCISOWeek(setUTCISOWeek(date, value));
-    }
-  }]);
-  return ISOWeekParser;
-}(Parser);
-;// CONCATENATED MODULE: ./node_modules/date-fns/esm/parse/_lib/parsers/DateParser.js
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   DateParser: () => (/* binding */ DateParser)
+/* harmony export */ });
+/* harmony import */ var _babel_runtime_helpers_esm_classCallCheck__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/helpers/esm/classCallCheck */ "./node_modules/@babel/runtime/helpers/esm/classCallCheck.js");
+/* harmony import */ var _babel_runtime_helpers_esm_createClass__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @babel/runtime/helpers/esm/createClass */ "./node_modules/@babel/runtime/helpers/esm/createClass.js");
+/* harmony import */ var _babel_runtime_helpers_esm_assertThisInitialized__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @babel/runtime/helpers/esm/assertThisInitialized */ "./node_modules/@babel/runtime/helpers/esm/assertThisInitialized.js");
+/* harmony import */ var _babel_runtime_helpers_esm_inherits__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @babel/runtime/helpers/esm/inherits */ "./node_modules/@babel/runtime/helpers/esm/inherits.js");
+/* harmony import */ var _babel_runtime_helpers_esm_createSuper__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @babel/runtime/helpers/esm/createSuper */ "./node_modules/@babel/runtime/helpers/esm/createSuper.js");
+/* harmony import */ var _babel_runtime_helpers_esm_defineProperty__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @babel/runtime/helpers/esm/defineProperty */ "./node_modules/@babel/runtime/helpers/esm/defineProperty.js");
+/* harmony import */ var _utils_js__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../utils.js */ "./node_modules/date-fns/esm/parse/_lib/utils.js");
+/* harmony import */ var _Parser_js__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../Parser.js */ "./node_modules/date-fns/esm/parse/_lib/Parser.js");
+/* harmony import */ var _constants_js__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../constants.js */ "./node_modules/date-fns/esm/parse/_lib/constants.js");
 
 
 
@@ -2370,39 +2076,39 @@ var DAYS_IN_MONTH_LEAP_YEAR = [31, 29, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
 
 // Day of the month
 var DateParser = /*#__PURE__*/function (_Parser) {
-  _inherits(DateParser, _Parser);
-  var _super = _createSuper(DateParser);
+  (0,_babel_runtime_helpers_esm_inherits__WEBPACK_IMPORTED_MODULE_3__["default"])(DateParser, _Parser);
+  var _super = (0,_babel_runtime_helpers_esm_createSuper__WEBPACK_IMPORTED_MODULE_4__["default"])(DateParser);
   function DateParser() {
     var _this;
-    _classCallCheck(this, DateParser);
+    (0,_babel_runtime_helpers_esm_classCallCheck__WEBPACK_IMPORTED_MODULE_0__["default"])(this, DateParser);
     for (var _len = arguments.length, args = new Array(_len), _key = 0; _key < _len; _key++) {
       args[_key] = arguments[_key];
     }
     _this = _super.call.apply(_super, [this].concat(args));
-    _defineProperty(_assertThisInitialized(_this), "priority", 90);
-    _defineProperty(_assertThisInitialized(_this), "subPriority", 1);
-    _defineProperty(_assertThisInitialized(_this), "incompatibleTokens", ['Y', 'R', 'q', 'Q', 'w', 'I', 'D', 'i', 'e', 'c', 't', 'T']);
+    (0,_babel_runtime_helpers_esm_defineProperty__WEBPACK_IMPORTED_MODULE_5__["default"])((0,_babel_runtime_helpers_esm_assertThisInitialized__WEBPACK_IMPORTED_MODULE_2__["default"])(_this), "priority", 90);
+    (0,_babel_runtime_helpers_esm_defineProperty__WEBPACK_IMPORTED_MODULE_5__["default"])((0,_babel_runtime_helpers_esm_assertThisInitialized__WEBPACK_IMPORTED_MODULE_2__["default"])(_this), "subPriority", 1);
+    (0,_babel_runtime_helpers_esm_defineProperty__WEBPACK_IMPORTED_MODULE_5__["default"])((0,_babel_runtime_helpers_esm_assertThisInitialized__WEBPACK_IMPORTED_MODULE_2__["default"])(_this), "incompatibleTokens", ['Y', 'R', 'q', 'Q', 'w', 'I', 'D', 'i', 'e', 'c', 't', 'T']);
     return _this;
   }
-  _createClass(DateParser, [{
+  (0,_babel_runtime_helpers_esm_createClass__WEBPACK_IMPORTED_MODULE_1__["default"])(DateParser, [{
     key: "parse",
     value: function parse(dateString, token, match) {
       switch (token) {
         case 'd':
-          return parseNumericPattern(numericPatterns.date, dateString);
+          return (0,_utils_js__WEBPACK_IMPORTED_MODULE_6__.parseNumericPattern)(_constants_js__WEBPACK_IMPORTED_MODULE_7__.numericPatterns.date, dateString);
         case 'do':
           return match.ordinalNumber(dateString, {
             unit: 'date'
           });
         default:
-          return parseNDigits(token.length, dateString);
+          return (0,_utils_js__WEBPACK_IMPORTED_MODULE_6__.parseNDigits)(token.length, dateString);
       }
     }
   }, {
     key: "validate",
     value: function validate(date, value) {
       var year = date.getUTCFullYear();
-      var isLeapYear = isLeapYearIndex(year);
+      var isLeapYear = (0,_utils_js__WEBPACK_IMPORTED_MODULE_6__.isLeapYearIndex)(year);
       var month = date.getUTCMonth();
       if (isLeapYear) {
         return value >= 1 && value <= DAYS_IN_MONTH_LEAP_YEAR[month];
@@ -2419,8 +2125,29 @@ var DateParser = /*#__PURE__*/function (_Parser) {
     }
   }]);
   return DateParser;
-}(Parser);
-;// CONCATENATED MODULE: ./node_modules/date-fns/esm/parse/_lib/parsers/DayOfYearParser.js
+}(_Parser_js__WEBPACK_IMPORTED_MODULE_8__.Parser);
+
+/***/ }),
+
+/***/ "./node_modules/date-fns/esm/parse/_lib/parsers/DayOfYearParser.js":
+/*!*************************************************************************!*\
+  !*** ./node_modules/date-fns/esm/parse/_lib/parsers/DayOfYearParser.js ***!
+  \*************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   DayOfYearParser: () => (/* binding */ DayOfYearParser)
+/* harmony export */ });
+/* harmony import */ var _babel_runtime_helpers_esm_classCallCheck__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/helpers/esm/classCallCheck */ "./node_modules/@babel/runtime/helpers/esm/classCallCheck.js");
+/* harmony import */ var _babel_runtime_helpers_esm_createClass__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @babel/runtime/helpers/esm/createClass */ "./node_modules/@babel/runtime/helpers/esm/createClass.js");
+/* harmony import */ var _babel_runtime_helpers_esm_assertThisInitialized__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @babel/runtime/helpers/esm/assertThisInitialized */ "./node_modules/@babel/runtime/helpers/esm/assertThisInitialized.js");
+/* harmony import */ var _babel_runtime_helpers_esm_inherits__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @babel/runtime/helpers/esm/inherits */ "./node_modules/@babel/runtime/helpers/esm/inherits.js");
+/* harmony import */ var _babel_runtime_helpers_esm_createSuper__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @babel/runtime/helpers/esm/createSuper */ "./node_modules/@babel/runtime/helpers/esm/createSuper.js");
+/* harmony import */ var _babel_runtime_helpers_esm_defineProperty__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @babel/runtime/helpers/esm/defineProperty */ "./node_modules/@babel/runtime/helpers/esm/defineProperty.js");
+/* harmony import */ var _Parser_js__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../Parser.js */ "./node_modules/date-fns/esm/parse/_lib/Parser.js");
+/* harmony import */ var _constants_js__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../constants.js */ "./node_modules/date-fns/esm/parse/_lib/constants.js");
+/* harmony import */ var _utils_js__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../utils.js */ "./node_modules/date-fns/esm/parse/_lib/utils.js");
 
 
 
@@ -2431,40 +2158,40 @@ var DateParser = /*#__PURE__*/function (_Parser) {
 
 
 var DayOfYearParser = /*#__PURE__*/function (_Parser) {
-  _inherits(DayOfYearParser, _Parser);
-  var _super = _createSuper(DayOfYearParser);
+  (0,_babel_runtime_helpers_esm_inherits__WEBPACK_IMPORTED_MODULE_3__["default"])(DayOfYearParser, _Parser);
+  var _super = (0,_babel_runtime_helpers_esm_createSuper__WEBPACK_IMPORTED_MODULE_4__["default"])(DayOfYearParser);
   function DayOfYearParser() {
     var _this;
-    _classCallCheck(this, DayOfYearParser);
+    (0,_babel_runtime_helpers_esm_classCallCheck__WEBPACK_IMPORTED_MODULE_0__["default"])(this, DayOfYearParser);
     for (var _len = arguments.length, args = new Array(_len), _key = 0; _key < _len; _key++) {
       args[_key] = arguments[_key];
     }
     _this = _super.call.apply(_super, [this].concat(args));
-    _defineProperty(_assertThisInitialized(_this), "priority", 90);
-    _defineProperty(_assertThisInitialized(_this), "subpriority", 1);
-    _defineProperty(_assertThisInitialized(_this), "incompatibleTokens", ['Y', 'R', 'q', 'Q', 'M', 'L', 'w', 'I', 'd', 'E', 'i', 'e', 'c', 't', 'T']);
+    (0,_babel_runtime_helpers_esm_defineProperty__WEBPACK_IMPORTED_MODULE_5__["default"])((0,_babel_runtime_helpers_esm_assertThisInitialized__WEBPACK_IMPORTED_MODULE_2__["default"])(_this), "priority", 90);
+    (0,_babel_runtime_helpers_esm_defineProperty__WEBPACK_IMPORTED_MODULE_5__["default"])((0,_babel_runtime_helpers_esm_assertThisInitialized__WEBPACK_IMPORTED_MODULE_2__["default"])(_this), "subpriority", 1);
+    (0,_babel_runtime_helpers_esm_defineProperty__WEBPACK_IMPORTED_MODULE_5__["default"])((0,_babel_runtime_helpers_esm_assertThisInitialized__WEBPACK_IMPORTED_MODULE_2__["default"])(_this), "incompatibleTokens", ['Y', 'R', 'q', 'Q', 'M', 'L', 'w', 'I', 'd', 'E', 'i', 'e', 'c', 't', 'T']);
     return _this;
   }
-  _createClass(DayOfYearParser, [{
+  (0,_babel_runtime_helpers_esm_createClass__WEBPACK_IMPORTED_MODULE_1__["default"])(DayOfYearParser, [{
     key: "parse",
     value: function parse(dateString, token, match) {
       switch (token) {
         case 'D':
         case 'DD':
-          return parseNumericPattern(numericPatterns.dayOfYear, dateString);
+          return (0,_utils_js__WEBPACK_IMPORTED_MODULE_6__.parseNumericPattern)(_constants_js__WEBPACK_IMPORTED_MODULE_7__.numericPatterns.dayOfYear, dateString);
         case 'Do':
           return match.ordinalNumber(dateString, {
             unit: 'date'
           });
         default:
-          return parseNDigits(token.length, dateString);
+          return (0,_utils_js__WEBPACK_IMPORTED_MODULE_6__.parseNDigits)(token.length, dateString);
       }
     }
   }, {
     key: "validate",
     value: function validate(date, value) {
       var year = date.getUTCFullYear();
-      var isLeapYear = isLeapYearIndex(year);
+      var isLeapYear = (0,_utils_js__WEBPACK_IMPORTED_MODULE_6__.isLeapYearIndex)(year);
       if (isLeapYear) {
         return value >= 1 && value <= 366;
       } else {
@@ -2480,32 +2207,28 @@ var DayOfYearParser = /*#__PURE__*/function (_Parser) {
     }
   }]);
   return DayOfYearParser;
-}(Parser);
-;// CONCATENATED MODULE: ./node_modules/date-fns/esm/_lib/setUTCDay/index.js
+}(_Parser_js__WEBPACK_IMPORTED_MODULE_8__.Parser);
 
+/***/ }),
 
+/***/ "./node_modules/date-fns/esm/parse/_lib/parsers/DayParser.js":
+/*!*******************************************************************!*\
+  !*** ./node_modules/date-fns/esm/parse/_lib/parsers/DayParser.js ***!
+  \*******************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-
-function setUTCDay(dirtyDate, dirtyDay, options) {
-  var _ref, _ref2, _ref3, _options$weekStartsOn, _options$locale, _options$locale$optio, _defaultOptions$local, _defaultOptions$local2;
-  requiredArgs(2, arguments);
-  var defaultOptions = getDefaultOptions();
-  var weekStartsOn = toInteger((_ref = (_ref2 = (_ref3 = (_options$weekStartsOn = options === null || options === void 0 ? void 0 : options.weekStartsOn) !== null && _options$weekStartsOn !== void 0 ? _options$weekStartsOn : options === null || options === void 0 ? void 0 : (_options$locale = options.locale) === null || _options$locale === void 0 ? void 0 : (_options$locale$optio = _options$locale.options) === null || _options$locale$optio === void 0 ? void 0 : _options$locale$optio.weekStartsOn) !== null && _ref3 !== void 0 ? _ref3 : defaultOptions.weekStartsOn) !== null && _ref2 !== void 0 ? _ref2 : (_defaultOptions$local = defaultOptions.locale) === null || _defaultOptions$local === void 0 ? void 0 : (_defaultOptions$local2 = _defaultOptions$local.options) === null || _defaultOptions$local2 === void 0 ? void 0 : _defaultOptions$local2.weekStartsOn) !== null && _ref !== void 0 ? _ref : 0);
-
-  // Test if weekStartsOn is between 0 and 6 _and_ is not NaN
-  if (!(weekStartsOn >= 0 && weekStartsOn <= 6)) {
-    throw new RangeError('weekStartsOn must be between 0 and 6 inclusively');
-  }
-  var date = toDate(dirtyDate);
-  var day = toInteger(dirtyDay);
-  var currentDay = date.getUTCDay();
-  var remainder = day % 7;
-  var dayIndex = (remainder + 7) % 7;
-  var diff = (dayIndex < weekStartsOn ? 7 : 0) + day - currentDay;
-  date.setUTCDate(date.getUTCDate() + diff);
-  return date;
-}
-;// CONCATENATED MODULE: ./node_modules/date-fns/esm/parse/_lib/parsers/DayParser.js
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   DayParser: () => (/* binding */ DayParser)
+/* harmony export */ });
+/* harmony import */ var _babel_runtime_helpers_esm_classCallCheck__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/helpers/esm/classCallCheck */ "./node_modules/@babel/runtime/helpers/esm/classCallCheck.js");
+/* harmony import */ var _babel_runtime_helpers_esm_createClass__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @babel/runtime/helpers/esm/createClass */ "./node_modules/@babel/runtime/helpers/esm/createClass.js");
+/* harmony import */ var _babel_runtime_helpers_esm_assertThisInitialized__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @babel/runtime/helpers/esm/assertThisInitialized */ "./node_modules/@babel/runtime/helpers/esm/assertThisInitialized.js");
+/* harmony import */ var _babel_runtime_helpers_esm_inherits__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @babel/runtime/helpers/esm/inherits */ "./node_modules/@babel/runtime/helpers/esm/inherits.js");
+/* harmony import */ var _babel_runtime_helpers_esm_createSuper__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @babel/runtime/helpers/esm/createSuper */ "./node_modules/@babel/runtime/helpers/esm/createSuper.js");
+/* harmony import */ var _babel_runtime_helpers_esm_defineProperty__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @babel/runtime/helpers/esm/defineProperty */ "./node_modules/@babel/runtime/helpers/esm/defineProperty.js");
+/* harmony import */ var _Parser_js__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../Parser.js */ "./node_modules/date-fns/esm/parse/_lib/Parser.js");
+/* harmony import */ var _lib_setUTCDay_index_js__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../../../_lib/setUTCDay/index.js */ "./node_modules/date-fns/esm/_lib/setUTCDay/index.js");
 
 
 
@@ -2515,20 +2238,20 @@ function setUTCDay(dirtyDate, dirtyDay, options) {
 
  // Day of week
 var DayParser = /*#__PURE__*/function (_Parser) {
-  _inherits(DayParser, _Parser);
-  var _super = _createSuper(DayParser);
+  (0,_babel_runtime_helpers_esm_inherits__WEBPACK_IMPORTED_MODULE_3__["default"])(DayParser, _Parser);
+  var _super = (0,_babel_runtime_helpers_esm_createSuper__WEBPACK_IMPORTED_MODULE_4__["default"])(DayParser);
   function DayParser() {
     var _this;
-    _classCallCheck(this, DayParser);
+    (0,_babel_runtime_helpers_esm_classCallCheck__WEBPACK_IMPORTED_MODULE_0__["default"])(this, DayParser);
     for (var _len = arguments.length, args = new Array(_len), _key = 0; _key < _len; _key++) {
       args[_key] = arguments[_key];
     }
     _this = _super.call.apply(_super, [this].concat(args));
-    _defineProperty(_assertThisInitialized(_this), "priority", 90);
-    _defineProperty(_assertThisInitialized(_this), "incompatibleTokens", ['D', 'i', 'e', 'c', 't', 'T']);
+    (0,_babel_runtime_helpers_esm_defineProperty__WEBPACK_IMPORTED_MODULE_5__["default"])((0,_babel_runtime_helpers_esm_assertThisInitialized__WEBPACK_IMPORTED_MODULE_2__["default"])(_this), "priority", 90);
+    (0,_babel_runtime_helpers_esm_defineProperty__WEBPACK_IMPORTED_MODULE_5__["default"])((0,_babel_runtime_helpers_esm_assertThisInitialized__WEBPACK_IMPORTED_MODULE_2__["default"])(_this), "incompatibleTokens", ['D', 'i', 'e', 'c', 't', 'T']);
     return _this;
   }
-  _createClass(DayParser, [{
+  (0,_babel_runtime_helpers_esm_createClass__WEBPACK_IMPORTED_MODULE_1__["default"])(DayParser, [{
     key: "parse",
     value: function parse(dateString, token, match) {
       switch (token) {
@@ -2587,14 +2310,1039 @@ var DayParser = /*#__PURE__*/function (_Parser) {
   }, {
     key: "set",
     value: function set(date, _flags, value, options) {
-      date = setUTCDay(date, value, options);
+      date = (0,_lib_setUTCDay_index_js__WEBPACK_IMPORTED_MODULE_6__["default"])(date, value, options);
       date.setUTCHours(0, 0, 0, 0);
       return date;
     }
   }]);
   return DayParser;
-}(Parser);
-;// CONCATENATED MODULE: ./node_modules/date-fns/esm/parse/_lib/parsers/LocalDayParser.js
+}(_Parser_js__WEBPACK_IMPORTED_MODULE_7__.Parser);
+
+/***/ }),
+
+/***/ "./node_modules/date-fns/esm/parse/_lib/parsers/DayPeriodParser.js":
+/*!*************************************************************************!*\
+  !*** ./node_modules/date-fns/esm/parse/_lib/parsers/DayPeriodParser.js ***!
+  \*************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   DayPeriodParser: () => (/* binding */ DayPeriodParser)
+/* harmony export */ });
+/* harmony import */ var _babel_runtime_helpers_esm_classCallCheck__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/helpers/esm/classCallCheck */ "./node_modules/@babel/runtime/helpers/esm/classCallCheck.js");
+/* harmony import */ var _babel_runtime_helpers_esm_createClass__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @babel/runtime/helpers/esm/createClass */ "./node_modules/@babel/runtime/helpers/esm/createClass.js");
+/* harmony import */ var _babel_runtime_helpers_esm_assertThisInitialized__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @babel/runtime/helpers/esm/assertThisInitialized */ "./node_modules/@babel/runtime/helpers/esm/assertThisInitialized.js");
+/* harmony import */ var _babel_runtime_helpers_esm_inherits__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @babel/runtime/helpers/esm/inherits */ "./node_modules/@babel/runtime/helpers/esm/inherits.js");
+/* harmony import */ var _babel_runtime_helpers_esm_createSuper__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @babel/runtime/helpers/esm/createSuper */ "./node_modules/@babel/runtime/helpers/esm/createSuper.js");
+/* harmony import */ var _babel_runtime_helpers_esm_defineProperty__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @babel/runtime/helpers/esm/defineProperty */ "./node_modules/@babel/runtime/helpers/esm/defineProperty.js");
+/* harmony import */ var _Parser_js__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../Parser.js */ "./node_modules/date-fns/esm/parse/_lib/Parser.js");
+/* harmony import */ var _utils_js__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../utils.js */ "./node_modules/date-fns/esm/parse/_lib/utils.js");
+
+
+
+
+
+
+
+ // in the morning, in the afternoon, in the evening, at night
+var DayPeriodParser = /*#__PURE__*/function (_Parser) {
+  (0,_babel_runtime_helpers_esm_inherits__WEBPACK_IMPORTED_MODULE_3__["default"])(DayPeriodParser, _Parser);
+  var _super = (0,_babel_runtime_helpers_esm_createSuper__WEBPACK_IMPORTED_MODULE_4__["default"])(DayPeriodParser);
+  function DayPeriodParser() {
+    var _this;
+    (0,_babel_runtime_helpers_esm_classCallCheck__WEBPACK_IMPORTED_MODULE_0__["default"])(this, DayPeriodParser);
+    for (var _len = arguments.length, args = new Array(_len), _key = 0; _key < _len; _key++) {
+      args[_key] = arguments[_key];
+    }
+    _this = _super.call.apply(_super, [this].concat(args));
+    (0,_babel_runtime_helpers_esm_defineProperty__WEBPACK_IMPORTED_MODULE_5__["default"])((0,_babel_runtime_helpers_esm_assertThisInitialized__WEBPACK_IMPORTED_MODULE_2__["default"])(_this), "priority", 80);
+    (0,_babel_runtime_helpers_esm_defineProperty__WEBPACK_IMPORTED_MODULE_5__["default"])((0,_babel_runtime_helpers_esm_assertThisInitialized__WEBPACK_IMPORTED_MODULE_2__["default"])(_this), "incompatibleTokens", ['a', 'b', 't', 'T']);
+    return _this;
+  }
+  (0,_babel_runtime_helpers_esm_createClass__WEBPACK_IMPORTED_MODULE_1__["default"])(DayPeriodParser, [{
+    key: "parse",
+    value: function parse(dateString, token, match) {
+      switch (token) {
+        case 'B':
+        case 'BB':
+        case 'BBB':
+          return match.dayPeriod(dateString, {
+            width: 'abbreviated',
+            context: 'formatting'
+          }) || match.dayPeriod(dateString, {
+            width: 'narrow',
+            context: 'formatting'
+          });
+        case 'BBBBB':
+          return match.dayPeriod(dateString, {
+            width: 'narrow',
+            context: 'formatting'
+          });
+        case 'BBBB':
+        default:
+          return match.dayPeriod(dateString, {
+            width: 'wide',
+            context: 'formatting'
+          }) || match.dayPeriod(dateString, {
+            width: 'abbreviated',
+            context: 'formatting'
+          }) || match.dayPeriod(dateString, {
+            width: 'narrow',
+            context: 'formatting'
+          });
+      }
+    }
+  }, {
+    key: "set",
+    value: function set(date, _flags, value) {
+      date.setUTCHours((0,_utils_js__WEBPACK_IMPORTED_MODULE_6__.dayPeriodEnumToHours)(value), 0, 0, 0);
+      return date;
+    }
+  }]);
+  return DayPeriodParser;
+}(_Parser_js__WEBPACK_IMPORTED_MODULE_7__.Parser);
+
+/***/ }),
+
+/***/ "./node_modules/date-fns/esm/parse/_lib/parsers/EraParser.js":
+/*!*******************************************************************!*\
+  !*** ./node_modules/date-fns/esm/parse/_lib/parsers/EraParser.js ***!
+  \*******************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   EraParser: () => (/* binding */ EraParser)
+/* harmony export */ });
+/* harmony import */ var _babel_runtime_helpers_esm_classCallCheck__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/helpers/esm/classCallCheck */ "./node_modules/@babel/runtime/helpers/esm/classCallCheck.js");
+/* harmony import */ var _babel_runtime_helpers_esm_createClass__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @babel/runtime/helpers/esm/createClass */ "./node_modules/@babel/runtime/helpers/esm/createClass.js");
+/* harmony import */ var _babel_runtime_helpers_esm_assertThisInitialized__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @babel/runtime/helpers/esm/assertThisInitialized */ "./node_modules/@babel/runtime/helpers/esm/assertThisInitialized.js");
+/* harmony import */ var _babel_runtime_helpers_esm_inherits__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @babel/runtime/helpers/esm/inherits */ "./node_modules/@babel/runtime/helpers/esm/inherits.js");
+/* harmony import */ var _babel_runtime_helpers_esm_createSuper__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @babel/runtime/helpers/esm/createSuper */ "./node_modules/@babel/runtime/helpers/esm/createSuper.js");
+/* harmony import */ var _babel_runtime_helpers_esm_defineProperty__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @babel/runtime/helpers/esm/defineProperty */ "./node_modules/@babel/runtime/helpers/esm/defineProperty.js");
+/* harmony import */ var _Parser_js__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../Parser.js */ "./node_modules/date-fns/esm/parse/_lib/Parser.js");
+
+
+
+
+
+
+
+var EraParser = /*#__PURE__*/function (_Parser) {
+  (0,_babel_runtime_helpers_esm_inherits__WEBPACK_IMPORTED_MODULE_3__["default"])(EraParser, _Parser);
+  var _super = (0,_babel_runtime_helpers_esm_createSuper__WEBPACK_IMPORTED_MODULE_4__["default"])(EraParser);
+  function EraParser() {
+    var _this;
+    (0,_babel_runtime_helpers_esm_classCallCheck__WEBPACK_IMPORTED_MODULE_0__["default"])(this, EraParser);
+    for (var _len = arguments.length, args = new Array(_len), _key = 0; _key < _len; _key++) {
+      args[_key] = arguments[_key];
+    }
+    _this = _super.call.apply(_super, [this].concat(args));
+    (0,_babel_runtime_helpers_esm_defineProperty__WEBPACK_IMPORTED_MODULE_5__["default"])((0,_babel_runtime_helpers_esm_assertThisInitialized__WEBPACK_IMPORTED_MODULE_2__["default"])(_this), "priority", 140);
+    (0,_babel_runtime_helpers_esm_defineProperty__WEBPACK_IMPORTED_MODULE_5__["default"])((0,_babel_runtime_helpers_esm_assertThisInitialized__WEBPACK_IMPORTED_MODULE_2__["default"])(_this), "incompatibleTokens", ['R', 'u', 't', 'T']);
+    return _this;
+  }
+  (0,_babel_runtime_helpers_esm_createClass__WEBPACK_IMPORTED_MODULE_1__["default"])(EraParser, [{
+    key: "parse",
+    value: function parse(dateString, token, match) {
+      switch (token) {
+        // AD, BC
+        case 'G':
+        case 'GG':
+        case 'GGG':
+          return match.era(dateString, {
+            width: 'abbreviated'
+          }) || match.era(dateString, {
+            width: 'narrow'
+          });
+        // A, B
+        case 'GGGGG':
+          return match.era(dateString, {
+            width: 'narrow'
+          });
+        // Anno Domini, Before Christ
+        case 'GGGG':
+        default:
+          return match.era(dateString, {
+            width: 'wide'
+          }) || match.era(dateString, {
+            width: 'abbreviated'
+          }) || match.era(dateString, {
+            width: 'narrow'
+          });
+      }
+    }
+  }, {
+    key: "set",
+    value: function set(date, flags, value) {
+      flags.era = value;
+      date.setUTCFullYear(value, 0, 1);
+      date.setUTCHours(0, 0, 0, 0);
+      return date;
+    }
+  }]);
+  return EraParser;
+}(_Parser_js__WEBPACK_IMPORTED_MODULE_6__.Parser);
+
+/***/ }),
+
+/***/ "./node_modules/date-fns/esm/parse/_lib/parsers/ExtendedYearParser.js":
+/*!****************************************************************************!*\
+  !*** ./node_modules/date-fns/esm/parse/_lib/parsers/ExtendedYearParser.js ***!
+  \****************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   ExtendedYearParser: () => (/* binding */ ExtendedYearParser)
+/* harmony export */ });
+/* harmony import */ var _babel_runtime_helpers_esm_classCallCheck__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/helpers/esm/classCallCheck */ "./node_modules/@babel/runtime/helpers/esm/classCallCheck.js");
+/* harmony import */ var _babel_runtime_helpers_esm_createClass__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @babel/runtime/helpers/esm/createClass */ "./node_modules/@babel/runtime/helpers/esm/createClass.js");
+/* harmony import */ var _babel_runtime_helpers_esm_assertThisInitialized__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @babel/runtime/helpers/esm/assertThisInitialized */ "./node_modules/@babel/runtime/helpers/esm/assertThisInitialized.js");
+/* harmony import */ var _babel_runtime_helpers_esm_inherits__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @babel/runtime/helpers/esm/inherits */ "./node_modules/@babel/runtime/helpers/esm/inherits.js");
+/* harmony import */ var _babel_runtime_helpers_esm_createSuper__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @babel/runtime/helpers/esm/createSuper */ "./node_modules/@babel/runtime/helpers/esm/createSuper.js");
+/* harmony import */ var _babel_runtime_helpers_esm_defineProperty__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @babel/runtime/helpers/esm/defineProperty */ "./node_modules/@babel/runtime/helpers/esm/defineProperty.js");
+/* harmony import */ var _Parser_js__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../Parser.js */ "./node_modules/date-fns/esm/parse/_lib/Parser.js");
+/* harmony import */ var _utils_js__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../utils.js */ "./node_modules/date-fns/esm/parse/_lib/utils.js");
+
+
+
+
+
+
+
+
+var ExtendedYearParser = /*#__PURE__*/function (_Parser) {
+  (0,_babel_runtime_helpers_esm_inherits__WEBPACK_IMPORTED_MODULE_3__["default"])(ExtendedYearParser, _Parser);
+  var _super = (0,_babel_runtime_helpers_esm_createSuper__WEBPACK_IMPORTED_MODULE_4__["default"])(ExtendedYearParser);
+  function ExtendedYearParser() {
+    var _this;
+    (0,_babel_runtime_helpers_esm_classCallCheck__WEBPACK_IMPORTED_MODULE_0__["default"])(this, ExtendedYearParser);
+    for (var _len = arguments.length, args = new Array(_len), _key = 0; _key < _len; _key++) {
+      args[_key] = arguments[_key];
+    }
+    _this = _super.call.apply(_super, [this].concat(args));
+    (0,_babel_runtime_helpers_esm_defineProperty__WEBPACK_IMPORTED_MODULE_5__["default"])((0,_babel_runtime_helpers_esm_assertThisInitialized__WEBPACK_IMPORTED_MODULE_2__["default"])(_this), "priority", 130);
+    (0,_babel_runtime_helpers_esm_defineProperty__WEBPACK_IMPORTED_MODULE_5__["default"])((0,_babel_runtime_helpers_esm_assertThisInitialized__WEBPACK_IMPORTED_MODULE_2__["default"])(_this), "incompatibleTokens", ['G', 'y', 'Y', 'R', 'w', 'I', 'i', 'e', 'c', 't', 'T']);
+    return _this;
+  }
+  (0,_babel_runtime_helpers_esm_createClass__WEBPACK_IMPORTED_MODULE_1__["default"])(ExtendedYearParser, [{
+    key: "parse",
+    value: function parse(dateString, token) {
+      if (token === 'u') {
+        return (0,_utils_js__WEBPACK_IMPORTED_MODULE_6__.parseNDigitsSigned)(4, dateString);
+      }
+      return (0,_utils_js__WEBPACK_IMPORTED_MODULE_6__.parseNDigitsSigned)(token.length, dateString);
+    }
+  }, {
+    key: "set",
+    value: function set(date, _flags, value) {
+      date.setUTCFullYear(value, 0, 1);
+      date.setUTCHours(0, 0, 0, 0);
+      return date;
+    }
+  }]);
+  return ExtendedYearParser;
+}(_Parser_js__WEBPACK_IMPORTED_MODULE_7__.Parser);
+
+/***/ }),
+
+/***/ "./node_modules/date-fns/esm/parse/_lib/parsers/FractionOfSecondParser.js":
+/*!********************************************************************************!*\
+  !*** ./node_modules/date-fns/esm/parse/_lib/parsers/FractionOfSecondParser.js ***!
+  \********************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   FractionOfSecondParser: () => (/* binding */ FractionOfSecondParser)
+/* harmony export */ });
+/* harmony import */ var _babel_runtime_helpers_esm_classCallCheck__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/helpers/esm/classCallCheck */ "./node_modules/@babel/runtime/helpers/esm/classCallCheck.js");
+/* harmony import */ var _babel_runtime_helpers_esm_createClass__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @babel/runtime/helpers/esm/createClass */ "./node_modules/@babel/runtime/helpers/esm/createClass.js");
+/* harmony import */ var _babel_runtime_helpers_esm_assertThisInitialized__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @babel/runtime/helpers/esm/assertThisInitialized */ "./node_modules/@babel/runtime/helpers/esm/assertThisInitialized.js");
+/* harmony import */ var _babel_runtime_helpers_esm_inherits__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @babel/runtime/helpers/esm/inherits */ "./node_modules/@babel/runtime/helpers/esm/inherits.js");
+/* harmony import */ var _babel_runtime_helpers_esm_createSuper__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @babel/runtime/helpers/esm/createSuper */ "./node_modules/@babel/runtime/helpers/esm/createSuper.js");
+/* harmony import */ var _babel_runtime_helpers_esm_defineProperty__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @babel/runtime/helpers/esm/defineProperty */ "./node_modules/@babel/runtime/helpers/esm/defineProperty.js");
+/* harmony import */ var _Parser_js__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../Parser.js */ "./node_modules/date-fns/esm/parse/_lib/Parser.js");
+/* harmony import */ var _utils_js__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../utils.js */ "./node_modules/date-fns/esm/parse/_lib/utils.js");
+
+
+
+
+
+
+
+
+var FractionOfSecondParser = /*#__PURE__*/function (_Parser) {
+  (0,_babel_runtime_helpers_esm_inherits__WEBPACK_IMPORTED_MODULE_3__["default"])(FractionOfSecondParser, _Parser);
+  var _super = (0,_babel_runtime_helpers_esm_createSuper__WEBPACK_IMPORTED_MODULE_4__["default"])(FractionOfSecondParser);
+  function FractionOfSecondParser() {
+    var _this;
+    (0,_babel_runtime_helpers_esm_classCallCheck__WEBPACK_IMPORTED_MODULE_0__["default"])(this, FractionOfSecondParser);
+    for (var _len = arguments.length, args = new Array(_len), _key = 0; _key < _len; _key++) {
+      args[_key] = arguments[_key];
+    }
+    _this = _super.call.apply(_super, [this].concat(args));
+    (0,_babel_runtime_helpers_esm_defineProperty__WEBPACK_IMPORTED_MODULE_5__["default"])((0,_babel_runtime_helpers_esm_assertThisInitialized__WEBPACK_IMPORTED_MODULE_2__["default"])(_this), "priority", 30);
+    (0,_babel_runtime_helpers_esm_defineProperty__WEBPACK_IMPORTED_MODULE_5__["default"])((0,_babel_runtime_helpers_esm_assertThisInitialized__WEBPACK_IMPORTED_MODULE_2__["default"])(_this), "incompatibleTokens", ['t', 'T']);
+    return _this;
+  }
+  (0,_babel_runtime_helpers_esm_createClass__WEBPACK_IMPORTED_MODULE_1__["default"])(FractionOfSecondParser, [{
+    key: "parse",
+    value: function parse(dateString, token) {
+      var valueCallback = function valueCallback(value) {
+        return Math.floor(value * Math.pow(10, -token.length + 3));
+      };
+      return (0,_utils_js__WEBPACK_IMPORTED_MODULE_6__.mapValue)((0,_utils_js__WEBPACK_IMPORTED_MODULE_6__.parseNDigits)(token.length, dateString), valueCallback);
+    }
+  }, {
+    key: "set",
+    value: function set(date, _flags, value) {
+      date.setUTCMilliseconds(value);
+      return date;
+    }
+  }]);
+  return FractionOfSecondParser;
+}(_Parser_js__WEBPACK_IMPORTED_MODULE_7__.Parser);
+
+/***/ }),
+
+/***/ "./node_modules/date-fns/esm/parse/_lib/parsers/Hour0To11Parser.js":
+/*!*************************************************************************!*\
+  !*** ./node_modules/date-fns/esm/parse/_lib/parsers/Hour0To11Parser.js ***!
+  \*************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   Hour0To11Parser: () => (/* binding */ Hour0To11Parser)
+/* harmony export */ });
+/* harmony import */ var _babel_runtime_helpers_esm_classCallCheck__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/helpers/esm/classCallCheck */ "./node_modules/@babel/runtime/helpers/esm/classCallCheck.js");
+/* harmony import */ var _babel_runtime_helpers_esm_createClass__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @babel/runtime/helpers/esm/createClass */ "./node_modules/@babel/runtime/helpers/esm/createClass.js");
+/* harmony import */ var _babel_runtime_helpers_esm_assertThisInitialized__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @babel/runtime/helpers/esm/assertThisInitialized */ "./node_modules/@babel/runtime/helpers/esm/assertThisInitialized.js");
+/* harmony import */ var _babel_runtime_helpers_esm_inherits__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @babel/runtime/helpers/esm/inherits */ "./node_modules/@babel/runtime/helpers/esm/inherits.js");
+/* harmony import */ var _babel_runtime_helpers_esm_createSuper__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @babel/runtime/helpers/esm/createSuper */ "./node_modules/@babel/runtime/helpers/esm/createSuper.js");
+/* harmony import */ var _babel_runtime_helpers_esm_defineProperty__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @babel/runtime/helpers/esm/defineProperty */ "./node_modules/@babel/runtime/helpers/esm/defineProperty.js");
+/* harmony import */ var _Parser_js__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../Parser.js */ "./node_modules/date-fns/esm/parse/_lib/Parser.js");
+/* harmony import */ var _constants_js__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../constants.js */ "./node_modules/date-fns/esm/parse/_lib/constants.js");
+/* harmony import */ var _utils_js__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../utils.js */ "./node_modules/date-fns/esm/parse/_lib/utils.js");
+
+
+
+
+
+
+
+
+
+var Hour0To11Parser = /*#__PURE__*/function (_Parser) {
+  (0,_babel_runtime_helpers_esm_inherits__WEBPACK_IMPORTED_MODULE_3__["default"])(Hour0To11Parser, _Parser);
+  var _super = (0,_babel_runtime_helpers_esm_createSuper__WEBPACK_IMPORTED_MODULE_4__["default"])(Hour0To11Parser);
+  function Hour0To11Parser() {
+    var _this;
+    (0,_babel_runtime_helpers_esm_classCallCheck__WEBPACK_IMPORTED_MODULE_0__["default"])(this, Hour0To11Parser);
+    for (var _len = arguments.length, args = new Array(_len), _key = 0; _key < _len; _key++) {
+      args[_key] = arguments[_key];
+    }
+    _this = _super.call.apply(_super, [this].concat(args));
+    (0,_babel_runtime_helpers_esm_defineProperty__WEBPACK_IMPORTED_MODULE_5__["default"])((0,_babel_runtime_helpers_esm_assertThisInitialized__WEBPACK_IMPORTED_MODULE_2__["default"])(_this), "priority", 70);
+    (0,_babel_runtime_helpers_esm_defineProperty__WEBPACK_IMPORTED_MODULE_5__["default"])((0,_babel_runtime_helpers_esm_assertThisInitialized__WEBPACK_IMPORTED_MODULE_2__["default"])(_this), "incompatibleTokens", ['h', 'H', 'k', 't', 'T']);
+    return _this;
+  }
+  (0,_babel_runtime_helpers_esm_createClass__WEBPACK_IMPORTED_MODULE_1__["default"])(Hour0To11Parser, [{
+    key: "parse",
+    value: function parse(dateString, token, match) {
+      switch (token) {
+        case 'K':
+          return (0,_utils_js__WEBPACK_IMPORTED_MODULE_6__.parseNumericPattern)(_constants_js__WEBPACK_IMPORTED_MODULE_7__.numericPatterns.hour11h, dateString);
+        case 'Ko':
+          return match.ordinalNumber(dateString, {
+            unit: 'hour'
+          });
+        default:
+          return (0,_utils_js__WEBPACK_IMPORTED_MODULE_6__.parseNDigits)(token.length, dateString);
+      }
+    }
+  }, {
+    key: "validate",
+    value: function validate(_date, value) {
+      return value >= 0 && value <= 11;
+    }
+  }, {
+    key: "set",
+    value: function set(date, _flags, value) {
+      var isPM = date.getUTCHours() >= 12;
+      if (isPM && value < 12) {
+        date.setUTCHours(value + 12, 0, 0, 0);
+      } else {
+        date.setUTCHours(value, 0, 0, 0);
+      }
+      return date;
+    }
+  }]);
+  return Hour0To11Parser;
+}(_Parser_js__WEBPACK_IMPORTED_MODULE_8__.Parser);
+
+/***/ }),
+
+/***/ "./node_modules/date-fns/esm/parse/_lib/parsers/Hour0to23Parser.js":
+/*!*************************************************************************!*\
+  !*** ./node_modules/date-fns/esm/parse/_lib/parsers/Hour0to23Parser.js ***!
+  \*************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   Hour0to23Parser: () => (/* binding */ Hour0to23Parser)
+/* harmony export */ });
+/* harmony import */ var _babel_runtime_helpers_esm_classCallCheck__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/helpers/esm/classCallCheck */ "./node_modules/@babel/runtime/helpers/esm/classCallCheck.js");
+/* harmony import */ var _babel_runtime_helpers_esm_createClass__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @babel/runtime/helpers/esm/createClass */ "./node_modules/@babel/runtime/helpers/esm/createClass.js");
+/* harmony import */ var _babel_runtime_helpers_esm_assertThisInitialized__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @babel/runtime/helpers/esm/assertThisInitialized */ "./node_modules/@babel/runtime/helpers/esm/assertThisInitialized.js");
+/* harmony import */ var _babel_runtime_helpers_esm_inherits__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @babel/runtime/helpers/esm/inherits */ "./node_modules/@babel/runtime/helpers/esm/inherits.js");
+/* harmony import */ var _babel_runtime_helpers_esm_createSuper__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @babel/runtime/helpers/esm/createSuper */ "./node_modules/@babel/runtime/helpers/esm/createSuper.js");
+/* harmony import */ var _babel_runtime_helpers_esm_defineProperty__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @babel/runtime/helpers/esm/defineProperty */ "./node_modules/@babel/runtime/helpers/esm/defineProperty.js");
+/* harmony import */ var _Parser_js__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../Parser.js */ "./node_modules/date-fns/esm/parse/_lib/Parser.js");
+/* harmony import */ var _constants_js__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../constants.js */ "./node_modules/date-fns/esm/parse/_lib/constants.js");
+/* harmony import */ var _utils_js__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../utils.js */ "./node_modules/date-fns/esm/parse/_lib/utils.js");
+
+
+
+
+
+
+
+
+
+var Hour0to23Parser = /*#__PURE__*/function (_Parser) {
+  (0,_babel_runtime_helpers_esm_inherits__WEBPACK_IMPORTED_MODULE_3__["default"])(Hour0to23Parser, _Parser);
+  var _super = (0,_babel_runtime_helpers_esm_createSuper__WEBPACK_IMPORTED_MODULE_4__["default"])(Hour0to23Parser);
+  function Hour0to23Parser() {
+    var _this;
+    (0,_babel_runtime_helpers_esm_classCallCheck__WEBPACK_IMPORTED_MODULE_0__["default"])(this, Hour0to23Parser);
+    for (var _len = arguments.length, args = new Array(_len), _key = 0; _key < _len; _key++) {
+      args[_key] = arguments[_key];
+    }
+    _this = _super.call.apply(_super, [this].concat(args));
+    (0,_babel_runtime_helpers_esm_defineProperty__WEBPACK_IMPORTED_MODULE_5__["default"])((0,_babel_runtime_helpers_esm_assertThisInitialized__WEBPACK_IMPORTED_MODULE_2__["default"])(_this), "priority", 70);
+    (0,_babel_runtime_helpers_esm_defineProperty__WEBPACK_IMPORTED_MODULE_5__["default"])((0,_babel_runtime_helpers_esm_assertThisInitialized__WEBPACK_IMPORTED_MODULE_2__["default"])(_this), "incompatibleTokens", ['a', 'b', 'h', 'K', 'k', 't', 'T']);
+    return _this;
+  }
+  (0,_babel_runtime_helpers_esm_createClass__WEBPACK_IMPORTED_MODULE_1__["default"])(Hour0to23Parser, [{
+    key: "parse",
+    value: function parse(dateString, token, match) {
+      switch (token) {
+        case 'H':
+          return (0,_utils_js__WEBPACK_IMPORTED_MODULE_6__.parseNumericPattern)(_constants_js__WEBPACK_IMPORTED_MODULE_7__.numericPatterns.hour23h, dateString);
+        case 'Ho':
+          return match.ordinalNumber(dateString, {
+            unit: 'hour'
+          });
+        default:
+          return (0,_utils_js__WEBPACK_IMPORTED_MODULE_6__.parseNDigits)(token.length, dateString);
+      }
+    }
+  }, {
+    key: "validate",
+    value: function validate(_date, value) {
+      return value >= 0 && value <= 23;
+    }
+  }, {
+    key: "set",
+    value: function set(date, _flags, value) {
+      date.setUTCHours(value, 0, 0, 0);
+      return date;
+    }
+  }]);
+  return Hour0to23Parser;
+}(_Parser_js__WEBPACK_IMPORTED_MODULE_8__.Parser);
+
+/***/ }),
+
+/***/ "./node_modules/date-fns/esm/parse/_lib/parsers/Hour1To24Parser.js":
+/*!*************************************************************************!*\
+  !*** ./node_modules/date-fns/esm/parse/_lib/parsers/Hour1To24Parser.js ***!
+  \*************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   Hour1To24Parser: () => (/* binding */ Hour1To24Parser)
+/* harmony export */ });
+/* harmony import */ var _babel_runtime_helpers_esm_classCallCheck__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/helpers/esm/classCallCheck */ "./node_modules/@babel/runtime/helpers/esm/classCallCheck.js");
+/* harmony import */ var _babel_runtime_helpers_esm_createClass__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @babel/runtime/helpers/esm/createClass */ "./node_modules/@babel/runtime/helpers/esm/createClass.js");
+/* harmony import */ var _babel_runtime_helpers_esm_assertThisInitialized__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @babel/runtime/helpers/esm/assertThisInitialized */ "./node_modules/@babel/runtime/helpers/esm/assertThisInitialized.js");
+/* harmony import */ var _babel_runtime_helpers_esm_inherits__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @babel/runtime/helpers/esm/inherits */ "./node_modules/@babel/runtime/helpers/esm/inherits.js");
+/* harmony import */ var _babel_runtime_helpers_esm_createSuper__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @babel/runtime/helpers/esm/createSuper */ "./node_modules/@babel/runtime/helpers/esm/createSuper.js");
+/* harmony import */ var _babel_runtime_helpers_esm_defineProperty__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @babel/runtime/helpers/esm/defineProperty */ "./node_modules/@babel/runtime/helpers/esm/defineProperty.js");
+/* harmony import */ var _Parser_js__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../Parser.js */ "./node_modules/date-fns/esm/parse/_lib/Parser.js");
+/* harmony import */ var _constants_js__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../constants.js */ "./node_modules/date-fns/esm/parse/_lib/constants.js");
+/* harmony import */ var _utils_js__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../utils.js */ "./node_modules/date-fns/esm/parse/_lib/utils.js");
+
+
+
+
+
+
+
+
+
+var Hour1To24Parser = /*#__PURE__*/function (_Parser) {
+  (0,_babel_runtime_helpers_esm_inherits__WEBPACK_IMPORTED_MODULE_3__["default"])(Hour1To24Parser, _Parser);
+  var _super = (0,_babel_runtime_helpers_esm_createSuper__WEBPACK_IMPORTED_MODULE_4__["default"])(Hour1To24Parser);
+  function Hour1To24Parser() {
+    var _this;
+    (0,_babel_runtime_helpers_esm_classCallCheck__WEBPACK_IMPORTED_MODULE_0__["default"])(this, Hour1To24Parser);
+    for (var _len = arguments.length, args = new Array(_len), _key = 0; _key < _len; _key++) {
+      args[_key] = arguments[_key];
+    }
+    _this = _super.call.apply(_super, [this].concat(args));
+    (0,_babel_runtime_helpers_esm_defineProperty__WEBPACK_IMPORTED_MODULE_5__["default"])((0,_babel_runtime_helpers_esm_assertThisInitialized__WEBPACK_IMPORTED_MODULE_2__["default"])(_this), "priority", 70);
+    (0,_babel_runtime_helpers_esm_defineProperty__WEBPACK_IMPORTED_MODULE_5__["default"])((0,_babel_runtime_helpers_esm_assertThisInitialized__WEBPACK_IMPORTED_MODULE_2__["default"])(_this), "incompatibleTokens", ['a', 'b', 'h', 'H', 'K', 't', 'T']);
+    return _this;
+  }
+  (0,_babel_runtime_helpers_esm_createClass__WEBPACK_IMPORTED_MODULE_1__["default"])(Hour1To24Parser, [{
+    key: "parse",
+    value: function parse(dateString, token, match) {
+      switch (token) {
+        case 'k':
+          return (0,_utils_js__WEBPACK_IMPORTED_MODULE_6__.parseNumericPattern)(_constants_js__WEBPACK_IMPORTED_MODULE_7__.numericPatterns.hour24h, dateString);
+        case 'ko':
+          return match.ordinalNumber(dateString, {
+            unit: 'hour'
+          });
+        default:
+          return (0,_utils_js__WEBPACK_IMPORTED_MODULE_6__.parseNDigits)(token.length, dateString);
+      }
+    }
+  }, {
+    key: "validate",
+    value: function validate(_date, value) {
+      return value >= 1 && value <= 24;
+    }
+  }, {
+    key: "set",
+    value: function set(date, _flags, value) {
+      var hours = value <= 24 ? value % 24 : value;
+      date.setUTCHours(hours, 0, 0, 0);
+      return date;
+    }
+  }]);
+  return Hour1To24Parser;
+}(_Parser_js__WEBPACK_IMPORTED_MODULE_8__.Parser);
+
+/***/ }),
+
+/***/ "./node_modules/date-fns/esm/parse/_lib/parsers/Hour1to12Parser.js":
+/*!*************************************************************************!*\
+  !*** ./node_modules/date-fns/esm/parse/_lib/parsers/Hour1to12Parser.js ***!
+  \*************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   Hour1to12Parser: () => (/* binding */ Hour1to12Parser)
+/* harmony export */ });
+/* harmony import */ var _babel_runtime_helpers_esm_classCallCheck__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/helpers/esm/classCallCheck */ "./node_modules/@babel/runtime/helpers/esm/classCallCheck.js");
+/* harmony import */ var _babel_runtime_helpers_esm_createClass__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @babel/runtime/helpers/esm/createClass */ "./node_modules/@babel/runtime/helpers/esm/createClass.js");
+/* harmony import */ var _babel_runtime_helpers_esm_assertThisInitialized__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @babel/runtime/helpers/esm/assertThisInitialized */ "./node_modules/@babel/runtime/helpers/esm/assertThisInitialized.js");
+/* harmony import */ var _babel_runtime_helpers_esm_inherits__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @babel/runtime/helpers/esm/inherits */ "./node_modules/@babel/runtime/helpers/esm/inherits.js");
+/* harmony import */ var _babel_runtime_helpers_esm_createSuper__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @babel/runtime/helpers/esm/createSuper */ "./node_modules/@babel/runtime/helpers/esm/createSuper.js");
+/* harmony import */ var _babel_runtime_helpers_esm_defineProperty__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @babel/runtime/helpers/esm/defineProperty */ "./node_modules/@babel/runtime/helpers/esm/defineProperty.js");
+/* harmony import */ var _Parser_js__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../Parser.js */ "./node_modules/date-fns/esm/parse/_lib/Parser.js");
+/* harmony import */ var _constants_js__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../constants.js */ "./node_modules/date-fns/esm/parse/_lib/constants.js");
+/* harmony import */ var _utils_js__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../utils.js */ "./node_modules/date-fns/esm/parse/_lib/utils.js");
+
+
+
+
+
+
+
+
+
+var Hour1to12Parser = /*#__PURE__*/function (_Parser) {
+  (0,_babel_runtime_helpers_esm_inherits__WEBPACK_IMPORTED_MODULE_3__["default"])(Hour1to12Parser, _Parser);
+  var _super = (0,_babel_runtime_helpers_esm_createSuper__WEBPACK_IMPORTED_MODULE_4__["default"])(Hour1to12Parser);
+  function Hour1to12Parser() {
+    var _this;
+    (0,_babel_runtime_helpers_esm_classCallCheck__WEBPACK_IMPORTED_MODULE_0__["default"])(this, Hour1to12Parser);
+    for (var _len = arguments.length, args = new Array(_len), _key = 0; _key < _len; _key++) {
+      args[_key] = arguments[_key];
+    }
+    _this = _super.call.apply(_super, [this].concat(args));
+    (0,_babel_runtime_helpers_esm_defineProperty__WEBPACK_IMPORTED_MODULE_5__["default"])((0,_babel_runtime_helpers_esm_assertThisInitialized__WEBPACK_IMPORTED_MODULE_2__["default"])(_this), "priority", 70);
+    (0,_babel_runtime_helpers_esm_defineProperty__WEBPACK_IMPORTED_MODULE_5__["default"])((0,_babel_runtime_helpers_esm_assertThisInitialized__WEBPACK_IMPORTED_MODULE_2__["default"])(_this), "incompatibleTokens", ['H', 'K', 'k', 't', 'T']);
+    return _this;
+  }
+  (0,_babel_runtime_helpers_esm_createClass__WEBPACK_IMPORTED_MODULE_1__["default"])(Hour1to12Parser, [{
+    key: "parse",
+    value: function parse(dateString, token, match) {
+      switch (token) {
+        case 'h':
+          return (0,_utils_js__WEBPACK_IMPORTED_MODULE_6__.parseNumericPattern)(_constants_js__WEBPACK_IMPORTED_MODULE_7__.numericPatterns.hour12h, dateString);
+        case 'ho':
+          return match.ordinalNumber(dateString, {
+            unit: 'hour'
+          });
+        default:
+          return (0,_utils_js__WEBPACK_IMPORTED_MODULE_6__.parseNDigits)(token.length, dateString);
+      }
+    }
+  }, {
+    key: "validate",
+    value: function validate(_date, value) {
+      return value >= 1 && value <= 12;
+    }
+  }, {
+    key: "set",
+    value: function set(date, _flags, value) {
+      var isPM = date.getUTCHours() >= 12;
+      if (isPM && value < 12) {
+        date.setUTCHours(value + 12, 0, 0, 0);
+      } else if (!isPM && value === 12) {
+        date.setUTCHours(0, 0, 0, 0);
+      } else {
+        date.setUTCHours(value, 0, 0, 0);
+      }
+      return date;
+    }
+  }]);
+  return Hour1to12Parser;
+}(_Parser_js__WEBPACK_IMPORTED_MODULE_8__.Parser);
+
+/***/ }),
+
+/***/ "./node_modules/date-fns/esm/parse/_lib/parsers/ISODayParser.js":
+/*!**********************************************************************!*\
+  !*** ./node_modules/date-fns/esm/parse/_lib/parsers/ISODayParser.js ***!
+  \**********************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   ISODayParser: () => (/* binding */ ISODayParser)
+/* harmony export */ });
+/* harmony import */ var _babel_runtime_helpers_esm_classCallCheck__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/helpers/esm/classCallCheck */ "./node_modules/@babel/runtime/helpers/esm/classCallCheck.js");
+/* harmony import */ var _babel_runtime_helpers_esm_createClass__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @babel/runtime/helpers/esm/createClass */ "./node_modules/@babel/runtime/helpers/esm/createClass.js");
+/* harmony import */ var _babel_runtime_helpers_esm_assertThisInitialized__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @babel/runtime/helpers/esm/assertThisInitialized */ "./node_modules/@babel/runtime/helpers/esm/assertThisInitialized.js");
+/* harmony import */ var _babel_runtime_helpers_esm_inherits__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @babel/runtime/helpers/esm/inherits */ "./node_modules/@babel/runtime/helpers/esm/inherits.js");
+/* harmony import */ var _babel_runtime_helpers_esm_createSuper__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @babel/runtime/helpers/esm/createSuper */ "./node_modules/@babel/runtime/helpers/esm/createSuper.js");
+/* harmony import */ var _babel_runtime_helpers_esm_defineProperty__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @babel/runtime/helpers/esm/defineProperty */ "./node_modules/@babel/runtime/helpers/esm/defineProperty.js");
+/* harmony import */ var _Parser_js__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../Parser.js */ "./node_modules/date-fns/esm/parse/_lib/Parser.js");
+/* harmony import */ var _utils_js__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../utils.js */ "./node_modules/date-fns/esm/parse/_lib/utils.js");
+/* harmony import */ var _lib_setUTCISODay_index_js__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../../../_lib/setUTCISODay/index.js */ "./node_modules/date-fns/esm/_lib/setUTCISODay/index.js");
+
+
+
+
+
+
+
+
+ // ISO day of week
+var ISODayParser = /*#__PURE__*/function (_Parser) {
+  (0,_babel_runtime_helpers_esm_inherits__WEBPACK_IMPORTED_MODULE_3__["default"])(ISODayParser, _Parser);
+  var _super = (0,_babel_runtime_helpers_esm_createSuper__WEBPACK_IMPORTED_MODULE_4__["default"])(ISODayParser);
+  function ISODayParser() {
+    var _this;
+    (0,_babel_runtime_helpers_esm_classCallCheck__WEBPACK_IMPORTED_MODULE_0__["default"])(this, ISODayParser);
+    for (var _len = arguments.length, args = new Array(_len), _key = 0; _key < _len; _key++) {
+      args[_key] = arguments[_key];
+    }
+    _this = _super.call.apply(_super, [this].concat(args));
+    (0,_babel_runtime_helpers_esm_defineProperty__WEBPACK_IMPORTED_MODULE_5__["default"])((0,_babel_runtime_helpers_esm_assertThisInitialized__WEBPACK_IMPORTED_MODULE_2__["default"])(_this), "priority", 90);
+    (0,_babel_runtime_helpers_esm_defineProperty__WEBPACK_IMPORTED_MODULE_5__["default"])((0,_babel_runtime_helpers_esm_assertThisInitialized__WEBPACK_IMPORTED_MODULE_2__["default"])(_this), "incompatibleTokens", ['y', 'Y', 'u', 'q', 'Q', 'M', 'L', 'w', 'd', 'D', 'E', 'e', 'c', 't', 'T']);
+    return _this;
+  }
+  (0,_babel_runtime_helpers_esm_createClass__WEBPACK_IMPORTED_MODULE_1__["default"])(ISODayParser, [{
+    key: "parse",
+    value: function parse(dateString, token, match) {
+      var valueCallback = function valueCallback(value) {
+        if (value === 0) {
+          return 7;
+        }
+        return value;
+      };
+      switch (token) {
+        // 2
+        case 'i':
+        case 'ii':
+          // 02
+          return (0,_utils_js__WEBPACK_IMPORTED_MODULE_6__.parseNDigits)(token.length, dateString);
+        // 2nd
+        case 'io':
+          return match.ordinalNumber(dateString, {
+            unit: 'day'
+          });
+        // Tue
+        case 'iii':
+          return (0,_utils_js__WEBPACK_IMPORTED_MODULE_6__.mapValue)(match.day(dateString, {
+            width: 'abbreviated',
+            context: 'formatting'
+          }) || match.day(dateString, {
+            width: 'short',
+            context: 'formatting'
+          }) || match.day(dateString, {
+            width: 'narrow',
+            context: 'formatting'
+          }), valueCallback);
+        // T
+        case 'iiiii':
+          return (0,_utils_js__WEBPACK_IMPORTED_MODULE_6__.mapValue)(match.day(dateString, {
+            width: 'narrow',
+            context: 'formatting'
+          }), valueCallback);
+        // Tu
+        case 'iiiiii':
+          return (0,_utils_js__WEBPACK_IMPORTED_MODULE_6__.mapValue)(match.day(dateString, {
+            width: 'short',
+            context: 'formatting'
+          }) || match.day(dateString, {
+            width: 'narrow',
+            context: 'formatting'
+          }), valueCallback);
+        // Tuesday
+        case 'iiii':
+        default:
+          return (0,_utils_js__WEBPACK_IMPORTED_MODULE_6__.mapValue)(match.day(dateString, {
+            width: 'wide',
+            context: 'formatting'
+          }) || match.day(dateString, {
+            width: 'abbreviated',
+            context: 'formatting'
+          }) || match.day(dateString, {
+            width: 'short',
+            context: 'formatting'
+          }) || match.day(dateString, {
+            width: 'narrow',
+            context: 'formatting'
+          }), valueCallback);
+      }
+    }
+  }, {
+    key: "validate",
+    value: function validate(_date, value) {
+      return value >= 1 && value <= 7;
+    }
+  }, {
+    key: "set",
+    value: function set(date, _flags, value) {
+      date = (0,_lib_setUTCISODay_index_js__WEBPACK_IMPORTED_MODULE_7__["default"])(date, value);
+      date.setUTCHours(0, 0, 0, 0);
+      return date;
+    }
+  }]);
+  return ISODayParser;
+}(_Parser_js__WEBPACK_IMPORTED_MODULE_8__.Parser);
+
+/***/ }),
+
+/***/ "./node_modules/date-fns/esm/parse/_lib/parsers/ISOTimezoneParser.js":
+/*!***************************************************************************!*\
+  !*** ./node_modules/date-fns/esm/parse/_lib/parsers/ISOTimezoneParser.js ***!
+  \***************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   ISOTimezoneParser: () => (/* binding */ ISOTimezoneParser)
+/* harmony export */ });
+/* harmony import */ var _babel_runtime_helpers_esm_classCallCheck__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/helpers/esm/classCallCheck */ "./node_modules/@babel/runtime/helpers/esm/classCallCheck.js");
+/* harmony import */ var _babel_runtime_helpers_esm_createClass__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @babel/runtime/helpers/esm/createClass */ "./node_modules/@babel/runtime/helpers/esm/createClass.js");
+/* harmony import */ var _babel_runtime_helpers_esm_assertThisInitialized__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @babel/runtime/helpers/esm/assertThisInitialized */ "./node_modules/@babel/runtime/helpers/esm/assertThisInitialized.js");
+/* harmony import */ var _babel_runtime_helpers_esm_inherits__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @babel/runtime/helpers/esm/inherits */ "./node_modules/@babel/runtime/helpers/esm/inherits.js");
+/* harmony import */ var _babel_runtime_helpers_esm_createSuper__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @babel/runtime/helpers/esm/createSuper */ "./node_modules/@babel/runtime/helpers/esm/createSuper.js");
+/* harmony import */ var _babel_runtime_helpers_esm_defineProperty__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @babel/runtime/helpers/esm/defineProperty */ "./node_modules/@babel/runtime/helpers/esm/defineProperty.js");
+/* harmony import */ var _Parser_js__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../Parser.js */ "./node_modules/date-fns/esm/parse/_lib/Parser.js");
+/* harmony import */ var _constants_js__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../constants.js */ "./node_modules/date-fns/esm/parse/_lib/constants.js");
+/* harmony import */ var _utils_js__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../utils.js */ "./node_modules/date-fns/esm/parse/_lib/utils.js");
+
+
+
+
+
+
+
+
+ // Timezone (ISO-8601)
+var ISOTimezoneParser = /*#__PURE__*/function (_Parser) {
+  (0,_babel_runtime_helpers_esm_inherits__WEBPACK_IMPORTED_MODULE_3__["default"])(ISOTimezoneParser, _Parser);
+  var _super = (0,_babel_runtime_helpers_esm_createSuper__WEBPACK_IMPORTED_MODULE_4__["default"])(ISOTimezoneParser);
+  function ISOTimezoneParser() {
+    var _this;
+    (0,_babel_runtime_helpers_esm_classCallCheck__WEBPACK_IMPORTED_MODULE_0__["default"])(this, ISOTimezoneParser);
+    for (var _len = arguments.length, args = new Array(_len), _key = 0; _key < _len; _key++) {
+      args[_key] = arguments[_key];
+    }
+    _this = _super.call.apply(_super, [this].concat(args));
+    (0,_babel_runtime_helpers_esm_defineProperty__WEBPACK_IMPORTED_MODULE_5__["default"])((0,_babel_runtime_helpers_esm_assertThisInitialized__WEBPACK_IMPORTED_MODULE_2__["default"])(_this), "priority", 10);
+    (0,_babel_runtime_helpers_esm_defineProperty__WEBPACK_IMPORTED_MODULE_5__["default"])((0,_babel_runtime_helpers_esm_assertThisInitialized__WEBPACK_IMPORTED_MODULE_2__["default"])(_this), "incompatibleTokens", ['t', 'T', 'X']);
+    return _this;
+  }
+  (0,_babel_runtime_helpers_esm_createClass__WEBPACK_IMPORTED_MODULE_1__["default"])(ISOTimezoneParser, [{
+    key: "parse",
+    value: function parse(dateString, token) {
+      switch (token) {
+        case 'x':
+          return (0,_utils_js__WEBPACK_IMPORTED_MODULE_6__.parseTimezonePattern)(_constants_js__WEBPACK_IMPORTED_MODULE_7__.timezonePatterns.basicOptionalMinutes, dateString);
+        case 'xx':
+          return (0,_utils_js__WEBPACK_IMPORTED_MODULE_6__.parseTimezonePattern)(_constants_js__WEBPACK_IMPORTED_MODULE_7__.timezonePatterns.basic, dateString);
+        case 'xxxx':
+          return (0,_utils_js__WEBPACK_IMPORTED_MODULE_6__.parseTimezonePattern)(_constants_js__WEBPACK_IMPORTED_MODULE_7__.timezonePatterns.basicOptionalSeconds, dateString);
+        case 'xxxxx':
+          return (0,_utils_js__WEBPACK_IMPORTED_MODULE_6__.parseTimezonePattern)(_constants_js__WEBPACK_IMPORTED_MODULE_7__.timezonePatterns.extendedOptionalSeconds, dateString);
+        case 'xxx':
+        default:
+          return (0,_utils_js__WEBPACK_IMPORTED_MODULE_6__.parseTimezonePattern)(_constants_js__WEBPACK_IMPORTED_MODULE_7__.timezonePatterns.extended, dateString);
+      }
+    }
+  }, {
+    key: "set",
+    value: function set(date, flags, value) {
+      if (flags.timestampIsSet) {
+        return date;
+      }
+      return new Date(date.getTime() - value);
+    }
+  }]);
+  return ISOTimezoneParser;
+}(_Parser_js__WEBPACK_IMPORTED_MODULE_8__.Parser);
+
+/***/ }),
+
+/***/ "./node_modules/date-fns/esm/parse/_lib/parsers/ISOTimezoneWithZParser.js":
+/*!********************************************************************************!*\
+  !*** ./node_modules/date-fns/esm/parse/_lib/parsers/ISOTimezoneWithZParser.js ***!
+  \********************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   ISOTimezoneWithZParser: () => (/* binding */ ISOTimezoneWithZParser)
+/* harmony export */ });
+/* harmony import */ var _babel_runtime_helpers_esm_classCallCheck__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/helpers/esm/classCallCheck */ "./node_modules/@babel/runtime/helpers/esm/classCallCheck.js");
+/* harmony import */ var _babel_runtime_helpers_esm_createClass__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @babel/runtime/helpers/esm/createClass */ "./node_modules/@babel/runtime/helpers/esm/createClass.js");
+/* harmony import */ var _babel_runtime_helpers_esm_assertThisInitialized__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @babel/runtime/helpers/esm/assertThisInitialized */ "./node_modules/@babel/runtime/helpers/esm/assertThisInitialized.js");
+/* harmony import */ var _babel_runtime_helpers_esm_inherits__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @babel/runtime/helpers/esm/inherits */ "./node_modules/@babel/runtime/helpers/esm/inherits.js");
+/* harmony import */ var _babel_runtime_helpers_esm_createSuper__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @babel/runtime/helpers/esm/createSuper */ "./node_modules/@babel/runtime/helpers/esm/createSuper.js");
+/* harmony import */ var _babel_runtime_helpers_esm_defineProperty__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @babel/runtime/helpers/esm/defineProperty */ "./node_modules/@babel/runtime/helpers/esm/defineProperty.js");
+/* harmony import */ var _Parser_js__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../Parser.js */ "./node_modules/date-fns/esm/parse/_lib/Parser.js");
+/* harmony import */ var _constants_js__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../constants.js */ "./node_modules/date-fns/esm/parse/_lib/constants.js");
+/* harmony import */ var _utils_js__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../utils.js */ "./node_modules/date-fns/esm/parse/_lib/utils.js");
+
+
+
+
+
+
+
+
+ // Timezone (ISO-8601. +00:00 is `'Z'`)
+var ISOTimezoneWithZParser = /*#__PURE__*/function (_Parser) {
+  (0,_babel_runtime_helpers_esm_inherits__WEBPACK_IMPORTED_MODULE_3__["default"])(ISOTimezoneWithZParser, _Parser);
+  var _super = (0,_babel_runtime_helpers_esm_createSuper__WEBPACK_IMPORTED_MODULE_4__["default"])(ISOTimezoneWithZParser);
+  function ISOTimezoneWithZParser() {
+    var _this;
+    (0,_babel_runtime_helpers_esm_classCallCheck__WEBPACK_IMPORTED_MODULE_0__["default"])(this, ISOTimezoneWithZParser);
+    for (var _len = arguments.length, args = new Array(_len), _key = 0; _key < _len; _key++) {
+      args[_key] = arguments[_key];
+    }
+    _this = _super.call.apply(_super, [this].concat(args));
+    (0,_babel_runtime_helpers_esm_defineProperty__WEBPACK_IMPORTED_MODULE_5__["default"])((0,_babel_runtime_helpers_esm_assertThisInitialized__WEBPACK_IMPORTED_MODULE_2__["default"])(_this), "priority", 10);
+    (0,_babel_runtime_helpers_esm_defineProperty__WEBPACK_IMPORTED_MODULE_5__["default"])((0,_babel_runtime_helpers_esm_assertThisInitialized__WEBPACK_IMPORTED_MODULE_2__["default"])(_this), "incompatibleTokens", ['t', 'T', 'x']);
+    return _this;
+  }
+  (0,_babel_runtime_helpers_esm_createClass__WEBPACK_IMPORTED_MODULE_1__["default"])(ISOTimezoneWithZParser, [{
+    key: "parse",
+    value: function parse(dateString, token) {
+      switch (token) {
+        case 'X':
+          return (0,_utils_js__WEBPACK_IMPORTED_MODULE_6__.parseTimezonePattern)(_constants_js__WEBPACK_IMPORTED_MODULE_7__.timezonePatterns.basicOptionalMinutes, dateString);
+        case 'XX':
+          return (0,_utils_js__WEBPACK_IMPORTED_MODULE_6__.parseTimezonePattern)(_constants_js__WEBPACK_IMPORTED_MODULE_7__.timezonePatterns.basic, dateString);
+        case 'XXXX':
+          return (0,_utils_js__WEBPACK_IMPORTED_MODULE_6__.parseTimezonePattern)(_constants_js__WEBPACK_IMPORTED_MODULE_7__.timezonePatterns.basicOptionalSeconds, dateString);
+        case 'XXXXX':
+          return (0,_utils_js__WEBPACK_IMPORTED_MODULE_6__.parseTimezonePattern)(_constants_js__WEBPACK_IMPORTED_MODULE_7__.timezonePatterns.extendedOptionalSeconds, dateString);
+        case 'XXX':
+        default:
+          return (0,_utils_js__WEBPACK_IMPORTED_MODULE_6__.parseTimezonePattern)(_constants_js__WEBPACK_IMPORTED_MODULE_7__.timezonePatterns.extended, dateString);
+      }
+    }
+  }, {
+    key: "set",
+    value: function set(date, flags, value) {
+      if (flags.timestampIsSet) {
+        return date;
+      }
+      return new Date(date.getTime() - value);
+    }
+  }]);
+  return ISOTimezoneWithZParser;
+}(_Parser_js__WEBPACK_IMPORTED_MODULE_8__.Parser);
+
+/***/ }),
+
+/***/ "./node_modules/date-fns/esm/parse/_lib/parsers/ISOWeekParser.js":
+/*!***********************************************************************!*\
+  !*** ./node_modules/date-fns/esm/parse/_lib/parsers/ISOWeekParser.js ***!
+  \***********************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   ISOWeekParser: () => (/* binding */ ISOWeekParser)
+/* harmony export */ });
+/* harmony import */ var _babel_runtime_helpers_esm_classCallCheck__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/helpers/esm/classCallCheck */ "./node_modules/@babel/runtime/helpers/esm/classCallCheck.js");
+/* harmony import */ var _babel_runtime_helpers_esm_createClass__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @babel/runtime/helpers/esm/createClass */ "./node_modules/@babel/runtime/helpers/esm/createClass.js");
+/* harmony import */ var _babel_runtime_helpers_esm_assertThisInitialized__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @babel/runtime/helpers/esm/assertThisInitialized */ "./node_modules/@babel/runtime/helpers/esm/assertThisInitialized.js");
+/* harmony import */ var _babel_runtime_helpers_esm_inherits__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @babel/runtime/helpers/esm/inherits */ "./node_modules/@babel/runtime/helpers/esm/inherits.js");
+/* harmony import */ var _babel_runtime_helpers_esm_createSuper__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @babel/runtime/helpers/esm/createSuper */ "./node_modules/@babel/runtime/helpers/esm/createSuper.js");
+/* harmony import */ var _babel_runtime_helpers_esm_defineProperty__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @babel/runtime/helpers/esm/defineProperty */ "./node_modules/@babel/runtime/helpers/esm/defineProperty.js");
+/* harmony import */ var _Parser_js__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ../Parser.js */ "./node_modules/date-fns/esm/parse/_lib/Parser.js");
+/* harmony import */ var _constants_js__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../constants.js */ "./node_modules/date-fns/esm/parse/_lib/constants.js");
+/* harmony import */ var _utils_js__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../utils.js */ "./node_modules/date-fns/esm/parse/_lib/utils.js");
+/* harmony import */ var _lib_setUTCISOWeek_index_js__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ../../../_lib/setUTCISOWeek/index.js */ "./node_modules/date-fns/esm/_lib/setUTCISOWeek/index.js");
+/* harmony import */ var _lib_startOfUTCISOWeek_index_js__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../../../_lib/startOfUTCISOWeek/index.js */ "./node_modules/date-fns/esm/_lib/startOfUTCISOWeek/index.js");
+
+
+
+
+
+
+
+
+
+
+ // ISO week of year
+var ISOWeekParser = /*#__PURE__*/function (_Parser) {
+  (0,_babel_runtime_helpers_esm_inherits__WEBPACK_IMPORTED_MODULE_3__["default"])(ISOWeekParser, _Parser);
+  var _super = (0,_babel_runtime_helpers_esm_createSuper__WEBPACK_IMPORTED_MODULE_4__["default"])(ISOWeekParser);
+  function ISOWeekParser() {
+    var _this;
+    (0,_babel_runtime_helpers_esm_classCallCheck__WEBPACK_IMPORTED_MODULE_0__["default"])(this, ISOWeekParser);
+    for (var _len = arguments.length, args = new Array(_len), _key = 0; _key < _len; _key++) {
+      args[_key] = arguments[_key];
+    }
+    _this = _super.call.apply(_super, [this].concat(args));
+    (0,_babel_runtime_helpers_esm_defineProperty__WEBPACK_IMPORTED_MODULE_5__["default"])((0,_babel_runtime_helpers_esm_assertThisInitialized__WEBPACK_IMPORTED_MODULE_2__["default"])(_this), "priority", 100);
+    (0,_babel_runtime_helpers_esm_defineProperty__WEBPACK_IMPORTED_MODULE_5__["default"])((0,_babel_runtime_helpers_esm_assertThisInitialized__WEBPACK_IMPORTED_MODULE_2__["default"])(_this), "incompatibleTokens", ['y', 'Y', 'u', 'q', 'Q', 'M', 'L', 'w', 'd', 'D', 'e', 'c', 't', 'T']);
+    return _this;
+  }
+  (0,_babel_runtime_helpers_esm_createClass__WEBPACK_IMPORTED_MODULE_1__["default"])(ISOWeekParser, [{
+    key: "parse",
+    value: function parse(dateString, token, match) {
+      switch (token) {
+        case 'I':
+          return (0,_utils_js__WEBPACK_IMPORTED_MODULE_6__.parseNumericPattern)(_constants_js__WEBPACK_IMPORTED_MODULE_7__.numericPatterns.week, dateString);
+        case 'Io':
+          return match.ordinalNumber(dateString, {
+            unit: 'week'
+          });
+        default:
+          return (0,_utils_js__WEBPACK_IMPORTED_MODULE_6__.parseNDigits)(token.length, dateString);
+      }
+    }
+  }, {
+    key: "validate",
+    value: function validate(_date, value) {
+      return value >= 1 && value <= 53;
+    }
+  }, {
+    key: "set",
+    value: function set(date, _flags, value) {
+      return (0,_lib_startOfUTCISOWeek_index_js__WEBPACK_IMPORTED_MODULE_8__["default"])((0,_lib_setUTCISOWeek_index_js__WEBPACK_IMPORTED_MODULE_9__["default"])(date, value));
+    }
+  }]);
+  return ISOWeekParser;
+}(_Parser_js__WEBPACK_IMPORTED_MODULE_10__.Parser);
+
+/***/ }),
+
+/***/ "./node_modules/date-fns/esm/parse/_lib/parsers/ISOWeekYearParser.js":
+/*!***************************************************************************!*\
+  !*** ./node_modules/date-fns/esm/parse/_lib/parsers/ISOWeekYearParser.js ***!
+  \***************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   ISOWeekYearParser: () => (/* binding */ ISOWeekYearParser)
+/* harmony export */ });
+/* harmony import */ var _babel_runtime_helpers_esm_classCallCheck__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/helpers/esm/classCallCheck */ "./node_modules/@babel/runtime/helpers/esm/classCallCheck.js");
+/* harmony import */ var _babel_runtime_helpers_esm_createClass__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @babel/runtime/helpers/esm/createClass */ "./node_modules/@babel/runtime/helpers/esm/createClass.js");
+/* harmony import */ var _babel_runtime_helpers_esm_assertThisInitialized__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @babel/runtime/helpers/esm/assertThisInitialized */ "./node_modules/@babel/runtime/helpers/esm/assertThisInitialized.js");
+/* harmony import */ var _babel_runtime_helpers_esm_inherits__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @babel/runtime/helpers/esm/inherits */ "./node_modules/@babel/runtime/helpers/esm/inherits.js");
+/* harmony import */ var _babel_runtime_helpers_esm_createSuper__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @babel/runtime/helpers/esm/createSuper */ "./node_modules/@babel/runtime/helpers/esm/createSuper.js");
+/* harmony import */ var _babel_runtime_helpers_esm_defineProperty__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @babel/runtime/helpers/esm/defineProperty */ "./node_modules/@babel/runtime/helpers/esm/defineProperty.js");
+/* harmony import */ var _Parser_js__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../Parser.js */ "./node_modules/date-fns/esm/parse/_lib/Parser.js");
+/* harmony import */ var _utils_js__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../utils.js */ "./node_modules/date-fns/esm/parse/_lib/utils.js");
+/* harmony import */ var _lib_startOfUTCISOWeek_index_js__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../../../_lib/startOfUTCISOWeek/index.js */ "./node_modules/date-fns/esm/_lib/startOfUTCISOWeek/index.js");
+
+
+
+
+
+
+
+
+ // ISO week-numbering year
+var ISOWeekYearParser = /*#__PURE__*/function (_Parser) {
+  (0,_babel_runtime_helpers_esm_inherits__WEBPACK_IMPORTED_MODULE_3__["default"])(ISOWeekYearParser, _Parser);
+  var _super = (0,_babel_runtime_helpers_esm_createSuper__WEBPACK_IMPORTED_MODULE_4__["default"])(ISOWeekYearParser);
+  function ISOWeekYearParser() {
+    var _this;
+    (0,_babel_runtime_helpers_esm_classCallCheck__WEBPACK_IMPORTED_MODULE_0__["default"])(this, ISOWeekYearParser);
+    for (var _len = arguments.length, args = new Array(_len), _key = 0; _key < _len; _key++) {
+      args[_key] = arguments[_key];
+    }
+    _this = _super.call.apply(_super, [this].concat(args));
+    (0,_babel_runtime_helpers_esm_defineProperty__WEBPACK_IMPORTED_MODULE_5__["default"])((0,_babel_runtime_helpers_esm_assertThisInitialized__WEBPACK_IMPORTED_MODULE_2__["default"])(_this), "priority", 130);
+    (0,_babel_runtime_helpers_esm_defineProperty__WEBPACK_IMPORTED_MODULE_5__["default"])((0,_babel_runtime_helpers_esm_assertThisInitialized__WEBPACK_IMPORTED_MODULE_2__["default"])(_this), "incompatibleTokens", ['G', 'y', 'Y', 'u', 'Q', 'q', 'M', 'L', 'w', 'd', 'D', 'e', 'c', 't', 'T']);
+    return _this;
+  }
+  (0,_babel_runtime_helpers_esm_createClass__WEBPACK_IMPORTED_MODULE_1__["default"])(ISOWeekYearParser, [{
+    key: "parse",
+    value: function parse(dateString, token) {
+      if (token === 'R') {
+        return (0,_utils_js__WEBPACK_IMPORTED_MODULE_6__.parseNDigitsSigned)(4, dateString);
+      }
+      return (0,_utils_js__WEBPACK_IMPORTED_MODULE_6__.parseNDigitsSigned)(token.length, dateString);
+    }
+  }, {
+    key: "set",
+    value: function set(_date, _flags, value) {
+      var firstWeekOfYear = new Date(0);
+      firstWeekOfYear.setUTCFullYear(value, 0, 4);
+      firstWeekOfYear.setUTCHours(0, 0, 0, 0);
+      return (0,_lib_startOfUTCISOWeek_index_js__WEBPACK_IMPORTED_MODULE_7__["default"])(firstWeekOfYear);
+    }
+  }]);
+  return ISOWeekYearParser;
+}(_Parser_js__WEBPACK_IMPORTED_MODULE_8__.Parser);
+
+/***/ }),
+
+/***/ "./node_modules/date-fns/esm/parse/_lib/parsers/LocalDayParser.js":
+/*!************************************************************************!*\
+  !*** ./node_modules/date-fns/esm/parse/_lib/parsers/LocalDayParser.js ***!
+  \************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   LocalDayParser: () => (/* binding */ LocalDayParser)
+/* harmony export */ });
+/* harmony import */ var _babel_runtime_helpers_esm_classCallCheck__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/helpers/esm/classCallCheck */ "./node_modules/@babel/runtime/helpers/esm/classCallCheck.js");
+/* harmony import */ var _babel_runtime_helpers_esm_createClass__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @babel/runtime/helpers/esm/createClass */ "./node_modules/@babel/runtime/helpers/esm/createClass.js");
+/* harmony import */ var _babel_runtime_helpers_esm_assertThisInitialized__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @babel/runtime/helpers/esm/assertThisInitialized */ "./node_modules/@babel/runtime/helpers/esm/assertThisInitialized.js");
+/* harmony import */ var _babel_runtime_helpers_esm_inherits__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @babel/runtime/helpers/esm/inherits */ "./node_modules/@babel/runtime/helpers/esm/inherits.js");
+/* harmony import */ var _babel_runtime_helpers_esm_createSuper__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @babel/runtime/helpers/esm/createSuper */ "./node_modules/@babel/runtime/helpers/esm/createSuper.js");
+/* harmony import */ var _babel_runtime_helpers_esm_defineProperty__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @babel/runtime/helpers/esm/defineProperty */ "./node_modules/@babel/runtime/helpers/esm/defineProperty.js");
+/* harmony import */ var _Parser_js__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../Parser.js */ "./node_modules/date-fns/esm/parse/_lib/Parser.js");
+/* harmony import */ var _utils_js__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../utils.js */ "./node_modules/date-fns/esm/parse/_lib/utils.js");
+/* harmony import */ var _lib_setUTCDay_index_js__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../../../_lib/setUTCDay/index.js */ "./node_modules/date-fns/esm/_lib/setUTCDay/index.js");
 
 
 
@@ -2605,20 +3353,20 @@ var DayParser = /*#__PURE__*/function (_Parser) {
 
  // Local day of week
 var LocalDayParser = /*#__PURE__*/function (_Parser) {
-  _inherits(LocalDayParser, _Parser);
-  var _super = _createSuper(LocalDayParser);
+  (0,_babel_runtime_helpers_esm_inherits__WEBPACK_IMPORTED_MODULE_3__["default"])(LocalDayParser, _Parser);
+  var _super = (0,_babel_runtime_helpers_esm_createSuper__WEBPACK_IMPORTED_MODULE_4__["default"])(LocalDayParser);
   function LocalDayParser() {
     var _this;
-    _classCallCheck(this, LocalDayParser);
+    (0,_babel_runtime_helpers_esm_classCallCheck__WEBPACK_IMPORTED_MODULE_0__["default"])(this, LocalDayParser);
     for (var _len = arguments.length, args = new Array(_len), _key = 0; _key < _len; _key++) {
       args[_key] = arguments[_key];
     }
     _this = _super.call.apply(_super, [this].concat(args));
-    _defineProperty(_assertThisInitialized(_this), "priority", 90);
-    _defineProperty(_assertThisInitialized(_this), "incompatibleTokens", ['y', 'R', 'u', 'q', 'Q', 'M', 'L', 'I', 'd', 'D', 'E', 'i', 'c', 't', 'T']);
+    (0,_babel_runtime_helpers_esm_defineProperty__WEBPACK_IMPORTED_MODULE_5__["default"])((0,_babel_runtime_helpers_esm_assertThisInitialized__WEBPACK_IMPORTED_MODULE_2__["default"])(_this), "priority", 90);
+    (0,_babel_runtime_helpers_esm_defineProperty__WEBPACK_IMPORTED_MODULE_5__["default"])((0,_babel_runtime_helpers_esm_assertThisInitialized__WEBPACK_IMPORTED_MODULE_2__["default"])(_this), "incompatibleTokens", ['y', 'R', 'u', 'q', 'Q', 'M', 'L', 'I', 'd', 'D', 'E', 'i', 'c', 't', 'T']);
     return _this;
   }
-  _createClass(LocalDayParser, [{
+  (0,_babel_runtime_helpers_esm_createClass__WEBPACK_IMPORTED_MODULE_1__["default"])(LocalDayParser, [{
     key: "parse",
     value: function parse(dateString, token, match, options) {
       var valueCallback = function valueCallback(value) {
@@ -2630,10 +3378,10 @@ var LocalDayParser = /*#__PURE__*/function (_Parser) {
         case 'e':
         case 'ee':
           // 03
-          return mapValue(parseNDigits(token.length, dateString), valueCallback);
+          return (0,_utils_js__WEBPACK_IMPORTED_MODULE_6__.mapValue)((0,_utils_js__WEBPACK_IMPORTED_MODULE_6__.parseNDigits)(token.length, dateString), valueCallback);
         // 3rd
         case 'eo':
-          return mapValue(match.ordinalNumber(dateString, {
+          return (0,_utils_js__WEBPACK_IMPORTED_MODULE_6__.mapValue)(match.ordinalNumber(dateString, {
             unit: 'day'
           }), valueCallback);
         // Tue
@@ -2689,14 +3437,558 @@ var LocalDayParser = /*#__PURE__*/function (_Parser) {
   }, {
     key: "set",
     value: function set(date, _flags, value, options) {
-      date = setUTCDay(date, value, options);
+      date = (0,_lib_setUTCDay_index_js__WEBPACK_IMPORTED_MODULE_7__["default"])(date, value, options);
       date.setUTCHours(0, 0, 0, 0);
       return date;
     }
   }]);
   return LocalDayParser;
-}(Parser);
-;// CONCATENATED MODULE: ./node_modules/date-fns/esm/parse/_lib/parsers/StandAloneLocalDayParser.js
+}(_Parser_js__WEBPACK_IMPORTED_MODULE_8__.Parser);
+
+/***/ }),
+
+/***/ "./node_modules/date-fns/esm/parse/_lib/parsers/LocalWeekParser.js":
+/*!*************************************************************************!*\
+  !*** ./node_modules/date-fns/esm/parse/_lib/parsers/LocalWeekParser.js ***!
+  \*************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   LocalWeekParser: () => (/* binding */ LocalWeekParser)
+/* harmony export */ });
+/* harmony import */ var _babel_runtime_helpers_esm_classCallCheck__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/helpers/esm/classCallCheck */ "./node_modules/@babel/runtime/helpers/esm/classCallCheck.js");
+/* harmony import */ var _babel_runtime_helpers_esm_createClass__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @babel/runtime/helpers/esm/createClass */ "./node_modules/@babel/runtime/helpers/esm/createClass.js");
+/* harmony import */ var _babel_runtime_helpers_esm_assertThisInitialized__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @babel/runtime/helpers/esm/assertThisInitialized */ "./node_modules/@babel/runtime/helpers/esm/assertThisInitialized.js");
+/* harmony import */ var _babel_runtime_helpers_esm_inherits__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @babel/runtime/helpers/esm/inherits */ "./node_modules/@babel/runtime/helpers/esm/inherits.js");
+/* harmony import */ var _babel_runtime_helpers_esm_createSuper__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @babel/runtime/helpers/esm/createSuper */ "./node_modules/@babel/runtime/helpers/esm/createSuper.js");
+/* harmony import */ var _babel_runtime_helpers_esm_defineProperty__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @babel/runtime/helpers/esm/defineProperty */ "./node_modules/@babel/runtime/helpers/esm/defineProperty.js");
+/* harmony import */ var _Parser_js__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ../Parser.js */ "./node_modules/date-fns/esm/parse/_lib/Parser.js");
+/* harmony import */ var _constants_js__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../constants.js */ "./node_modules/date-fns/esm/parse/_lib/constants.js");
+/* harmony import */ var _utils_js__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../utils.js */ "./node_modules/date-fns/esm/parse/_lib/utils.js");
+/* harmony import */ var _lib_setUTCWeek_index_js__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ../../../_lib/setUTCWeek/index.js */ "./node_modules/date-fns/esm/_lib/setUTCWeek/index.js");
+/* harmony import */ var _lib_startOfUTCWeek_index_js__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../../../_lib/startOfUTCWeek/index.js */ "./node_modules/date-fns/esm/_lib/startOfUTCWeek/index.js");
+
+
+
+
+
+
+
+
+
+
+ // Local week of year
+var LocalWeekParser = /*#__PURE__*/function (_Parser) {
+  (0,_babel_runtime_helpers_esm_inherits__WEBPACK_IMPORTED_MODULE_3__["default"])(LocalWeekParser, _Parser);
+  var _super = (0,_babel_runtime_helpers_esm_createSuper__WEBPACK_IMPORTED_MODULE_4__["default"])(LocalWeekParser);
+  function LocalWeekParser() {
+    var _this;
+    (0,_babel_runtime_helpers_esm_classCallCheck__WEBPACK_IMPORTED_MODULE_0__["default"])(this, LocalWeekParser);
+    for (var _len = arguments.length, args = new Array(_len), _key = 0; _key < _len; _key++) {
+      args[_key] = arguments[_key];
+    }
+    _this = _super.call.apply(_super, [this].concat(args));
+    (0,_babel_runtime_helpers_esm_defineProperty__WEBPACK_IMPORTED_MODULE_5__["default"])((0,_babel_runtime_helpers_esm_assertThisInitialized__WEBPACK_IMPORTED_MODULE_2__["default"])(_this), "priority", 100);
+    (0,_babel_runtime_helpers_esm_defineProperty__WEBPACK_IMPORTED_MODULE_5__["default"])((0,_babel_runtime_helpers_esm_assertThisInitialized__WEBPACK_IMPORTED_MODULE_2__["default"])(_this), "incompatibleTokens", ['y', 'R', 'u', 'q', 'Q', 'M', 'L', 'I', 'd', 'D', 'i', 't', 'T']);
+    return _this;
+  }
+  (0,_babel_runtime_helpers_esm_createClass__WEBPACK_IMPORTED_MODULE_1__["default"])(LocalWeekParser, [{
+    key: "parse",
+    value: function parse(dateString, token, match) {
+      switch (token) {
+        case 'w':
+          return (0,_utils_js__WEBPACK_IMPORTED_MODULE_6__.parseNumericPattern)(_constants_js__WEBPACK_IMPORTED_MODULE_7__.numericPatterns.week, dateString);
+        case 'wo':
+          return match.ordinalNumber(dateString, {
+            unit: 'week'
+          });
+        default:
+          return (0,_utils_js__WEBPACK_IMPORTED_MODULE_6__.parseNDigits)(token.length, dateString);
+      }
+    }
+  }, {
+    key: "validate",
+    value: function validate(_date, value) {
+      return value >= 1 && value <= 53;
+    }
+  }, {
+    key: "set",
+    value: function set(date, _flags, value, options) {
+      return (0,_lib_startOfUTCWeek_index_js__WEBPACK_IMPORTED_MODULE_8__["default"])((0,_lib_setUTCWeek_index_js__WEBPACK_IMPORTED_MODULE_9__["default"])(date, value, options), options);
+    }
+  }]);
+  return LocalWeekParser;
+}(_Parser_js__WEBPACK_IMPORTED_MODULE_10__.Parser);
+
+/***/ }),
+
+/***/ "./node_modules/date-fns/esm/parse/_lib/parsers/LocalWeekYearParser.js":
+/*!*****************************************************************************!*\
+  !*** ./node_modules/date-fns/esm/parse/_lib/parsers/LocalWeekYearParser.js ***!
+  \*****************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   LocalWeekYearParser: () => (/* binding */ LocalWeekYearParser)
+/* harmony export */ });
+/* harmony import */ var _babel_runtime_helpers_esm_classCallCheck__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/helpers/esm/classCallCheck */ "./node_modules/@babel/runtime/helpers/esm/classCallCheck.js");
+/* harmony import */ var _babel_runtime_helpers_esm_createClass__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @babel/runtime/helpers/esm/createClass */ "./node_modules/@babel/runtime/helpers/esm/createClass.js");
+/* harmony import */ var _babel_runtime_helpers_esm_assertThisInitialized__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @babel/runtime/helpers/esm/assertThisInitialized */ "./node_modules/@babel/runtime/helpers/esm/assertThisInitialized.js");
+/* harmony import */ var _babel_runtime_helpers_esm_inherits__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @babel/runtime/helpers/esm/inherits */ "./node_modules/@babel/runtime/helpers/esm/inherits.js");
+/* harmony import */ var _babel_runtime_helpers_esm_createSuper__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @babel/runtime/helpers/esm/createSuper */ "./node_modules/@babel/runtime/helpers/esm/createSuper.js");
+/* harmony import */ var _babel_runtime_helpers_esm_defineProperty__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @babel/runtime/helpers/esm/defineProperty */ "./node_modules/@babel/runtime/helpers/esm/defineProperty.js");
+/* harmony import */ var _Parser_js__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ../Parser.js */ "./node_modules/date-fns/esm/parse/_lib/Parser.js");
+/* harmony import */ var _utils_js__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../utils.js */ "./node_modules/date-fns/esm/parse/_lib/utils.js");
+/* harmony import */ var _lib_getUTCWeekYear_index_js__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../../../_lib/getUTCWeekYear/index.js */ "./node_modules/date-fns/esm/_lib/getUTCWeekYear/index.js");
+/* harmony import */ var _lib_startOfUTCWeek_index_js__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../../../_lib/startOfUTCWeek/index.js */ "./node_modules/date-fns/esm/_lib/startOfUTCWeek/index.js");
+
+
+
+
+
+
+
+
+
+
+// Local week-numbering year
+var LocalWeekYearParser = /*#__PURE__*/function (_Parser) {
+  (0,_babel_runtime_helpers_esm_inherits__WEBPACK_IMPORTED_MODULE_3__["default"])(LocalWeekYearParser, _Parser);
+  var _super = (0,_babel_runtime_helpers_esm_createSuper__WEBPACK_IMPORTED_MODULE_4__["default"])(LocalWeekYearParser);
+  function LocalWeekYearParser() {
+    var _this;
+    (0,_babel_runtime_helpers_esm_classCallCheck__WEBPACK_IMPORTED_MODULE_0__["default"])(this, LocalWeekYearParser);
+    for (var _len = arguments.length, args = new Array(_len), _key = 0; _key < _len; _key++) {
+      args[_key] = arguments[_key];
+    }
+    _this = _super.call.apply(_super, [this].concat(args));
+    (0,_babel_runtime_helpers_esm_defineProperty__WEBPACK_IMPORTED_MODULE_5__["default"])((0,_babel_runtime_helpers_esm_assertThisInitialized__WEBPACK_IMPORTED_MODULE_2__["default"])(_this), "priority", 130);
+    (0,_babel_runtime_helpers_esm_defineProperty__WEBPACK_IMPORTED_MODULE_5__["default"])((0,_babel_runtime_helpers_esm_assertThisInitialized__WEBPACK_IMPORTED_MODULE_2__["default"])(_this), "incompatibleTokens", ['y', 'R', 'u', 'Q', 'q', 'M', 'L', 'I', 'd', 'D', 'i', 't', 'T']);
+    return _this;
+  }
+  (0,_babel_runtime_helpers_esm_createClass__WEBPACK_IMPORTED_MODULE_1__["default"])(LocalWeekYearParser, [{
+    key: "parse",
+    value: function parse(dateString, token, match) {
+      var valueCallback = function valueCallback(year) {
+        return {
+          year: year,
+          isTwoDigitYear: token === 'YY'
+        };
+      };
+      switch (token) {
+        case 'Y':
+          return (0,_utils_js__WEBPACK_IMPORTED_MODULE_6__.mapValue)((0,_utils_js__WEBPACK_IMPORTED_MODULE_6__.parseNDigits)(4, dateString), valueCallback);
+        case 'Yo':
+          return (0,_utils_js__WEBPACK_IMPORTED_MODULE_6__.mapValue)(match.ordinalNumber(dateString, {
+            unit: 'year'
+          }), valueCallback);
+        default:
+          return (0,_utils_js__WEBPACK_IMPORTED_MODULE_6__.mapValue)((0,_utils_js__WEBPACK_IMPORTED_MODULE_6__.parseNDigits)(token.length, dateString), valueCallback);
+      }
+    }
+  }, {
+    key: "validate",
+    value: function validate(_date, value) {
+      return value.isTwoDigitYear || value.year > 0;
+    }
+  }, {
+    key: "set",
+    value: function set(date, flags, value, options) {
+      var currentYear = (0,_lib_getUTCWeekYear_index_js__WEBPACK_IMPORTED_MODULE_7__["default"])(date, options);
+      if (value.isTwoDigitYear) {
+        var normalizedTwoDigitYear = (0,_utils_js__WEBPACK_IMPORTED_MODULE_6__.normalizeTwoDigitYear)(value.year, currentYear);
+        date.setUTCFullYear(normalizedTwoDigitYear, 0, options.firstWeekContainsDate);
+        date.setUTCHours(0, 0, 0, 0);
+        return (0,_lib_startOfUTCWeek_index_js__WEBPACK_IMPORTED_MODULE_8__["default"])(date, options);
+      }
+      var year = !('era' in flags) || flags.era === 1 ? value.year : 1 - value.year;
+      date.setUTCFullYear(year, 0, options.firstWeekContainsDate);
+      date.setUTCHours(0, 0, 0, 0);
+      return (0,_lib_startOfUTCWeek_index_js__WEBPACK_IMPORTED_MODULE_8__["default"])(date, options);
+    }
+  }]);
+  return LocalWeekYearParser;
+}(_Parser_js__WEBPACK_IMPORTED_MODULE_9__.Parser);
+
+/***/ }),
+
+/***/ "./node_modules/date-fns/esm/parse/_lib/parsers/MinuteParser.js":
+/*!**********************************************************************!*\
+  !*** ./node_modules/date-fns/esm/parse/_lib/parsers/MinuteParser.js ***!
+  \**********************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   MinuteParser: () => (/* binding */ MinuteParser)
+/* harmony export */ });
+/* harmony import */ var _babel_runtime_helpers_esm_classCallCheck__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/helpers/esm/classCallCheck */ "./node_modules/@babel/runtime/helpers/esm/classCallCheck.js");
+/* harmony import */ var _babel_runtime_helpers_esm_createClass__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @babel/runtime/helpers/esm/createClass */ "./node_modules/@babel/runtime/helpers/esm/createClass.js");
+/* harmony import */ var _babel_runtime_helpers_esm_assertThisInitialized__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @babel/runtime/helpers/esm/assertThisInitialized */ "./node_modules/@babel/runtime/helpers/esm/assertThisInitialized.js");
+/* harmony import */ var _babel_runtime_helpers_esm_inherits__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @babel/runtime/helpers/esm/inherits */ "./node_modules/@babel/runtime/helpers/esm/inherits.js");
+/* harmony import */ var _babel_runtime_helpers_esm_createSuper__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @babel/runtime/helpers/esm/createSuper */ "./node_modules/@babel/runtime/helpers/esm/createSuper.js");
+/* harmony import */ var _babel_runtime_helpers_esm_defineProperty__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @babel/runtime/helpers/esm/defineProperty */ "./node_modules/@babel/runtime/helpers/esm/defineProperty.js");
+/* harmony import */ var _Parser_js__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../Parser.js */ "./node_modules/date-fns/esm/parse/_lib/Parser.js");
+/* harmony import */ var _constants_js__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../constants.js */ "./node_modules/date-fns/esm/parse/_lib/constants.js");
+/* harmony import */ var _utils_js__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../utils.js */ "./node_modules/date-fns/esm/parse/_lib/utils.js");
+
+
+
+
+
+
+
+
+
+var MinuteParser = /*#__PURE__*/function (_Parser) {
+  (0,_babel_runtime_helpers_esm_inherits__WEBPACK_IMPORTED_MODULE_3__["default"])(MinuteParser, _Parser);
+  var _super = (0,_babel_runtime_helpers_esm_createSuper__WEBPACK_IMPORTED_MODULE_4__["default"])(MinuteParser);
+  function MinuteParser() {
+    var _this;
+    (0,_babel_runtime_helpers_esm_classCallCheck__WEBPACK_IMPORTED_MODULE_0__["default"])(this, MinuteParser);
+    for (var _len = arguments.length, args = new Array(_len), _key = 0; _key < _len; _key++) {
+      args[_key] = arguments[_key];
+    }
+    _this = _super.call.apply(_super, [this].concat(args));
+    (0,_babel_runtime_helpers_esm_defineProperty__WEBPACK_IMPORTED_MODULE_5__["default"])((0,_babel_runtime_helpers_esm_assertThisInitialized__WEBPACK_IMPORTED_MODULE_2__["default"])(_this), "priority", 60);
+    (0,_babel_runtime_helpers_esm_defineProperty__WEBPACK_IMPORTED_MODULE_5__["default"])((0,_babel_runtime_helpers_esm_assertThisInitialized__WEBPACK_IMPORTED_MODULE_2__["default"])(_this), "incompatibleTokens", ['t', 'T']);
+    return _this;
+  }
+  (0,_babel_runtime_helpers_esm_createClass__WEBPACK_IMPORTED_MODULE_1__["default"])(MinuteParser, [{
+    key: "parse",
+    value: function parse(dateString, token, match) {
+      switch (token) {
+        case 'm':
+          return (0,_utils_js__WEBPACK_IMPORTED_MODULE_6__.parseNumericPattern)(_constants_js__WEBPACK_IMPORTED_MODULE_7__.numericPatterns.minute, dateString);
+        case 'mo':
+          return match.ordinalNumber(dateString, {
+            unit: 'minute'
+          });
+        default:
+          return (0,_utils_js__WEBPACK_IMPORTED_MODULE_6__.parseNDigits)(token.length, dateString);
+      }
+    }
+  }, {
+    key: "validate",
+    value: function validate(_date, value) {
+      return value >= 0 && value <= 59;
+    }
+  }, {
+    key: "set",
+    value: function set(date, _flags, value) {
+      date.setUTCMinutes(value, 0, 0);
+      return date;
+    }
+  }]);
+  return MinuteParser;
+}(_Parser_js__WEBPACK_IMPORTED_MODULE_8__.Parser);
+
+/***/ }),
+
+/***/ "./node_modules/date-fns/esm/parse/_lib/parsers/MonthParser.js":
+/*!*********************************************************************!*\
+  !*** ./node_modules/date-fns/esm/parse/_lib/parsers/MonthParser.js ***!
+  \*********************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   MonthParser: () => (/* binding */ MonthParser)
+/* harmony export */ });
+/* harmony import */ var _babel_runtime_helpers_esm_classCallCheck__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/helpers/esm/classCallCheck */ "./node_modules/@babel/runtime/helpers/esm/classCallCheck.js");
+/* harmony import */ var _babel_runtime_helpers_esm_createClass__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @babel/runtime/helpers/esm/createClass */ "./node_modules/@babel/runtime/helpers/esm/createClass.js");
+/* harmony import */ var _babel_runtime_helpers_esm_assertThisInitialized__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @babel/runtime/helpers/esm/assertThisInitialized */ "./node_modules/@babel/runtime/helpers/esm/assertThisInitialized.js");
+/* harmony import */ var _babel_runtime_helpers_esm_inherits__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @babel/runtime/helpers/esm/inherits */ "./node_modules/@babel/runtime/helpers/esm/inherits.js");
+/* harmony import */ var _babel_runtime_helpers_esm_createSuper__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @babel/runtime/helpers/esm/createSuper */ "./node_modules/@babel/runtime/helpers/esm/createSuper.js");
+/* harmony import */ var _babel_runtime_helpers_esm_defineProperty__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @babel/runtime/helpers/esm/defineProperty */ "./node_modules/@babel/runtime/helpers/esm/defineProperty.js");
+/* harmony import */ var _utils_js__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../utils.js */ "./node_modules/date-fns/esm/parse/_lib/utils.js");
+/* harmony import */ var _Parser_js__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../Parser.js */ "./node_modules/date-fns/esm/parse/_lib/Parser.js");
+/* harmony import */ var _constants_js__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../constants.js */ "./node_modules/date-fns/esm/parse/_lib/constants.js");
+
+
+
+
+
+
+
+
+
+var MonthParser = /*#__PURE__*/function (_Parser) {
+  (0,_babel_runtime_helpers_esm_inherits__WEBPACK_IMPORTED_MODULE_3__["default"])(MonthParser, _Parser);
+  var _super = (0,_babel_runtime_helpers_esm_createSuper__WEBPACK_IMPORTED_MODULE_4__["default"])(MonthParser);
+  function MonthParser() {
+    var _this;
+    (0,_babel_runtime_helpers_esm_classCallCheck__WEBPACK_IMPORTED_MODULE_0__["default"])(this, MonthParser);
+    for (var _len = arguments.length, args = new Array(_len), _key = 0; _key < _len; _key++) {
+      args[_key] = arguments[_key];
+    }
+    _this = _super.call.apply(_super, [this].concat(args));
+    (0,_babel_runtime_helpers_esm_defineProperty__WEBPACK_IMPORTED_MODULE_5__["default"])((0,_babel_runtime_helpers_esm_assertThisInitialized__WEBPACK_IMPORTED_MODULE_2__["default"])(_this), "incompatibleTokens", ['Y', 'R', 'q', 'Q', 'L', 'w', 'I', 'D', 'i', 'e', 'c', 't', 'T']);
+    (0,_babel_runtime_helpers_esm_defineProperty__WEBPACK_IMPORTED_MODULE_5__["default"])((0,_babel_runtime_helpers_esm_assertThisInitialized__WEBPACK_IMPORTED_MODULE_2__["default"])(_this), "priority", 110);
+    return _this;
+  }
+  (0,_babel_runtime_helpers_esm_createClass__WEBPACK_IMPORTED_MODULE_1__["default"])(MonthParser, [{
+    key: "parse",
+    value: function parse(dateString, token, match) {
+      var valueCallback = function valueCallback(value) {
+        return value - 1;
+      };
+      switch (token) {
+        // 1, 2, ..., 12
+        case 'M':
+          return (0,_utils_js__WEBPACK_IMPORTED_MODULE_6__.mapValue)((0,_utils_js__WEBPACK_IMPORTED_MODULE_6__.parseNumericPattern)(_constants_js__WEBPACK_IMPORTED_MODULE_7__.numericPatterns.month, dateString), valueCallback);
+        // 01, 02, ..., 12
+        case 'MM':
+          return (0,_utils_js__WEBPACK_IMPORTED_MODULE_6__.mapValue)((0,_utils_js__WEBPACK_IMPORTED_MODULE_6__.parseNDigits)(2, dateString), valueCallback);
+        // 1st, 2nd, ..., 12th
+        case 'Mo':
+          return (0,_utils_js__WEBPACK_IMPORTED_MODULE_6__.mapValue)(match.ordinalNumber(dateString, {
+            unit: 'month'
+          }), valueCallback);
+        // Jan, Feb, ..., Dec
+        case 'MMM':
+          return match.month(dateString, {
+            width: 'abbreviated',
+            context: 'formatting'
+          }) || match.month(dateString, {
+            width: 'narrow',
+            context: 'formatting'
+          });
+        // J, F, ..., D
+        case 'MMMMM':
+          return match.month(dateString, {
+            width: 'narrow',
+            context: 'formatting'
+          });
+        // January, February, ..., December
+        case 'MMMM':
+        default:
+          return match.month(dateString, {
+            width: 'wide',
+            context: 'formatting'
+          }) || match.month(dateString, {
+            width: 'abbreviated',
+            context: 'formatting'
+          }) || match.month(dateString, {
+            width: 'narrow',
+            context: 'formatting'
+          });
+      }
+    }
+  }, {
+    key: "validate",
+    value: function validate(_date, value) {
+      return value >= 0 && value <= 11;
+    }
+  }, {
+    key: "set",
+    value: function set(date, _flags, value) {
+      date.setUTCMonth(value, 1);
+      date.setUTCHours(0, 0, 0, 0);
+      return date;
+    }
+  }]);
+  return MonthParser;
+}(_Parser_js__WEBPACK_IMPORTED_MODULE_8__.Parser);
+
+/***/ }),
+
+/***/ "./node_modules/date-fns/esm/parse/_lib/parsers/QuarterParser.js":
+/*!***********************************************************************!*\
+  !*** ./node_modules/date-fns/esm/parse/_lib/parsers/QuarterParser.js ***!
+  \***********************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   QuarterParser: () => (/* binding */ QuarterParser)
+/* harmony export */ });
+/* harmony import */ var _babel_runtime_helpers_esm_classCallCheck__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/helpers/esm/classCallCheck */ "./node_modules/@babel/runtime/helpers/esm/classCallCheck.js");
+/* harmony import */ var _babel_runtime_helpers_esm_createClass__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @babel/runtime/helpers/esm/createClass */ "./node_modules/@babel/runtime/helpers/esm/createClass.js");
+/* harmony import */ var _babel_runtime_helpers_esm_assertThisInitialized__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @babel/runtime/helpers/esm/assertThisInitialized */ "./node_modules/@babel/runtime/helpers/esm/assertThisInitialized.js");
+/* harmony import */ var _babel_runtime_helpers_esm_inherits__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @babel/runtime/helpers/esm/inherits */ "./node_modules/@babel/runtime/helpers/esm/inherits.js");
+/* harmony import */ var _babel_runtime_helpers_esm_createSuper__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @babel/runtime/helpers/esm/createSuper */ "./node_modules/@babel/runtime/helpers/esm/createSuper.js");
+/* harmony import */ var _babel_runtime_helpers_esm_defineProperty__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @babel/runtime/helpers/esm/defineProperty */ "./node_modules/@babel/runtime/helpers/esm/defineProperty.js");
+/* harmony import */ var _Parser_js__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../Parser.js */ "./node_modules/date-fns/esm/parse/_lib/Parser.js");
+/* harmony import */ var _utils_js__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../utils.js */ "./node_modules/date-fns/esm/parse/_lib/utils.js");
+
+
+
+
+
+
+
+
+var QuarterParser = /*#__PURE__*/function (_Parser) {
+  (0,_babel_runtime_helpers_esm_inherits__WEBPACK_IMPORTED_MODULE_3__["default"])(QuarterParser, _Parser);
+  var _super = (0,_babel_runtime_helpers_esm_createSuper__WEBPACK_IMPORTED_MODULE_4__["default"])(QuarterParser);
+  function QuarterParser() {
+    var _this;
+    (0,_babel_runtime_helpers_esm_classCallCheck__WEBPACK_IMPORTED_MODULE_0__["default"])(this, QuarterParser);
+    for (var _len = arguments.length, args = new Array(_len), _key = 0; _key < _len; _key++) {
+      args[_key] = arguments[_key];
+    }
+    _this = _super.call.apply(_super, [this].concat(args));
+    (0,_babel_runtime_helpers_esm_defineProperty__WEBPACK_IMPORTED_MODULE_5__["default"])((0,_babel_runtime_helpers_esm_assertThisInitialized__WEBPACK_IMPORTED_MODULE_2__["default"])(_this), "priority", 120);
+    (0,_babel_runtime_helpers_esm_defineProperty__WEBPACK_IMPORTED_MODULE_5__["default"])((0,_babel_runtime_helpers_esm_assertThisInitialized__WEBPACK_IMPORTED_MODULE_2__["default"])(_this), "incompatibleTokens", ['Y', 'R', 'q', 'M', 'L', 'w', 'I', 'd', 'D', 'i', 'e', 'c', 't', 'T']);
+    return _this;
+  }
+  (0,_babel_runtime_helpers_esm_createClass__WEBPACK_IMPORTED_MODULE_1__["default"])(QuarterParser, [{
+    key: "parse",
+    value: function parse(dateString, token, match) {
+      switch (token) {
+        // 1, 2, 3, 4
+        case 'Q':
+        case 'QQ':
+          // 01, 02, 03, 04
+          return (0,_utils_js__WEBPACK_IMPORTED_MODULE_6__.parseNDigits)(token.length, dateString);
+        // 1st, 2nd, 3rd, 4th
+        case 'Qo':
+          return match.ordinalNumber(dateString, {
+            unit: 'quarter'
+          });
+        // Q1, Q2, Q3, Q4
+        case 'QQQ':
+          return match.quarter(dateString, {
+            width: 'abbreviated',
+            context: 'formatting'
+          }) || match.quarter(dateString, {
+            width: 'narrow',
+            context: 'formatting'
+          });
+        // 1, 2, 3, 4 (narrow quarter; could be not numerical)
+        case 'QQQQQ':
+          return match.quarter(dateString, {
+            width: 'narrow',
+            context: 'formatting'
+          });
+        // 1st quarter, 2nd quarter, ...
+        case 'QQQQ':
+        default:
+          return match.quarter(dateString, {
+            width: 'wide',
+            context: 'formatting'
+          }) || match.quarter(dateString, {
+            width: 'abbreviated',
+            context: 'formatting'
+          }) || match.quarter(dateString, {
+            width: 'narrow',
+            context: 'formatting'
+          });
+      }
+    }
+  }, {
+    key: "validate",
+    value: function validate(_date, value) {
+      return value >= 1 && value <= 4;
+    }
+  }, {
+    key: "set",
+    value: function set(date, _flags, value) {
+      date.setUTCMonth((value - 1) * 3, 1);
+      date.setUTCHours(0, 0, 0, 0);
+      return date;
+    }
+  }]);
+  return QuarterParser;
+}(_Parser_js__WEBPACK_IMPORTED_MODULE_7__.Parser);
+
+/***/ }),
+
+/***/ "./node_modules/date-fns/esm/parse/_lib/parsers/SecondParser.js":
+/*!**********************************************************************!*\
+  !*** ./node_modules/date-fns/esm/parse/_lib/parsers/SecondParser.js ***!
+  \**********************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   SecondParser: () => (/* binding */ SecondParser)
+/* harmony export */ });
+/* harmony import */ var _babel_runtime_helpers_esm_classCallCheck__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/helpers/esm/classCallCheck */ "./node_modules/@babel/runtime/helpers/esm/classCallCheck.js");
+/* harmony import */ var _babel_runtime_helpers_esm_createClass__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @babel/runtime/helpers/esm/createClass */ "./node_modules/@babel/runtime/helpers/esm/createClass.js");
+/* harmony import */ var _babel_runtime_helpers_esm_assertThisInitialized__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @babel/runtime/helpers/esm/assertThisInitialized */ "./node_modules/@babel/runtime/helpers/esm/assertThisInitialized.js");
+/* harmony import */ var _babel_runtime_helpers_esm_inherits__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @babel/runtime/helpers/esm/inherits */ "./node_modules/@babel/runtime/helpers/esm/inherits.js");
+/* harmony import */ var _babel_runtime_helpers_esm_createSuper__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @babel/runtime/helpers/esm/createSuper */ "./node_modules/@babel/runtime/helpers/esm/createSuper.js");
+/* harmony import */ var _babel_runtime_helpers_esm_defineProperty__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @babel/runtime/helpers/esm/defineProperty */ "./node_modules/@babel/runtime/helpers/esm/defineProperty.js");
+/* harmony import */ var _Parser_js__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../Parser.js */ "./node_modules/date-fns/esm/parse/_lib/Parser.js");
+/* harmony import */ var _constants_js__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../constants.js */ "./node_modules/date-fns/esm/parse/_lib/constants.js");
+/* harmony import */ var _utils_js__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../utils.js */ "./node_modules/date-fns/esm/parse/_lib/utils.js");
+
+
+
+
+
+
+
+
+
+var SecondParser = /*#__PURE__*/function (_Parser) {
+  (0,_babel_runtime_helpers_esm_inherits__WEBPACK_IMPORTED_MODULE_3__["default"])(SecondParser, _Parser);
+  var _super = (0,_babel_runtime_helpers_esm_createSuper__WEBPACK_IMPORTED_MODULE_4__["default"])(SecondParser);
+  function SecondParser() {
+    var _this;
+    (0,_babel_runtime_helpers_esm_classCallCheck__WEBPACK_IMPORTED_MODULE_0__["default"])(this, SecondParser);
+    for (var _len = arguments.length, args = new Array(_len), _key = 0; _key < _len; _key++) {
+      args[_key] = arguments[_key];
+    }
+    _this = _super.call.apply(_super, [this].concat(args));
+    (0,_babel_runtime_helpers_esm_defineProperty__WEBPACK_IMPORTED_MODULE_5__["default"])((0,_babel_runtime_helpers_esm_assertThisInitialized__WEBPACK_IMPORTED_MODULE_2__["default"])(_this), "priority", 50);
+    (0,_babel_runtime_helpers_esm_defineProperty__WEBPACK_IMPORTED_MODULE_5__["default"])((0,_babel_runtime_helpers_esm_assertThisInitialized__WEBPACK_IMPORTED_MODULE_2__["default"])(_this), "incompatibleTokens", ['t', 'T']);
+    return _this;
+  }
+  (0,_babel_runtime_helpers_esm_createClass__WEBPACK_IMPORTED_MODULE_1__["default"])(SecondParser, [{
+    key: "parse",
+    value: function parse(dateString, token, match) {
+      switch (token) {
+        case 's':
+          return (0,_utils_js__WEBPACK_IMPORTED_MODULE_6__.parseNumericPattern)(_constants_js__WEBPACK_IMPORTED_MODULE_7__.numericPatterns.second, dateString);
+        case 'so':
+          return match.ordinalNumber(dateString, {
+            unit: 'second'
+          });
+        default:
+          return (0,_utils_js__WEBPACK_IMPORTED_MODULE_6__.parseNDigits)(token.length, dateString);
+      }
+    }
+  }, {
+    key: "validate",
+    value: function validate(_date, value) {
+      return value >= 0 && value <= 59;
+    }
+  }, {
+    key: "set",
+    value: function set(date, _flags, value) {
+      date.setUTCSeconds(value, 0);
+      return date;
+    }
+  }]);
+  return SecondParser;
+}(_Parser_js__WEBPACK_IMPORTED_MODULE_8__.Parser);
+
+/***/ }),
+
+/***/ "./node_modules/date-fns/esm/parse/_lib/parsers/StandAloneLocalDayParser.js":
+/*!**********************************************************************************!*\
+  !*** ./node_modules/date-fns/esm/parse/_lib/parsers/StandAloneLocalDayParser.js ***!
+  \**********************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   StandAloneLocalDayParser: () => (/* binding */ StandAloneLocalDayParser)
+/* harmony export */ });
+/* harmony import */ var _babel_runtime_helpers_esm_classCallCheck__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/helpers/esm/classCallCheck */ "./node_modules/@babel/runtime/helpers/esm/classCallCheck.js");
+/* harmony import */ var _babel_runtime_helpers_esm_createClass__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @babel/runtime/helpers/esm/createClass */ "./node_modules/@babel/runtime/helpers/esm/createClass.js");
+/* harmony import */ var _babel_runtime_helpers_esm_assertThisInitialized__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @babel/runtime/helpers/esm/assertThisInitialized */ "./node_modules/@babel/runtime/helpers/esm/assertThisInitialized.js");
+/* harmony import */ var _babel_runtime_helpers_esm_inherits__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @babel/runtime/helpers/esm/inherits */ "./node_modules/@babel/runtime/helpers/esm/inherits.js");
+/* harmony import */ var _babel_runtime_helpers_esm_createSuper__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @babel/runtime/helpers/esm/createSuper */ "./node_modules/@babel/runtime/helpers/esm/createSuper.js");
+/* harmony import */ var _babel_runtime_helpers_esm_defineProperty__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @babel/runtime/helpers/esm/defineProperty */ "./node_modules/@babel/runtime/helpers/esm/defineProperty.js");
+/* harmony import */ var _Parser_js__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../Parser.js */ "./node_modules/date-fns/esm/parse/_lib/Parser.js");
+/* harmony import */ var _utils_js__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../utils.js */ "./node_modules/date-fns/esm/parse/_lib/utils.js");
+/* harmony import */ var _lib_setUTCDay_index_js__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../../../_lib/setUTCDay/index.js */ "./node_modules/date-fns/esm/_lib/setUTCDay/index.js");
 
 
 
@@ -2707,20 +3999,20 @@ var LocalDayParser = /*#__PURE__*/function (_Parser) {
 
  // Stand-alone local day of week
 var StandAloneLocalDayParser = /*#__PURE__*/function (_Parser) {
-  _inherits(StandAloneLocalDayParser, _Parser);
-  var _super = _createSuper(StandAloneLocalDayParser);
+  (0,_babel_runtime_helpers_esm_inherits__WEBPACK_IMPORTED_MODULE_3__["default"])(StandAloneLocalDayParser, _Parser);
+  var _super = (0,_babel_runtime_helpers_esm_createSuper__WEBPACK_IMPORTED_MODULE_4__["default"])(StandAloneLocalDayParser);
   function StandAloneLocalDayParser() {
     var _this;
-    _classCallCheck(this, StandAloneLocalDayParser);
+    (0,_babel_runtime_helpers_esm_classCallCheck__WEBPACK_IMPORTED_MODULE_0__["default"])(this, StandAloneLocalDayParser);
     for (var _len = arguments.length, args = new Array(_len), _key = 0; _key < _len; _key++) {
       args[_key] = arguments[_key];
     }
     _this = _super.call.apply(_super, [this].concat(args));
-    _defineProperty(_assertThisInitialized(_this), "priority", 90);
-    _defineProperty(_assertThisInitialized(_this), "incompatibleTokens", ['y', 'R', 'u', 'q', 'Q', 'M', 'L', 'I', 'd', 'D', 'E', 'i', 'e', 't', 'T']);
+    (0,_babel_runtime_helpers_esm_defineProperty__WEBPACK_IMPORTED_MODULE_5__["default"])((0,_babel_runtime_helpers_esm_assertThisInitialized__WEBPACK_IMPORTED_MODULE_2__["default"])(_this), "priority", 90);
+    (0,_babel_runtime_helpers_esm_defineProperty__WEBPACK_IMPORTED_MODULE_5__["default"])((0,_babel_runtime_helpers_esm_assertThisInitialized__WEBPACK_IMPORTED_MODULE_2__["default"])(_this), "incompatibleTokens", ['y', 'R', 'u', 'q', 'Q', 'M', 'L', 'I', 'd', 'D', 'E', 'i', 'e', 't', 'T']);
     return _this;
   }
-  _createClass(StandAloneLocalDayParser, [{
+  (0,_babel_runtime_helpers_esm_createClass__WEBPACK_IMPORTED_MODULE_1__["default"])(StandAloneLocalDayParser, [{
     key: "parse",
     value: function parse(dateString, token, match, options) {
       var valueCallback = function valueCallback(value) {
@@ -2732,10 +4024,10 @@ var StandAloneLocalDayParser = /*#__PURE__*/function (_Parser) {
         case 'c':
         case 'cc':
           // 03
-          return mapValue(parseNDigits(token.length, dateString), valueCallback);
+          return (0,_utils_js__WEBPACK_IMPORTED_MODULE_6__.mapValue)((0,_utils_js__WEBPACK_IMPORTED_MODULE_6__.parseNDigits)(token.length, dateString), valueCallback);
         // 3rd
         case 'co':
-          return mapValue(match.ordinalNumber(dateString, {
+          return (0,_utils_js__WEBPACK_IMPORTED_MODULE_6__.mapValue)(match.ordinalNumber(dateString, {
             unit: 'day'
           }), valueCallback);
         // Tue
@@ -2791,478 +4083,104 @@ var StandAloneLocalDayParser = /*#__PURE__*/function (_Parser) {
   }, {
     key: "set",
     value: function set(date, _flags, value, options) {
-      date = setUTCDay(date, value, options);
+      date = (0,_lib_setUTCDay_index_js__WEBPACK_IMPORTED_MODULE_7__["default"])(date, value, options);
       date.setUTCHours(0, 0, 0, 0);
       return date;
     }
   }]);
   return StandAloneLocalDayParser;
-}(Parser);
-;// CONCATENATED MODULE: ./node_modules/date-fns/esm/_lib/setUTCISODay/index.js
+}(_Parser_js__WEBPACK_IMPORTED_MODULE_8__.Parser);
+
+/***/ }),
+
+/***/ "./node_modules/date-fns/esm/parse/_lib/parsers/StandAloneMonthParser.js":
+/*!*******************************************************************************!*\
+  !*** ./node_modules/date-fns/esm/parse/_lib/parsers/StandAloneMonthParser.js ***!
+  \*******************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   StandAloneMonthParser: () => (/* binding */ StandAloneMonthParser)
+/* harmony export */ });
+/* harmony import */ var _babel_runtime_helpers_esm_classCallCheck__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/helpers/esm/classCallCheck */ "./node_modules/@babel/runtime/helpers/esm/classCallCheck.js");
+/* harmony import */ var _babel_runtime_helpers_esm_createClass__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @babel/runtime/helpers/esm/createClass */ "./node_modules/@babel/runtime/helpers/esm/createClass.js");
+/* harmony import */ var _babel_runtime_helpers_esm_assertThisInitialized__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @babel/runtime/helpers/esm/assertThisInitialized */ "./node_modules/@babel/runtime/helpers/esm/assertThisInitialized.js");
+/* harmony import */ var _babel_runtime_helpers_esm_inherits__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @babel/runtime/helpers/esm/inherits */ "./node_modules/@babel/runtime/helpers/esm/inherits.js");
+/* harmony import */ var _babel_runtime_helpers_esm_createSuper__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @babel/runtime/helpers/esm/createSuper */ "./node_modules/@babel/runtime/helpers/esm/createSuper.js");
+/* harmony import */ var _babel_runtime_helpers_esm_defineProperty__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @babel/runtime/helpers/esm/defineProperty */ "./node_modules/@babel/runtime/helpers/esm/defineProperty.js");
+/* harmony import */ var _Parser_js__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../Parser.js */ "./node_modules/date-fns/esm/parse/_lib/Parser.js");
+/* harmony import */ var _constants_js__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../constants.js */ "./node_modules/date-fns/esm/parse/_lib/constants.js");
+/* harmony import */ var _utils_js__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../utils.js */ "./node_modules/date-fns/esm/parse/_lib/utils.js");
 
 
 
-function setUTCISODay(dirtyDate, dirtyDay) {
-  requiredArgs(2, arguments);
-  var day = toInteger(dirtyDay);
-  if (day % 7 === 0) {
-    day = day - 7;
-  }
-  var weekStartsOn = 1;
-  var date = toDate(dirtyDate);
-  var currentDay = date.getUTCDay();
-  var remainder = day % 7;
-  var dayIndex = (remainder + 7) % 7;
-  var diff = (dayIndex < weekStartsOn ? 7 : 0) + day - currentDay;
-  date.setUTCDate(date.getUTCDate() + diff);
-  return date;
-}
-;// CONCATENATED MODULE: ./node_modules/date-fns/esm/parse/_lib/parsers/ISODayParser.js
 
 
 
 
 
 
-
-
- // ISO day of week
-var ISODayParser = /*#__PURE__*/function (_Parser) {
-  _inherits(ISODayParser, _Parser);
-  var _super = _createSuper(ISODayParser);
-  function ISODayParser() {
+var StandAloneMonthParser = /*#__PURE__*/function (_Parser) {
+  (0,_babel_runtime_helpers_esm_inherits__WEBPACK_IMPORTED_MODULE_3__["default"])(StandAloneMonthParser, _Parser);
+  var _super = (0,_babel_runtime_helpers_esm_createSuper__WEBPACK_IMPORTED_MODULE_4__["default"])(StandAloneMonthParser);
+  function StandAloneMonthParser() {
     var _this;
-    _classCallCheck(this, ISODayParser);
+    (0,_babel_runtime_helpers_esm_classCallCheck__WEBPACK_IMPORTED_MODULE_0__["default"])(this, StandAloneMonthParser);
     for (var _len = arguments.length, args = new Array(_len), _key = 0; _key < _len; _key++) {
       args[_key] = arguments[_key];
     }
     _this = _super.call.apply(_super, [this].concat(args));
-    _defineProperty(_assertThisInitialized(_this), "priority", 90);
-    _defineProperty(_assertThisInitialized(_this), "incompatibleTokens", ['y', 'Y', 'u', 'q', 'Q', 'M', 'L', 'w', 'd', 'D', 'E', 'e', 'c', 't', 'T']);
+    (0,_babel_runtime_helpers_esm_defineProperty__WEBPACK_IMPORTED_MODULE_5__["default"])((0,_babel_runtime_helpers_esm_assertThisInitialized__WEBPACK_IMPORTED_MODULE_2__["default"])(_this), "priority", 110);
+    (0,_babel_runtime_helpers_esm_defineProperty__WEBPACK_IMPORTED_MODULE_5__["default"])((0,_babel_runtime_helpers_esm_assertThisInitialized__WEBPACK_IMPORTED_MODULE_2__["default"])(_this), "incompatibleTokens", ['Y', 'R', 'q', 'Q', 'M', 'w', 'I', 'D', 'i', 'e', 'c', 't', 'T']);
     return _this;
   }
-  _createClass(ISODayParser, [{
+  (0,_babel_runtime_helpers_esm_createClass__WEBPACK_IMPORTED_MODULE_1__["default"])(StandAloneMonthParser, [{
     key: "parse",
     value: function parse(dateString, token, match) {
       var valueCallback = function valueCallback(value) {
-        if (value === 0) {
-          return 7;
-        }
-        return value;
+        return value - 1;
       };
       switch (token) {
-        // 2
-        case 'i':
-        case 'ii':
-          // 02
-          return parseNDigits(token.length, dateString);
-        // 2nd
-        case 'io':
-          return match.ordinalNumber(dateString, {
-            unit: 'day'
-          });
-        // Tue
-        case 'iii':
-          return mapValue(match.day(dateString, {
-            width: 'abbreviated',
-            context: 'formatting'
-          }) || match.day(dateString, {
-            width: 'short',
-            context: 'formatting'
-          }) || match.day(dateString, {
-            width: 'narrow',
-            context: 'formatting'
+        // 1, 2, ..., 12
+        case 'L':
+          return (0,_utils_js__WEBPACK_IMPORTED_MODULE_6__.mapValue)((0,_utils_js__WEBPACK_IMPORTED_MODULE_6__.parseNumericPattern)(_constants_js__WEBPACK_IMPORTED_MODULE_7__.numericPatterns.month, dateString), valueCallback);
+        // 01, 02, ..., 12
+        case 'LL':
+          return (0,_utils_js__WEBPACK_IMPORTED_MODULE_6__.mapValue)((0,_utils_js__WEBPACK_IMPORTED_MODULE_6__.parseNDigits)(2, dateString), valueCallback);
+        // 1st, 2nd, ..., 12th
+        case 'Lo':
+          return (0,_utils_js__WEBPACK_IMPORTED_MODULE_6__.mapValue)(match.ordinalNumber(dateString, {
+            unit: 'month'
           }), valueCallback);
-        // T
-        case 'iiiii':
-          return mapValue(match.day(dateString, {
+        // Jan, Feb, ..., Dec
+        case 'LLL':
+          return match.month(dateString, {
+            width: 'abbreviated',
+            context: 'standalone'
+          }) || match.month(dateString, {
             width: 'narrow',
-            context: 'formatting'
-          }), valueCallback);
-        // Tu
-        case 'iiiiii':
-          return mapValue(match.day(dateString, {
-            width: 'short',
-            context: 'formatting'
-          }) || match.day(dateString, {
+            context: 'standalone'
+          });
+        // J, F, ..., D
+        case 'LLLLL':
+          return match.month(dateString, {
             width: 'narrow',
-            context: 'formatting'
-          }), valueCallback);
-        // Tuesday
-        case 'iiii':
+            context: 'standalone'
+          });
+        // January, February, ..., December
+        case 'LLLL':
         default:
-          return mapValue(match.day(dateString, {
+          return match.month(dateString, {
             width: 'wide',
-            context: 'formatting'
-          }) || match.day(dateString, {
+            context: 'standalone'
+          }) || match.month(dateString, {
             width: 'abbreviated',
-            context: 'formatting'
-          }) || match.day(dateString, {
-            width: 'short',
-            context: 'formatting'
-          }) || match.day(dateString, {
+            context: 'standalone'
+          }) || match.month(dateString, {
             width: 'narrow',
-            context: 'formatting'
-          }), valueCallback);
-      }
-    }
-  }, {
-    key: "validate",
-    value: function validate(_date, value) {
-      return value >= 1 && value <= 7;
-    }
-  }, {
-    key: "set",
-    value: function set(date, _flags, value) {
-      date = setUTCISODay(date, value);
-      date.setUTCHours(0, 0, 0, 0);
-      return date;
-    }
-  }]);
-  return ISODayParser;
-}(Parser);
-;// CONCATENATED MODULE: ./node_modules/date-fns/esm/parse/_lib/parsers/AMPMParser.js
-
-
-
-
-
-
-
-
-var AMPMParser = /*#__PURE__*/function (_Parser) {
-  _inherits(AMPMParser, _Parser);
-  var _super = _createSuper(AMPMParser);
-  function AMPMParser() {
-    var _this;
-    _classCallCheck(this, AMPMParser);
-    for (var _len = arguments.length, args = new Array(_len), _key = 0; _key < _len; _key++) {
-      args[_key] = arguments[_key];
-    }
-    _this = _super.call.apply(_super, [this].concat(args));
-    _defineProperty(_assertThisInitialized(_this), "priority", 80);
-    _defineProperty(_assertThisInitialized(_this), "incompatibleTokens", ['b', 'B', 'H', 'k', 't', 'T']);
-    return _this;
-  }
-  _createClass(AMPMParser, [{
-    key: "parse",
-    value: function parse(dateString, token, match) {
-      switch (token) {
-        case 'a':
-        case 'aa':
-        case 'aaa':
-          return match.dayPeriod(dateString, {
-            width: 'abbreviated',
-            context: 'formatting'
-          }) || match.dayPeriod(dateString, {
-            width: 'narrow',
-            context: 'formatting'
+            context: 'standalone'
           });
-        case 'aaaaa':
-          return match.dayPeriod(dateString, {
-            width: 'narrow',
-            context: 'formatting'
-          });
-        case 'aaaa':
-        default:
-          return match.dayPeriod(dateString, {
-            width: 'wide',
-            context: 'formatting'
-          }) || match.dayPeriod(dateString, {
-            width: 'abbreviated',
-            context: 'formatting'
-          }) || match.dayPeriod(dateString, {
-            width: 'narrow',
-            context: 'formatting'
-          });
-      }
-    }
-  }, {
-    key: "set",
-    value: function set(date, _flags, value) {
-      date.setUTCHours(dayPeriodEnumToHours(value), 0, 0, 0);
-      return date;
-    }
-  }]);
-  return AMPMParser;
-}(Parser);
-;// CONCATENATED MODULE: ./node_modules/date-fns/esm/parse/_lib/parsers/AMPMMidnightParser.js
-
-
-
-
-
-
-
-
-var AMPMMidnightParser = /*#__PURE__*/function (_Parser) {
-  _inherits(AMPMMidnightParser, _Parser);
-  var _super = _createSuper(AMPMMidnightParser);
-  function AMPMMidnightParser() {
-    var _this;
-    _classCallCheck(this, AMPMMidnightParser);
-    for (var _len = arguments.length, args = new Array(_len), _key = 0; _key < _len; _key++) {
-      args[_key] = arguments[_key];
-    }
-    _this = _super.call.apply(_super, [this].concat(args));
-    _defineProperty(_assertThisInitialized(_this), "priority", 80);
-    _defineProperty(_assertThisInitialized(_this), "incompatibleTokens", ['a', 'B', 'H', 'k', 't', 'T']);
-    return _this;
-  }
-  _createClass(AMPMMidnightParser, [{
-    key: "parse",
-    value: function parse(dateString, token, match) {
-      switch (token) {
-        case 'b':
-        case 'bb':
-        case 'bbb':
-          return match.dayPeriod(dateString, {
-            width: 'abbreviated',
-            context: 'formatting'
-          }) || match.dayPeriod(dateString, {
-            width: 'narrow',
-            context: 'formatting'
-          });
-        case 'bbbbb':
-          return match.dayPeriod(dateString, {
-            width: 'narrow',
-            context: 'formatting'
-          });
-        case 'bbbb':
-        default:
-          return match.dayPeriod(dateString, {
-            width: 'wide',
-            context: 'formatting'
-          }) || match.dayPeriod(dateString, {
-            width: 'abbreviated',
-            context: 'formatting'
-          }) || match.dayPeriod(dateString, {
-            width: 'narrow',
-            context: 'formatting'
-          });
-      }
-    }
-  }, {
-    key: "set",
-    value: function set(date, _flags, value) {
-      date.setUTCHours(dayPeriodEnumToHours(value), 0, 0, 0);
-      return date;
-    }
-  }]);
-  return AMPMMidnightParser;
-}(Parser);
-;// CONCATENATED MODULE: ./node_modules/date-fns/esm/parse/_lib/parsers/DayPeriodParser.js
-
-
-
-
-
-
-
- // in the morning, in the afternoon, in the evening, at night
-var DayPeriodParser = /*#__PURE__*/function (_Parser) {
-  _inherits(DayPeriodParser, _Parser);
-  var _super = _createSuper(DayPeriodParser);
-  function DayPeriodParser() {
-    var _this;
-    _classCallCheck(this, DayPeriodParser);
-    for (var _len = arguments.length, args = new Array(_len), _key = 0; _key < _len; _key++) {
-      args[_key] = arguments[_key];
-    }
-    _this = _super.call.apply(_super, [this].concat(args));
-    _defineProperty(_assertThisInitialized(_this), "priority", 80);
-    _defineProperty(_assertThisInitialized(_this), "incompatibleTokens", ['a', 'b', 't', 'T']);
-    return _this;
-  }
-  _createClass(DayPeriodParser, [{
-    key: "parse",
-    value: function parse(dateString, token, match) {
-      switch (token) {
-        case 'B':
-        case 'BB':
-        case 'BBB':
-          return match.dayPeriod(dateString, {
-            width: 'abbreviated',
-            context: 'formatting'
-          }) || match.dayPeriod(dateString, {
-            width: 'narrow',
-            context: 'formatting'
-          });
-        case 'BBBBB':
-          return match.dayPeriod(dateString, {
-            width: 'narrow',
-            context: 'formatting'
-          });
-        case 'BBBB':
-        default:
-          return match.dayPeriod(dateString, {
-            width: 'wide',
-            context: 'formatting'
-          }) || match.dayPeriod(dateString, {
-            width: 'abbreviated',
-            context: 'formatting'
-          }) || match.dayPeriod(dateString, {
-            width: 'narrow',
-            context: 'formatting'
-          });
-      }
-    }
-  }, {
-    key: "set",
-    value: function set(date, _flags, value) {
-      date.setUTCHours(dayPeriodEnumToHours(value), 0, 0, 0);
-      return date;
-    }
-  }]);
-  return DayPeriodParser;
-}(Parser);
-;// CONCATENATED MODULE: ./node_modules/date-fns/esm/parse/_lib/parsers/Hour1to12Parser.js
-
-
-
-
-
-
-
-
-
-var Hour1to12Parser = /*#__PURE__*/function (_Parser) {
-  _inherits(Hour1to12Parser, _Parser);
-  var _super = _createSuper(Hour1to12Parser);
-  function Hour1to12Parser() {
-    var _this;
-    _classCallCheck(this, Hour1to12Parser);
-    for (var _len = arguments.length, args = new Array(_len), _key = 0; _key < _len; _key++) {
-      args[_key] = arguments[_key];
-    }
-    _this = _super.call.apply(_super, [this].concat(args));
-    _defineProperty(_assertThisInitialized(_this), "priority", 70);
-    _defineProperty(_assertThisInitialized(_this), "incompatibleTokens", ['H', 'K', 'k', 't', 'T']);
-    return _this;
-  }
-  _createClass(Hour1to12Parser, [{
-    key: "parse",
-    value: function parse(dateString, token, match) {
-      switch (token) {
-        case 'h':
-          return parseNumericPattern(numericPatterns.hour12h, dateString);
-        case 'ho':
-          return match.ordinalNumber(dateString, {
-            unit: 'hour'
-          });
-        default:
-          return parseNDigits(token.length, dateString);
-      }
-    }
-  }, {
-    key: "validate",
-    value: function validate(_date, value) {
-      return value >= 1 && value <= 12;
-    }
-  }, {
-    key: "set",
-    value: function set(date, _flags, value) {
-      var isPM = date.getUTCHours() >= 12;
-      if (isPM && value < 12) {
-        date.setUTCHours(value + 12, 0, 0, 0);
-      } else if (!isPM && value === 12) {
-        date.setUTCHours(0, 0, 0, 0);
-      } else {
-        date.setUTCHours(value, 0, 0, 0);
-      }
-      return date;
-    }
-  }]);
-  return Hour1to12Parser;
-}(Parser);
-;// CONCATENATED MODULE: ./node_modules/date-fns/esm/parse/_lib/parsers/Hour0to23Parser.js
-
-
-
-
-
-
-
-
-
-var Hour0to23Parser = /*#__PURE__*/function (_Parser) {
-  _inherits(Hour0to23Parser, _Parser);
-  var _super = _createSuper(Hour0to23Parser);
-  function Hour0to23Parser() {
-    var _this;
-    _classCallCheck(this, Hour0to23Parser);
-    for (var _len = arguments.length, args = new Array(_len), _key = 0; _key < _len; _key++) {
-      args[_key] = arguments[_key];
-    }
-    _this = _super.call.apply(_super, [this].concat(args));
-    _defineProperty(_assertThisInitialized(_this), "priority", 70);
-    _defineProperty(_assertThisInitialized(_this), "incompatibleTokens", ['a', 'b', 'h', 'K', 'k', 't', 'T']);
-    return _this;
-  }
-  _createClass(Hour0to23Parser, [{
-    key: "parse",
-    value: function parse(dateString, token, match) {
-      switch (token) {
-        case 'H':
-          return parseNumericPattern(numericPatterns.hour23h, dateString);
-        case 'Ho':
-          return match.ordinalNumber(dateString, {
-            unit: 'hour'
-          });
-        default:
-          return parseNDigits(token.length, dateString);
-      }
-    }
-  }, {
-    key: "validate",
-    value: function validate(_date, value) {
-      return value >= 0 && value <= 23;
-    }
-  }, {
-    key: "set",
-    value: function set(date, _flags, value) {
-      date.setUTCHours(value, 0, 0, 0);
-      return date;
-    }
-  }]);
-  return Hour0to23Parser;
-}(Parser);
-;// CONCATENATED MODULE: ./node_modules/date-fns/esm/parse/_lib/parsers/Hour0To11Parser.js
-
-
-
-
-
-
-
-
-
-var Hour0To11Parser = /*#__PURE__*/function (_Parser) {
-  _inherits(Hour0To11Parser, _Parser);
-  var _super = _createSuper(Hour0To11Parser);
-  function Hour0To11Parser() {
-    var _this;
-    _classCallCheck(this, Hour0To11Parser);
-    for (var _len = arguments.length, args = new Array(_len), _key = 0; _key < _len; _key++) {
-      args[_key] = arguments[_key];
-    }
-    _this = _super.call.apply(_super, [this].concat(args));
-    _defineProperty(_assertThisInitialized(_this), "priority", 70);
-    _defineProperty(_assertThisInitialized(_this), "incompatibleTokens", ['h', 'H', 'k', 't', 'T']);
-    return _this;
-  }
-  _createClass(Hour0To11Parser, [{
-    key: "parse",
-    value: function parse(dateString, token, match) {
-      switch (token) {
-        case 'K':
-          return parseNumericPattern(numericPatterns.hour11h, dateString);
-        case 'Ko':
-          return match.ordinalNumber(dateString, {
-            unit: 'hour'
-          });
-        default:
-          return parseNDigits(token.length, dateString);
       }
     }
   }, {
@@ -3273,18 +4191,34 @@ var Hour0To11Parser = /*#__PURE__*/function (_Parser) {
   }, {
     key: "set",
     value: function set(date, _flags, value) {
-      var isPM = date.getUTCHours() >= 12;
-      if (isPM && value < 12) {
-        date.setUTCHours(value + 12, 0, 0, 0);
-      } else {
-        date.setUTCHours(value, 0, 0, 0);
-      }
+      date.setUTCMonth(value, 1);
+      date.setUTCHours(0, 0, 0, 0);
       return date;
     }
   }]);
-  return Hour0To11Parser;
-}(Parser);
-;// CONCATENATED MODULE: ./node_modules/date-fns/esm/parse/_lib/parsers/Hour1To24Parser.js
+  return StandAloneMonthParser;
+}(_Parser_js__WEBPACK_IMPORTED_MODULE_8__.Parser);
+
+/***/ }),
+
+/***/ "./node_modules/date-fns/esm/parse/_lib/parsers/StandAloneQuarterParser.js":
+/*!*********************************************************************************!*\
+  !*** ./node_modules/date-fns/esm/parse/_lib/parsers/StandAloneQuarterParser.js ***!
+  \*********************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   StandAloneQuarterParser: () => (/* binding */ StandAloneQuarterParser)
+/* harmony export */ });
+/* harmony import */ var _babel_runtime_helpers_esm_classCallCheck__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/helpers/esm/classCallCheck */ "./node_modules/@babel/runtime/helpers/esm/classCallCheck.js");
+/* harmony import */ var _babel_runtime_helpers_esm_createClass__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @babel/runtime/helpers/esm/createClass */ "./node_modules/@babel/runtime/helpers/esm/createClass.js");
+/* harmony import */ var _babel_runtime_helpers_esm_assertThisInitialized__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @babel/runtime/helpers/esm/assertThisInitialized */ "./node_modules/@babel/runtime/helpers/esm/assertThisInitialized.js");
+/* harmony import */ var _babel_runtime_helpers_esm_inherits__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @babel/runtime/helpers/esm/inherits */ "./node_modules/@babel/runtime/helpers/esm/inherits.js");
+/* harmony import */ var _babel_runtime_helpers_esm_createSuper__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @babel/runtime/helpers/esm/createSuper */ "./node_modules/@babel/runtime/helpers/esm/createSuper.js");
+/* harmony import */ var _babel_runtime_helpers_esm_defineProperty__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @babel/runtime/helpers/esm/defineProperty */ "./node_modules/@babel/runtime/helpers/esm/defineProperty.js");
+/* harmony import */ var _Parser_js__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../Parser.js */ "./node_modules/date-fns/esm/parse/_lib/Parser.js");
+/* harmony import */ var _utils_js__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../utils.js */ "./node_modules/date-fns/esm/parse/_lib/utils.js");
 
 
 
@@ -3293,337 +4227,100 @@ var Hour0To11Parser = /*#__PURE__*/function (_Parser) {
 
 
 
-
-var Hour1To24Parser = /*#__PURE__*/function (_Parser) {
-  _inherits(Hour1To24Parser, _Parser);
-  var _super = _createSuper(Hour1To24Parser);
-  function Hour1To24Parser() {
+var StandAloneQuarterParser = /*#__PURE__*/function (_Parser) {
+  (0,_babel_runtime_helpers_esm_inherits__WEBPACK_IMPORTED_MODULE_3__["default"])(StandAloneQuarterParser, _Parser);
+  var _super = (0,_babel_runtime_helpers_esm_createSuper__WEBPACK_IMPORTED_MODULE_4__["default"])(StandAloneQuarterParser);
+  function StandAloneQuarterParser() {
     var _this;
-    _classCallCheck(this, Hour1To24Parser);
+    (0,_babel_runtime_helpers_esm_classCallCheck__WEBPACK_IMPORTED_MODULE_0__["default"])(this, StandAloneQuarterParser);
     for (var _len = arguments.length, args = new Array(_len), _key = 0; _key < _len; _key++) {
       args[_key] = arguments[_key];
     }
     _this = _super.call.apply(_super, [this].concat(args));
-    _defineProperty(_assertThisInitialized(_this), "priority", 70);
-    _defineProperty(_assertThisInitialized(_this), "incompatibleTokens", ['a', 'b', 'h', 'H', 'K', 't', 'T']);
+    (0,_babel_runtime_helpers_esm_defineProperty__WEBPACK_IMPORTED_MODULE_5__["default"])((0,_babel_runtime_helpers_esm_assertThisInitialized__WEBPACK_IMPORTED_MODULE_2__["default"])(_this), "priority", 120);
+    (0,_babel_runtime_helpers_esm_defineProperty__WEBPACK_IMPORTED_MODULE_5__["default"])((0,_babel_runtime_helpers_esm_assertThisInitialized__WEBPACK_IMPORTED_MODULE_2__["default"])(_this), "incompatibleTokens", ['Y', 'R', 'Q', 'M', 'L', 'w', 'I', 'd', 'D', 'i', 'e', 'c', 't', 'T']);
     return _this;
   }
-  _createClass(Hour1To24Parser, [{
+  (0,_babel_runtime_helpers_esm_createClass__WEBPACK_IMPORTED_MODULE_1__["default"])(StandAloneQuarterParser, [{
     key: "parse",
     value: function parse(dateString, token, match) {
       switch (token) {
-        case 'k':
-          return parseNumericPattern(numericPatterns.hour24h, dateString);
-        case 'ko':
+        // 1, 2, 3, 4
+        case 'q':
+        case 'qq':
+          // 01, 02, 03, 04
+          return (0,_utils_js__WEBPACK_IMPORTED_MODULE_6__.parseNDigits)(token.length, dateString);
+        // 1st, 2nd, 3rd, 4th
+        case 'qo':
           return match.ordinalNumber(dateString, {
-            unit: 'hour'
+            unit: 'quarter'
           });
+        // Q1, Q2, Q3, Q4
+        case 'qqq':
+          return match.quarter(dateString, {
+            width: 'abbreviated',
+            context: 'standalone'
+          }) || match.quarter(dateString, {
+            width: 'narrow',
+            context: 'standalone'
+          });
+        // 1, 2, 3, 4 (narrow quarter; could be not numerical)
+        case 'qqqqq':
+          return match.quarter(dateString, {
+            width: 'narrow',
+            context: 'standalone'
+          });
+        // 1st quarter, 2nd quarter, ...
+        case 'qqqq':
         default:
-          return parseNDigits(token.length, dateString);
+          return match.quarter(dateString, {
+            width: 'wide',
+            context: 'standalone'
+          }) || match.quarter(dateString, {
+            width: 'abbreviated',
+            context: 'standalone'
+          }) || match.quarter(dateString, {
+            width: 'narrow',
+            context: 'standalone'
+          });
       }
     }
   }, {
     key: "validate",
     value: function validate(_date, value) {
-      return value >= 1 && value <= 24;
+      return value >= 1 && value <= 4;
     }
   }, {
     key: "set",
     value: function set(date, _flags, value) {
-      var hours = value <= 24 ? value % 24 : value;
-      date.setUTCHours(hours, 0, 0, 0);
+      date.setUTCMonth((value - 1) * 3, 1);
+      date.setUTCHours(0, 0, 0, 0);
       return date;
     }
   }]);
-  return Hour1To24Parser;
-}(Parser);
-;// CONCATENATED MODULE: ./node_modules/date-fns/esm/parse/_lib/parsers/MinuteParser.js
+  return StandAloneQuarterParser;
+}(_Parser_js__WEBPACK_IMPORTED_MODULE_7__.Parser);
 
+/***/ }),
 
+/***/ "./node_modules/date-fns/esm/parse/_lib/parsers/TimestampMillisecondsParser.js":
+/*!*************************************************************************************!*\
+  !*** ./node_modules/date-fns/esm/parse/_lib/parsers/TimestampMillisecondsParser.js ***!
+  \*************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-
-
-
-
-
-
-var MinuteParser = /*#__PURE__*/function (_Parser) {
-  _inherits(MinuteParser, _Parser);
-  var _super = _createSuper(MinuteParser);
-  function MinuteParser() {
-    var _this;
-    _classCallCheck(this, MinuteParser);
-    for (var _len = arguments.length, args = new Array(_len), _key = 0; _key < _len; _key++) {
-      args[_key] = arguments[_key];
-    }
-    _this = _super.call.apply(_super, [this].concat(args));
-    _defineProperty(_assertThisInitialized(_this), "priority", 60);
-    _defineProperty(_assertThisInitialized(_this), "incompatibleTokens", ['t', 'T']);
-    return _this;
-  }
-  _createClass(MinuteParser, [{
-    key: "parse",
-    value: function parse(dateString, token, match) {
-      switch (token) {
-        case 'm':
-          return parseNumericPattern(numericPatterns.minute, dateString);
-        case 'mo':
-          return match.ordinalNumber(dateString, {
-            unit: 'minute'
-          });
-        default:
-          return parseNDigits(token.length, dateString);
-      }
-    }
-  }, {
-    key: "validate",
-    value: function validate(_date, value) {
-      return value >= 0 && value <= 59;
-    }
-  }, {
-    key: "set",
-    value: function set(date, _flags, value) {
-      date.setUTCMinutes(value, 0, 0);
-      return date;
-    }
-  }]);
-  return MinuteParser;
-}(Parser);
-;// CONCATENATED MODULE: ./node_modules/date-fns/esm/parse/_lib/parsers/SecondParser.js
-
-
-
-
-
-
-
-
-
-var SecondParser = /*#__PURE__*/function (_Parser) {
-  _inherits(SecondParser, _Parser);
-  var _super = _createSuper(SecondParser);
-  function SecondParser() {
-    var _this;
-    _classCallCheck(this, SecondParser);
-    for (var _len = arguments.length, args = new Array(_len), _key = 0; _key < _len; _key++) {
-      args[_key] = arguments[_key];
-    }
-    _this = _super.call.apply(_super, [this].concat(args));
-    _defineProperty(_assertThisInitialized(_this), "priority", 50);
-    _defineProperty(_assertThisInitialized(_this), "incompatibleTokens", ['t', 'T']);
-    return _this;
-  }
-  _createClass(SecondParser, [{
-    key: "parse",
-    value: function parse(dateString, token, match) {
-      switch (token) {
-        case 's':
-          return parseNumericPattern(numericPatterns.second, dateString);
-        case 'so':
-          return match.ordinalNumber(dateString, {
-            unit: 'second'
-          });
-        default:
-          return parseNDigits(token.length, dateString);
-      }
-    }
-  }, {
-    key: "validate",
-    value: function validate(_date, value) {
-      return value >= 0 && value <= 59;
-    }
-  }, {
-    key: "set",
-    value: function set(date, _flags, value) {
-      date.setUTCSeconds(value, 0);
-      return date;
-    }
-  }]);
-  return SecondParser;
-}(Parser);
-;// CONCATENATED MODULE: ./node_modules/date-fns/esm/parse/_lib/parsers/FractionOfSecondParser.js
-
-
-
-
-
-
-
-
-var FractionOfSecondParser = /*#__PURE__*/function (_Parser) {
-  _inherits(FractionOfSecondParser, _Parser);
-  var _super = _createSuper(FractionOfSecondParser);
-  function FractionOfSecondParser() {
-    var _this;
-    _classCallCheck(this, FractionOfSecondParser);
-    for (var _len = arguments.length, args = new Array(_len), _key = 0; _key < _len; _key++) {
-      args[_key] = arguments[_key];
-    }
-    _this = _super.call.apply(_super, [this].concat(args));
-    _defineProperty(_assertThisInitialized(_this), "priority", 30);
-    _defineProperty(_assertThisInitialized(_this), "incompatibleTokens", ['t', 'T']);
-    return _this;
-  }
-  _createClass(FractionOfSecondParser, [{
-    key: "parse",
-    value: function parse(dateString, token) {
-      var valueCallback = function valueCallback(value) {
-        return Math.floor(value * Math.pow(10, -token.length + 3));
-      };
-      return mapValue(parseNDigits(token.length, dateString), valueCallback);
-    }
-  }, {
-    key: "set",
-    value: function set(date, _flags, value) {
-      date.setUTCMilliseconds(value);
-      return date;
-    }
-  }]);
-  return FractionOfSecondParser;
-}(Parser);
-;// CONCATENATED MODULE: ./node_modules/date-fns/esm/parse/_lib/parsers/ISOTimezoneWithZParser.js
-
-
-
-
-
-
-
-
- // Timezone (ISO-8601. +00:00 is `'Z'`)
-var ISOTimezoneWithZParser = /*#__PURE__*/function (_Parser) {
-  _inherits(ISOTimezoneWithZParser, _Parser);
-  var _super = _createSuper(ISOTimezoneWithZParser);
-  function ISOTimezoneWithZParser() {
-    var _this;
-    _classCallCheck(this, ISOTimezoneWithZParser);
-    for (var _len = arguments.length, args = new Array(_len), _key = 0; _key < _len; _key++) {
-      args[_key] = arguments[_key];
-    }
-    _this = _super.call.apply(_super, [this].concat(args));
-    _defineProperty(_assertThisInitialized(_this), "priority", 10);
-    _defineProperty(_assertThisInitialized(_this), "incompatibleTokens", ['t', 'T', 'x']);
-    return _this;
-  }
-  _createClass(ISOTimezoneWithZParser, [{
-    key: "parse",
-    value: function parse(dateString, token) {
-      switch (token) {
-        case 'X':
-          return parseTimezonePattern(timezonePatterns.basicOptionalMinutes, dateString);
-        case 'XX':
-          return parseTimezonePattern(timezonePatterns.basic, dateString);
-        case 'XXXX':
-          return parseTimezonePattern(timezonePatterns.basicOptionalSeconds, dateString);
-        case 'XXXXX':
-          return parseTimezonePattern(timezonePatterns.extendedOptionalSeconds, dateString);
-        case 'XXX':
-        default:
-          return parseTimezonePattern(timezonePatterns.extended, dateString);
-      }
-    }
-  }, {
-    key: "set",
-    value: function set(date, flags, value) {
-      if (flags.timestampIsSet) {
-        return date;
-      }
-      return new Date(date.getTime() - value);
-    }
-  }]);
-  return ISOTimezoneWithZParser;
-}(Parser);
-;// CONCATENATED MODULE: ./node_modules/date-fns/esm/parse/_lib/parsers/ISOTimezoneParser.js
-
-
-
-
-
-
-
-
- // Timezone (ISO-8601)
-var ISOTimezoneParser = /*#__PURE__*/function (_Parser) {
-  _inherits(ISOTimezoneParser, _Parser);
-  var _super = _createSuper(ISOTimezoneParser);
-  function ISOTimezoneParser() {
-    var _this;
-    _classCallCheck(this, ISOTimezoneParser);
-    for (var _len = arguments.length, args = new Array(_len), _key = 0; _key < _len; _key++) {
-      args[_key] = arguments[_key];
-    }
-    _this = _super.call.apply(_super, [this].concat(args));
-    _defineProperty(_assertThisInitialized(_this), "priority", 10);
-    _defineProperty(_assertThisInitialized(_this), "incompatibleTokens", ['t', 'T', 'X']);
-    return _this;
-  }
-  _createClass(ISOTimezoneParser, [{
-    key: "parse",
-    value: function parse(dateString, token) {
-      switch (token) {
-        case 'x':
-          return parseTimezonePattern(timezonePatterns.basicOptionalMinutes, dateString);
-        case 'xx':
-          return parseTimezonePattern(timezonePatterns.basic, dateString);
-        case 'xxxx':
-          return parseTimezonePattern(timezonePatterns.basicOptionalSeconds, dateString);
-        case 'xxxxx':
-          return parseTimezonePattern(timezonePatterns.extendedOptionalSeconds, dateString);
-        case 'xxx':
-        default:
-          return parseTimezonePattern(timezonePatterns.extended, dateString);
-      }
-    }
-  }, {
-    key: "set",
-    value: function set(date, flags, value) {
-      if (flags.timestampIsSet) {
-        return date;
-      }
-      return new Date(date.getTime() - value);
-    }
-  }]);
-  return ISOTimezoneParser;
-}(Parser);
-;// CONCATENATED MODULE: ./node_modules/date-fns/esm/parse/_lib/parsers/TimestampSecondsParser.js
-
-
-
-
-
-
-
-
-var TimestampSecondsParser = /*#__PURE__*/function (_Parser) {
-  _inherits(TimestampSecondsParser, _Parser);
-  var _super = _createSuper(TimestampSecondsParser);
-  function TimestampSecondsParser() {
-    var _this;
-    _classCallCheck(this, TimestampSecondsParser);
-    for (var _len = arguments.length, args = new Array(_len), _key = 0; _key < _len; _key++) {
-      args[_key] = arguments[_key];
-    }
-    _this = _super.call.apply(_super, [this].concat(args));
-    _defineProperty(_assertThisInitialized(_this), "priority", 40);
-    _defineProperty(_assertThisInitialized(_this), "incompatibleTokens", '*');
-    return _this;
-  }
-  _createClass(TimestampSecondsParser, [{
-    key: "parse",
-    value: function parse(dateString) {
-      return parseAnyDigitsSigned(dateString);
-    }
-  }, {
-    key: "set",
-    value: function set(_date, _flags, value) {
-      return [new Date(value * 1000), {
-        timestampIsSet: true
-      }];
-    }
-  }]);
-  return TimestampSecondsParser;
-}(Parser);
-;// CONCATENATED MODULE: ./node_modules/date-fns/esm/parse/_lib/parsers/TimestampMillisecondsParser.js
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   TimestampMillisecondsParser: () => (/* binding */ TimestampMillisecondsParser)
+/* harmony export */ });
+/* harmony import */ var _babel_runtime_helpers_esm_classCallCheck__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/helpers/esm/classCallCheck */ "./node_modules/@babel/runtime/helpers/esm/classCallCheck.js");
+/* harmony import */ var _babel_runtime_helpers_esm_createClass__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @babel/runtime/helpers/esm/createClass */ "./node_modules/@babel/runtime/helpers/esm/createClass.js");
+/* harmony import */ var _babel_runtime_helpers_esm_assertThisInitialized__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @babel/runtime/helpers/esm/assertThisInitialized */ "./node_modules/@babel/runtime/helpers/esm/assertThisInitialized.js");
+/* harmony import */ var _babel_runtime_helpers_esm_inherits__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @babel/runtime/helpers/esm/inherits */ "./node_modules/@babel/runtime/helpers/esm/inherits.js");
+/* harmony import */ var _babel_runtime_helpers_esm_createSuper__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @babel/runtime/helpers/esm/createSuper */ "./node_modules/@babel/runtime/helpers/esm/createSuper.js");
+/* harmony import */ var _babel_runtime_helpers_esm_defineProperty__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @babel/runtime/helpers/esm/defineProperty */ "./node_modules/@babel/runtime/helpers/esm/defineProperty.js");
+/* harmony import */ var _Parser_js__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../Parser.js */ "./node_modules/date-fns/esm/parse/_lib/Parser.js");
+/* harmony import */ var _utils_js__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../utils.js */ "./node_modules/date-fns/esm/parse/_lib/utils.js");
 
 
 
@@ -3633,23 +4330,23 @@ var TimestampSecondsParser = /*#__PURE__*/function (_Parser) {
 
 
 var TimestampMillisecondsParser = /*#__PURE__*/function (_Parser) {
-  _inherits(TimestampMillisecondsParser, _Parser);
-  var _super = _createSuper(TimestampMillisecondsParser);
+  (0,_babel_runtime_helpers_esm_inherits__WEBPACK_IMPORTED_MODULE_3__["default"])(TimestampMillisecondsParser, _Parser);
+  var _super = (0,_babel_runtime_helpers_esm_createSuper__WEBPACK_IMPORTED_MODULE_4__["default"])(TimestampMillisecondsParser);
   function TimestampMillisecondsParser() {
     var _this;
-    _classCallCheck(this, TimestampMillisecondsParser);
+    (0,_babel_runtime_helpers_esm_classCallCheck__WEBPACK_IMPORTED_MODULE_0__["default"])(this, TimestampMillisecondsParser);
     for (var _len = arguments.length, args = new Array(_len), _key = 0; _key < _len; _key++) {
       args[_key] = arguments[_key];
     }
     _this = _super.call.apply(_super, [this].concat(args));
-    _defineProperty(_assertThisInitialized(_this), "priority", 20);
-    _defineProperty(_assertThisInitialized(_this), "incompatibleTokens", '*');
+    (0,_babel_runtime_helpers_esm_defineProperty__WEBPACK_IMPORTED_MODULE_5__["default"])((0,_babel_runtime_helpers_esm_assertThisInitialized__WEBPACK_IMPORTED_MODULE_2__["default"])(_this), "priority", 20);
+    (0,_babel_runtime_helpers_esm_defineProperty__WEBPACK_IMPORTED_MODULE_5__["default"])((0,_babel_runtime_helpers_esm_assertThisInitialized__WEBPACK_IMPORTED_MODULE_2__["default"])(_this), "incompatibleTokens", '*');
     return _this;
   }
-  _createClass(TimestampMillisecondsParser, [{
+  (0,_babel_runtime_helpers_esm_createClass__WEBPACK_IMPORTED_MODULE_1__["default"])(TimestampMillisecondsParser, [{
     key: "parse",
     value: function parse(dateString) {
-      return parseAnyDigitsSigned(dateString);
+      return (0,_utils_js__WEBPACK_IMPORTED_MODULE_6__.parseAnyDigitsSigned)(dateString);
     }
   }, {
     key: "set",
@@ -3660,8 +4357,203 @@ var TimestampMillisecondsParser = /*#__PURE__*/function (_Parser) {
     }
   }]);
   return TimestampMillisecondsParser;
-}(Parser);
-;// CONCATENATED MODULE: ./node_modules/date-fns/esm/parse/_lib/parsers/index.js
+}(_Parser_js__WEBPACK_IMPORTED_MODULE_7__.Parser);
+
+/***/ }),
+
+/***/ "./node_modules/date-fns/esm/parse/_lib/parsers/TimestampSecondsParser.js":
+/*!********************************************************************************!*\
+  !*** ./node_modules/date-fns/esm/parse/_lib/parsers/TimestampSecondsParser.js ***!
+  \********************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   TimestampSecondsParser: () => (/* binding */ TimestampSecondsParser)
+/* harmony export */ });
+/* harmony import */ var _babel_runtime_helpers_esm_classCallCheck__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/helpers/esm/classCallCheck */ "./node_modules/@babel/runtime/helpers/esm/classCallCheck.js");
+/* harmony import */ var _babel_runtime_helpers_esm_createClass__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @babel/runtime/helpers/esm/createClass */ "./node_modules/@babel/runtime/helpers/esm/createClass.js");
+/* harmony import */ var _babel_runtime_helpers_esm_assertThisInitialized__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @babel/runtime/helpers/esm/assertThisInitialized */ "./node_modules/@babel/runtime/helpers/esm/assertThisInitialized.js");
+/* harmony import */ var _babel_runtime_helpers_esm_inherits__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @babel/runtime/helpers/esm/inherits */ "./node_modules/@babel/runtime/helpers/esm/inherits.js");
+/* harmony import */ var _babel_runtime_helpers_esm_createSuper__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @babel/runtime/helpers/esm/createSuper */ "./node_modules/@babel/runtime/helpers/esm/createSuper.js");
+/* harmony import */ var _babel_runtime_helpers_esm_defineProperty__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @babel/runtime/helpers/esm/defineProperty */ "./node_modules/@babel/runtime/helpers/esm/defineProperty.js");
+/* harmony import */ var _Parser_js__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../Parser.js */ "./node_modules/date-fns/esm/parse/_lib/Parser.js");
+/* harmony import */ var _utils_js__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../utils.js */ "./node_modules/date-fns/esm/parse/_lib/utils.js");
+
+
+
+
+
+
+
+
+var TimestampSecondsParser = /*#__PURE__*/function (_Parser) {
+  (0,_babel_runtime_helpers_esm_inherits__WEBPACK_IMPORTED_MODULE_3__["default"])(TimestampSecondsParser, _Parser);
+  var _super = (0,_babel_runtime_helpers_esm_createSuper__WEBPACK_IMPORTED_MODULE_4__["default"])(TimestampSecondsParser);
+  function TimestampSecondsParser() {
+    var _this;
+    (0,_babel_runtime_helpers_esm_classCallCheck__WEBPACK_IMPORTED_MODULE_0__["default"])(this, TimestampSecondsParser);
+    for (var _len = arguments.length, args = new Array(_len), _key = 0; _key < _len; _key++) {
+      args[_key] = arguments[_key];
+    }
+    _this = _super.call.apply(_super, [this].concat(args));
+    (0,_babel_runtime_helpers_esm_defineProperty__WEBPACK_IMPORTED_MODULE_5__["default"])((0,_babel_runtime_helpers_esm_assertThisInitialized__WEBPACK_IMPORTED_MODULE_2__["default"])(_this), "priority", 40);
+    (0,_babel_runtime_helpers_esm_defineProperty__WEBPACK_IMPORTED_MODULE_5__["default"])((0,_babel_runtime_helpers_esm_assertThisInitialized__WEBPACK_IMPORTED_MODULE_2__["default"])(_this), "incompatibleTokens", '*');
+    return _this;
+  }
+  (0,_babel_runtime_helpers_esm_createClass__WEBPACK_IMPORTED_MODULE_1__["default"])(TimestampSecondsParser, [{
+    key: "parse",
+    value: function parse(dateString) {
+      return (0,_utils_js__WEBPACK_IMPORTED_MODULE_6__.parseAnyDigitsSigned)(dateString);
+    }
+  }, {
+    key: "set",
+    value: function set(_date, _flags, value) {
+      return [new Date(value * 1000), {
+        timestampIsSet: true
+      }];
+    }
+  }]);
+  return TimestampSecondsParser;
+}(_Parser_js__WEBPACK_IMPORTED_MODULE_7__.Parser);
+
+/***/ }),
+
+/***/ "./node_modules/date-fns/esm/parse/_lib/parsers/YearParser.js":
+/*!********************************************************************!*\
+  !*** ./node_modules/date-fns/esm/parse/_lib/parsers/YearParser.js ***!
+  \********************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   YearParser: () => (/* binding */ YearParser)
+/* harmony export */ });
+/* harmony import */ var _babel_runtime_helpers_esm_classCallCheck__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/helpers/esm/classCallCheck */ "./node_modules/@babel/runtime/helpers/esm/classCallCheck.js");
+/* harmony import */ var _babel_runtime_helpers_esm_createClass__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @babel/runtime/helpers/esm/createClass */ "./node_modules/@babel/runtime/helpers/esm/createClass.js");
+/* harmony import */ var _babel_runtime_helpers_esm_assertThisInitialized__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @babel/runtime/helpers/esm/assertThisInitialized */ "./node_modules/@babel/runtime/helpers/esm/assertThisInitialized.js");
+/* harmony import */ var _babel_runtime_helpers_esm_inherits__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @babel/runtime/helpers/esm/inherits */ "./node_modules/@babel/runtime/helpers/esm/inherits.js");
+/* harmony import */ var _babel_runtime_helpers_esm_createSuper__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @babel/runtime/helpers/esm/createSuper */ "./node_modules/@babel/runtime/helpers/esm/createSuper.js");
+/* harmony import */ var _babel_runtime_helpers_esm_defineProperty__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @babel/runtime/helpers/esm/defineProperty */ "./node_modules/@babel/runtime/helpers/esm/defineProperty.js");
+/* harmony import */ var _Parser_js__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../Parser.js */ "./node_modules/date-fns/esm/parse/_lib/Parser.js");
+/* harmony import */ var _utils_js__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../utils.js */ "./node_modules/date-fns/esm/parse/_lib/utils.js");
+
+
+
+
+
+
+
+
+// From http://www.unicode.org/reports/tr35/tr35-31/tr35-dates.html#Date_Format_Patterns
+// | Year     |     y | yy |   yyy |  yyyy | yyyyy |
+// |----------|-------|----|-------|-------|-------|
+// | AD 1     |     1 | 01 |   001 |  0001 | 00001 |
+// | AD 12    |    12 | 12 |   012 |  0012 | 00012 |
+// | AD 123   |   123 | 23 |   123 |  0123 | 00123 |
+// | AD 1234  |  1234 | 34 |  1234 |  1234 | 01234 |
+// | AD 12345 | 12345 | 45 | 12345 | 12345 | 12345 |
+var YearParser = /*#__PURE__*/function (_Parser) {
+  (0,_babel_runtime_helpers_esm_inherits__WEBPACK_IMPORTED_MODULE_3__["default"])(YearParser, _Parser);
+  var _super = (0,_babel_runtime_helpers_esm_createSuper__WEBPACK_IMPORTED_MODULE_4__["default"])(YearParser);
+  function YearParser() {
+    var _this;
+    (0,_babel_runtime_helpers_esm_classCallCheck__WEBPACK_IMPORTED_MODULE_0__["default"])(this, YearParser);
+    for (var _len = arguments.length, args = new Array(_len), _key = 0; _key < _len; _key++) {
+      args[_key] = arguments[_key];
+    }
+    _this = _super.call.apply(_super, [this].concat(args));
+    (0,_babel_runtime_helpers_esm_defineProperty__WEBPACK_IMPORTED_MODULE_5__["default"])((0,_babel_runtime_helpers_esm_assertThisInitialized__WEBPACK_IMPORTED_MODULE_2__["default"])(_this), "priority", 130);
+    (0,_babel_runtime_helpers_esm_defineProperty__WEBPACK_IMPORTED_MODULE_5__["default"])((0,_babel_runtime_helpers_esm_assertThisInitialized__WEBPACK_IMPORTED_MODULE_2__["default"])(_this), "incompatibleTokens", ['Y', 'R', 'u', 'w', 'I', 'i', 'e', 'c', 't', 'T']);
+    return _this;
+  }
+  (0,_babel_runtime_helpers_esm_createClass__WEBPACK_IMPORTED_MODULE_1__["default"])(YearParser, [{
+    key: "parse",
+    value: function parse(dateString, token, match) {
+      var valueCallback = function valueCallback(year) {
+        return {
+          year: year,
+          isTwoDigitYear: token === 'yy'
+        };
+      };
+      switch (token) {
+        case 'y':
+          return (0,_utils_js__WEBPACK_IMPORTED_MODULE_6__.mapValue)((0,_utils_js__WEBPACK_IMPORTED_MODULE_6__.parseNDigits)(4, dateString), valueCallback);
+        case 'yo':
+          return (0,_utils_js__WEBPACK_IMPORTED_MODULE_6__.mapValue)(match.ordinalNumber(dateString, {
+            unit: 'year'
+          }), valueCallback);
+        default:
+          return (0,_utils_js__WEBPACK_IMPORTED_MODULE_6__.mapValue)((0,_utils_js__WEBPACK_IMPORTED_MODULE_6__.parseNDigits)(token.length, dateString), valueCallback);
+      }
+    }
+  }, {
+    key: "validate",
+    value: function validate(_date, value) {
+      return value.isTwoDigitYear || value.year > 0;
+    }
+  }, {
+    key: "set",
+    value: function set(date, flags, value) {
+      var currentYear = date.getUTCFullYear();
+      if (value.isTwoDigitYear) {
+        var normalizedTwoDigitYear = (0,_utils_js__WEBPACK_IMPORTED_MODULE_6__.normalizeTwoDigitYear)(value.year, currentYear);
+        date.setUTCFullYear(normalizedTwoDigitYear, 0, 1);
+        date.setUTCHours(0, 0, 0, 0);
+        return date;
+      }
+      var year = !('era' in flags) || flags.era === 1 ? value.year : 1 - value.year;
+      date.setUTCFullYear(year, 0, 1);
+      date.setUTCHours(0, 0, 0, 0);
+      return date;
+    }
+  }]);
+  return YearParser;
+}(_Parser_js__WEBPACK_IMPORTED_MODULE_7__.Parser);
+
+/***/ }),
+
+/***/ "./node_modules/date-fns/esm/parse/_lib/parsers/index.js":
+/*!***************************************************************!*\
+  !*** ./node_modules/date-fns/esm/parse/_lib/parsers/index.js ***!
+  \***************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   parsers: () => (/* binding */ parsers)
+/* harmony export */ });
+/* harmony import */ var _EraParser_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./EraParser.js */ "./node_modules/date-fns/esm/parse/_lib/parsers/EraParser.js");
+/* harmony import */ var _YearParser_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./YearParser.js */ "./node_modules/date-fns/esm/parse/_lib/parsers/YearParser.js");
+/* harmony import */ var _LocalWeekYearParser_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./LocalWeekYearParser.js */ "./node_modules/date-fns/esm/parse/_lib/parsers/LocalWeekYearParser.js");
+/* harmony import */ var _ISOWeekYearParser_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./ISOWeekYearParser.js */ "./node_modules/date-fns/esm/parse/_lib/parsers/ISOWeekYearParser.js");
+/* harmony import */ var _ExtendedYearParser_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./ExtendedYearParser.js */ "./node_modules/date-fns/esm/parse/_lib/parsers/ExtendedYearParser.js");
+/* harmony import */ var _QuarterParser_js__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./QuarterParser.js */ "./node_modules/date-fns/esm/parse/_lib/parsers/QuarterParser.js");
+/* harmony import */ var _StandAloneQuarterParser_js__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./StandAloneQuarterParser.js */ "./node_modules/date-fns/esm/parse/_lib/parsers/StandAloneQuarterParser.js");
+/* harmony import */ var _MonthParser_js__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./MonthParser.js */ "./node_modules/date-fns/esm/parse/_lib/parsers/MonthParser.js");
+/* harmony import */ var _StandAloneMonthParser_js__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./StandAloneMonthParser.js */ "./node_modules/date-fns/esm/parse/_lib/parsers/StandAloneMonthParser.js");
+/* harmony import */ var _LocalWeekParser_js__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./LocalWeekParser.js */ "./node_modules/date-fns/esm/parse/_lib/parsers/LocalWeekParser.js");
+/* harmony import */ var _ISOWeekParser_js__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./ISOWeekParser.js */ "./node_modules/date-fns/esm/parse/_lib/parsers/ISOWeekParser.js");
+/* harmony import */ var _DateParser_js__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./DateParser.js */ "./node_modules/date-fns/esm/parse/_lib/parsers/DateParser.js");
+/* harmony import */ var _DayOfYearParser_js__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ./DayOfYearParser.js */ "./node_modules/date-fns/esm/parse/_lib/parsers/DayOfYearParser.js");
+/* harmony import */ var _DayParser_js__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ./DayParser.js */ "./node_modules/date-fns/esm/parse/_lib/parsers/DayParser.js");
+/* harmony import */ var _LocalDayParser_js__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ./LocalDayParser.js */ "./node_modules/date-fns/esm/parse/_lib/parsers/LocalDayParser.js");
+/* harmony import */ var _StandAloneLocalDayParser_js__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ./StandAloneLocalDayParser.js */ "./node_modules/date-fns/esm/parse/_lib/parsers/StandAloneLocalDayParser.js");
+/* harmony import */ var _ISODayParser_js__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! ./ISODayParser.js */ "./node_modules/date-fns/esm/parse/_lib/parsers/ISODayParser.js");
+/* harmony import */ var _AMPMParser_js__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! ./AMPMParser.js */ "./node_modules/date-fns/esm/parse/_lib/parsers/AMPMParser.js");
+/* harmony import */ var _AMPMMidnightParser_js__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(/*! ./AMPMMidnightParser.js */ "./node_modules/date-fns/esm/parse/_lib/parsers/AMPMMidnightParser.js");
+/* harmony import */ var _DayPeriodParser_js__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(/*! ./DayPeriodParser.js */ "./node_modules/date-fns/esm/parse/_lib/parsers/DayPeriodParser.js");
+/* harmony import */ var _Hour1to12Parser_js__WEBPACK_IMPORTED_MODULE_20__ = __webpack_require__(/*! ./Hour1to12Parser.js */ "./node_modules/date-fns/esm/parse/_lib/parsers/Hour1to12Parser.js");
+/* harmony import */ var _Hour0to23Parser_js__WEBPACK_IMPORTED_MODULE_21__ = __webpack_require__(/*! ./Hour0to23Parser.js */ "./node_modules/date-fns/esm/parse/_lib/parsers/Hour0to23Parser.js");
+/* harmony import */ var _Hour0To11Parser_js__WEBPACK_IMPORTED_MODULE_22__ = __webpack_require__(/*! ./Hour0To11Parser.js */ "./node_modules/date-fns/esm/parse/_lib/parsers/Hour0To11Parser.js");
+/* harmony import */ var _Hour1To24Parser_js__WEBPACK_IMPORTED_MODULE_23__ = __webpack_require__(/*! ./Hour1To24Parser.js */ "./node_modules/date-fns/esm/parse/_lib/parsers/Hour1To24Parser.js");
+/* harmony import */ var _MinuteParser_js__WEBPACK_IMPORTED_MODULE_24__ = __webpack_require__(/*! ./MinuteParser.js */ "./node_modules/date-fns/esm/parse/_lib/parsers/MinuteParser.js");
+/* harmony import */ var _SecondParser_js__WEBPACK_IMPORTED_MODULE_25__ = __webpack_require__(/*! ./SecondParser.js */ "./node_modules/date-fns/esm/parse/_lib/parsers/SecondParser.js");
+/* harmony import */ var _FractionOfSecondParser_js__WEBPACK_IMPORTED_MODULE_26__ = __webpack_require__(/*! ./FractionOfSecondParser.js */ "./node_modules/date-fns/esm/parse/_lib/parsers/FractionOfSecondParser.js");
+/* harmony import */ var _ISOTimezoneWithZParser_js__WEBPACK_IMPORTED_MODULE_27__ = __webpack_require__(/*! ./ISOTimezoneWithZParser.js */ "./node_modules/date-fns/esm/parse/_lib/parsers/ISOTimezoneWithZParser.js");
+/* harmony import */ var _ISOTimezoneParser_js__WEBPACK_IMPORTED_MODULE_28__ = __webpack_require__(/*! ./ISOTimezoneParser.js */ "./node_modules/date-fns/esm/parse/_lib/parsers/ISOTimezoneParser.js");
+/* harmony import */ var _TimestampSecondsParser_js__WEBPACK_IMPORTED_MODULE_29__ = __webpack_require__(/*! ./TimestampSecondsParser.js */ "./node_modules/date-fns/esm/parse/_lib/parsers/TimestampSecondsParser.js");
+/* harmony import */ var _TimestampMillisecondsParser_js__WEBPACK_IMPORTED_MODULE_30__ = __webpack_require__(/*! ./TimestampMillisecondsParser.js */ "./node_modules/date-fns/esm/parse/_lib/parsers/TimestampMillisecondsParser.js");
 
 
 
@@ -3737,39 +4629,200 @@ var TimestampMillisecondsParser = /*#__PURE__*/function (_Parser) {
  *   for week-numbering date specific to the locale.
  */
 var parsers = {
-  G: new EraParser(),
-  y: new YearParser(),
-  Y: new LocalWeekYearParser(),
-  R: new ISOWeekYearParser(),
-  u: new ExtendedYearParser(),
-  Q: new QuarterParser(),
-  q: new StandAloneQuarterParser(),
-  M: new MonthParser(),
-  L: new StandAloneMonthParser(),
-  w: new LocalWeekParser(),
-  I: new ISOWeekParser(),
-  d: new DateParser(),
-  D: new DayOfYearParser(),
-  E: new DayParser(),
-  e: new LocalDayParser(),
-  c: new StandAloneLocalDayParser(),
-  i: new ISODayParser(),
-  a: new AMPMParser(),
-  b: new AMPMMidnightParser(),
-  B: new DayPeriodParser(),
-  h: new Hour1to12Parser(),
-  H: new Hour0to23Parser(),
-  K: new Hour0To11Parser(),
-  k: new Hour1To24Parser(),
-  m: new MinuteParser(),
-  s: new SecondParser(),
-  S: new FractionOfSecondParser(),
-  X: new ISOTimezoneWithZParser(),
-  x: new ISOTimezoneParser(),
-  t: new TimestampSecondsParser(),
-  T: new TimestampMillisecondsParser()
+  G: new _EraParser_js__WEBPACK_IMPORTED_MODULE_0__.EraParser(),
+  y: new _YearParser_js__WEBPACK_IMPORTED_MODULE_1__.YearParser(),
+  Y: new _LocalWeekYearParser_js__WEBPACK_IMPORTED_MODULE_2__.LocalWeekYearParser(),
+  R: new _ISOWeekYearParser_js__WEBPACK_IMPORTED_MODULE_3__.ISOWeekYearParser(),
+  u: new _ExtendedYearParser_js__WEBPACK_IMPORTED_MODULE_4__.ExtendedYearParser(),
+  Q: new _QuarterParser_js__WEBPACK_IMPORTED_MODULE_5__.QuarterParser(),
+  q: new _StandAloneQuarterParser_js__WEBPACK_IMPORTED_MODULE_6__.StandAloneQuarterParser(),
+  M: new _MonthParser_js__WEBPACK_IMPORTED_MODULE_7__.MonthParser(),
+  L: new _StandAloneMonthParser_js__WEBPACK_IMPORTED_MODULE_8__.StandAloneMonthParser(),
+  w: new _LocalWeekParser_js__WEBPACK_IMPORTED_MODULE_9__.LocalWeekParser(),
+  I: new _ISOWeekParser_js__WEBPACK_IMPORTED_MODULE_10__.ISOWeekParser(),
+  d: new _DateParser_js__WEBPACK_IMPORTED_MODULE_11__.DateParser(),
+  D: new _DayOfYearParser_js__WEBPACK_IMPORTED_MODULE_12__.DayOfYearParser(),
+  E: new _DayParser_js__WEBPACK_IMPORTED_MODULE_13__.DayParser(),
+  e: new _LocalDayParser_js__WEBPACK_IMPORTED_MODULE_14__.LocalDayParser(),
+  c: new _StandAloneLocalDayParser_js__WEBPACK_IMPORTED_MODULE_15__.StandAloneLocalDayParser(),
+  i: new _ISODayParser_js__WEBPACK_IMPORTED_MODULE_16__.ISODayParser(),
+  a: new _AMPMParser_js__WEBPACK_IMPORTED_MODULE_17__.AMPMParser(),
+  b: new _AMPMMidnightParser_js__WEBPACK_IMPORTED_MODULE_18__.AMPMMidnightParser(),
+  B: new _DayPeriodParser_js__WEBPACK_IMPORTED_MODULE_19__.DayPeriodParser(),
+  h: new _Hour1to12Parser_js__WEBPACK_IMPORTED_MODULE_20__.Hour1to12Parser(),
+  H: new _Hour0to23Parser_js__WEBPACK_IMPORTED_MODULE_21__.Hour0to23Parser(),
+  K: new _Hour0To11Parser_js__WEBPACK_IMPORTED_MODULE_22__.Hour0To11Parser(),
+  k: new _Hour1To24Parser_js__WEBPACK_IMPORTED_MODULE_23__.Hour1To24Parser(),
+  m: new _MinuteParser_js__WEBPACK_IMPORTED_MODULE_24__.MinuteParser(),
+  s: new _SecondParser_js__WEBPACK_IMPORTED_MODULE_25__.SecondParser(),
+  S: new _FractionOfSecondParser_js__WEBPACK_IMPORTED_MODULE_26__.FractionOfSecondParser(),
+  X: new _ISOTimezoneWithZParser_js__WEBPACK_IMPORTED_MODULE_27__.ISOTimezoneWithZParser(),
+  x: new _ISOTimezoneParser_js__WEBPACK_IMPORTED_MODULE_28__.ISOTimezoneParser(),
+  t: new _TimestampSecondsParser_js__WEBPACK_IMPORTED_MODULE_29__.TimestampSecondsParser(),
+  T: new _TimestampMillisecondsParser_js__WEBPACK_IMPORTED_MODULE_30__.TimestampMillisecondsParser()
 };
-;// CONCATENATED MODULE: ./node_modules/date-fns/esm/parse/index.js
+
+/***/ }),
+
+/***/ "./node_modules/date-fns/esm/parse/_lib/utils.js":
+/*!*******************************************************!*\
+  !*** ./node_modules/date-fns/esm/parse/_lib/utils.js ***!
+  \*******************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   dayPeriodEnumToHours: () => (/* binding */ dayPeriodEnumToHours),
+/* harmony export */   isLeapYearIndex: () => (/* binding */ isLeapYearIndex),
+/* harmony export */   mapValue: () => (/* binding */ mapValue),
+/* harmony export */   normalizeTwoDigitYear: () => (/* binding */ normalizeTwoDigitYear),
+/* harmony export */   parseAnyDigitsSigned: () => (/* binding */ parseAnyDigitsSigned),
+/* harmony export */   parseNDigits: () => (/* binding */ parseNDigits),
+/* harmony export */   parseNDigitsSigned: () => (/* binding */ parseNDigitsSigned),
+/* harmony export */   parseNumericPattern: () => (/* binding */ parseNumericPattern),
+/* harmony export */   parseTimezonePattern: () => (/* binding */ parseTimezonePattern)
+/* harmony export */ });
+/* harmony import */ var _constants_index_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../constants/index.js */ "./node_modules/date-fns/esm/constants/index.js");
+/* harmony import */ var _constants_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./constants.js */ "./node_modules/date-fns/esm/parse/_lib/constants.js");
+
+
+function mapValue(parseFnResult, mapFn) {
+  if (!parseFnResult) {
+    return parseFnResult;
+  }
+  return {
+    value: mapFn(parseFnResult.value),
+    rest: parseFnResult.rest
+  };
+}
+function parseNumericPattern(pattern, dateString) {
+  var matchResult = dateString.match(pattern);
+  if (!matchResult) {
+    return null;
+  }
+  return {
+    value: parseInt(matchResult[0], 10),
+    rest: dateString.slice(matchResult[0].length)
+  };
+}
+function parseTimezonePattern(pattern, dateString) {
+  var matchResult = dateString.match(pattern);
+  if (!matchResult) {
+    return null;
+  }
+
+  // Input is 'Z'
+  if (matchResult[0] === 'Z') {
+    return {
+      value: 0,
+      rest: dateString.slice(1)
+    };
+  }
+  var sign = matchResult[1] === '+' ? 1 : -1;
+  var hours = matchResult[2] ? parseInt(matchResult[2], 10) : 0;
+  var minutes = matchResult[3] ? parseInt(matchResult[3], 10) : 0;
+  var seconds = matchResult[5] ? parseInt(matchResult[5], 10) : 0;
+  return {
+    value: sign * (hours * _constants_index_js__WEBPACK_IMPORTED_MODULE_0__.millisecondsInHour + minutes * _constants_index_js__WEBPACK_IMPORTED_MODULE_0__.millisecondsInMinute + seconds * _constants_index_js__WEBPACK_IMPORTED_MODULE_0__.millisecondsInSecond),
+    rest: dateString.slice(matchResult[0].length)
+  };
+}
+function parseAnyDigitsSigned(dateString) {
+  return parseNumericPattern(_constants_js__WEBPACK_IMPORTED_MODULE_1__.numericPatterns.anyDigitsSigned, dateString);
+}
+function parseNDigits(n, dateString) {
+  switch (n) {
+    case 1:
+      return parseNumericPattern(_constants_js__WEBPACK_IMPORTED_MODULE_1__.numericPatterns.singleDigit, dateString);
+    case 2:
+      return parseNumericPattern(_constants_js__WEBPACK_IMPORTED_MODULE_1__.numericPatterns.twoDigits, dateString);
+    case 3:
+      return parseNumericPattern(_constants_js__WEBPACK_IMPORTED_MODULE_1__.numericPatterns.threeDigits, dateString);
+    case 4:
+      return parseNumericPattern(_constants_js__WEBPACK_IMPORTED_MODULE_1__.numericPatterns.fourDigits, dateString);
+    default:
+      return parseNumericPattern(new RegExp('^\\d{1,' + n + '}'), dateString);
+  }
+}
+function parseNDigitsSigned(n, dateString) {
+  switch (n) {
+    case 1:
+      return parseNumericPattern(_constants_js__WEBPACK_IMPORTED_MODULE_1__.numericPatterns.singleDigitSigned, dateString);
+    case 2:
+      return parseNumericPattern(_constants_js__WEBPACK_IMPORTED_MODULE_1__.numericPatterns.twoDigitsSigned, dateString);
+    case 3:
+      return parseNumericPattern(_constants_js__WEBPACK_IMPORTED_MODULE_1__.numericPatterns.threeDigitsSigned, dateString);
+    case 4:
+      return parseNumericPattern(_constants_js__WEBPACK_IMPORTED_MODULE_1__.numericPatterns.fourDigitsSigned, dateString);
+    default:
+      return parseNumericPattern(new RegExp('^-?\\d{1,' + n + '}'), dateString);
+  }
+}
+function dayPeriodEnumToHours(dayPeriod) {
+  switch (dayPeriod) {
+    case 'morning':
+      return 4;
+    case 'evening':
+      return 17;
+    case 'pm':
+    case 'noon':
+    case 'afternoon':
+      return 12;
+    case 'am':
+    case 'midnight':
+    case 'night':
+    default:
+      return 0;
+  }
+}
+function normalizeTwoDigitYear(twoDigitYear, currentYear) {
+  var isCommonEra = currentYear > 0;
+  // Absolute number of the current year:
+  // 1 -> 1 AC
+  // 0 -> 1 BC
+  // -1 -> 2 BC
+  var absCurrentYear = isCommonEra ? currentYear : 1 - currentYear;
+  var result;
+  if (absCurrentYear <= 50) {
+    result = twoDigitYear || 100;
+  } else {
+    var rangeEnd = absCurrentYear + 50;
+    var rangeEndCentury = Math.floor(rangeEnd / 100) * 100;
+    var isPreviousCentury = twoDigitYear >= rangeEnd % 100;
+    result = twoDigitYear + rangeEndCentury - (isPreviousCentury ? 100 : 0);
+  }
+  return isCommonEra ? result : 1 - result;
+}
+function isLeapYearIndex(year) {
+  return year % 400 === 0 || year % 4 === 0 && year % 100 !== 0;
+}
+
+/***/ }),
+
+/***/ "./node_modules/date-fns/esm/parse/index.js":
+/*!**************************************************!*\
+  !*** ./node_modules/date-fns/esm/parse/index.js ***!
+  \**************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (/* binding */ parse)
+/* harmony export */ });
+/* harmony import */ var _babel_runtime_helpers_esm_typeof__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/helpers/esm/typeof */ "./node_modules/@babel/runtime/helpers/esm/typeof.js");
+/* harmony import */ var _babel_runtime_helpers_esm_createForOfIteratorHelper__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @babel/runtime/helpers/esm/createForOfIteratorHelper */ "./node_modules/@babel/runtime/helpers/esm/createForOfIteratorHelper.js");
+/* harmony import */ var _lib_defaultLocale_index_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../_lib/defaultLocale/index.js */ "./node_modules/date-fns/esm/_lib/defaultLocale/index.js");
+/* harmony import */ var _subMilliseconds_index_js__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ../subMilliseconds/index.js */ "./node_modules/date-fns/esm/subMilliseconds/index.js");
+/* harmony import */ var _toDate_index_js__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../toDate/index.js */ "./node_modules/date-fns/esm/toDate/index.js");
+/* harmony import */ var _lib_assign_index_js__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ../_lib/assign/index.js */ "./node_modules/date-fns/esm/_lib/assign/index.js");
+/* harmony import */ var _lib_format_longFormatters_index_js__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../_lib/format/longFormatters/index.js */ "./node_modules/date-fns/esm/_lib/format/longFormatters/index.js");
+/* harmony import */ var _lib_getTimezoneOffsetInMilliseconds_index_js__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ../_lib/getTimezoneOffsetInMilliseconds/index.js */ "./node_modules/date-fns/esm/_lib/getTimezoneOffsetInMilliseconds/index.js");
+/* harmony import */ var _lib_protectedTokens_index_js__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ../_lib/protectedTokens/index.js */ "./node_modules/date-fns/esm/_lib/protectedTokens/index.js");
+/* harmony import */ var _lib_toInteger_index_js__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../_lib/toInteger/index.js */ "./node_modules/date-fns/esm/_lib/toInteger/index.js");
+/* harmony import */ var _lib_requiredArgs_index_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../_lib/requiredArgs/index.js */ "./node_modules/date-fns/esm/_lib/requiredArgs/index.js");
+/* harmony import */ var _lib_Setter_js__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./_lib/Setter.js */ "./node_modules/date-fns/esm/parse/_lib/Setter.js");
+/* harmony import */ var _lib_parsers_index_js__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./_lib/parsers/index.js */ "./node_modules/date-fns/esm/parse/_lib/parsers/index.js");
+/* harmony import */ var _lib_defaultOptions_index_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../_lib/defaultOptions/index.js */ "./node_modules/date-fns/esm/_lib/defaultOptions/index.js");
 
 
 
@@ -4107,21 +5160,21 @@ var unescapedLatinCharacterRegExp = /[a-zA-Z]/;
  */
 function parse(dirtyDateString, dirtyFormatString, dirtyReferenceDate, options) {
   var _ref, _options$locale, _ref2, _ref3, _ref4, _options$firstWeekCon, _options$locale2, _options$locale2$opti, _defaultOptions$local, _defaultOptions$local2, _ref5, _ref6, _ref7, _options$weekStartsOn, _options$locale3, _options$locale3$opti, _defaultOptions$local3, _defaultOptions$local4;
-  requiredArgs(3, arguments);
+  (0,_lib_requiredArgs_index_js__WEBPACK_IMPORTED_MODULE_2__["default"])(3, arguments);
   var dateString = String(dirtyDateString);
   var formatString = String(dirtyFormatString);
-  var defaultOptions = getDefaultOptions();
-  var locale = (_ref = (_options$locale = options === null || options === void 0 ? void 0 : options.locale) !== null && _options$locale !== void 0 ? _options$locale : defaultOptions.locale) !== null && _ref !== void 0 ? _ref : defaultLocale;
+  var defaultOptions = (0,_lib_defaultOptions_index_js__WEBPACK_IMPORTED_MODULE_3__.getDefaultOptions)();
+  var locale = (_ref = (_options$locale = options === null || options === void 0 ? void 0 : options.locale) !== null && _options$locale !== void 0 ? _options$locale : defaultOptions.locale) !== null && _ref !== void 0 ? _ref : _lib_defaultLocale_index_js__WEBPACK_IMPORTED_MODULE_4__["default"];
   if (!locale.match) {
     throw new RangeError('locale must contain match property');
   }
-  var firstWeekContainsDate = toInteger((_ref2 = (_ref3 = (_ref4 = (_options$firstWeekCon = options === null || options === void 0 ? void 0 : options.firstWeekContainsDate) !== null && _options$firstWeekCon !== void 0 ? _options$firstWeekCon : options === null || options === void 0 ? void 0 : (_options$locale2 = options.locale) === null || _options$locale2 === void 0 ? void 0 : (_options$locale2$opti = _options$locale2.options) === null || _options$locale2$opti === void 0 ? void 0 : _options$locale2$opti.firstWeekContainsDate) !== null && _ref4 !== void 0 ? _ref4 : defaultOptions.firstWeekContainsDate) !== null && _ref3 !== void 0 ? _ref3 : (_defaultOptions$local = defaultOptions.locale) === null || _defaultOptions$local === void 0 ? void 0 : (_defaultOptions$local2 = _defaultOptions$local.options) === null || _defaultOptions$local2 === void 0 ? void 0 : _defaultOptions$local2.firstWeekContainsDate) !== null && _ref2 !== void 0 ? _ref2 : 1);
+  var firstWeekContainsDate = (0,_lib_toInteger_index_js__WEBPACK_IMPORTED_MODULE_5__["default"])((_ref2 = (_ref3 = (_ref4 = (_options$firstWeekCon = options === null || options === void 0 ? void 0 : options.firstWeekContainsDate) !== null && _options$firstWeekCon !== void 0 ? _options$firstWeekCon : options === null || options === void 0 ? void 0 : (_options$locale2 = options.locale) === null || _options$locale2 === void 0 ? void 0 : (_options$locale2$opti = _options$locale2.options) === null || _options$locale2$opti === void 0 ? void 0 : _options$locale2$opti.firstWeekContainsDate) !== null && _ref4 !== void 0 ? _ref4 : defaultOptions.firstWeekContainsDate) !== null && _ref3 !== void 0 ? _ref3 : (_defaultOptions$local = defaultOptions.locale) === null || _defaultOptions$local === void 0 ? void 0 : (_defaultOptions$local2 = _defaultOptions$local.options) === null || _defaultOptions$local2 === void 0 ? void 0 : _defaultOptions$local2.firstWeekContainsDate) !== null && _ref2 !== void 0 ? _ref2 : 1);
 
   // Test if weekStartsOn is between 1 and 7 _and_ is not NaN
   if (!(firstWeekContainsDate >= 1 && firstWeekContainsDate <= 7)) {
     throw new RangeError('firstWeekContainsDate must be between 1 and 7 inclusively');
   }
-  var weekStartsOn = toInteger((_ref5 = (_ref6 = (_ref7 = (_options$weekStartsOn = options === null || options === void 0 ? void 0 : options.weekStartsOn) !== null && _options$weekStartsOn !== void 0 ? _options$weekStartsOn : options === null || options === void 0 ? void 0 : (_options$locale3 = options.locale) === null || _options$locale3 === void 0 ? void 0 : (_options$locale3$opti = _options$locale3.options) === null || _options$locale3$opti === void 0 ? void 0 : _options$locale3$opti.weekStartsOn) !== null && _ref7 !== void 0 ? _ref7 : defaultOptions.weekStartsOn) !== null && _ref6 !== void 0 ? _ref6 : (_defaultOptions$local3 = defaultOptions.locale) === null || _defaultOptions$local3 === void 0 ? void 0 : (_defaultOptions$local4 = _defaultOptions$local3.options) === null || _defaultOptions$local4 === void 0 ? void 0 : _defaultOptions$local4.weekStartsOn) !== null && _ref5 !== void 0 ? _ref5 : 0);
+  var weekStartsOn = (0,_lib_toInteger_index_js__WEBPACK_IMPORTED_MODULE_5__["default"])((_ref5 = (_ref6 = (_ref7 = (_options$weekStartsOn = options === null || options === void 0 ? void 0 : options.weekStartsOn) !== null && _options$weekStartsOn !== void 0 ? _options$weekStartsOn : options === null || options === void 0 ? void 0 : (_options$locale3 = options.locale) === null || _options$locale3 === void 0 ? void 0 : (_options$locale3$opti = _options$locale3.options) === null || _options$locale3$opti === void 0 ? void 0 : _options$locale3$opti.weekStartsOn) !== null && _ref7 !== void 0 ? _ref7 : defaultOptions.weekStartsOn) !== null && _ref6 !== void 0 ? _ref6 : (_defaultOptions$local3 = defaultOptions.locale) === null || _defaultOptions$local3 === void 0 ? void 0 : (_defaultOptions$local4 = _defaultOptions$local3.options) === null || _defaultOptions$local4 === void 0 ? void 0 : _defaultOptions$local4.weekStartsOn) !== null && _ref5 !== void 0 ? _ref5 : 0);
 
   // Test if weekStartsOn is between 0 and 6 _and_ is not NaN
   if (!(weekStartsOn >= 0 && weekStartsOn <= 6)) {
@@ -4129,7 +5182,7 @@ function parse(dirtyDateString, dirtyFormatString, dirtyReferenceDate, options) 
   }
   if (formatString === '') {
     if (dateString === '') {
-      return toDate(dirtyReferenceDate);
+      return (0,_toDate_index_js__WEBPACK_IMPORTED_MODULE_6__["default"])(dirtyReferenceDate);
     } else {
       return new Date(NaN);
     }
@@ -4141,29 +5194,29 @@ function parse(dirtyDateString, dirtyFormatString, dirtyReferenceDate, options) 
   };
 
   // If timezone isn't specified, it will be set to the system timezone
-  var setters = [new DateToSystemTimezoneSetter()];
+  var setters = [new _lib_Setter_js__WEBPACK_IMPORTED_MODULE_7__.DateToSystemTimezoneSetter()];
   var tokens = formatString.match(longFormattingTokensRegExp).map(function (substring) {
     var firstCharacter = substring[0];
-    if (firstCharacter in format_longFormatters) {
-      var longFormatter = format_longFormatters[firstCharacter];
+    if (firstCharacter in _lib_format_longFormatters_index_js__WEBPACK_IMPORTED_MODULE_8__["default"]) {
+      var longFormatter = _lib_format_longFormatters_index_js__WEBPACK_IMPORTED_MODULE_8__["default"][firstCharacter];
       return longFormatter(substring, locale.formatLong);
     }
     return substring;
   }).join('').match(formattingTokensRegExp);
   var usedTokens = [];
-  var _iterator = _createForOfIteratorHelper(tokens),
+  var _iterator = (0,_babel_runtime_helpers_esm_createForOfIteratorHelper__WEBPACK_IMPORTED_MODULE_1__["default"])(tokens),
     _step;
   try {
     var _loop = function _loop() {
       var token = _step.value;
-      if (!(options !== null && options !== void 0 && options.useAdditionalWeekYearTokens) && isProtectedWeekYearToken(token)) {
-        throwProtectedError(token, formatString, dirtyDateString);
+      if (!(options !== null && options !== void 0 && options.useAdditionalWeekYearTokens) && (0,_lib_protectedTokens_index_js__WEBPACK_IMPORTED_MODULE_9__.isProtectedWeekYearToken)(token)) {
+        (0,_lib_protectedTokens_index_js__WEBPACK_IMPORTED_MODULE_9__.throwProtectedError)(token, formatString, dirtyDateString);
       }
-      if (!(options !== null && options !== void 0 && options.useAdditionalDayOfYearTokens) && isProtectedDayOfYearToken(token)) {
-        throwProtectedError(token, formatString, dirtyDateString);
+      if (!(options !== null && options !== void 0 && options.useAdditionalDayOfYearTokens) && (0,_lib_protectedTokens_index_js__WEBPACK_IMPORTED_MODULE_9__.isProtectedDayOfYearToken)(token)) {
+        (0,_lib_protectedTokens_index_js__WEBPACK_IMPORTED_MODULE_9__.throwProtectedError)(token, formatString, dirtyDateString);
       }
       var firstCharacter = token[0];
-      var parser = parsers[firstCharacter];
+      var parser = _lib_parsers_index_js__WEBPACK_IMPORTED_MODULE_10__.parsers[firstCharacter];
       if (parser) {
         var incompatibleTokens = parser.incompatibleTokens;
         if (Array.isArray(incompatibleTokens)) {
@@ -4212,7 +5265,7 @@ function parse(dirtyDateString, dirtyFormatString, dirtyReferenceDate, options) 
     };
     for (_iterator.s(); !(_step = _iterator.n()).done;) {
       var _ret = _loop();
-      if (_typeof(_ret) === "object") return _ret.v;
+      if ((0,_babel_runtime_helpers_esm_typeof__WEBPACK_IMPORTED_MODULE_0__["default"])(_ret) === "object") return _ret.v;
     }
 
     // Check if the remaining input contains something other than whitespace
@@ -4239,15 +5292,15 @@ function parse(dirtyDateString, dirtyFormatString, dirtyReferenceDate, options) 
   }).map(function (setterArray) {
     return setterArray[0];
   });
-  var date = toDate(dirtyReferenceDate);
+  var date = (0,_toDate_index_js__WEBPACK_IMPORTED_MODULE_6__["default"])(dirtyReferenceDate);
   if (isNaN(date.getTime())) {
     return new Date(NaN);
   }
 
   // Convert the date in system timezone to the same date in UTC+00:00 timezone.
-  var utcDate = subMilliseconds(date, getTimezoneOffsetInMilliseconds(date));
+  var utcDate = (0,_subMilliseconds_index_js__WEBPACK_IMPORTED_MODULE_11__["default"])(date, (0,_lib_getTimezoneOffsetInMilliseconds_index_js__WEBPACK_IMPORTED_MODULE_12__["default"])(date));
   var flags = {};
-  var _iterator2 = _createForOfIteratorHelper(uniquePrioritySetters),
+  var _iterator2 = (0,_babel_runtime_helpers_esm_createForOfIteratorHelper__WEBPACK_IMPORTED_MODULE_1__["default"])(uniquePrioritySetters),
     _step2;
   try {
     for (_iterator2.s(); !(_step2 = _iterator2.n()).done;) {
@@ -4259,7 +5312,7 @@ function parse(dirtyDateString, dirtyFormatString, dirtyReferenceDate, options) 
       // Result is tuple (date, flags)
       if (Array.isArray(result)) {
         utcDate = result[0];
-        assign_assign(flags, result[1]);
+        (0,_lib_assign_index_js__WEBPACK_IMPORTED_MODULE_13__["default"])(flags, result[1]);
         // Result is date
       } else {
         utcDate = result;
@@ -4275,89 +5328,142 @@ function parse(dirtyDateString, dirtyFormatString, dirtyReferenceDate, options) 
 function cleanEscapedString(input) {
   return input.match(escapedStringRegExp)[1].replace(doubleQuoteRegExp, "'");
 }
-;// CONCATENATED MODULE: ./node_modules/date-fns/esm/isDate/index.js
+
+/***/ }),
+
+/***/ "./node_modules/date-fns/esm/subMilliseconds/index.js":
+/*!************************************************************!*\
+  !*** ./node_modules/date-fns/esm/subMilliseconds/index.js ***!
+  \************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (/* binding */ subMilliseconds)
+/* harmony export */ });
+/* harmony import */ var _addMilliseconds_index_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../addMilliseconds/index.js */ "./node_modules/date-fns/esm/addMilliseconds/index.js");
+/* harmony import */ var _lib_requiredArgs_index_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../_lib/requiredArgs/index.js */ "./node_modules/date-fns/esm/_lib/requiredArgs/index.js");
+/* harmony import */ var _lib_toInteger_index_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../_lib/toInteger/index.js */ "./node_modules/date-fns/esm/_lib/toInteger/index.js");
+
 
 
 /**
- * @name isDate
- * @category Common Helpers
- * @summary Is the given value a date?
+ * @name subMilliseconds
+ * @category Millisecond Helpers
+ * @summary Subtract the specified number of milliseconds from the given date.
  *
  * @description
- * Returns true if the given value is an instance of Date. The function works for dates transferred across iframes.
+ * Subtract the specified number of milliseconds from the given date.
  *
- * @param {*} value - the value to check
- * @returns {boolean} true if the given value is a date
- * @throws {TypeError} 1 arguments required
- *
- * @example
- * // For a valid date:
- * const result = isDate(new Date())
- * //=> true
+ * @param {Date|Number} date - the date to be changed
+ * @param {Number} amount - the amount of milliseconds to be subtracted. Positive decimals will be rounded using `Math.floor`, decimals less than zero will be rounded using `Math.ceil`.
+ * @returns {Date} the new date with the milliseconds subtracted
+ * @throws {TypeError} 2 arguments required
  *
  * @example
- * // For an invalid date:
- * const result = isDate(new Date(NaN))
- * //=> true
- *
- * @example
- * // For some value:
- * const result = isDate('2014-02-31')
- * //=> false
- *
- * @example
- * // For an object:
- * const result = isDate({})
- * //=> false
+ * // Subtract 750 milliseconds from 10 July 2014 12:45:30.000:
+ * const result = subMilliseconds(new Date(2014, 6, 10, 12, 45, 30, 0), 750)
+ * //=> Thu Jul 10 2014 12:45:29.250
  */
-function isDate(value) {
-  requiredArgs(1, arguments);
-  return value instanceof Date || _typeof(value) === 'object' && Object.prototype.toString.call(value) === '[object Date]';
+function subMilliseconds(dirtyDate, dirtyAmount) {
+  (0,_lib_requiredArgs_index_js__WEBPACK_IMPORTED_MODULE_0__["default"])(2, arguments);
+  var amount = (0,_lib_toInteger_index_js__WEBPACK_IMPORTED_MODULE_1__["default"])(dirtyAmount);
+  return (0,_addMilliseconds_index_js__WEBPACK_IMPORTED_MODULE_2__["default"])(dirtyDate, -amount);
 }
-;// CONCATENATED MODULE: ./node_modules/date-fns/esm/isValid/index.js
 
+/***/ }),
+
+/***/ "./node_modules/date-fns/esm/toDate/index.js":
+/*!***************************************************!*\
+  !*** ./node_modules/date-fns/esm/toDate/index.js ***!
+  \***************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (/* binding */ toDate)
+/* harmony export */ });
+/* harmony import */ var _babel_runtime_helpers_esm_typeof__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/helpers/esm/typeof */ "./node_modules/@babel/runtime/helpers/esm/typeof.js");
+/* harmony import */ var _lib_requiredArgs_index_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../_lib/requiredArgs/index.js */ "./node_modules/date-fns/esm/_lib/requiredArgs/index.js");
 
 
 /**
- * @name isValid
+ * @name toDate
  * @category Common Helpers
- * @summary Is the given date valid?
+ * @summary Convert the given argument to an instance of Date.
  *
  * @description
- * Returns false if argument is Invalid Date and true otherwise.
- * Argument is converted to Date using `toDate`. See [toDate]{@link https://date-fns.org/docs/toDate}
- * Invalid Date is a Date, whose time value is NaN.
+ * Convert the given argument to an instance of Date.
  *
- * Time value of Date: http://es5.github.io/#x15.9.1.1
+ * If the argument is an instance of Date, the function returns its clone.
  *
- * @param {*} date - the date to check
- * @returns {Boolean} the date is valid
+ * If the argument is a number, it is treated as a timestamp.
+ *
+ * If the argument is none of the above, the function returns Invalid Date.
+ *
+ * **Note**: *all* Date arguments passed to any *date-fns* function is processed by `toDate`.
+ *
+ * @param {Date|Number} argument - the value to convert
+ * @returns {Date} the parsed date in the local time zone
  * @throws {TypeError} 1 argument required
  *
  * @example
- * // For the valid date:
- * const result = isValid(new Date(2014, 1, 31))
- * //=> true
+ * // Clone the date:
+ * const result = toDate(new Date(2014, 1, 11, 11, 30, 30))
+ * //=> Tue Feb 11 2014 11:30:30
  *
  * @example
- * // For the value, convertable into a date:
- * const result = isValid(1393804800000)
- * //=> true
- *
- * @example
- * // For the invalid date:
- * const result = isValid(new Date(''))
- * //=> false
+ * // Convert the timestamp to date:
+ * const result = toDate(1392098430000)
+ * //=> Tue Feb 11 2014 11:30:30
  */
-function isValid(dirtyDate) {
-  requiredArgs(1, arguments);
-  if (!isDate(dirtyDate) && typeof dirtyDate !== 'number') {
-    return false;
+function toDate(argument) {
+  (0,_lib_requiredArgs_index_js__WEBPACK_IMPORTED_MODULE_1__["default"])(1, arguments);
+  var argStr = Object.prototype.toString.call(argument);
+
+  // Clone the date
+  if (argument instanceof Date || (0,_babel_runtime_helpers_esm_typeof__WEBPACK_IMPORTED_MODULE_0__["default"])(argument) === 'object' && argStr === '[object Date]') {
+    // Prevent the date to lose the milliseconds when passed to new Date() in IE10
+    return new Date(argument.getTime());
+  } else if (typeof argument === 'number' || argStr === '[object Number]') {
+    return new Date(argument);
+  } else {
+    if ((typeof argument === 'string' || argStr === '[object String]') && typeof console !== 'undefined') {
+      // eslint-disable-next-line no-console
+      console.warn("Starting with v2.0.0-beta.1 date-fns doesn't accept strings as date arguments. Please use `parseISO` to parse strings. See: https://github.com/date-fns/date-fns/blob/master/docs/upgradeGuide.md#string-arguments");
+      // eslint-disable-next-line no-console
+      console.warn(new Error().stack);
+    }
+    return new Date(NaN);
   }
-  var date = toDate(dirtyDate);
-  return !isNaN(Number(date));
 }
-;// CONCATENATED MODULE: ./src/todo-manager.js
+
+/***/ }),
+
+/***/ "./src/assets/style.css":
+/*!******************************!*\
+  !*** ./src/assets/style.css ***!
+  \******************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+// extracted by mini-css-extract-plugin
+
+
+/***/ }),
+
+/***/ "./src/todo-manager.js":
+/*!*****************************!*\
+  !*** ./src/todo-manager.js ***!
+  \*****************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var date_fns__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! date-fns */ "./node_modules/date-fns/esm/parse/index.js");
+/* harmony import */ var date_fns__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! date-fns */ "./node_modules/date-fns/esm/isValid/index.js");
 
 
 /*
@@ -4435,9 +5541,9 @@ function processDate(date) {
     }
 
     // Check for validity
-    const parsedDate = parse(date, 'yyyy-MM-dd', new Date());
+    const parsedDate = (0,date_fns__WEBPACK_IMPORTED_MODULE_0__["default"])(date, 'yyyy-MM-dd', new Date());
 
-    if (!isValid(parsedDate)) {
+    if (!(0,date_fns__WEBPACK_IMPORTED_MODULE_1__["default"])(parsedDate)) {
         return null;
     }
 
@@ -4548,12 +5654,506 @@ const todoManager = (function() {
     return { getTodoObject, addProject, addSection, addTodoItem };
 })();
 
-/* harmony default export */ const todo_manager = (todoManager);
-;// CONCATENATED MODULE: ./src/main.js
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (todoManager);
+
+/***/ }),
+
+/***/ "./node_modules/@babel/runtime/helpers/esm/arrayLikeToArray.js":
+/*!*********************************************************************!*\
+  !*** ./node_modules/@babel/runtime/helpers/esm/arrayLikeToArray.js ***!
+  \*********************************************************************/
+/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (/* binding */ _arrayLikeToArray)
+/* harmony export */ });
+function _arrayLikeToArray(arr, len) {
+  if (len == null || len > arr.length) len = arr.length;
+  for (var i = 0, arr2 = new Array(len); i < len; i++) arr2[i] = arr[i];
+  return arr2;
+}
+
+/***/ }),
+
+/***/ "./node_modules/@babel/runtime/helpers/esm/assertThisInitialized.js":
+/*!**************************************************************************!*\
+  !*** ./node_modules/@babel/runtime/helpers/esm/assertThisInitialized.js ***!
+  \**************************************************************************/
+/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (/* binding */ _assertThisInitialized)
+/* harmony export */ });
+function _assertThisInitialized(self) {
+  if (self === void 0) {
+    throw new ReferenceError("this hasn't been initialised - super() hasn't been called");
+  }
+  return self;
+}
+
+/***/ }),
+
+/***/ "./node_modules/@babel/runtime/helpers/esm/classCallCheck.js":
+/*!*******************************************************************!*\
+  !*** ./node_modules/@babel/runtime/helpers/esm/classCallCheck.js ***!
+  \*******************************************************************/
+/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (/* binding */ _classCallCheck)
+/* harmony export */ });
+function _classCallCheck(instance, Constructor) {
+  if (!(instance instanceof Constructor)) {
+    throw new TypeError("Cannot call a class as a function");
+  }
+}
+
+/***/ }),
+
+/***/ "./node_modules/@babel/runtime/helpers/esm/createClass.js":
+/*!****************************************************************!*\
+  !*** ./node_modules/@babel/runtime/helpers/esm/createClass.js ***!
+  \****************************************************************/
+/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (/* binding */ _createClass)
+/* harmony export */ });
+/* harmony import */ var _toPropertyKey_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./toPropertyKey.js */ "./node_modules/@babel/runtime/helpers/esm/toPropertyKey.js");
+
+function _defineProperties(target, props) {
+  for (var i = 0; i < props.length; i++) {
+    var descriptor = props[i];
+    descriptor.enumerable = descriptor.enumerable || false;
+    descriptor.configurable = true;
+    if ("value" in descriptor) descriptor.writable = true;
+    Object.defineProperty(target, (0,_toPropertyKey_js__WEBPACK_IMPORTED_MODULE_0__["default"])(descriptor.key), descriptor);
+  }
+}
+function _createClass(Constructor, protoProps, staticProps) {
+  if (protoProps) _defineProperties(Constructor.prototype, protoProps);
+  if (staticProps) _defineProperties(Constructor, staticProps);
+  Object.defineProperty(Constructor, "prototype", {
+    writable: false
+  });
+  return Constructor;
+}
+
+/***/ }),
+
+/***/ "./node_modules/@babel/runtime/helpers/esm/createForOfIteratorHelper.js":
+/*!******************************************************************************!*\
+  !*** ./node_modules/@babel/runtime/helpers/esm/createForOfIteratorHelper.js ***!
+  \******************************************************************************/
+/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (/* binding */ _createForOfIteratorHelper)
+/* harmony export */ });
+/* harmony import */ var _unsupportedIterableToArray_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./unsupportedIterableToArray.js */ "./node_modules/@babel/runtime/helpers/esm/unsupportedIterableToArray.js");
+
+function _createForOfIteratorHelper(o, allowArrayLike) {
+  var it = typeof Symbol !== "undefined" && o[Symbol.iterator] || o["@@iterator"];
+  if (!it) {
+    if (Array.isArray(o) || (it = (0,_unsupportedIterableToArray_js__WEBPACK_IMPORTED_MODULE_0__["default"])(o)) || allowArrayLike && o && typeof o.length === "number") {
+      if (it) o = it;
+      var i = 0;
+      var F = function F() {};
+      return {
+        s: F,
+        n: function n() {
+          if (i >= o.length) return {
+            done: true
+          };
+          return {
+            done: false,
+            value: o[i++]
+          };
+        },
+        e: function e(_e) {
+          throw _e;
+        },
+        f: F
+      };
+    }
+    throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.");
+  }
+  var normalCompletion = true,
+    didErr = false,
+    err;
+  return {
+    s: function s() {
+      it = it.call(o);
+    },
+    n: function n() {
+      var step = it.next();
+      normalCompletion = step.done;
+      return step;
+    },
+    e: function e(_e2) {
+      didErr = true;
+      err = _e2;
+    },
+    f: function f() {
+      try {
+        if (!normalCompletion && it["return"] != null) it["return"]();
+      } finally {
+        if (didErr) throw err;
+      }
+    }
+  };
+}
+
+/***/ }),
+
+/***/ "./node_modules/@babel/runtime/helpers/esm/createSuper.js":
+/*!****************************************************************!*\
+  !*** ./node_modules/@babel/runtime/helpers/esm/createSuper.js ***!
+  \****************************************************************/
+/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (/* binding */ _createSuper)
+/* harmony export */ });
+/* harmony import */ var _getPrototypeOf_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./getPrototypeOf.js */ "./node_modules/@babel/runtime/helpers/esm/getPrototypeOf.js");
+/* harmony import */ var _isNativeReflectConstruct_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./isNativeReflectConstruct.js */ "./node_modules/@babel/runtime/helpers/esm/isNativeReflectConstruct.js");
+/* harmony import */ var _possibleConstructorReturn_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./possibleConstructorReturn.js */ "./node_modules/@babel/runtime/helpers/esm/possibleConstructorReturn.js");
 
 
 
-window.todoManager = todo_manager;
+function _createSuper(Derived) {
+  var hasNativeReflectConstruct = (0,_isNativeReflectConstruct_js__WEBPACK_IMPORTED_MODULE_1__["default"])();
+  return function _createSuperInternal() {
+    var Super = (0,_getPrototypeOf_js__WEBPACK_IMPORTED_MODULE_0__["default"])(Derived),
+      result;
+    if (hasNativeReflectConstruct) {
+      var NewTarget = (0,_getPrototypeOf_js__WEBPACK_IMPORTED_MODULE_0__["default"])(this).constructor;
+      result = Reflect.construct(Super, arguments, NewTarget);
+    } else {
+      result = Super.apply(this, arguments);
+    }
+    return (0,_possibleConstructorReturn_js__WEBPACK_IMPORTED_MODULE_2__["default"])(this, result);
+  };
+}
+
+/***/ }),
+
+/***/ "./node_modules/@babel/runtime/helpers/esm/defineProperty.js":
+/*!*******************************************************************!*\
+  !*** ./node_modules/@babel/runtime/helpers/esm/defineProperty.js ***!
+  \*******************************************************************/
+/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (/* binding */ _defineProperty)
+/* harmony export */ });
+/* harmony import */ var _toPropertyKey_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./toPropertyKey.js */ "./node_modules/@babel/runtime/helpers/esm/toPropertyKey.js");
+
+function _defineProperty(obj, key, value) {
+  key = (0,_toPropertyKey_js__WEBPACK_IMPORTED_MODULE_0__["default"])(key);
+  if (key in obj) {
+    Object.defineProperty(obj, key, {
+      value: value,
+      enumerable: true,
+      configurable: true,
+      writable: true
+    });
+  } else {
+    obj[key] = value;
+  }
+  return obj;
+}
+
+/***/ }),
+
+/***/ "./node_modules/@babel/runtime/helpers/esm/getPrototypeOf.js":
+/*!*******************************************************************!*\
+  !*** ./node_modules/@babel/runtime/helpers/esm/getPrototypeOf.js ***!
+  \*******************************************************************/
+/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (/* binding */ _getPrototypeOf)
+/* harmony export */ });
+function _getPrototypeOf(o) {
+  _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf.bind() : function _getPrototypeOf(o) {
+    return o.__proto__ || Object.getPrototypeOf(o);
+  };
+  return _getPrototypeOf(o);
+}
+
+/***/ }),
+
+/***/ "./node_modules/@babel/runtime/helpers/esm/inherits.js":
+/*!*************************************************************!*\
+  !*** ./node_modules/@babel/runtime/helpers/esm/inherits.js ***!
+  \*************************************************************/
+/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (/* binding */ _inherits)
+/* harmony export */ });
+/* harmony import */ var _setPrototypeOf_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./setPrototypeOf.js */ "./node_modules/@babel/runtime/helpers/esm/setPrototypeOf.js");
+
+function _inherits(subClass, superClass) {
+  if (typeof superClass !== "function" && superClass !== null) {
+    throw new TypeError("Super expression must either be null or a function");
+  }
+  subClass.prototype = Object.create(superClass && superClass.prototype, {
+    constructor: {
+      value: subClass,
+      writable: true,
+      configurable: true
+    }
+  });
+  Object.defineProperty(subClass, "prototype", {
+    writable: false
+  });
+  if (superClass) (0,_setPrototypeOf_js__WEBPACK_IMPORTED_MODULE_0__["default"])(subClass, superClass);
+}
+
+/***/ }),
+
+/***/ "./node_modules/@babel/runtime/helpers/esm/isNativeReflectConstruct.js":
+/*!*****************************************************************************!*\
+  !*** ./node_modules/@babel/runtime/helpers/esm/isNativeReflectConstruct.js ***!
+  \*****************************************************************************/
+/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (/* binding */ _isNativeReflectConstruct)
+/* harmony export */ });
+function _isNativeReflectConstruct() {
+  if (typeof Reflect === "undefined" || !Reflect.construct) return false;
+  if (Reflect.construct.sham) return false;
+  if (typeof Proxy === "function") return true;
+  try {
+    Boolean.prototype.valueOf.call(Reflect.construct(Boolean, [], function () {}));
+    return true;
+  } catch (e) {
+    return false;
+  }
+}
+
+/***/ }),
+
+/***/ "./node_modules/@babel/runtime/helpers/esm/possibleConstructorReturn.js":
+/*!******************************************************************************!*\
+  !*** ./node_modules/@babel/runtime/helpers/esm/possibleConstructorReturn.js ***!
+  \******************************************************************************/
+/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (/* binding */ _possibleConstructorReturn)
+/* harmony export */ });
+/* harmony import */ var _typeof_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./typeof.js */ "./node_modules/@babel/runtime/helpers/esm/typeof.js");
+/* harmony import */ var _assertThisInitialized_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./assertThisInitialized.js */ "./node_modules/@babel/runtime/helpers/esm/assertThisInitialized.js");
+
+
+function _possibleConstructorReturn(self, call) {
+  if (call && ((0,_typeof_js__WEBPACK_IMPORTED_MODULE_0__["default"])(call) === "object" || typeof call === "function")) {
+    return call;
+  } else if (call !== void 0) {
+    throw new TypeError("Derived constructors may only return object or undefined");
+  }
+  return (0,_assertThisInitialized_js__WEBPACK_IMPORTED_MODULE_1__["default"])(self);
+}
+
+/***/ }),
+
+/***/ "./node_modules/@babel/runtime/helpers/esm/setPrototypeOf.js":
+/*!*******************************************************************!*\
+  !*** ./node_modules/@babel/runtime/helpers/esm/setPrototypeOf.js ***!
+  \*******************************************************************/
+/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (/* binding */ _setPrototypeOf)
+/* harmony export */ });
+function _setPrototypeOf(o, p) {
+  _setPrototypeOf = Object.setPrototypeOf ? Object.setPrototypeOf.bind() : function _setPrototypeOf(o, p) {
+    o.__proto__ = p;
+    return o;
+  };
+  return _setPrototypeOf(o, p);
+}
+
+/***/ }),
+
+/***/ "./node_modules/@babel/runtime/helpers/esm/toPrimitive.js":
+/*!****************************************************************!*\
+  !*** ./node_modules/@babel/runtime/helpers/esm/toPrimitive.js ***!
+  \****************************************************************/
+/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (/* binding */ _toPrimitive)
+/* harmony export */ });
+/* harmony import */ var _typeof_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./typeof.js */ "./node_modules/@babel/runtime/helpers/esm/typeof.js");
+
+function _toPrimitive(input, hint) {
+  if ((0,_typeof_js__WEBPACK_IMPORTED_MODULE_0__["default"])(input) !== "object" || input === null) return input;
+  var prim = input[Symbol.toPrimitive];
+  if (prim !== undefined) {
+    var res = prim.call(input, hint || "default");
+    if ((0,_typeof_js__WEBPACK_IMPORTED_MODULE_0__["default"])(res) !== "object") return res;
+    throw new TypeError("@@toPrimitive must return a primitive value.");
+  }
+  return (hint === "string" ? String : Number)(input);
+}
+
+/***/ }),
+
+/***/ "./node_modules/@babel/runtime/helpers/esm/toPropertyKey.js":
+/*!******************************************************************!*\
+  !*** ./node_modules/@babel/runtime/helpers/esm/toPropertyKey.js ***!
+  \******************************************************************/
+/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (/* binding */ _toPropertyKey)
+/* harmony export */ });
+/* harmony import */ var _typeof_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./typeof.js */ "./node_modules/@babel/runtime/helpers/esm/typeof.js");
+/* harmony import */ var _toPrimitive_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./toPrimitive.js */ "./node_modules/@babel/runtime/helpers/esm/toPrimitive.js");
+
+
+function _toPropertyKey(arg) {
+  var key = (0,_toPrimitive_js__WEBPACK_IMPORTED_MODULE_1__["default"])(arg, "string");
+  return (0,_typeof_js__WEBPACK_IMPORTED_MODULE_0__["default"])(key) === "symbol" ? key : String(key);
+}
+
+/***/ }),
+
+/***/ "./node_modules/@babel/runtime/helpers/esm/typeof.js":
+/*!***********************************************************!*\
+  !*** ./node_modules/@babel/runtime/helpers/esm/typeof.js ***!
+  \***********************************************************/
+/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (/* binding */ _typeof)
+/* harmony export */ });
+function _typeof(o) {
+  "@babel/helpers - typeof";
+
+  return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) {
+    return typeof o;
+  } : function (o) {
+    return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o;
+  }, _typeof(o);
+}
+
+/***/ }),
+
+/***/ "./node_modules/@babel/runtime/helpers/esm/unsupportedIterableToArray.js":
+/*!*******************************************************************************!*\
+  !*** ./node_modules/@babel/runtime/helpers/esm/unsupportedIterableToArray.js ***!
+  \*******************************************************************************/
+/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (/* binding */ _unsupportedIterableToArray)
+/* harmony export */ });
+/* harmony import */ var _arrayLikeToArray_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./arrayLikeToArray.js */ "./node_modules/@babel/runtime/helpers/esm/arrayLikeToArray.js");
+
+function _unsupportedIterableToArray(o, minLen) {
+  if (!o) return;
+  if (typeof o === "string") return (0,_arrayLikeToArray_js__WEBPACK_IMPORTED_MODULE_0__["default"])(o, minLen);
+  var n = Object.prototype.toString.call(o).slice(8, -1);
+  if (n === "Object" && o.constructor) n = o.constructor.name;
+  if (n === "Map" || n === "Set") return Array.from(o);
+  if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return (0,_arrayLikeToArray_js__WEBPACK_IMPORTED_MODULE_0__["default"])(o, minLen);
+}
+
+/***/ })
+
+/******/ 	});
+/************************************************************************/
+/******/ 	// The module cache
+/******/ 	var __webpack_module_cache__ = {};
+/******/ 	
+/******/ 	// The require function
+/******/ 	function __webpack_require__(moduleId) {
+/******/ 		// Check if module is in cache
+/******/ 		var cachedModule = __webpack_module_cache__[moduleId];
+/******/ 		if (cachedModule !== undefined) {
+/******/ 			return cachedModule.exports;
+/******/ 		}
+/******/ 		// Create a new module (and put it into the cache)
+/******/ 		var module = __webpack_module_cache__[moduleId] = {
+/******/ 			// no module.id needed
+/******/ 			// no module.loaded needed
+/******/ 			exports: {}
+/******/ 		};
+/******/ 	
+/******/ 		// Execute the module function
+/******/ 		__webpack_modules__[moduleId](module, module.exports, __webpack_require__);
+/******/ 	
+/******/ 		// Return the exports of the module
+/******/ 		return module.exports;
+/******/ 	}
+/******/ 	
+/************************************************************************/
+/******/ 	/* webpack/runtime/define property getters */
+/******/ 	(() => {
+/******/ 		// define getter functions for harmony exports
+/******/ 		__webpack_require__.d = (exports, definition) => {
+/******/ 			for(var key in definition) {
+/******/ 				if(__webpack_require__.o(definition, key) && !__webpack_require__.o(exports, key)) {
+/******/ 					Object.defineProperty(exports, key, { enumerable: true, get: definition[key] });
+/******/ 				}
+/******/ 			}
+/******/ 		};
+/******/ 	})();
+/******/ 	
+/******/ 	/* webpack/runtime/hasOwnProperty shorthand */
+/******/ 	(() => {
+/******/ 		__webpack_require__.o = (obj, prop) => (Object.prototype.hasOwnProperty.call(obj, prop))
+/******/ 	})();
+/******/ 	
+/******/ 	/* webpack/runtime/make namespace object */
+/******/ 	(() => {
+/******/ 		// define __esModule on exports
+/******/ 		__webpack_require__.r = (exports) => {
+/******/ 			if(typeof Symbol !== 'undefined' && Symbol.toStringTag) {
+/******/ 				Object.defineProperty(exports, Symbol.toStringTag, { value: 'Module' });
+/******/ 			}
+/******/ 			Object.defineProperty(exports, '__esModule', { value: true });
+/******/ 		};
+/******/ 	})();
+/******/ 	
+/************************************************************************/
+var __webpack_exports__ = {};
+// This entry need to be wrapped in an IIFE because it need to be isolated against other modules in the chunk.
+(() => {
+/*!*********************!*\
+  !*** ./src/main.js ***!
+  \*********************/
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _todo_manager_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./todo-manager.js */ "./src/todo-manager.js");
+/* harmony import */ var _assets_style_css__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./assets/style.css */ "./src/assets/style.css");
+
+
+
+window.todoManager = _todo_manager_js__WEBPACK_IMPORTED_MODULE_0__["default"];
+})();
+
 /******/ })()
 ;
 //# sourceMappingURL=bundle.js.map

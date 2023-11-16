@@ -10,10 +10,12 @@ module.exports = {
         filename: 'bundle.js',
         path: path.resolve(__dirname, 'dist'),
         assetModuleFilename: 'assets/[hash][ext][query]',
-        clean: false,
+        clean: true,
     },
     plugins: [
-        new HtmlWebpackPlugin(),
+        new HtmlWebpackPlugin({
+            template: './src/assets/index.html',
+        }),
         new MiniCssExtractPlugin({
             filename: '[name][hash].css',
         }),
