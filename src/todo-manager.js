@@ -76,11 +76,18 @@ function processDate(date) {
         return 'No Due Date';
     }
 
-    // Check for validity here
-    
-    const dateObject = new Date(date);
+    // Check for validity
+    const parsedDate = parse(date, 'yyyy-MM-dd', new Date());
 
-    return format(dateObject, 'd MMM yyyy');
+    if (!isValid(parsedDate)) {
+        return 'No Due Date';
+    }
+
+    // This is for the UI manager
+    // return format(dateObject, 'd MMM yyyy');
+
+    // Store it as a date object
+    return new Date(date);
 }
 
 /*
