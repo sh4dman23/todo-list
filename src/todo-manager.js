@@ -24,7 +24,7 @@ function createTodoItem(title, description = '', dueDate = null, priority = 'low
         todo.starred = newStarredStatus !== undefined ? newStarredStatus : todo.starred;
     };
 
-    return todo;
+    return Object.assign(todo, { update });
 }
 
 function createSection(name) {

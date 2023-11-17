@@ -1,1 +1,0 @@
-{"version":3,"file":"main361c2b83c2b7d654cc5e.css","mappings":";;;AAAA;IACI,SAAS;IACT,UAAU;IACV,sBAAsB;AAC1B,C","sources":["webpack://todo-list/./src/assets/style.css"],"sourcesContent":["* {\n    margin: 0;\n    padding: 0;\n    box-sizing: border-box;\n}"],"names":[],"sourceRoot":""}
