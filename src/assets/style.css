@@ -8,6 +8,8 @@
 
 button {
     cursor: pointer;
+    color: #212427;
+    transition: 100ms all ease-in-out;
 }
 
 :root {
@@ -105,19 +107,56 @@ main {
     grid-column: 2 / -1;
     padding: 1.5rem 3rem;
     background-color: #fefefe;
-    height: calc(100vh - 100px);
+    /* height: calc(100vh - 100px); */
+    height: 100%;
     overflow: auto;
 }
 
 .page {
+    height: 100%;
     overflow: auto;
 }
 
 main .pg-top-section {
     margin-bottom: 1.5rem;
+    display: grid;
+    grid-template-columns: 1fr auto;
+    grid-template-rows: auto auto;
 }
 
-.project, .todo-title, .todo-desc, .section-header {
+.project-desc {
+    margin-top: 0.5rem;
+    opacity: 0.9;
+    padding-left: 0.2rem;
+
+    grid-row: 2 / 3;
+    grid-column: 1 / -1;
+}
+
+.project-buttons {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.project-buttons button {
+    border: none;
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+    gap: 0.3rem;
+    padding: 0.4rem 0.5rem;
+    opacity: 0.8;
+    background-color: inherit;
+}
+
+.project-buttons button:hover {
+    opacity: 1;
+    color: #000;
+    background-color: #f0f0f0;
+}
+
+.project, .todo-title, .todo-desc, .section-header, .project-name {
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
@@ -219,7 +258,7 @@ input[type="checkbox"]:checked {
 
 .checkmark {
     position: absolute;
-    top: -0.1rem;
+    top: -0.18rem;
     left: 1.1rem;
     display: none;
     height: 25px;

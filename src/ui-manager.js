@@ -1,6 +1,7 @@
 import todoManager from "./todo-manager.js";
 import { format, isToday, isThisWeek, isFuture } from "date-fns";
 import SVGObject from "./svg-manager.js";
+import { de } from "date-fns/locale";
 
 const main = document.querySelector('main');
 
@@ -21,12 +22,36 @@ function clearPage() {
     domAssociatorObject.reset();
 }
 
-function createSimpleTopBar(title) {
+function createTopBar(title, isProject = false, projectDescription = '') {
     const topBar = createElementWithClass('pg-top-section');
 
-    const topBarHeader = createElementWithClass('', 'h1');
+    const topBarHeader = createElementWithClass(isProject ? 'project-name' : '', 'h1');
     topBarHeader.textContent = title;
+
     topBar.appendChild(topBarHeader);
+
+    if (isProject) {
+        const desc = createElementWithClass('project-desc');
+        desc.textContent = projectDescription;
+
+        const buttons = createElementWithClass('project-buttons');
+
+        const editButton = createElementWithClass('project-edit', 'button');
+        editButton.innerHTML = SVGObject.edit + 'Edit Project';
+
+        const addSection = createElementWithClass('project-add-section', 'button');
+        addSection.innerHTML = SVGObject.add + 'Add Section';
+
+        const deleteProject = createElementWithClass('project-delete', 'button');
+        deleteProject.innerHTML = SVGObject.delete + 'Delete Project';
+
+        buttons.appendChild(editButton);
+        buttons.appendChild(addSection);
+        buttons.appendChild(deleteProject);
+
+        topBar.appendChild(desc);
+        topBar.appendChild(buttons);
+    }
 
     return topBar;
 }
@@ -85,7 +110,7 @@ function createTodoButton() {
     const buttonContainer = createElementWithClass('add-todo-button');
 
     const button = createElementWithClass('add-todo', 'button');
-    button.innerHTML = SVGObject.addTodo + 'Add Task';
+    button.innerHTML = SVGObject.add + 'Add Task';
 
     buttonContainer.appendChild(button);
     return buttonContainer;
@@ -127,12 +152,10 @@ function setActivePage(pageId = 'inbox') {
     document.querySelectorAll('.sidebar-item.active').forEach(item => item.classList.remove('active'));
 
     document.querySelector(`.sidebar-item#${pageId}`).classList.add('active');
+    currentPage = pageId;
 }
 
-/*
-    This object keeps track of dom todo items
-*/
-
+/* This object keeps track of dom todo items */
 const domAssociatorObject = (function() {
     // Keep track of dom object
     let index = 0;
@@ -165,9 +188,10 @@ const domAssociatorObject = (function() {
 })();
 
 
-/*
-    The following objects are responsible for loading pages
-*/
+/* The following objects and functions are responsible for loading pages */
+let currentPage = 'inbox';
+
+const getCurrentPage = () => currentPage;
 
 const inboxPage = {
     id: 'inbox',
@@ -177,7 +201,7 @@ const inboxPage = {
         const page = createElementWithClass('page');
         page.dataset.page = 'inbox';
 
-        page.appendChild(createSimpleTopBar('Inbox'));
+        page.appendChild(createTopBar('Inbox'));
 
         const inboxProject = todoObject.findProject('default');
 
@@ -212,11 +236,16 @@ const todayPage = {
         const page = createElementWithClass('page');
         page.dataset.page = 'today';
 
-        page.appendChild(createSimpleTopBar('Today'));
+        page.appendChild(createTopBar('Today'));
 
         const itemList = createElementWithClass('todo-items');
 
         for (const project of todoObject.projects) {
+            for (const unlistedItem of project.unlistedItems) {
+                if (isToday(unlistedItem.dueDate) || format(new Date(), 'yyyy-MM-dd') === format(unlistedItem.dueDate, 'yyyy-MM-dd')) {
+                    itemList.appendChild(createItemElement(unlistedItem));
+                }
+            }
             for (const section of project.sections) {
                 for (const item of section.items) {
                     if (isToday(item.dueDate) || format(new Date(), 'yyyy-MM-dd') === format(item.dueDate, 'yyyy-MM-dd')) {
@@ -241,11 +270,16 @@ const weekPage = {
         const page = createElementWithClass('page');
         page.dataset.page = 'week';
 
-        page.appendChild(createSimpleTopBar('Week'));
+        page.appendChild(createTopBar('Week'));
 
         const itemList = createElementWithClass('todo-items');
 
         for (const project of todoObject.projects) {
+            for (const unlistedItem of project.unlistedItems) {
+                if (isThisWeek(unlistedItem.dueDate, { weekStartsOn: 0 }) && (isFuture(unlistedItem.dueDate) || isToday(unlistedItem.dueDate))) {
+                    itemList.appendChild(createItemElement(unlistedItem));
+                }
+            }
             for (const section of project.sections) {
                 for (const item of section.items) {
                     if (isThisWeek(item.dueDate, { weekStartsOn: 0 }) && (isFuture(item.dueDate) || isToday(item.dueDate))) {
@@ -261,9 +295,48 @@ const weekPage = {
     },
 };
 
+const projectPageLoader = project => {
+    clearPage();
+
+    const page = createElementWithClass('page');
+    page.dataset.page = project.name.toLowerCase();
+
+    page.appendChild(createTopBar(project.name, true, project.description));
+
+    const unlistedSection = createElementWithClass('section');
+    unlistedSection.id = 'unlisted';
+
+    const itemList = createElementWithClass('todo-items');
+
+    for (const item of project.unlistedItems) {
+        itemList.appendChild(createItemElement(item));
+    }
+
+    itemList.appendChild(createTodoButton());
+
+    unlistedSection.appendChild(itemList);
+    page.appendChild(unlistedSection);
+
+    for (const section of project.sections) {
+        page.appendChild(createSectionElement(section));
+    }
+
+    main.appendChild(page);
+    setActivePage(`project-${project.name.toLowerCase()}`);
+};
+
 const sidebarLoader = () => {
+    const addProjectButton = document.querySelector('#add-project-button');
     const projectsList = document.querySelector('.sidebar-list.project-list');
-    projectsList.innerHTML = '';
+
+    // Clear everything from the list except the add-project button
+    for (const child of projectsList.children) {
+        if (child === addProjectButton) {
+            continue;
+        }
+
+        projectsList.removeChild(child);
+    }
 
     for (const project of todoObject.projects) {
         if (project.name === 'default') {
@@ -271,11 +344,11 @@ const sidebarLoader = () => {
         }
 
         const projectButton = createElementWithClass('sidebar-item project', 'button');
-        projectButton.id = `project-${project.name}`;
-        projectButton.dataset.name = project.name;
+        projectButton.id = `project-${project.name.toLowerCase()}`;
+        projectButton.dataset.name = project.name.toLowerCase();
         projectButton.innerHTML = SVGObject.project + project.name;
 
-        projectsList.appendChild(projectButton);
+        projectsList.insertBefore(projectButton, addProjectButton);
     }
 };
 
@@ -287,4 +360,4 @@ const defaultLoader = () => {
     inboxPage.switchTo();
 };
 
-export { domAssociatorObject, inboxPage, todayPage, weekPage, sidebarLoader, defaultLoader };
+export { domAssociatorObject, inboxPage, todayPage, weekPage, projectPageLoader, sidebarLoader, defaultLoader };
