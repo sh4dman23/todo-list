@@ -2345,6 +2345,48 @@ function isDate(value) {
 
 /***/ }),
 
+/***/ "./node_modules/date-fns/esm/isFuture/index.js":
+/*!*****************************************************!*\
+  !*** ./node_modules/date-fns/esm/isFuture/index.js ***!
+  \*****************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (/* binding */ isFuture)
+/* harmony export */ });
+/* harmony import */ var _toDate_index_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../toDate/index.js */ "./node_modules/date-fns/esm/toDate/index.js");
+/* harmony import */ var _lib_requiredArgs_index_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../_lib/requiredArgs/index.js */ "./node_modules/date-fns/esm/_lib/requiredArgs/index.js");
+
+
+/**
+ * @name isFuture
+ * @category Common Helpers
+ * @summary Is the given date in the future?
+ * @pure false
+ *
+ * @description
+ * Is the given date in the future?
+ *
+ * > ⚠️ Please note that this function is not present in the FP submodule as
+ * > it uses `Date.now()` internally hence impure and can't be safely curried.
+ *
+ * @param {Date|Number} date - the date to check
+ * @returns {Boolean} the date is in the future
+ * @throws {TypeError} 1 argument required
+ *
+ * @example
+ * // If today is 6 October 2014, is 31 December 2014 in the future?
+ * const result = isFuture(new Date(2014, 11, 31))
+ * //=> true
+ */
+function isFuture(dirtyDate) {
+  (0,_lib_requiredArgs_index_js__WEBPACK_IMPORTED_MODULE_0__["default"])(1, arguments);
+  return (0,_toDate_index_js__WEBPACK_IMPORTED_MODULE_1__["default"])(dirtyDate).getTime() > Date.now();
+}
+
+/***/ }),
+
 /***/ "./node_modules/date-fns/esm/isSameDay/index.js":
 /*!******************************************************!*\
   !*** ./node_modules/date-fns/esm/isSameDay/index.js ***!
@@ -7139,7 +7181,7 @@ const SVGObject = {
     delete: '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><title>delete-outline</title><path d="M6,19A2,2 0 0,0 8,21H16A2,2 0 0,0 18,19V7H6V19M8,9H16V19H8V9M15.5,4L14.5,3H9.5L8.5,4H5V6H19V4H15.5Z" /></svg>',
     addTodo: '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><title>plus</title><path d="M19,13H13V19H11V13H5V11H11V5H13V11H19V13Z" /></svg>',
     arrowDown: '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><title>chevron-down</title><path d="M7.41,8.58L12,13.17L16.59,8.58L18,10L12,16L6,10L7.41,8.58Z" /></svg>',
-
+    project: '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><title>format-list-checks</title><path d="M3,5H9V11H3V5M5,7V9H7V7H5M11,7H21V9H11V7M11,15H21V17H11V15M5,20L1.5,16.5L2.91,15.09L5,17.17L9.59,12.59L11,14L5,20Z" /></svg>',
 };
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (SVGObject);
@@ -7360,8 +7402,10 @@ const todoManager = (function() {
 
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   defaultLoader: () => (/* binding */ defaultLoader),
 /* harmony export */   domAssociatorObject: () => (/* binding */ domAssociatorObject),
 /* harmony export */   inboxPage: () => (/* binding */ inboxPage),
+/* harmony export */   sidebarLoader: () => (/* binding */ sidebarLoader),
 /* harmony export */   todayPage: () => (/* binding */ todayPage),
 /* harmony export */   weekPage: () => (/* binding */ weekPage)
 /* harmony export */ });
@@ -7369,6 +7413,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var date_fns__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! date-fns */ "./node_modules/date-fns/esm/format/index.js");
 /* harmony import */ var date_fns__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! date-fns */ "./node_modules/date-fns/esm/isToday/index.js");
 /* harmony import */ var date_fns__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! date-fns */ "./node_modules/date-fns/esm/isThisWeek/index.js");
+/* harmony import */ var date_fns__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! date-fns */ "./node_modules/date-fns/esm/isFuture/index.js");
 /* harmony import */ var _svg_manager_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./svg-manager.js */ "./src/svg-manager.js");
 
 
@@ -7620,7 +7665,7 @@ const weekPage = {
         for (const project of todoObject.projects) {
             for (const section of project.sections) {
                 for (const item of section.items) {
-                    if ((0,date_fns__WEBPACK_IMPORTED_MODULE_4__["default"])(item.dueDate, { weekStartsOn: 0 })) {
+                    if ((0,date_fns__WEBPACK_IMPORTED_MODULE_4__["default"])(item.dueDate, { weekStartsOn: 0 }) && ((0,date_fns__WEBPACK_IMPORTED_MODULE_5__["default"])(item.dueDate) || (0,date_fns__WEBPACK_IMPORTED_MODULE_3__["default"])(item.dueDate))) {
                         itemList.appendChild(createItemElement(item));
                     }
                 }
@@ -7631,6 +7676,41 @@ const weekPage = {
         main.appendChild(page);
         setActivePage('week');
     },
+};
+
+const sidebarLoader = () => {
+    const addProjectButton = document.querySelector('#add-project-button');
+    const projectsList = document.querySelector('.sidebar-list.project-list');
+
+    // Clear everything from the list except the add-project button
+    for (const child of projectsList.children) {
+        if (child === addProjectButton) {
+            continue;
+        }
+
+        projectsList.removeChild(child);
+    }
+
+    for (const project of todoObject.projects) {
+        if (project.name === 'default') {
+            continue;
+        }
+
+        const projectButton = createElementWithClass('sidebar-item project', 'button');
+        projectButton.id = `project-${project.name}`;
+        projectButton.dataset.name = project.name;
+        projectButton.innerHTML = _svg_manager_js__WEBPACK_IMPORTED_MODULE_1__["default"].project + project.name;
+
+        projectsList.insertBefore(projectButton, addProjectButton);
+    }
+};
+
+const defaultLoader = () => {
+    // Loads the elements on the sidebar
+    sidebarLoader();
+
+    // Loads the inbox page by default
+    inboxPage.switchTo();
 };
 
 
@@ -8134,10 +8214,15 @@ __webpack_require__.r(__webpack_exports__);
 
 window.todoManager = _todo_manager_js__WEBPACK_IMPORTED_MODULE_0__["default"];
 
+_todo_manager_js__WEBPACK_IMPORTED_MODULE_0__["default"].addProject('Home');
+_todo_manager_js__WEBPACK_IMPORTED_MODULE_0__["default"].addProject('Study');
+_todo_manager_js__WEBPACK_IMPORTED_MODULE_0__["default"].addProject('Work');
+
 _todo_manager_js__WEBPACK_IMPORTED_MODULE_0__["default"].addSection('homework');
 const item = _todo_manager_js__WEBPACK_IMPORTED_MODULE_0__["default"].addTodoItem('laundry', 'must do today', '2023-11-17', 'low', 'default', 'homework');
-_todo_manager_js__WEBPACK_IMPORTED_MODULE_0__["default"].addTodoItem('laundry22', 'must do today too', '2023-11-16', 'high', 'default', 'homework');
-_ui_manager_js__WEBPACK_IMPORTED_MODULE_1__.inboxPage.switchTo();
+_todo_manager_js__WEBPACK_IMPORTED_MODULE_0__["default"].addTodoItem('laundry22', 'must do today too', '2023-11-18', 'high', 'Home', 'homework');
+
+(0,_ui_manager_js__WEBPACK_IMPORTED_MODULE_1__.defaultLoader)();
 
 // Sets up event listeners
 const eventListenersObject = (function() {
