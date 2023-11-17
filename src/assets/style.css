@@ -10,6 +10,7 @@ button {
     cursor: pointer;
     color: #212427;
     transition: 100ms all ease-in-out;
+    flex-shrink: 0;
 }
 
 :root {
@@ -60,6 +61,8 @@ header svg, button.sidebar-item svg {
     box-shadow: 2px 2px 4px 1px rgba(0, 0, 0, 0.1);
     position: relative;
     z-index: 1;
+    height: calc(100vh - 100px);
+    overflow: auto;
 }
 
 .sidebar-list {
@@ -105,14 +108,13 @@ button.sidebar-item.add-project {
 main {
     grid-row: 2 / 3;
     grid-column: 2 / -1;
-    padding: 1.5rem 3rem;
     background-color: #fefefe;
-    /* height: calc(100vh - 100px); */
-    height: 100%;
+    height: calc(100vh - 100px);
     overflow: auto;
 }
 
 .page {
+    padding: 1.5rem 3rem;
     height: 100%;
     overflow: auto;
 }
