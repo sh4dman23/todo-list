@@ -3,6 +3,7 @@
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="./style.css">
         <title>Todo List</title>
     </head>
     <body>
@@ -13,7 +14,7 @@
         <nav class="sidebar">
             <div>
                 <div class="sidebar-list">
-                    <button class="sidebar-item" id="inbox">
+                    <button class="sidebar-item active" id="inbox">
                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><title>inbox</title><path d="M19,15H15A3,3 0 0,1 12,18A3,3 0 0,1 9,15H5V5H19M19,3H5C3.89,3 3,3.9 3,5V19A2,2 0 0,0 5,21H19A2,2 0 0,0 21,19V5A2,2 0 0,0 19,3Z" /></svg>
                         Inbox
                     </button>
@@ -29,8 +30,8 @@
             </div>
             <div>
                 <h1 class="sidebar-header">Projects</h1>
-                <div class="sidebar-list">
-                    <button class="sidebar-item" id="project-home" data-attribute="home">
+                <div class="sidebar-list project-list">
+                    <button class="sidebar-item project" id="project-home" data-attribute="home">
                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><title>format-list-checks</title><path d="M3,5H9V11H3V5M5,7V9H7V7H5M11,7H21V9H11V7M11,15H21V17H11V15M5,20L1.5,16.5L2.91,15.09L5,17.17L9.59,12.59L11,14L5,20Z" /></svg>
                         Home
                     </button>
@@ -42,7 +43,7 @@
                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><title>format-list-checks</title><path d="M3,5H9V11H3V5M5,7V9H7V7H5M11,7H21V9H11V7M11,15H21V17H11V15M5,20L1.5,16.5L2.91,15.09L5,17.17L9.59,12.59L11,14L5,20Z" /></svg>
                         Work
                     </button>
-                    <button class="sidebar-list add-project">
+                    <button class="sidebar-item add-project" id="add-project-button">
                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><title>plus-circle-outline</title><path d="M12,20C7.59,20 4,16.41 4,12C4,7.59 7.59,4 12,4C16.41,4 20,7.59 20,12C20,16.41 16.41,20 12,20M12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12A10,10 0 0,0 12,2M13,7H11V11H7V13H11V17H13V13H17V11H13V7Z" /></svg>
                         Add Project
                     </button>
@@ -50,7 +51,39 @@
             </div>
         </nav>
         <main>
+            <div class="top-section">
+                <h1>Inbox</h1>
+            </div>
+            <div class="todo-items">
+                <!-- store a dataset.index with associator and another dataset.section(to 'unlisted') here -->
+                <div class="todo-item" data-attribute="1">
+                    <div class="checkbox-container">
+                        <input type="checkbox" class="todo-checkbox">
+                        <span class="checkmark"></span>
+                    </div>
+                    <span class="todo-title">do the laundry</span>
+                    <p class="todo-desc">must finish today</p>
+                    <p class="todo-date">23 Nov</p>
+                    <div class="todo-buttons">
+                        <button name="todo-edit" class="icon-button">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><title>pencil-outline</title><path d="M14.06,9L15,9.94L5.92,19H5V18.08L14.06,9M17.66,3C17.41,3 17.15,3.1 16.96,3.29L15.13,5.12L18.88,8.87L20.71,7.04C21.1,6.65 21.1,6 20.71,5.63L18.37,3.29C18.17,3.09 17.92,3 17.66,3M14.06,6.19L3,17.25V21H6.75L17.81,9.94L14.06,6.19Z" /></svg>
+                        </button>
+                        <button name="todo-info" class="icon-button">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><title>information-outline</title><path d="M11,9H13V7H11M12,20C7.59,20 4,16.41 4,12C4,7.59 7.59,4 12,4C16.41,4 20,7.59 20,12C20,16.41 16.41,20 12,20M12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12A10,10 0 0,0 12,2M11,17H13V11H11V17Z" /></svg>
+                        </button>
+                        <button name="todo-delete" class="icon-button">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><title>delete-outline</title><path d="M6,19A2,2 0 0,0 8,21H16A2,2 0 0,0 18,19V7H6V19M8,9H16V19H8V9M15.5,4L14.5,3H9.5L8.5,4H5V6H19V4H15.5Z" /></svg>
+                        </button>
+                    </div>
+                </div>
 
+                <div class="add-todo-button">
+                    <button class="add-todo">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><title>plus</title><path d="M19,13H13V19H11V13H5V11H11V5H13V11H19V13Z" /></svg>
+                        Add Task
+                    </button>
+                </div>
+            </div>
         </main>
     </body>
 </html>

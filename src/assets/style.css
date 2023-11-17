@@ -6,6 +6,240 @@
     box-sizing: border-box;
 }
 
+button {
+    cursor: pointer;
+}
+
 body {
     font-family: 'Roboto', 'Lato', 'Helvetica Neue', sans-serif;
+    min-height: 100vh;
+    display: grid;
+    grid-template-columns: minmax(250px, 1fr) 4fr;
+    grid-template-rows: 100px 1fr;
+    color: #212427;
+}
+
+svg {
+    height: 1.3em;
+    position: relative;
+    fill: #212427;
+}
+
+header {
+    grid-row: 1 / 2;
+    grid-column: 1 / -1;
+    font-size: 40px;
+    font-weight: 700;
+    font-family: 'Lato', 'Roboto', 'Helvetica Neue', 'Helvetica', sans-serif;
+    padding-left: 2rem;
+    display: flex;
+    align-items: center;
+    box-shadow: 1px 0 4px 1px rgba(0, 0, 0, 0.1);
+    position: relative;
+    z-index: 2;
+}
+
+header svg, button.sidebar-item svg {
+    top: -0.05em;
+}
+
+.sidebar {
+    grid-row: 2 / 3;
+    grid-column: 1 / 2;
+    display: flex;
+    flex-direction: column;
+    padding: 32px 16px;
+    gap: 16px;
+    background-color: #fafafa;
+    box-shadow: 2px 2px 4px 1px rgba(0, 0, 0, 0.1);
+    position: relative;
+    z-index: 1;
+}
+
+.sidebar-list {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+button.sidebar-item {
+    font-size: 1rem;
+    font-weight: 400;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.5rem 1rem;
+    border: none;
+    border-radius: 4px;
+    background-color: transparent;
+    color: #212427;
+}
+
+button.sidebar-item:hover, button.sidebar-item.active {
+    background-color: #f0f0f0;
+}
+
+.sidebar-header {
+    font-weight: 500;
+    margin-bottom: 0.5rem;
+}
+
+button.sidebar-item.add-project {
+    visibility: hidden;
+    justify-content: center;
+    transition: all 50ms ease-in-out;
+    font-size: 0.9rem;
+}
+
+.project-list:hover button.sidebar-item.add-project, button.sidebar-item.add-project:hover {
+    visibility: visible;
+}
+
+main {
+    grid-row: 2 / 3;
+    grid-column: 2 / -1;
+    padding: 1.5rem 3rem;
+    background-color: #fefefe;
+}
+
+main > .top-section {
+    margin-bottom: 1.5rem;
+}
+
+.todo-item {
+    cursor: pointer;
+    display: grid;
+    grid-template-columns: auto 4fr 1fr;
+    grid-template-rows: 1.5rem auto auto;
+    row-gap: 0.15rem;
+    font-family: 'Lato', 'Roboto', 'Helvetica Neue', 'Helvetica', sans-serif;
+    border-bottom: 1px solid #ddd;
+    padding-bottom: 1rem;
+}
+
+.todo-checkbox {
+    display: block;
+    grid-template: 1 / 2;
+    margin: 0 1rem;
+}
+
+.todo-title {
+    grid-column: 2 / 3;
+    display: flex;
+    align-items: center;
+    font-size: 1.1rem;
+    font-weight: 600;
+}
+
+.todo-buttons {
+    grid-column: 3 / 4;
+    grid-row: 1 / 2;
+    display: none;
+    justify-content: flex-end;
+    gap: 0.5rem;
+}
+
+.icon-button, button.add-todo {
+    border: none;
+    height: 1.5rem;
+    border-radius: 4px;
+    padding: 2px;
+    background-color: transparent;
+}
+
+.icon-button:hover {
+    background-color: #f0f0f0;
+}
+
+.icon-button > svg {
+    height: 100%;
+    width: 100%;
+}
+
+.todo-item:hover .todo-buttons {
+    display: flex;
+}
+
+.todo-desc, .todo-date {
+    grid-column: 2 / -1;
+}
+
+.todo-desc {
+    opacity: 0.8;
+}
+
+.checkbox-container {
+    display: flex;
+    align-items: center;
+    position: relative;
+}
+
+input[type="checkbox"] {
+    cursor: pointer;
+    appearance: none;
+    width: 1rem;
+    height: 1rem;
+    border: 1px solid black;
+    border-radius: 2px;
+}
+
+input[type="checkbox"]:checked {
+    background-color: #212427;
+}
+
+.checkmark, .checkmark::after {
+    pointer-events: none;
+    user-select: none;
+}
+
+.checkmark {
+    position: absolute;
+    top: -0.1rem;
+    left: 1.1rem;
+    display: none;
+    height: 25px;
+    width: 25px;
+}
+
+.checkmark::after {
+    position: absolute;
+    display: none;
+    content: "✓";
+    top: 0.3rem;
+    color: #ffffff;
+    font-weight: bold;
+}
+
+input[type="checkbox"]:checked + .checkmark::after, input[type="checkbox"]:checked + .checkmark {
+    display: inline;
+}
+
+button.add-todo {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 1.5rem 1rem;
+    font-size: 1rem;
+    color: #555;
+    width: 100%;
+}
+
+button.add-todo, button.add-todo * {
+    transition: 100ms all ease;
+}
+
+button.add-todo:hover {
+    color: inherit;
+}
+
+button.add-todo svg {
+    border-radius: 50%;
+    height: 1.5em;
+    top: -0.05em;
+}
+
+button.add-todo:hover svg {
+    fill: #fff;
+    background-color: #212427;
 }
