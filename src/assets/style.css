@@ -10,6 +10,10 @@ button {
     cursor: pointer;
 }
 
+:root {
+    font-size: 15px;
+}
+
 body {
     font-family: 'Roboto', 'Lato', 'Helvetica Neue', sans-serif;
     min-height: 100vh;
@@ -35,8 +39,8 @@ header {
     display: flex;
     align-items: center;
     box-shadow: 1px 0 4px 1px rgba(0, 0, 0, 0.1);
-    position: relative;
     z-index: 2;
+    background-color: #fff;
 }
 
 header svg, button.sidebar-item svg {
@@ -101,10 +105,22 @@ main {
     grid-column: 2 / -1;
     padding: 1.5rem 3rem;
     background-color: #fefefe;
+    height: calc(100vh - 100px);
+    overflow: auto;
 }
 
-main > .top-section {
+.page {
+    overflow: auto;
+}
+
+main .pg-top-section {
     margin-bottom: 1.5rem;
+}
+
+.project, .todo-title, .todo-desc, .section-header {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
 }
 
 .todo-item {
@@ -242,4 +258,44 @@ button.add-todo svg {
 button.add-todo:hover svg {
     fill: #fff;
     background-color: #212427;
+}
+
+.section + .section {
+    margin-top: 1rem;
+}
+
+.section-header {
+    display: grid;
+    grid-template-columns: auto 1fr auto;
+    font-size: 1.1rem;
+    margin-bottom: 1rem;
+}
+
+.section-header * {
+    display: flex;
+    align-items: center;
+}
+
+.section-header span {
+    padding-left: 1rem;
+    font-weight: 700;
+}
+
+.section-header button {
+    border: none;
+    padding: 0.1rem;
+    border-radius: 4px;
+    background-color: transparent;
+}
+
+.delete-section {
+    visibility: hidden;
+}
+
+.section-header button:hover {
+    background-color: #f0f0f0;
+}
+
+.section-header:hover .delete-section {
+    visibility: visible;
 }

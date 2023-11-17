@@ -48,7 +48,7 @@ function createProject(name, description = '') {
     };
 
     // Finds section by name
-    const findSection = sectionName => project.sections.find(section => section.name === sectionName);
+    const findSection = sectionName => project.sections.find(section => section.name.toLowerCase() === sectionName.toLowerCase());
 
     const update = (newName, newDescription) => {
         project.name = newName !== undefined ? newName : project.name;
@@ -116,7 +116,7 @@ const todoManager = (function() {
 
         // Finds project by name
         findProject(projectName) {
-            return this.projects.find(project => project.name === projectName);
+            return this.projects.find(project => project.name.toLowerCase() === projectName.toLowerCase());
         },
     };
 
