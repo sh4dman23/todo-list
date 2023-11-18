@@ -1,6 +1,7 @@
 import todoManager from "./todo-manager.js";
-import { domAssociatorObject, inboxPage, todayPage, weekPage, projectPageLoader, defaultLoader,
+import { getCurrentPage, domAssociatorObject, inboxPage, todayPage, weekPage, projectPageLoader, defaultLoader,
         modalManager } from "./ui-manager.js";
+import { parse, isValid } from 'date-fns';
 import './assets/style.css';
 
 window.todoManager = todoManager;
@@ -10,8 +11,8 @@ todoManager.addProject('Study', 'lorem * 5');
 todoManager.addProject('Work');
 
 todoManager.addSection('homework');
-const item = todoManager.addTodoItem('laundry', 'must do today', '2023-11-17', 'low', 'default', 'homework');
-todoManager.addTodoItem('laundry22', 'must do today too', '2023-11-18', 'high', 'Home');
+const item = todoManager.addTodoItem('laundry', 'must do today', new Date('2023-11-17'), 'low', 'default', 'homework');
+todoManager.addTodoItem('laundry22', 'must do today too', new Date('2023-11-18'), 'high', 'Home');
 
 defaultLoader();
 
@@ -73,10 +74,10 @@ const eventListenersObject = (function() {
 })();
 
 // Load popup modal and add event listeners to it
-function managePopupModal(mode = 'edit', target) {
+function managePopupModal(mode = 'edit', targetElement, targetType = 'item') {
     let selectedTodoItem;
     if (mode === 'edit') {
-        selectedTodoItem = manageEditModalPopupLoad(target);
+        selectedTodoItem = manageEditModalPopupLoad(targetElement);
     }
 
     const dialog = document.querySelector('.dialog');
@@ -87,7 +88,7 @@ function managePopupModal(mode = 'edit', target) {
     dialog.addEventListener('click', event => {
         event.stopPropagation();
         const target = event.target;
-        if (target.classList.contains('priority-button')) {
+        if (targetType === 'item' && target.classList.contains('priority-button')) {
             modalManager.switchPriority(target.dataset.priority);
         } else if (target.id === 'close-popup-modal') {
             modalManager.closeModal();
@@ -96,12 +97,23 @@ function managePopupModal(mode = 'edit', target) {
 
     popupForm.addEventListener('submit', event => {
         event.preventDefault();
+
         if (!checkModalForm()) {
             // EDIT: will add corner popup here
             return;
         }
-        
 
+        const title = popupForm.querySelector('#edit-todo-title').value;
+        const description = popupForm.querySelector('#edit-todo-desc').value;
+        const dueDate = popupForm.querySelector('#edit-todo-date').value;
+        let priority = popupForm.querySelector('.priority-button.selected').dataset.priority;
+        priority = ['low', 'mid', 'high'].includes(priority) ? priority : 'low';
+        const status = popupForm.querySelector('#edit-todo-checkbox').checked;
+
+        if (mode === 'edit') {
+            selectedTodoItem.update(title, description, processDate(dueDate), priority, status);
+            modalManager.closeModal();
+        }
     });
 }
 
@@ -169,6 +181,24 @@ function checkModalForm() {
     if (document.querySelector('.popup.overlay') === undefined || document.querySelector('.priority-button.selected') === undefined) {
         return false;
     }
+
+    return true;
+}
+
+function processDate(date) {
+    if (date === undefined || date === null || date === '' || date === 'none') {
+        return null;
+    }
+
+    // Check for validity
+    const parsedDate = parse(date, 'yyyy-MM-dd', new Date());
+
+    if (!isValid(parsedDate)) {
+        return null;
+    }
+
+    // Store it as a date object
+    return new Date(date);
 }
 
 eventListenersObject.setUp();

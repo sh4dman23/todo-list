@@ -15,13 +15,12 @@ function createTodoItem(title, description = '', dueDate = null, priority = 'low
         priority,
         status: false, // status = false means this todo has not been completed
     };
-    const update = (newTitle, newDescription, newDueDate, newPriority, newStatus, newStarredStatus) => {
-        todo.title = newTitle !== undefined ? newTitle: todo.title;
+    const update = (newTitle, newDescription, newDueDate, newPriority, newStatus) => {
+        todo.title = newTitle !== undefined ? newTitle : todo.title;
         todo.description = newDescription !== undefined ? newDescription : todo.description;
         todo.dueDate = newDueDate !== undefined ? newDueDate : todo.dueDate;
         todo.priority = newPriority !== undefined ? newPriority : todo.priority;
-        todo.status = newStatus !== undefined ? newStatus : todo. status;
-        todo.starred = newStarredStatus !== undefined ? newStarredStatus : todo.starred;
+        todo.status = newStatus !== undefined ? newStatus : todo.status;
     };
 
     return Object.assign(todo, { update });
@@ -66,26 +65,6 @@ function checkForEmpty(...args) {
     });
 
     return false;
-}
-
-// REMOVE: MOVE THIS TO UI MANAGER LATER
-function processDate(date) {
-    if (checkForEmpty(date) || date === 'none') {
-        return null;
-    }
-
-    // Check for validity
-    const parsedDate = parse(date, 'yyyy-MM-dd', new Date());
-
-    if (!isValid(parsedDate)) {
-        return null;
-    }
-
-    // This is for the UI manager
-    // return format(dateObject, 'd MMM yyyy');
-
-    // Store it as a date object
-    return new Date(date);
 }
 
 /*
@@ -168,7 +147,7 @@ const todoManager = (function() {
             return false;
         }
 
-        const item = createTodoItem(title, description, processDate(dueDate), priority);
+        const item = createTodoItem(title, description, dueDate, priority);
 
         // If section is null, add to unlisted items, else find and then add to that section's item list
         if (sectionName === null) {

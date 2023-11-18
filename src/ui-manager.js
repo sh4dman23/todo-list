@@ -431,7 +431,7 @@ const modalManager = (function() {
         date.id = 'edit-todo-date';
 
         date.value = todoItem.dueDate === null ? '' : format(todoItem.dueDate, 'yyyy-MM-dd');
-        date.min = format(new Date(), 'yyyy-MM-dd');
+        date.min = date.value !== '' ? date.value : format(new Date(), 'yyyy-MM-dd');
 
 
         dateDiv.appendChild(dateLabel);
@@ -522,4 +522,4 @@ const modalManager = (function() {
     return { loadEditModal, closeModal, switchPriority };
 })();
 
-export { domAssociatorObject, inboxPage, todayPage, weekPage, projectPageLoader, sidebarLoader, defaultLoader, modalManager };
+export { getCurrentPage, domAssociatorObject, inboxPage, todayPage, weekPage, projectPageLoader, sidebarLoader, defaultLoader, modalManager };
