@@ -189,12 +189,12 @@ main .pg-top-section {
     row-gap: 0.15rem;
     font-family: 'Lato', 'Roboto', 'Helvetica Neue', 'Helvetica', sans-serif;
     border-bottom: 1px solid #ddd;
-    padding-bottom: 1rem;
+    padding: 0.8rem;
 }
 
-.todo-item + .todo-item {
+/* .todo-item + .todo-item {
     padding-top: 1rem;
-}
+} */
 
 .todo-checkbox {
     display: block;
@@ -249,6 +249,10 @@ main .pg-top-section {
 
 .todo-date {
     font-size: 0.9rem;
+}
+
+.todo-date:not(input) {
+    margin-top: 0.25rem;
 }
 
 .checkbox-container {
@@ -317,8 +321,7 @@ button.add-todo:hover {
 
 button.add-todo svg {
     border-radius: 50%;
-    height: 1.5em;
-    top: -0.05em;
+    height: 1.55em;
 }
 
 button.add-todo:hover svg {
@@ -334,7 +337,6 @@ button.add-todo:hover svg {
     display: grid;
     grid-template-columns: auto 1fr auto;
     font-size: 1.1rem;
-    margin-bottom: 1rem;
 }
 
 .section-header * {

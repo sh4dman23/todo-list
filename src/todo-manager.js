@@ -7,13 +7,15 @@ import { format, parse, isValid } from 'date-fns';
         ex: exampleItem.update(...Array(3), 'high'); will only update the priority
 */
 
-function createTodoItem(title, description = '', dueDate = null, priority = 'low') {
+function createTodoItem(title, description = '', dueDate = null, priority = 'low', projectName = 'default', sectionName = null) {
     const todo = {
         title,
         description,
         dueDate,
         priority,
         status: false, // status = false means this todo has not been completed
+        projectName,
+        sectionName,
     };
     const update = (newTitle, newDescription, newDueDate, newPriority, newStatus) => {
         todo.title = newTitle !== undefined ? newTitle : todo.title;
@@ -147,7 +149,7 @@ const todoManager = (function() {
             return false;
         }
 
-        const item = createTodoItem(title, description, dueDate, priority);
+        const item = createTodoItem(title, description, dueDate, priority, projectName, sectionName);
 
         // If section is null, add to unlisted items, else find and then add to that section's item list
         if (sectionName === null) {

@@ -1,26 +1,23 @@
 import todoManager from "./todo-manager.js";
-import { getCurrentPage, domAssociatorObject, inboxPage, todayPage, weekPage, projectPageLoader, defaultLoader,
-        modalManager } from "./ui-manager.js";
+import { domAssociatorObject, pageLoader, modalManager, DOMAdderRemover } from "./ui-manager.js";
 import { parse, isValid } from 'date-fns';
 import './assets/style.css';
 
 window.todoManager = todoManager;
 
-todoManager.addProject('Home', 'asjdhasdaosadsa');
+todoManager.addProject('HOme', 'asjdhasdaosadsa');
 todoManager.addProject('Study', 'lorem * 5');
 todoManager.addProject('Work');
 
 todoManager.addSection('homework');
 const item = todoManager.addTodoItem('laundry', 'must do today', new Date('2023-11-17'), 'low', 'default', 'homework');
-todoManager.addTodoItem('laundry22', 'must do today too', new Date('2023-11-18'), 'high', 'Home');
+todoManager.addTodoItem('laundry22', 'must do today too', new Date('2023-11-18'), 'high', 'HOme');
 
-defaultLoader();
+pageLoader.defaultLoader();
 
 // Set up event listeners; all functions of this module called here are written down below
 const eventListenersObject = (function() {
     const todoObject = todoManager.getTodoObject();
-
-    const defaultPages = [inboxPage, todayPage, weekPage];
 
     const sidebar = document.querySelector('.sidebar');
     const main = document.querySelector('main');
@@ -29,7 +26,7 @@ const eventListenersObject = (function() {
         sidebar.addEventListener('click', event => {
             const target = event.target;
 
-            const page = defaultPages.find(page => page.id === target.id);
+            const page = pageLoader.defaultPages.find(page => page.id === target.id);
             if (page !== undefined) {
                 page.switchTo();
                 return;
@@ -48,7 +45,7 @@ const eventListenersObject = (function() {
                     return;
                 }
 
-                projectPageLoader(project);
+                pageLoader.projectPageLoader(project);
                 return;
             }
         });
@@ -78,15 +75,12 @@ const eventListenersObject = (function() {
 
 // Load popup modal and add event listeners to it
 function managePopupModal(mode = 'edit', targetElement, targetType = 'item') {
-    let selectedTodoItem;
-    if (mode === 'edit') {
-        selectedTodoItem = manageEditModalPopupLoad(targetElement);
-    } else if (mode === 'add') {
-        // we need to open model using a function call
-        // for that, we need
-        //      1. project name
-        //      2. section name
-        // no return value
+    let selectedTodoElement, selectedTodoItem, section, projectName;
+
+    if (mode === 'edit' && targetType === 'item') {
+        [selectedTodoElement, selectedTodoItem] = manageEditItemModalLoad(targetElement);
+    } else if (mode === 'add' && targetType === 'item') {
+        [section, projectName] = manageAddItemModalLoad(targetElement);
     }
 
     const dialog = document.querySelector('.dialog');
@@ -117,19 +111,24 @@ function managePopupModal(mode = 'edit', targetElement, targetType = 'item') {
         const dueDate = popupForm.querySelector('#edit-todo-date').value;
         let priority = popupForm.querySelector('.priority-button.selected').dataset.priority;
         priority = ['low', 'medium', 'high'].includes(priority) ? priority : 'low';
-        const status = popupForm.querySelector('#edit-todo-checkbox').checked;
 
-        if (mode === 'edit') {
+        if (mode === 'edit' && targetType === 'item') {
+            const status = popupForm.querySelector('#edit-todo-checkbox').checked;
             selectedTodoItem.update(title, description, processDate(dueDate), priority, status);
             modalManager.closeModal();
-        } else if (mode === 'edit') {
-            // here, we add item to todoManager
-            // now use ui manager to add it to DOM
+            pageLoader.refreshItem(selectedTodoElement, selectedTodoItem);
+
+        } else if (mode === 'add' && targetType === 'item') {
+            const sectionName = section.dataset.name;
+            const newTodoItem = todoManager.addTodoItem(title, description, processDate(dueDate), priority, projectName, sectionName);
+            DOMAdderRemover.addItem(section, newTodoItem);
+            modalManager.closeModal();
+            // Why do we not use a refresh page here? because, we are already adding the element using the add item method
         }
     });
 }
 
-function manageEditModalPopupLoad(target) {
+function manageEditItemModalLoad(target) {
     const todoObject = todoManager.getTodoObject();
 
     let todoElement;
@@ -149,42 +148,39 @@ function manageEditModalPopupLoad(target) {
 
     const todoItem = domAssociatorObject.getItem(itemIndex);
 
-    const pageName = document.querySelector('.page').dataset.page;
-
-    const lowercaseProjectName = pageName === 'inbox' ? 'default'
-                        : pageName === 'today' || projectName === 'week' ? ''
-                        : pageName.slice('project-'.length);
-
     const section = todoElement.parentNode.parentNode;
 
-    let sectionName;
-
-    let projectName;
-    let project;
-
-    if (['inbox', 'today', 'week'].includes(pageName)) {
-        if (pageName === 'inbox') {
-            project = todoObject.findProject('default');
-            sectionName = section.id;
-        }
-
-        projectName = pageName.charAt(0).toUpperCase() + pageName.slice(1);
-    } else {
-        project = todoObject.findProject(lowercaseProjectName);
-
-        if (project === undefined) {
-            return;
-        }
-
-        projectName = project.name;
-        sectionName = section.id;
+    let [projectName, sectionName] = getProjectAndSectionName(todoItem);
+    if (projectName === 'default') {
+        projectName = 'Inbox';
     }
 
-    const properCaseSectionName = sectionName === 'unlisted' || sectionName === '' || sectionName === undefined ? null
-                                                    : project.findSection(sectionName).name;
+    modalManager.loadEditItemModal(projectName, sectionName, todoItem);
+    return [todoElement, todoItem];
+}
 
-    modalManager.loadEditModal(projectName, properCaseSectionName, todoItem);
-    return todoItem;
+function manageAddItemModalLoad(target) {
+    // First parent is button div, second is item list container and the third is the section div
+    const section = target.parentNode.parentNode.parentNode;
+
+    const pageName = pageLoader.getCurrentPage();
+
+    let projectName;
+    if (pageName.startsWith('project-')) {
+        projectName = pageName.slice('project-'.length);
+    } else {
+        projectName = 'default';
+    }
+
+    modalManager.loadAddItemModal(projectName === 'default' ? 'Inbox' : projectName, section.dataset.name);
+
+    return [section, projectName];
+}
+
+function manageConfirmationModel(target, targetType) {
+    // load modal with args (targetType)
+    // add event listener to delete from both memory and dom if yes is clicked
+    // add event listener to close popup if cancel is clicked
 }
 
 // Does a light check to see if one of the priority buttons are selected or not, since they are required and are not native HTML input elements
@@ -211,6 +207,29 @@ function processDate(date) {
 
     // Store it as a date object
     return new Date(date);
+}
+
+function getProjectAndSectionName(todoItem) {
+    return [todoItem.projectName, todoItem.sectionName];
+}
+
+function refreshPage() {
+    const currentPage = pageLoader.getCurrentPage();
+
+    let foundPage = false;
+    pageLoader.defaultPages.forEach(page => {
+        if (page.id === currentPage) {
+            foundPage = true;
+            page.switchTo();
+            return;
+        }
+    });
+    if (foundPage) {
+        return;
+    }
+
+    const projectName = currentPage.slice('project-'.length);
+    pageLoader.projectPageLoader(projectName);
 }
 
 eventListenersObject.setUp();
