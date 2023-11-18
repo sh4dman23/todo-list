@@ -433,7 +433,6 @@ const modalManager = (function() {
         date.value = todoItem.dueDate === null ? '' : format(todoItem.dueDate, 'yyyy-MM-dd');
         date.min = date.value !== '' ? date.value : format(new Date(), 'yyyy-MM-dd');
 
-
         dateDiv.appendChild(dateLabel);
         dateDiv.appendChild(date);
 
@@ -448,7 +447,7 @@ const modalManager = (function() {
 
         const mid = createElementWithClass('priority-button mid', 'button');
         mid.textContent = 'Medium';
-        mid.dataset.priority = 'mid';
+        mid.dataset.priority = 'medium';
         mid.type = 'button';
 
         const high = createElementWithClass('priority-button high', 'button');
@@ -522,4 +521,22 @@ const modalManager = (function() {
     return { loadEditModal, closeModal, switchPriority };
 })();
 
-export { getCurrentPage, domAssociatorObject, inboxPage, todayPage, weekPage, projectPageLoader, sidebarLoader, defaultLoader, modalManager };
+const DOMAdderRemover = (function() {
+    const addItem = (sectionId, todoItem) => {
+        const page = document.querySelector('.page');
+        const section = document.querySelector(`.section#${sectionId}`);
+
+        if (section === undefined) {
+            return false;
+        }
+
+        const itemDiv = createItemElement(todoItem);
+
+        section.insertBefore(todoItem, section.lastElementChild)
+    };
+
+    return { addItem };
+})();
+
+export { getCurrentPage, domAssociatorObject, inboxPage, todayPage, weekPage, projectPageLoader, sidebarLoader, defaultLoader,
+    modalManager, DOMAdderRemover };

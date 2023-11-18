@@ -59,8 +59,11 @@ const eventListenersObject = (function() {
             const target = event.target;
 
             if (target.classList.contains('todo-item') || target.classList.contains('todo-edit')) {
-                // This function will add necessary event listeners to the form in the popup
-                managePopupModal('edit', target);
+                // Open and manage popup modal for *editing items*
+                managePopupModal('edit', target, 'item');
+            } else if (target.classList.contains('add-todo')) {
+                // Open and manage popup modal for *adding items*
+                managePopupModal('add', target, 'item');
             }
         });
     };
@@ -78,6 +81,12 @@ function managePopupModal(mode = 'edit', targetElement, targetType = 'item') {
     let selectedTodoItem;
     if (mode === 'edit') {
         selectedTodoItem = manageEditModalPopupLoad(targetElement);
+    } else if (mode === 'add') {
+        // we need to open model using a function call
+        // for that, we need
+        //      1. project name
+        //      2. section name
+        // no return value
     }
 
     const dialog = document.querySelector('.dialog');
@@ -107,12 +116,15 @@ function managePopupModal(mode = 'edit', targetElement, targetType = 'item') {
         const description = popupForm.querySelector('#edit-todo-desc').value;
         const dueDate = popupForm.querySelector('#edit-todo-date').value;
         let priority = popupForm.querySelector('.priority-button.selected').dataset.priority;
-        priority = ['low', 'mid', 'high'].includes(priority) ? priority : 'low';
+        priority = ['low', 'medium', 'high'].includes(priority) ? priority : 'low';
         const status = popupForm.querySelector('#edit-todo-checkbox').checked;
 
         if (mode === 'edit') {
             selectedTodoItem.update(title, description, processDate(dueDate), priority, status);
             modalManager.closeModal();
+        } else if (mode === 'edit') {
+            // here, we add item to todoManager
+            // now use ui manager to add it to DOM
         }
     });
 }

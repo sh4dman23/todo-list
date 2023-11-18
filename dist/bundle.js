@@ -7200,8 +7200,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-/* harmony import */ var date_fns__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! date-fns */ "./node_modules/date-fns/esm/parse/index.js");
-/* harmony import */ var date_fns__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! date-fns */ "./node_modules/date-fns/esm/isValid/index.js");
 
 
 /*
@@ -7219,13 +7217,12 @@ function createTodoItem(title, description = '', dueDate = null, priority = 'low
         priority,
         status: false, // status = false means this todo has not been completed
     };
-    const update = (newTitle, newDescription, newDueDate, newPriority, newStatus, newStarredStatus) => {
-        todo.title = newTitle !== undefined ? newTitle: todo.title;
+    const update = (newTitle, newDescription, newDueDate, newPriority, newStatus) => {
+        todo.title = newTitle !== undefined ? newTitle : todo.title;
         todo.description = newDescription !== undefined ? newDescription : todo.description;
         todo.dueDate = newDueDate !== undefined ? newDueDate : todo.dueDate;
         todo.priority = newPriority !== undefined ? newPriority : todo.priority;
-        todo.status = newStatus !== undefined ? newStatus : todo. status;
-        todo.starred = newStarredStatus !== undefined ? newStarredStatus : todo.starred;
+        todo.status = newStatus !== undefined ? newStatus : todo.status;
     };
 
     return Object.assign(todo, { update });
@@ -7270,26 +7267,6 @@ function checkForEmpty(...args) {
     });
 
     return false;
-}
-
-// REMOVE: MOVE THIS TO UI MANAGER LATER
-function processDate(date) {
-    if (checkForEmpty(date) || date === 'none') {
-        return null;
-    }
-
-    // Check for validity
-    const parsedDate = (0,date_fns__WEBPACK_IMPORTED_MODULE_0__["default"])(date, 'yyyy-MM-dd', new Date());
-
-    if (!(0,date_fns__WEBPACK_IMPORTED_MODULE_1__["default"])(parsedDate)) {
-        return null;
-    }
-
-    // This is for the UI manager
-    // return format(dateObject, 'd MMM yyyy');
-
-    // Store it as a date object
-    return new Date(date);
 }
 
 /*
@@ -7364,7 +7341,7 @@ const todoManager = (function() {
     };
 
     // Add item and then return it
-    const addTodoItem = (title, description, dueDate, priority, projectName = 'default', sectionName = null) => {
+    const addTodoItem = (title, description, dueDate = null, priority, projectName = 'default', sectionName = null) => {
         const project = todoObject.findProject(projectName);
 
         // Project must exist
@@ -7372,7 +7349,7 @@ const todoManager = (function() {
             return false;
         }
 
-        const item = createTodoItem(title, description, processDate(dueDate), priority);
+        const item = createTodoItem(title, description, dueDate, priority);
 
         // If section is null, add to unlisted items, else find and then add to that section's item list
         if (sectionName === null) {
@@ -7404,10 +7381,12 @@ const todoManager = (function() {
 
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   DOMAdderRemover: () => (/* binding */ DOMAdderRemover),
 /* harmony export */   defaultLoader: () => (/* binding */ defaultLoader),
 /* harmony export */   domAssociatorObject: () => (/* binding */ domAssociatorObject),
-/* harmony export */   editModalLoader: () => (/* binding */ editModalLoader),
+/* harmony export */   getCurrentPage: () => (/* binding */ getCurrentPage),
 /* harmony export */   inboxPage: () => (/* binding */ inboxPage),
+/* harmony export */   modalManager: () => (/* binding */ modalManager),
 /* harmony export */   projectPageLoader: () => (/* binding */ projectPageLoader),
 /* harmony export */   sidebarLoader: () => (/* binding */ sidebarLoader),
 /* harmony export */   todayPage: () => (/* binding */ todayPage),
@@ -7435,6 +7414,9 @@ function createElementWithClass(classProperty = '', tag = 'div') {
 }
 
 function dateFormatter(date) {
+    if (date === null) {
+        return 'No Due Date';
+    }
     return (0,date_fns__WEBPACK_IMPORTED_MODULE_2__["default"])(date, 'd MMM');
 }
 
@@ -7580,7 +7562,7 @@ const domAssociatorObject = (function() {
     let assArray = [];
     const getAssArray = () => assArray;
 
-    const getItem = itemIndex => assArray[index];
+    const getItem = itemIndex => assArray[itemIndex].todoItem;
 
     // Reset the associator when we change pages
     const reset = () => {
@@ -7779,117 +7761,182 @@ const defaultLoader = () => {
     inboxPage.switchTo();
 };
 
-function modalLoader(topBarText) {
-    const overlay = createElementWithClass('popup overlay');
+const modalManager = (function() {
+    function modalLoader(topBarText) {
+        const overlay = createElementWithClass('popup overlay');
 
-    const dialog = createElementWithClass('dialog');
+        const dialog = createElementWithClass('dialog');
 
-    const topHeader = createElementWithClass('top-header');
+        const topHeader = createElementWithClass('top-header');
 
-    const headerText = createElementWithClass('project-name', 'span');
-    headerText.textContent = topBarText;
+        const headerText = createElementWithClass('project-name', 'span');
+        headerText.textContent = topBarText;
 
-    const closeButton = createElementWithClass('close-popup', 'button');
-    closeButton.innerHTML = _svg_manager_js__WEBPACK_IMPORTED_MODULE_1__["default"].close;
+        const closeButton = createElementWithClass('close-popup', 'button');
+        closeButton.id = 'close-popup-modal';
+        closeButton.innerHTML = _svg_manager_js__WEBPACK_IMPORTED_MODULE_1__["default"].close;
 
-    topHeader.appendChild(headerText);
-    topHeader.appendChild(closeButton);
+        topHeader.appendChild(headerText);
+        topHeader.appendChild(closeButton);
 
-    dialog.appendChild(topHeader);
+        dialog.appendChild(topHeader);
 
-    return [ overlay, dialog ];
-}
+        return [ overlay, dialog ];
+    }
 
-const editModalLoader = (projectName = '', sectionName = null, todoItem) => {
-    const page = document.querySelector('page');
+    const loadEditModal = (projectName = '', sectionName = null, todoItem) => {
+        const page = document.querySelector('.page');
 
-    // Close all open popups if they exist
-    document.querySelectorAll('.popup.overlay').forEach(element => {
-        page.removeChild(element);
-    });
+        // Close all open popups if they exist
+        document.querySelectorAll('.popup.overlay').forEach(element => {
+            page.removeChild(element);
+        });
 
-    const [ overlay, dialog ] = modalLoader(projectName + sectionName !== null ? `> ${sectionName}` : '' );
+        const [ overlay, dialog ] = modalLoader(projectName + (sectionName !== null ? ` > ${sectionName}` : '') );
 
-    const popupForm = createElementWithClass('popup-body', 'form');
+        const popupForm = createElementWithClass('popup-body', 'form');
 
-    const checkboxContainer = createElementWithClass('checkbox-container');
+        const checkboxContainer = createElementWithClass('checkbox-container');
 
-    const checkbox = createElementWithClass('todo-checkbox', 'input');
-    checkbox.type = 'checkbox';
-    checkbox.id = 'edit-todo-checkbox';
+        const checkbox = createElementWithClass('todo-checkbox', 'input');
+        checkbox.type = 'checkbox';
+        checkbox.id = 'edit-todo-checkbox';
 
-    const checkmark = createElementWithClass('checkmark', 'span');
+        const checkmark = createElementWithClass('checkmark', 'span');
 
-    checkboxContainer.appendChild(checkbox);
-    checkboxContainer.appendChild(checkmark);
+        checkboxContainer.appendChild(checkbox);
+        checkboxContainer.appendChild(checkmark);
 
-    const title = createElementWithClass('todo-title', 'input');
-    title.type = 'text';
-    title.id = 'edit-todo-title';
-    title.spellcheck = false;
-    title.value = todoItem.title;
-    title.required = true;
+        const title = createElementWithClass('todo-title', 'input');
+        title.type = 'text';
+        title.id = 'edit-todo-title';
+        title.spellcheck = false;
+        title.autocomplete = 'off';
+        title.value = todoItem.title;
+        title.required = true;
 
-    const desc = createElementWithClass('todo-desc', 'textarea');
-    desc.id = 'edit-todo-desc';
-    desc.spellcheck = false;
-    desc.textContent = todoItem.description;
+        const desc = createElementWithClass('todo-desc', 'textarea');
+        desc.id = 'edit-todo-desc';
+        desc.spellcheck = false;
+        desc.textContent = todoItem.description;
 
-    const dateDiv = createElementWithClass('date');
+        const dateDiv = createElementWithClass('date');
 
-    const dateLabel = createElementWithClass('', 'label');
-    dateLabel.setAttribute('for', 'edit-todo-date');
+        const dateLabel = createElementWithClass('', 'label');
+        dateLabel.setAttribute('for', 'edit-todo-date');
+        dateLabel.textContent = 'Due Date: ';
 
-    const date = createElementWithClass('todo-date', 'input');
-    date.type = 'date';
-    date.id = 'edit-todo-date';
-    date.value = (0,date_fns__WEBPACK_IMPORTED_MODULE_2__["default"])(todoItem.dueDate, 'yyyy-MM-dd');
+        const date = createElementWithClass('todo-date', 'input');
+        date.type = 'date';
+        date.id = 'edit-todo-date';
 
-    dateDiv.appendChild(dateLabel);
-    dateDiv.appendChild(date);
+        date.value = todoItem.dueDate === null ? '' : (0,date_fns__WEBPACK_IMPORTED_MODULE_2__["default"])(todoItem.dueDate, 'yyyy-MM-dd');
+        date.min = date.value !== '' ? date.value : (0,date_fns__WEBPACK_IMPORTED_MODULE_2__["default"])(new Date(), 'yyyy-MM-dd');
 
-    const buttons = createElementWithClass('buttons');
+        dateDiv.appendChild(dateLabel);
+        dateDiv.appendChild(date);
 
-    const selectButtons = createElementWithClass('select-buttons');
+        const buttons = createElementWithClass('buttons');
 
-    const low = createElementWithClass('priority-button low', 'button');
-    low.textContent = 'Low';
-    low.type = 'button';
+        const selectButtons = createElementWithClass('select-buttons');
 
-    const mid = createElementWithClass('priority-button mid', 'button');
-    mid.textContent = 'Medium';
-    mid.type = 'button';
+        const low = createElementWithClass('priority-button low', 'button');
+        low.textContent = 'Low';
+        low.dataset.priority = 'low';
+        low.type = 'button';
 
-    const high = createElementWithClass('priority-button high', 'button');
-    high.textContent = 'High';
-    high.type = 'button';
+        const mid = createElementWithClass('priority-button mid', 'button');
+        mid.textContent = 'Medium';
+        mid.dataset.priority = 'medium';
+        mid.type = 'button';
 
-    selectButtons.appendChild(low);
-    selectButtons.appendChild(mid);
-    selectButtons.appendChild(high);
+        const high = createElementWithClass('priority-button high', 'button');
+        high.textContent = 'High';
+        high.dataset.priority = 'high';
+        high.type = 'button';
 
-    const confirmButton = createElementWithClass('confirm', 'button');
-    confirmButton.textContent = 'Confirm Edit';
-    confirmButton.type = 'submit';
+        switch(todoItem.priority) {
+            case 'low':
+                low.classList.add('selected');
+                break;
+            case 'medium':
+                mid.classList.add('selected');
+                break;
+            case 'high':
+                high.classList.add('selected');
+                break;
+        }
 
-    buttons.appendChild(selectButtons);
-    buttons.appendChild(confirmButton);
+        selectButtons.appendChild(low);
+        selectButtons.appendChild(mid);
+        selectButtons.appendChild(high);
 
-    popupForm.appendChild(checkboxContainer);
-    popupForm.appendChild(title);
-    popupForm.appendChild(desc);
-    popupForm.appendChild(dateDiv);
-    popupForm.appendChild(buttons);
+        const confirmButton = createElementWithClass('confirm', 'button');
+        confirmButton.textContent = 'Confirm Edit';
+        confirmButton.type = 'submit';
 
-    dialog.appendChild(popupForm);
+        buttons.appendChild(selectButtons);
+        buttons.appendChild(confirmButton);
 
-    overlay.appendChild(dialog);
+        popupForm.appendChild(checkboxContainer);
+        popupForm.appendChild(title);
+        popupForm.appendChild(desc);
+        popupForm.appendChild(dateDiv);
+        popupForm.appendChild(buttons);
 
-    page.appendChild(overlay);
+        dialog.appendChild(popupForm);
 
-    // Disable the body so that the user cannot interact with it
-    document.body.classList.add('disabled');
-};
+        overlay.appendChild(dialog);
+
+        page.appendChild(overlay);
+
+        // Disable the body so that the user cannot interact with it
+        document.body.classList.add('disabled');
+    };
+
+    const closeModal = () => {
+        const page = document.querySelector('.page');
+        const popupOverlay = document.querySelector('.popup.overlay');
+
+        page.removeChild(popupOverlay);
+
+        document.body.classList.remove('disabled');
+    };
+
+    const switchPriority = priority => {
+        const buttons = document.querySelectorAll('.priority-button');
+        if (buttons === undefined) {
+            return;
+        }
+
+        buttons.forEach(button => {
+            if (button.dataset.priority === priority) {
+                button.classList.add('selected');
+            } else {
+                button.classList.remove('selected');
+            }
+        });
+    };
+
+    return { loadEditModal, closeModal, switchPriority };
+})();
+
+const DOMAdderRemover = (function() {
+    const addItem = (sectionId, todoItem) => {
+        const page = document.querySelector('.page');
+        const section = document.querySelector(`.section#${sectionId}`);
+
+        if (section === undefined) {
+            return false;
+        }
+
+        const itemDiv = createItemElement(todoItem);
+
+        section.insertBefore(todoItem, section.lastElementChild)
+    };
+
+    return { addItem };
+})();
 
 
 
@@ -8385,7 +8432,10 @@ var __webpack_exports__ = {};
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _todo_manager_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./todo-manager.js */ "./src/todo-manager.js");
 /* harmony import */ var _ui_manager_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./ui-manager.js */ "./src/ui-manager.js");
+/* harmony import */ var date_fns__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! date-fns */ "./node_modules/date-fns/esm/parse/index.js");
+/* harmony import */ var date_fns__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! date-fns */ "./node_modules/date-fns/esm/isValid/index.js");
 /* harmony import */ var _assets_style_css__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./assets/style.css */ "./src/assets/style.css");
+
 
 
 
@@ -8397,12 +8447,12 @@ _todo_manager_js__WEBPACK_IMPORTED_MODULE_0__["default"].addProject('Study', 'lo
 _todo_manager_js__WEBPACK_IMPORTED_MODULE_0__["default"].addProject('Work');
 
 _todo_manager_js__WEBPACK_IMPORTED_MODULE_0__["default"].addSection('homework');
-const item = _todo_manager_js__WEBPACK_IMPORTED_MODULE_0__["default"].addTodoItem('laundry', 'must do today', '2023-11-17', 'low', 'default', 'homework');
-_todo_manager_js__WEBPACK_IMPORTED_MODULE_0__["default"].addTodoItem('laundry22', 'must do today too', '2023-11-18', 'high', 'Home');
+const item = _todo_manager_js__WEBPACK_IMPORTED_MODULE_0__["default"].addTodoItem('laundry', 'must do today', new Date('2023-11-17'), 'low', 'default', 'homework');
+_todo_manager_js__WEBPACK_IMPORTED_MODULE_0__["default"].addTodoItem('laundry22', 'must do today too', new Date('2023-11-18'), 'high', 'Home');
 
 (0,_ui_manager_js__WEBPACK_IMPORTED_MODULE_1__.defaultLoader)();
 
-// Sets up event listeners
+// Set up event listeners; all functions of this module called here are written down below
 const eventListenersObject = (function() {
     const todoObject = _todo_manager_js__WEBPACK_IMPORTED_MODULE_0__["default"].getTodoObject();
 
@@ -8428,7 +8478,7 @@ const eventListenersObject = (function() {
                     return;
                 }
 
-                const project = _todo_manager_js__WEBPACK_IMPORTED_MODULE_0__["default"].getTodoObject().findProject(projectName);
+                const project = todoObject.findProject(projectName);
 
                 if (project === undefined) {
                     return;
@@ -8444,34 +8494,12 @@ const eventListenersObject = (function() {
         main.addEventListener('click', event => {
             const target = event.target;
 
-            if (target.classList.contains('todo-item')) {
-                const itemIndex = target.dataset.index;
-
-                if (itemIndex === undefined) {
-                    return;
-                }
-
-                const todoItem = _ui_manager_js__WEBPACK_IMPORTED_MODULE_1__.domAssociatorObject.getItem(itemIndex);
-
-                const pageName = document.querySelector('page').dataset.page;
-
-                const lowercaseProjectName = pageName === 'inbox' ? 'default'
-                                    : pageName === 'today' || projectName === 'week' ? ''
-                                    : pageName.slice('project-'.length);
-
-                const project = todoObject.findProject(lowercaseProjectName);
-
-                if (project === undefined) {
-                    return;
-                }
-
-                const properCaseProjectName = project.name
-
-                const sectionName = target.parentNode.parentNode.name;
-
-                const properCaseSectionName = sectionName === 'unlisted' ? null : project.findSection(sectionName);
-
-                (0,_ui_manager_js__WEBPACK_IMPORTED_MODULE_1__.editModalLoader)(properCaseProjectName, properCaseSectionName, todoItem);
+            if (target.classList.contains('todo-item') || target.classList.contains('todo-edit')) {
+                // Open and manage popup modal for *editing items*
+                managePopupModal('edit', target, 'item');
+            } else if (target.classList.contains('add-todo')) {
+                // Open and manage popup modal for *adding items*
+                managePopupModal('add', target, 'item');
             }
         });
     };
@@ -8483,6 +8511,143 @@ const eventListenersObject = (function() {
 
     return { setUp };
 })();
+
+// Load popup modal and add event listeners to it
+function managePopupModal(mode = 'edit', targetElement, targetType = 'item') {
+    let selectedTodoItem;
+    if (mode === 'edit') {
+        selectedTodoItem = manageEditModalPopupLoad(targetElement);
+    } else if (mode === 'add') {
+        // we need to open model using a function call
+        // for that, we need
+        //      1. project name
+        //      2. section name
+        // no return value
+    }
+
+    const dialog = document.querySelector('.dialog');
+    const popupForm = document.querySelector('.dialog form');
+
+    dialog.parentNode.addEventListener('click', () => _ui_manager_js__WEBPACK_IMPORTED_MODULE_1__.modalManager.closeModal());
+
+    dialog.addEventListener('click', event => {
+        event.stopPropagation();
+        const target = event.target;
+        if (targetType === 'item' && target.classList.contains('priority-button')) {
+            _ui_manager_js__WEBPACK_IMPORTED_MODULE_1__.modalManager.switchPriority(target.dataset.priority);
+        } else if (target.id === 'close-popup-modal') {
+            _ui_manager_js__WEBPACK_IMPORTED_MODULE_1__.modalManager.closeModal();
+        }
+    });
+
+    popupForm.addEventListener('submit', event => {
+        event.preventDefault();
+
+        if (!checkModalForm()) {
+            // EDIT: will add corner popup here
+            return;
+        }
+
+        const title = popupForm.querySelector('#edit-todo-title').value;
+        const description = popupForm.querySelector('#edit-todo-desc').value;
+        const dueDate = popupForm.querySelector('#edit-todo-date').value;
+        let priority = popupForm.querySelector('.priority-button.selected').dataset.priority;
+        priority = ['low', 'medium', 'high'].includes(priority) ? priority : 'low';
+        const status = popupForm.querySelector('#edit-todo-checkbox').checked;
+
+        if (mode === 'edit') {
+            selectedTodoItem.update(title, description, processDate(dueDate), priority, status);
+            _ui_manager_js__WEBPACK_IMPORTED_MODULE_1__.modalManager.closeModal();
+        } else if (mode === 'edit') {
+            // here, we add item to todoManager
+            // now use ui manager to add it to DOM
+        }
+    });
+}
+
+function manageEditModalPopupLoad(target) {
+    const todoObject = _todo_manager_js__WEBPACK_IMPORTED_MODULE_0__["default"].getTodoObject();
+
+    let todoElement;
+
+    if (target.classList.contains('todo-item')) {
+        todoElement = target;
+    } else {
+        // The first parent is the buttons div, the second is the todo element
+        todoElement = target.parentNode.parentNode;
+    }
+
+    const itemIndex = todoElement.dataset.index;
+
+    if (itemIndex === undefined) {
+        return;
+    }
+
+    const todoItem = _ui_manager_js__WEBPACK_IMPORTED_MODULE_1__.domAssociatorObject.getItem(itemIndex);
+
+    const pageName = document.querySelector('.page').dataset.page;
+
+    const lowercaseProjectName = pageName === 'inbox' ? 'default'
+                        : pageName === 'today' || projectName === 'week' ? ''
+                        : pageName.slice('project-'.length);
+
+    const section = todoElement.parentNode.parentNode;
+
+    let sectionName;
+
+    let projectName;
+    let project;
+
+    if (['inbox', 'today', 'week'].includes(pageName)) {
+        if (pageName === 'inbox') {
+            project = todoObject.findProject('default');
+            sectionName = section.id;
+        }
+
+        projectName = pageName.charAt(0).toUpperCase() + pageName.slice(1);
+    } else {
+        project = todoObject.findProject(lowercaseProjectName);
+
+        if (project === undefined) {
+            return;
+        }
+
+        projectName = project.name;
+        sectionName = section.id;
+    }
+
+    const properCaseSectionName = sectionName === 'unlisted' || sectionName === '' || sectionName === undefined ? null
+                                                    : project.findSection(sectionName).name;
+
+    _ui_manager_js__WEBPACK_IMPORTED_MODULE_1__.modalManager.loadEditModal(projectName, properCaseSectionName, todoItem);
+    return todoItem;
+}
+
+// Does a light check to see if one of the priority buttons are selected or not, since they are required and are not native HTML input elements
+// The only other required field is the title, which is checked automatically due to the required attribute
+function checkModalForm() {
+    if (document.querySelector('.popup.overlay') === undefined || document.querySelector('.priority-button.selected') === undefined) {
+        return false;
+    }
+
+    return true;
+}
+
+function processDate(date) {
+    if (date === undefined || date === null || date === '' || date === 'none') {
+        return null;
+    }
+
+    // Check for validity
+    const parsedDate = (0,date_fns__WEBPACK_IMPORTED_MODULE_3__["default"])(date, 'yyyy-MM-dd', new Date());
+
+    if (!(0,date_fns__WEBPACK_IMPORTED_MODULE_4__["default"])(parsedDate)) {
+        return null;
+    }
+
+    // Store it as a date object
+    return new Date(date);
+}
 
 eventListenersObject.setUp();
 })();

@@ -19,6 +19,10 @@ button {
     border: none;
 }
 
+button svg {
+    pointer-events: none;
+}
+
 :root {
     font-size: 15px;
 }
@@ -170,6 +174,10 @@ main .pg-top-section {
     opacity: 1;
     color: #000;
     background-color: #f0f0f0;
+}
+
+.todo-title:not(input), .todo-desc:not(textarea), .todo-date:not(input) {
+    pointer-events: none;
 }
 
 .project, .todo-title, .todo-desc, .section-header, .project-name {
@@ -364,7 +372,6 @@ button.add-todo:hover svg {
 }
 
 .overlay {
-    display: none;
     position: fixed;
     width: 100vw;
     height: 100vh;
@@ -472,6 +479,7 @@ textarea.todo-desc {
 }
 
 .date .todo-date {
+    cursor: pointer;
     padding: 0.3rem 0.5rem;
     font-family: 'Lato', 'Roboto', 'Helvetica', sans-serif;
     font-family: sans-serif;
@@ -526,4 +534,4 @@ textarea.todo-desc {
     font-weight: 600;
 }
 
-/*# sourceMappingURL=main28f24974e35c88d70e8c.css.map*/
+/*# sourceMappingURL=main20f1f0109234ccf3f965.css.map*/
