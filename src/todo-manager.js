@@ -160,7 +160,7 @@ const todoManager = (function() {
     };
 
     // Add item and then return it
-    const addTodoItem = (title, description, dueDate, priority, projectName = 'default', sectionName = null) => {
+    const addTodoItem = (title, description, dueDate = null, priority, projectName = 'default', sectionName = null) => {
         const project = todoObject.findProject(projectName);
 
         // Project must exist

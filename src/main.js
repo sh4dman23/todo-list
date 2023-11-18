@@ -1,5 +1,6 @@
 import todoManager from "./todo-manager.js";
-import { domAssociatorObject, inboxPage, todayPage, weekPage, projectPageLoader, defaultLoader } from "./ui-manager.js";
+import { domAssociatorObject, inboxPage, todayPage, weekPage, projectPageLoader, defaultLoader,
+        modalManager } from "./ui-manager.js";
 import './assets/style.css';
 
 window.todoManager = todoManager;
@@ -14,12 +15,16 @@ todoManager.addTodoItem('laundry22', 'must do today too', '2023-11-18', 'high', 
 
 defaultLoader();
 
-// Sets up event listeners
+// Set up event listeners; all functions of this module called here are written down below
 const eventListenersObject = (function() {
-    const defaultPages = [inboxPage, todayPage, weekPage];
-    const sidebar = document.querySelector('.sidebar');
+    const todoObject = todoManager.getTodoObject();
 
-    const setUp = () => {
+    const defaultPages = [inboxPage, todayPage, weekPage];
+
+    const sidebar = document.querySelector('.sidebar');
+    const main = document.querySelector('main');
+
+    function setUpSidebar () {
         sidebar.addEventListener('click', event => {
             const target = event.target;
 
@@ -36,7 +41,7 @@ const eventListenersObject = (function() {
                     return;
                 }
 
-                const project = todoManager.getTodoObject().findProject(projectName);
+                const project = todoObject.findProject(projectName);
 
                 if (project === undefined) {
                     return;
@@ -48,7 +53,122 @@ const eventListenersObject = (function() {
         });
     };
 
+    function setUpMain() {
+        main.addEventListener('click', event => {
+            const target = event.target;
+
+            if (target.classList.contains('todo-item') || target.classList.contains('todo-edit')) {
+                // This function will add necessary event listeners to the form in the popup
+                managePopupModal('edit', target);
+            }
+        });
+    };
+
+    const setUp = () => {
+        setUpSidebar();
+        setUpMain();
+    };
+
     return { setUp };
 })();
+
+// Load popup modal and add event listeners to it
+function managePopupModal(mode = 'edit', target) {
+    let selectedTodoItem;
+    if (mode === 'edit') {
+        selectedTodoItem = manageEditModalPopupLoad(target);
+    }
+
+    const dialog = document.querySelector('.dialog');
+    const popupForm = document.querySelector('.dialog form');
+
+    dialog.parentNode.addEventListener('click', () => modalManager.closeModal());
+
+    dialog.addEventListener('click', event => {
+        event.stopPropagation();
+        const target = event.target;
+        if (target.classList.contains('priority-button')) {
+            modalManager.switchPriority(target.dataset.priority);
+        } else if (target.id === 'close-popup-modal') {
+            modalManager.closeModal();
+        }
+    });
+
+    popupForm.addEventListener('submit', event => {
+        event.preventDefault();
+        if (!checkModalForm()) {
+            // EDIT: will add corner popup here
+            return;
+        }
+        
+
+    });
+}
+
+function manageEditModalPopupLoad(target) {
+    const todoObject = todoManager.getTodoObject();
+
+    let todoElement;
+
+    if (target.classList.contains('todo-item')) {
+        todoElement = target;
+    } else {
+        // The first parent is the buttons div, the second is the todo element
+        todoElement = target.parentNode.parentNode;
+    }
+
+    const itemIndex = todoElement.dataset.index;
+
+    if (itemIndex === undefined) {
+        return;
+    }
+
+    const todoItem = domAssociatorObject.getItem(itemIndex);
+
+    const pageName = document.querySelector('.page').dataset.page;
+
+    const lowercaseProjectName = pageName === 'inbox' ? 'default'
+                        : pageName === 'today' || projectName === 'week' ? ''
+                        : pageName.slice('project-'.length);
+
+    const section = todoElement.parentNode.parentNode;
+
+    let sectionName;
+
+    let projectName;
+    let project;
+
+    if (['inbox', 'today', 'week'].includes(pageName)) {
+        if (pageName === 'inbox') {
+            project = todoObject.findProject('default');
+            sectionName = section.id;
+        }
+
+        projectName = pageName.charAt(0).toUpperCase() + pageName.slice(1);
+    } else {
+        project = todoObject.findProject(lowercaseProjectName);
+
+        if (project === undefined) {
+            return;
+        }
+
+        projectName = project.name;
+        sectionName = section.id;
+    }
+
+    const properCaseSectionName = sectionName === 'unlisted' || sectionName === '' || sectionName === undefined ? null
+                                                    : project.findSection(sectionName).name;
+
+    modalManager.loadEditModal(projectName, properCaseSectionName, todoItem);
+    return todoItem;
+}
+
+// Does a light check to see if one of the priority buttons are selected or not, since they are required and are not native HTML input elements
+// The only other required field is the title, which is checked automatically due to the required attribute
+function checkModalForm() {
+    if (document.querySelector('.popup.overlay') === undefined || document.querySelector('.priority-button.selected') === undefined) {
+        return false;
+    }
+}
 
 eventListenersObject.setUp();

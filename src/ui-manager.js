@@ -14,6 +14,9 @@ function createElementWithClass(classProperty = '', tag = 'div') {
 }
 
 function dateFormatter(date) {
+    if (date === null) {
+        return 'No Due Date';
+    }
     return format(date, 'd MMM');
 }
 
@@ -87,14 +90,10 @@ function createItemElement(item) {
     const editButton = createElementWithClass('icon-button todo-edit', 'button');
     editButton.innerHTML = SVGObject.edit;
 
-    const infoButton = createElementWithClass('icon-button todo-info', 'button');
-    infoButton.innerHTML = SVGObject.info;
-
     const deleteButton = createElementWithClass('icon-button todo-delete', 'button');
     deleteButton.innerHTML = SVGObject.delete;
 
     buttons.appendChild(editButton);
-    buttons.appendChild(infoButton);
     buttons.appendChild(deleteButton);
 
     itemDiv.appendChild(checkboxContainer);
@@ -163,6 +162,8 @@ const domAssociatorObject = (function() {
     let assArray = [];
     const getAssArray = () => assArray;
 
+    const getItem = itemIndex => assArray[itemIndex].todoItem;
+
     // Reset the associator when we change pages
     const reset = () => {
         index = 0;
@@ -184,7 +185,7 @@ const domAssociatorObject = (function() {
         assArray[indexToRemove] = undefined;
     };
 
-    return { getAssArray, reset, addObj, removeObj }
+    return { getAssArray, getItem, reset, addObj, removeObj }
 })();
 
 
@@ -299,7 +300,7 @@ const projectPageLoader = project => {
     clearPage();
 
     const page = createElementWithClass('page');
-    page.dataset.page = project.name.toLowerCase();
+    page.dataset.page = `project-${project.name.toLowerCase()}`;
 
     page.appendChild(createTopBar(project.name, true, project.description));
 
@@ -360,4 +361,165 @@ const defaultLoader = () => {
     inboxPage.switchTo();
 };
 
-export { domAssociatorObject, inboxPage, todayPage, weekPage, projectPageLoader, sidebarLoader, defaultLoader };
+const modalManager = (function() {
+    function modalLoader(topBarText) {
+        const overlay = createElementWithClass('popup overlay');
+
+        const dialog = createElementWithClass('dialog');
+
+        const topHeader = createElementWithClass('top-header');
+
+        const headerText = createElementWithClass('project-name', 'span');
+        headerText.textContent = topBarText;
+
+        const closeButton = createElementWithClass('close-popup', 'button');
+        closeButton.id = 'close-popup-modal';
+        closeButton.innerHTML = SVGObject.close;
+
+        topHeader.appendChild(headerText);
+        topHeader.appendChild(closeButton);
+
+        dialog.appendChild(topHeader);
+
+        return [ overlay, dialog ];
+    }
+
+    const loadEditModal = (projectName = '', sectionName = null, todoItem) => {
+        const page = document.querySelector('.page');
+
+        // Close all open popups if they exist
+        document.querySelectorAll('.popup.overlay').forEach(element => {
+            page.removeChild(element);
+        });
+
+        const [ overlay, dialog ] = modalLoader(projectName + (sectionName !== null ? ` > ${sectionName}` : '') );
+
+        const popupForm = createElementWithClass('popup-body', 'form');
+
+        const checkboxContainer = createElementWithClass('checkbox-container');
+
+        const checkbox = createElementWithClass('todo-checkbox', 'input');
+        checkbox.type = 'checkbox';
+        checkbox.id = 'edit-todo-checkbox';
+
+        const checkmark = createElementWithClass('checkmark', 'span');
+
+        checkboxContainer.appendChild(checkbox);
+        checkboxContainer.appendChild(checkmark);
+
+        const title = createElementWithClass('todo-title', 'input');
+        title.type = 'text';
+        title.id = 'edit-todo-title';
+        title.spellcheck = false;
+        title.autocomplete = 'off';
+        title.value = todoItem.title;
+        title.required = true;
+
+        const desc = createElementWithClass('todo-desc', 'textarea');
+        desc.id = 'edit-todo-desc';
+        desc.spellcheck = false;
+        desc.textContent = todoItem.description;
+
+        const dateDiv = createElementWithClass('date');
+
+        const dateLabel = createElementWithClass('', 'label');
+        dateLabel.setAttribute('for', 'edit-todo-date');
+        dateLabel.textContent = 'Due Date: ';
+
+        const date = createElementWithClass('todo-date', 'input');
+        date.type = 'date';
+        date.id = 'edit-todo-date';
+
+        date.value = todoItem.dueDate === null ? '' : format(todoItem.dueDate, 'yyyy-MM-dd');
+        date.min = format(new Date(), 'yyyy-MM-dd');
+
+
+        dateDiv.appendChild(dateLabel);
+        dateDiv.appendChild(date);
+
+        const buttons = createElementWithClass('buttons');
+
+        const selectButtons = createElementWithClass('select-buttons');
+
+        const low = createElementWithClass('priority-button low', 'button');
+        low.textContent = 'Low';
+        low.dataset.priority = 'low';
+        low.type = 'button';
+
+        const mid = createElementWithClass('priority-button mid', 'button');
+        mid.textContent = 'Medium';
+        mid.dataset.priority = 'mid';
+        mid.type = 'button';
+
+        const high = createElementWithClass('priority-button high', 'button');
+        high.textContent = 'High';
+        high.dataset.priority = 'high';
+        high.type = 'button';
+
+        switch(todoItem.priority) {
+            case 'low':
+                low.classList.add('selected');
+                break;
+            case 'medium':
+                mid.classList.add('selected');
+                break;
+            case 'high':
+                high.classList.add('selected');
+                break;
+        }
+
+        selectButtons.appendChild(low);
+        selectButtons.appendChild(mid);
+        selectButtons.appendChild(high);
+
+        const confirmButton = createElementWithClass('confirm', 'button');
+        confirmButton.textContent = 'Confirm Edit';
+        confirmButton.type = 'submit';
+
+        buttons.appendChild(selectButtons);
+        buttons.appendChild(confirmButton);
+
+        popupForm.appendChild(checkboxContainer);
+        popupForm.appendChild(title);
+        popupForm.appendChild(desc);
+        popupForm.appendChild(dateDiv);
+        popupForm.appendChild(buttons);
+
+        dialog.appendChild(popupForm);
+
+        overlay.appendChild(dialog);
+
+        page.appendChild(overlay);
+
+        // Disable the body so that the user cannot interact with it
+        document.body.classList.add('disabled');
+    };
+
+    const closeModal = () => {
+        const page = document.querySelector('.page');
+        const popupOverlay = document.querySelector('.popup.overlay');
+
+        page.removeChild(popupOverlay);
+
+        document.body.classList.remove('disabled');
+    };
+
+    const switchPriority = priority => {
+        const buttons = document.querySelectorAll('.priority-button');
+        if (buttons === undefined) {
+            return;
+        }
+
+        buttons.forEach(button => {
+            if (button.dataset.priority === priority) {
+                button.classList.add('selected');
+            } else {
+                button.classList.remove('selected');
+            }
+        });
+    };
+
+    return { loadEditModal, closeModal, switchPriority };
+})();
+
+export { domAssociatorObject, inboxPage, todayPage, weekPage, projectPageLoader, sidebarLoader, defaultLoader, modalManager };

@@ -87,9 +87,6 @@
                                 <button class="icon-button todo-edit">
                                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><title>pencil-outline</title><path d="M14.06,9L15,9.94L5.92,19H5V18.08L14.06,9M17.66,3C17.41,3 17.15,3.1 16.96,3.29L15.13,5.12L18.88,8.87L20.71,7.04C21.1,6.65 21.1,6 20.71,5.63L18.37,3.29C18.17,3.09 17.92,3 17.66,3M14.06,6.19L3,17.25V21H6.75L17.81,9.94L14.06,6.19Z" /></svg>
                                 </button>
-                                <button name="" class="icon-button todo-info">
-                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><title>information-outline</title><path d="M11,9H13V7H11M12,20C7.59,20 4,16.41 4,12C4,7.59 7.59,4 12,4C16.41,4 20,7.59 20,12C20,16.41 16.41,20 12,20M12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12A10,10 0 0,0 12,2M11,17H13V11H11V17Z" /></svg>
-                                </button>
                                 <button name="" class="icon-button todo-delete">
                                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><title>delete-outline</title><path d="M6,19A2,2 0 0,0 8,21H16A2,2 0 0,0 18,19V7H6V19M8,9H16V19H8V9M15.5,4L14.5,3H9.5L8.5,4H5V6H19V4H15.5Z" /></svg>
                                 </button>
@@ -103,130 +100,38 @@
                         </div>
                     </div>
                 </div>
-                <div class="section" id="homework">
-                    <div class="section-header">
-                        <button class="collapse-section">
-                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><title>chevron-down</title><path d="M7.41,8.58L12,13.17L16.59,8.58L18,10L12,16L6,10L7.41,8.58Z" /></svg>
-                        </button>
-                        <span class="section-name">
-                            homework
-                        </span>
-                        <button class="delete-section">
-                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><title>delete-outline</title><path d="M6,19A2,2 0 0,0 8,21H16A2,2 0 0,0 18,19V7H6V19M8,9H16V19H8V9M15.5,4L14.5,3H9.5L8.5,4H5V6H19V4H15.5Z" /></svg>
-                        </button>
-                    </div>
-                    <div class="todo-items">
-                        <!-- store a dataset.index with associator -->
-                        <div class="todo-item" data-attribute="1">
-                            <div class="checkbox-container">
-                                <input type="checkbox" class="todo-checkbox">
-                                <span class="checkmark"></span>
-                            </div>
-                            <span class="todo-title">do the laundry</span>
-                            <p class="todo-desc">must finish today Lorem ipsum dolor sit amet consectetur, adipisicing elit. Consequatur fugiat sunt alias quibusdam error pariatur, numquam, suscipit non unde sit voluptatibus, debitis sequi vel esse. Ab nesciunt obcaecati aliquam vel?</p>
-                            <p class="todo-date">23 Nov</p>
-                            <div class="todo-buttons">
-                                <button name="todo-edit" class="icon-button">
-                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><title>pencil-outline</title><path d="M14.06,9L15,9.94L5.92,19H5V18.08L14.06,9M17.66,3C17.41,3 17.15,3.1 16.96,3.29L15.13,5.12L18.88,8.87L20.71,7.04C21.1,6.65 21.1,6 20.71,5.63L18.37,3.29C18.17,3.09 17.92,3 17.66,3M14.06,6.19L3,17.25V21H6.75L17.81,9.94L14.06,6.19Z" /></svg>
-                                </button>
-                                <button name="todo-info" class="icon-button">
-                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><title>information-outline</title><path d="M11,9H13V7H11M12,20C7.59,20 4,16.41 4,12C4,7.59 7.59,4 12,4C16.41,4 20,7.59 20,12C20,16.41 16.41,20 12,20M12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12A10,10 0 0,0 12,2M11,17H13V11H11V17Z" /></svg>
-                                </button>
-                                <button name="todo-delete" class="icon-button">
-                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><title>delete-outline</title><path d="M6,19A2,2 0 0,0 8,21H16A2,2 0 0,0 18,19V7H6V19M8,9H16V19H8V9M15.5,4L14.5,3H9.5L8.5,4H5V6H19V4H15.5Z" /></svg>
-                                </button>
-                            </div>
-                        </div>
-                        <div class="todo-item" data-attribute="1">
-                            <div class="checkbox-container">
-                                <input type="checkbox" class="todo-checkbox">
-                                <span class="checkmark"></span>
-                            </div>
-                            <span class="todo-title">do the laundry</span>
-                            <p class="todo-desc">must finish today Lorem ipsum dolor sit amet consectetur, adipisicing elit. Consequatur fugiat sunt alias quibusdam error pariatur, numquam, suscipit non unde sit voluptatibus, debitis sequi vel esse. Ab nesciunt obcaecati aliquam vel?</p>
-                            <p class="todo-date">23 Nov</p>
-                            <div class="todo-buttons">
-                                <button name="todo-edit" class="icon-button">
-                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><title>pencil-outline</title><path d="M14.06,9L15,9.94L5.92,19H5V18.08L14.06,9M17.66,3C17.41,3 17.15,3.1 16.96,3.29L15.13,5.12L18.88,8.87L20.71,7.04C21.1,6.65 21.1,6 20.71,5.63L18.37,3.29C18.17,3.09 17.92,3 17.66,3M14.06,6.19L3,17.25V21H6.75L17.81,9.94L14.06,6.19Z" /></svg>
-                                </button>
-                                <button name="todo-info" class="icon-button">
-                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><title>information-outline</title><path d="M11,9H13V7H11M12,20C7.59,20 4,16.41 4,12C4,7.59 7.59,4 12,4C16.41,4 20,7.59 20,12C20,16.41 16.41,20 12,20M12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12A10,10 0 0,0 12,2M11,17H13V11H11V17Z" /></svg>
-                                </button>
-                                <button name="todo-delete" class="icon-button">
-                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><title>delete-outline</title><path d="M6,19A2,2 0 0,0 8,21H16A2,2 0 0,0 18,19V7H6V19M8,9H16V19H8V9M15.5,4L14.5,3H9.5L8.5,4H5V6H19V4H15.5Z" /></svg>
-                                </button>
-                            </div>
-                        </div>
-                        <div class="add-todo-button">
-                            <button class="add-todo">
-                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><title>plus</title><path d="M19,13H13V19H11V13H5V11H11V5H13V11H19V13Z" /></svg>
-                                Add Task
+
+               <div class="popup overlay">
+                    <div class="dialog">
+                        <div class="top-header">
+                            <span class="project-name">Study</span>
+                            <button class="close-popup" id="close-popup-modal">
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><title>window-close</title><path d="M13.46,12L19,17.54V19H17.54L12,13.46L6.46,19H5V17.54L10.54,12L5,6.46V5H6.46L12,10.54L17.54,5H19V6.46L13.46,12Z" /></svg>
                             </button>
                         </div>
-                    </div>
-                </div>
-                <div class="section" id="homework">
-                    <div class="section-header">
-                        <button class="collapse-section">
-                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><title>chevron-down</title><path d="M7.41,8.58L12,13.17L16.59,8.58L18,10L12,16L6,10L7.41,8.58Z" /></svg>
-                        </button>
-                        <span class="section-name">
-                            homework
-                        </span>
-                        <button class="delete-section">
-                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><title>delete-outline</title><path d="M6,19A2,2 0 0,0 8,21H16A2,2 0 0,0 18,19V7H6V19M8,9H16V19H8V9M15.5,4L14.5,3H9.5L8.5,4H5V6H19V4H15.5Z" /></svg>
-                        </button>
-                    </div>
-                    <div class="todo-items">
-                        <!-- store a dataset.index with associator -->
-                        <div class="todo-item" data-attribute="1">
+                        <form class="popup-body">
                             <div class="checkbox-container">
-                                <input type="checkbox" class="todo-checkbox">
+                                <input type="checkbox" class="todo-checkbox" id="edit-todo-checkbox">
                                 <span class="checkmark"></span>
                             </div>
-                            <span class="todo-title">do the laundry</span>
-                            <p class="todo-desc">must finish today Lorem ipsum dolor sit amet consectetur, adipisicing elit. Consequatur fugiat sunt alias quibusdam error pariatur, numquam, suscipit non unde sit voluptatibus, debitis sequi vel esse. Ab nesciunt obcaecati aliquam vel?</p>
-                            <p class="todo-date">23 Nov</p>
-                            <div class="todo-buttons">
-                                <button name="todo-edit" class="icon-button">
-                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><title>pencil-outline</title><path d="M14.06,9L15,9.94L5.92,19H5V18.08L14.06,9M17.66,3C17.41,3 17.15,3.1 16.96,3.29L15.13,5.12L18.88,8.87L20.71,7.04C21.1,6.65 21.1,6 20.71,5.63L18.37,3.29C18.17,3.09 17.92,3 17.66,3M14.06,6.19L3,17.25V21H6.75L17.81,9.94L14.06,6.19Z" /></svg>
-                                </button>
-                                <button name="todo-info" class="icon-button">
-                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><title>information-outline</title><path d="M11,9H13V7H11M12,20C7.59,20 4,16.41 4,12C4,7.59 7.59,4 12,4C16.41,4 20,7.59 20,12C20,16.41 16.41,20 12,20M12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12A10,10 0 0,0 12,2M11,17H13V11H11V17Z" /></svg>
-                                </button>
-                                <button name="todo-delete" class="icon-button">
-                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><title>delete-outline</title><path d="M6,19A2,2 0 0,0 8,21H16A2,2 0 0,0 18,19V7H6V19M8,9H16V19H8V9M15.5,4L14.5,3H9.5L8.5,4H5V6H19V4H15.5Z" /></svg>
-                                </button>
+                            <input type="text" id="edit-todo-title" class="todo-title" spellcheck="false" value="do the laundry" required></input>
+                            <textarea class="todo-desc" id="edit-todo-desc" spellcheck="false">Lorem ipsum dolor sit amet consectetur adipisicing elit. Commodi laboriosam repellendus voluptates enim at, expedita dolorum explicabo, eaque molestias quam iste. Quisquam labore quibusdam pariatur dicta iste, harum inventore ab!</textarea>
+                            <div class="date">
+                                <label for="edit-todo-date">Due Date: </label>
+                                <input type="date" class="todo-date" id="edit-todo-date" value="2023-11-17">
                             </div>
-                        </div>
-                        <div class="todo-item" data-attribute="1">
-                            <div class="checkbox-container">
-                                <input type="checkbox" class="todo-checkbox">
-                                <span class="checkmark"></span>
+                            <div class="buttons">
+                                <div class="select-buttons">
+                                    <button type="button" class="priority-button low">Low</button>
+                                    <button type="button" class="priority-button mid">Medium</button>
+                                    <button type="button" class="priority-button high selected">High</button>
+                                </div>
+
+                                <button type="submit" class="confirm">Confirm Edit</button>
                             </div>
-                            <span class="todo-title">do the laundry</span>
-                            <p class="todo-desc">must finish today Lorem ipsum dolor sit amet consectetur, adipisicing elit. Consequatur fugiat sunt alias quibusdam error pariatur, numquam, suscipit non unde sit voluptatibus, debitis sequi vel esse. Ab nesciunt obcaecati aliquam vel?</p>
-                            <p class="todo-date">23 Nov</p>
-                            <div class="todo-buttons">
-                                <button name="todo-edit" class="icon-button">
-                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><title>pencil-outline</title><path d="M14.06,9L15,9.94L5.92,19H5V18.08L14.06,9M17.66,3C17.41,3 17.15,3.1 16.96,3.29L15.13,5.12L18.88,8.87L20.71,7.04C21.1,6.65 21.1,6 20.71,5.63L18.37,3.29C18.17,3.09 17.92,3 17.66,3M14.06,6.19L3,17.25V21H6.75L17.81,9.94L14.06,6.19Z" /></svg>
-                                </button>
-                                <button name="todo-info" class="icon-button">
-                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><title>information-outline</title><path d="M11,9H13V7H11M12,20C7.59,20 4,16.41 4,12C4,7.59 7.59,4 12,4C16.41,4 20,7.59 20,12C20,16.41 16.41,20 12,20M12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12A10,10 0 0,0 12,2M11,17H13V11H11V17Z" /></svg>
-                                </button>
-                                <button name="todo-delete" class="icon-button">
-                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><title>delete-outline</title><path d="M6,19A2,2 0 0,0 8,21H16A2,2 0 0,0 18,19V7H6V19M8,9H16V19H8V9M15.5,4L14.5,3H9.5L8.5,4H5V6H19V4H15.5Z" /></svg>
-                                </button>
-                            </div>
-                        </div>
-                        <div class="add-todo-button">
-                            <button class="add-todo">
-                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><title>plus</title><path d="M19,13H13V19H11V13H5V11H11V5H13V11H19V13Z" /></svg>
-                                Add Task
-                            </button>
-                        </div>
+                        </form>
                     </div>
-                </div>
+               </div>
             </div>
         </main>
     </body>

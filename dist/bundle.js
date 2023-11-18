@@ -7179,9 +7179,11 @@ const SVGObject = {
     edit: '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><title>pencil-outline</title><path d="M14.06,9L15,9.94L5.92,19H5V18.08L14.06,9M17.66,3C17.41,3 17.15,3.1 16.96,3.29L15.13,5.12L18.88,8.87L20.71,7.04C21.1,6.65 21.1,6 20.71,5.63L18.37,3.29C18.17,3.09 17.92,3 17.66,3M14.06,6.19L3,17.25V21H6.75L17.81,9.94L14.06,6.19Z" /></svg>',
     info: '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><title>information-outline</title><path d="M11,9H13V7H11M12,20C7.59,20 4,16.41 4,12C4,7.59 7.59,4 12,4C16.41,4 20,7.59 20,12C20,16.41 16.41,20 12,20M12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12A10,10 0 0,0 12,2M11,17H13V11H11V17Z" /></svg>',
     delete: '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><title>delete-outline</title><path d="M6,19A2,2 0 0,0 8,21H16A2,2 0 0,0 18,19V7H6V19M8,9H16V19H8V9M15.5,4L14.5,3H9.5L8.5,4H5V6H19V4H15.5Z" /></svg>',
-    addTodo: '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><title>plus</title><path d="M19,13H13V19H11V13H5V11H11V5H13V11H19V13Z" /></svg>',
+    add: '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><title>plus</title><path d="M19,13H13V19H11V13H5V11H11V5H13V11H19V13Z" /></svg>',
+    arrowUp: '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><title>chevron-right</title><path d="M8.59,16.58L13.17,12L8.59,7.41L10,6L16,12L10,18L8.59,16.58Z" /></svg>',
     arrowDown: '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><title>chevron-down</title><path d="M7.41,8.58L12,13.17L16.59,8.58L18,10L12,16L6,10L7.41,8.58Z" /></svg>',
     project: '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><title>format-list-checks</title><path d="M3,5H9V11H3V5M5,7V9H7V7H5M11,7H21V9H11V7M11,15H21V17H11V15M5,20L1.5,16.5L2.91,15.09L5,17.17L9.59,12.59L11,14L5,20Z" /></svg>',
+    close: '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><title>window-close</title><path d="M13.46,12L19,17.54V19H17.54L12,13.46L6.46,19H5V17.54L10.54,12L5,6.46V5H6.46L12,10.54L17.54,5H19V6.46L13.46,12Z" /></svg>',
 };
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (SVGObject);
@@ -7404,7 +7406,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   defaultLoader: () => (/* binding */ defaultLoader),
 /* harmony export */   domAssociatorObject: () => (/* binding */ domAssociatorObject),
+/* harmony export */   editModalLoader: () => (/* binding */ editModalLoader),
 /* harmony export */   inboxPage: () => (/* binding */ inboxPage),
+/* harmony export */   projectPageLoader: () => (/* binding */ projectPageLoader),
 /* harmony export */   sidebarLoader: () => (/* binding */ sidebarLoader),
 /* harmony export */   todayPage: () => (/* binding */ todayPage),
 /* harmony export */   weekPage: () => (/* binding */ weekPage)
@@ -7415,6 +7419,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var date_fns__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! date-fns */ "./node_modules/date-fns/esm/isThisWeek/index.js");
 /* harmony import */ var date_fns__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! date-fns */ "./node_modules/date-fns/esm/isFuture/index.js");
 /* harmony import */ var _svg_manager_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./svg-manager.js */ "./src/svg-manager.js");
+
 
 
 
@@ -7438,12 +7443,36 @@ function clearPage() {
     domAssociatorObject.reset();
 }
 
-function createSimpleTopBar(title) {
+function createTopBar(title, isProject = false, projectDescription = '') {
     const topBar = createElementWithClass('pg-top-section');
 
-    const topBarHeader = createElementWithClass('', 'h1');
+    const topBarHeader = createElementWithClass(isProject ? 'project-name' : '', 'h1');
     topBarHeader.textContent = title;
+
     topBar.appendChild(topBarHeader);
+
+    if (isProject) {
+        const desc = createElementWithClass('project-desc');
+        desc.textContent = projectDescription;
+
+        const buttons = createElementWithClass('project-buttons');
+
+        const editButton = createElementWithClass('project-edit', 'button');
+        editButton.innerHTML = _svg_manager_js__WEBPACK_IMPORTED_MODULE_1__["default"].edit + 'Edit Project';
+
+        const addSection = createElementWithClass('project-add-section', 'button');
+        addSection.innerHTML = _svg_manager_js__WEBPACK_IMPORTED_MODULE_1__["default"].add + 'Add Section';
+
+        const deleteProject = createElementWithClass('project-delete', 'button');
+        deleteProject.innerHTML = _svg_manager_js__WEBPACK_IMPORTED_MODULE_1__["default"].delete + 'Delete Project';
+
+        buttons.appendChild(editButton);
+        buttons.appendChild(addSection);
+        buttons.appendChild(deleteProject);
+
+        topBar.appendChild(desc);
+        topBar.appendChild(buttons);
+    }
 
     return topBar;
 }
@@ -7479,14 +7508,10 @@ function createItemElement(item) {
     const editButton = createElementWithClass('icon-button todo-edit', 'button');
     editButton.innerHTML = _svg_manager_js__WEBPACK_IMPORTED_MODULE_1__["default"].edit;
 
-    const infoButton = createElementWithClass('icon-button todo-info', 'button');
-    infoButton.innerHTML = _svg_manager_js__WEBPACK_IMPORTED_MODULE_1__["default"].info;
-
     const deleteButton = createElementWithClass('icon-button todo-delete', 'button');
     deleteButton.innerHTML = _svg_manager_js__WEBPACK_IMPORTED_MODULE_1__["default"].delete;
 
     buttons.appendChild(editButton);
-    buttons.appendChild(infoButton);
     buttons.appendChild(deleteButton);
 
     itemDiv.appendChild(checkboxContainer);
@@ -7502,7 +7527,7 @@ function createTodoButton() {
     const buttonContainer = createElementWithClass('add-todo-button');
 
     const button = createElementWithClass('add-todo', 'button');
-    button.innerHTML = _svg_manager_js__WEBPACK_IMPORTED_MODULE_1__["default"].addTodo + 'Add Task';
+    button.innerHTML = _svg_manager_js__WEBPACK_IMPORTED_MODULE_1__["default"].add + 'Add Task';
 
     buttonContainer.appendChild(button);
     return buttonContainer;
@@ -7544,18 +7569,18 @@ function setActivePage(pageId = 'inbox') {
     document.querySelectorAll('.sidebar-item.active').forEach(item => item.classList.remove('active'));
 
     document.querySelector(`.sidebar-item#${pageId}`).classList.add('active');
+    currentPage = pageId;
 }
 
-/*
-    This object keeps track of dom todo items
-*/
-
+/* This object keeps track of dom todo items */
 const domAssociatorObject = (function() {
     // Keep track of dom object
     let index = 0;
 
     let assArray = [];
     const getAssArray = () => assArray;
+
+    const getItem = itemIndex => assArray[index];
 
     // Reset the associator when we change pages
     const reset = () => {
@@ -7578,13 +7603,14 @@ const domAssociatorObject = (function() {
         assArray[indexToRemove] = undefined;
     };
 
-    return { getAssArray, reset, addObj, removeObj }
+    return { getAssArray, getItem, reset, addObj, removeObj }
 })();
 
 
-/*
-    The following objects are responsible for loading pages
-*/
+/* The following objects and functions are responsible for loading pages */
+let currentPage = 'inbox';
+
+const getCurrentPage = () => currentPage;
 
 const inboxPage = {
     id: 'inbox',
@@ -7594,7 +7620,7 @@ const inboxPage = {
         const page = createElementWithClass('page');
         page.dataset.page = 'inbox';
 
-        page.appendChild(createSimpleTopBar('Inbox'));
+        page.appendChild(createTopBar('Inbox'));
 
         const inboxProject = todoObject.findProject('default');
 
@@ -7629,11 +7655,16 @@ const todayPage = {
         const page = createElementWithClass('page');
         page.dataset.page = 'today';
 
-        page.appendChild(createSimpleTopBar('Today'));
+        page.appendChild(createTopBar('Today'));
 
         const itemList = createElementWithClass('todo-items');
 
         for (const project of todoObject.projects) {
+            for (const unlistedItem of project.unlistedItems) {
+                if ((0,date_fns__WEBPACK_IMPORTED_MODULE_3__["default"])(unlistedItem.dueDate) || (0,date_fns__WEBPACK_IMPORTED_MODULE_2__["default"])(new Date(), 'yyyy-MM-dd') === (0,date_fns__WEBPACK_IMPORTED_MODULE_2__["default"])(unlistedItem.dueDate, 'yyyy-MM-dd')) {
+                    itemList.appendChild(createItemElement(unlistedItem));
+                }
+            }
             for (const section of project.sections) {
                 for (const item of section.items) {
                     if ((0,date_fns__WEBPACK_IMPORTED_MODULE_3__["default"])(item.dueDate) || (0,date_fns__WEBPACK_IMPORTED_MODULE_2__["default"])(new Date(), 'yyyy-MM-dd') === (0,date_fns__WEBPACK_IMPORTED_MODULE_2__["default"])(item.dueDate, 'yyyy-MM-dd')) {
@@ -7658,11 +7689,16 @@ const weekPage = {
         const page = createElementWithClass('page');
         page.dataset.page = 'week';
 
-        page.appendChild(createSimpleTopBar('Week'));
+        page.appendChild(createTopBar('Week'));
 
         const itemList = createElementWithClass('todo-items');
 
         for (const project of todoObject.projects) {
+            for (const unlistedItem of project.unlistedItems) {
+                if ((0,date_fns__WEBPACK_IMPORTED_MODULE_4__["default"])(unlistedItem.dueDate, { weekStartsOn: 0 }) && ((0,date_fns__WEBPACK_IMPORTED_MODULE_5__["default"])(unlistedItem.dueDate) || (0,date_fns__WEBPACK_IMPORTED_MODULE_3__["default"])(unlistedItem.dueDate))) {
+                    itemList.appendChild(createItemElement(unlistedItem));
+                }
+            }
             for (const section of project.sections) {
                 for (const item of section.items) {
                     if ((0,date_fns__WEBPACK_IMPORTED_MODULE_4__["default"])(item.dueDate, { weekStartsOn: 0 }) && ((0,date_fns__WEBPACK_IMPORTED_MODULE_5__["default"])(item.dueDate) || (0,date_fns__WEBPACK_IMPORTED_MODULE_3__["default"])(item.dueDate))) {
@@ -7676,6 +7712,36 @@ const weekPage = {
         main.appendChild(page);
         setActivePage('week');
     },
+};
+
+const projectPageLoader = project => {
+    clearPage();
+
+    const page = createElementWithClass('page');
+    page.dataset.page = `project-${project.name.toLowerCase()}`;
+
+    page.appendChild(createTopBar(project.name, true, project.description));
+
+    const unlistedSection = createElementWithClass('section');
+    unlistedSection.id = 'unlisted';
+
+    const itemList = createElementWithClass('todo-items');
+
+    for (const item of project.unlistedItems) {
+        itemList.appendChild(createItemElement(item));
+    }
+
+    itemList.appendChild(createTodoButton());
+
+    unlistedSection.appendChild(itemList);
+    page.appendChild(unlistedSection);
+
+    for (const section of project.sections) {
+        page.appendChild(createSectionElement(section));
+    }
+
+    main.appendChild(page);
+    setActivePage(`project-${project.name.toLowerCase()}`);
 };
 
 const sidebarLoader = () => {
@@ -7697,8 +7763,8 @@ const sidebarLoader = () => {
         }
 
         const projectButton = createElementWithClass('sidebar-item project', 'button');
-        projectButton.id = `project-${project.name}`;
-        projectButton.dataset.name = project.name;
+        projectButton.id = `project-${project.name.toLowerCase()}`;
+        projectButton.dataset.name = project.name.toLowerCase();
         projectButton.innerHTML = _svg_manager_js__WEBPACK_IMPORTED_MODULE_1__["default"].project + project.name;
 
         projectsList.insertBefore(projectButton, addProjectButton);
@@ -7711,6 +7777,118 @@ const defaultLoader = () => {
 
     // Loads the inbox page by default
     inboxPage.switchTo();
+};
+
+function modalLoader(topBarText) {
+    const overlay = createElementWithClass('popup overlay');
+
+    const dialog = createElementWithClass('dialog');
+
+    const topHeader = createElementWithClass('top-header');
+
+    const headerText = createElementWithClass('project-name', 'span');
+    headerText.textContent = topBarText;
+
+    const closeButton = createElementWithClass('close-popup', 'button');
+    closeButton.innerHTML = _svg_manager_js__WEBPACK_IMPORTED_MODULE_1__["default"].close;
+
+    topHeader.appendChild(headerText);
+    topHeader.appendChild(closeButton);
+
+    dialog.appendChild(topHeader);
+
+    return [ overlay, dialog ];
+}
+
+const editModalLoader = (projectName = '', sectionName = null, todoItem) => {
+    const page = document.querySelector('page');
+
+    // Close all open popups if they exist
+    document.querySelectorAll('.popup.overlay').forEach(element => {
+        page.removeChild(element);
+    });
+
+    const [ overlay, dialog ] = modalLoader(projectName + sectionName !== null ? `> ${sectionName}` : '' );
+
+    const popupForm = createElementWithClass('popup-body', 'form');
+
+    const checkboxContainer = createElementWithClass('checkbox-container');
+
+    const checkbox = createElementWithClass('todo-checkbox', 'input');
+    checkbox.type = 'checkbox';
+    checkbox.id = 'edit-todo-checkbox';
+
+    const checkmark = createElementWithClass('checkmark', 'span');
+
+    checkboxContainer.appendChild(checkbox);
+    checkboxContainer.appendChild(checkmark);
+
+    const title = createElementWithClass('todo-title', 'input');
+    title.type = 'text';
+    title.id = 'edit-todo-title';
+    title.spellcheck = false;
+    title.value = todoItem.title;
+    title.required = true;
+
+    const desc = createElementWithClass('todo-desc', 'textarea');
+    desc.id = 'edit-todo-desc';
+    desc.spellcheck = false;
+    desc.textContent = todoItem.description;
+
+    const dateDiv = createElementWithClass('date');
+
+    const dateLabel = createElementWithClass('', 'label');
+    dateLabel.setAttribute('for', 'edit-todo-date');
+
+    const date = createElementWithClass('todo-date', 'input');
+    date.type = 'date';
+    date.id = 'edit-todo-date';
+    date.value = (0,date_fns__WEBPACK_IMPORTED_MODULE_2__["default"])(todoItem.dueDate, 'yyyy-MM-dd');
+
+    dateDiv.appendChild(dateLabel);
+    dateDiv.appendChild(date);
+
+    const buttons = createElementWithClass('buttons');
+
+    const selectButtons = createElementWithClass('select-buttons');
+
+    const low = createElementWithClass('priority-button low', 'button');
+    low.textContent = 'Low';
+    low.type = 'button';
+
+    const mid = createElementWithClass('priority-button mid', 'button');
+    mid.textContent = 'Medium';
+    mid.type = 'button';
+
+    const high = createElementWithClass('priority-button high', 'button');
+    high.textContent = 'High';
+    high.type = 'button';
+
+    selectButtons.appendChild(low);
+    selectButtons.appendChild(mid);
+    selectButtons.appendChild(high);
+
+    const confirmButton = createElementWithClass('confirm', 'button');
+    confirmButton.textContent = 'Confirm Edit';
+    confirmButton.type = 'submit';
+
+    buttons.appendChild(selectButtons);
+    buttons.appendChild(confirmButton);
+
+    popupForm.appendChild(checkboxContainer);
+    popupForm.appendChild(title);
+    popupForm.appendChild(desc);
+    popupForm.appendChild(dateDiv);
+    popupForm.appendChild(buttons);
+
+    dialog.appendChild(popupForm);
+
+    overlay.appendChild(dialog);
+
+    page.appendChild(overlay);
+
+    // Disable the body so that the user cannot interact with it
+    document.body.classList.add('disabled');
 };
 
 
@@ -8214,30 +8392,93 @@ __webpack_require__.r(__webpack_exports__);
 
 window.todoManager = _todo_manager_js__WEBPACK_IMPORTED_MODULE_0__["default"];
 
-_todo_manager_js__WEBPACK_IMPORTED_MODULE_0__["default"].addProject('Home');
-_todo_manager_js__WEBPACK_IMPORTED_MODULE_0__["default"].addProject('Study');
+_todo_manager_js__WEBPACK_IMPORTED_MODULE_0__["default"].addProject('Home', 'asjdhasdaosadsa');
+_todo_manager_js__WEBPACK_IMPORTED_MODULE_0__["default"].addProject('Study', 'lorem * 5');
 _todo_manager_js__WEBPACK_IMPORTED_MODULE_0__["default"].addProject('Work');
 
 _todo_manager_js__WEBPACK_IMPORTED_MODULE_0__["default"].addSection('homework');
 const item = _todo_manager_js__WEBPACK_IMPORTED_MODULE_0__["default"].addTodoItem('laundry', 'must do today', '2023-11-17', 'low', 'default', 'homework');
-_todo_manager_js__WEBPACK_IMPORTED_MODULE_0__["default"].addTodoItem('laundry22', 'must do today too', '2023-11-18', 'high', 'Home', 'homework');
+_todo_manager_js__WEBPACK_IMPORTED_MODULE_0__["default"].addTodoItem('laundry22', 'must do today too', '2023-11-18', 'high', 'Home');
 
 (0,_ui_manager_js__WEBPACK_IMPORTED_MODULE_1__.defaultLoader)();
 
 // Sets up event listeners
 const eventListenersObject = (function() {
-    const defaultPages = [_ui_manager_js__WEBPACK_IMPORTED_MODULE_1__.inboxPage, _ui_manager_js__WEBPACK_IMPORTED_MODULE_1__.todayPage, _ui_manager_js__WEBPACK_IMPORTED_MODULE_1__.weekPage];
-    const sidebar = document.querySelector('.sidebar');
+    const todoObject = _todo_manager_js__WEBPACK_IMPORTED_MODULE_0__["default"].getTodoObject();
 
-    const setUp = () => {
+    const defaultPages = [_ui_manager_js__WEBPACK_IMPORTED_MODULE_1__.inboxPage, _ui_manager_js__WEBPACK_IMPORTED_MODULE_1__.todayPage, _ui_manager_js__WEBPACK_IMPORTED_MODULE_1__.weekPage];
+
+    const sidebar = document.querySelector('.sidebar');
+    const main = document.querySelector('main');
+
+    function setUpSidebar () {
         sidebar.addEventListener('click', event => {
             const target = event.target;
 
-            let page = defaultPages.find(page => page.id === target.id);
+            const page = defaultPages.find(page => page.id === target.id);
             if (page !== undefined) {
                 page.switchTo();
+                return;
+            }
+
+            if (target.classList.contains('project')) {
+                const projectName = target.dataset.name;
+
+                if (target.id !== `project-${projectName}`) {
+                    return;
+                }
+
+                const project = _todo_manager_js__WEBPACK_IMPORTED_MODULE_0__["default"].getTodoObject().findProject(projectName);
+
+                if (project === undefined) {
+                    return;
+                }
+
+                (0,_ui_manager_js__WEBPACK_IMPORTED_MODULE_1__.projectPageLoader)(project);
+                return;
             }
         });
+    };
+
+    function setUpMain() {
+        main.addEventListener('click', event => {
+            const target = event.target;
+
+            if (target.classList.contains('todo-item')) {
+                const itemIndex = target.dataset.index;
+
+                if (itemIndex === undefined) {
+                    return;
+                }
+
+                const todoItem = _ui_manager_js__WEBPACK_IMPORTED_MODULE_1__.domAssociatorObject.getItem(itemIndex);
+
+                const pageName = document.querySelector('page').dataset.page;
+
+                const lowercaseProjectName = pageName === 'inbox' ? 'default'
+                                    : pageName === 'today' || projectName === 'week' ? ''
+                                    : pageName.slice('project-'.length);
+
+                const project = todoObject.findProject(lowercaseProjectName);
+
+                if (project === undefined) {
+                    return;
+                }
+
+                const properCaseProjectName = project.name
+
+                const sectionName = target.parentNode.parentNode.name;
+
+                const properCaseSectionName = sectionName === 'unlisted' ? null : project.findSection(sectionName);
+
+                (0,_ui_manager_js__WEBPACK_IMPORTED_MODULE_1__.editModalLoader)(properCaseProjectName, properCaseSectionName, todoItem);
+            }
+        });
+    };
+
+    const setUp = () => {
+        setUpSidebar();
+        setUpMain();
     };
 
     return { setUp };
