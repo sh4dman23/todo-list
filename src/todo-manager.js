@@ -33,6 +33,7 @@ function createSection(name) {
         name,
         items: [],
     };
+
     const update = newName => {
         section.name = newName !== undefined ? newName : section.name;
     };
@@ -49,9 +50,14 @@ function createProject(name, description = '') {
     };
 
     // Finds section by name
-    const findSection = sectionName => project.sections.find(section => section.name.toLowerCase() === sectionName.toLowerCase());
+    const findSection = sectionName => project.sections.find(section => section.name === sectionName);
 
+    // While To-Dos may have the same name, projects cannot. So, we need to perform a check
     const update = (newName, newDescription) => {
+        if (todoManager.getTodoObject().findProject(newName) !== undefined && newName !== project.name) {
+            return false;
+        }
+
         project.name = newName !== undefined ? newName : project.name;
         project.description = newDescription !== undefined ? newDescription : project.description;
     }
@@ -97,7 +103,7 @@ const todoManager = (function() {
 
         // Finds project by name
         findProject(projectName) {
-            return this.projects.find(project => project.name.toLowerCase() === projectName.toLowerCase());
+            return this.projects.find(project => project.name === projectName);
         },
     };
 
@@ -164,9 +170,76 @@ const todoManager = (function() {
         }
 
         return item;
-    }
+    };
 
-    return { getTodoObject, addProject, addSection, addTodoItem };
+    const deleteTodoItem = (todoItem) => {
+        const project = todoObject.findProject(todoItem.projectName);
+
+        if (project === undefined) {
+            return false;
+        }
+
+        const sectionName = todoItem.sectionName;
+
+        // We need to do the same thing twice here because, the property value isn't passed by reference, unlike the object itself
+        let itemList;
+        if (sectionName === null) {
+            itemList = project.unlistedItems;
+            const itemIndex = itemList.findIndex(item => item === todoItem);
+
+            if (itemIndex === undefined) {
+                return false;
+            }
+
+            project.unlistedItems = itemList.slice(0, itemIndex).concat(itemList.slice(itemIndex + 1));
+        } else {
+            const section = project.findSection(sectionName);
+            if (section === undefined) {
+                return false;
+            }
+
+            itemList = section.items;
+            const itemIndex = itemList.findIndex(item => item === todoItem);
+            if (itemIndex === undefined) {
+                return false;
+            }
+
+            section.items = itemList.slice(0, itemIndex).concat(itemList.slice(itemIndex + 1));
+        }
+
+        return true;
+    };
+
+    const deleteSection = (projectName, sectionName) => {
+        const project = todoObject.findProject(projectName);
+
+        if (project === undefined) {
+            return false;
+        }
+
+        const sectionIndex = project.sections.findIndex(section => section.name === sectionName);
+
+        if (sectionIndex === undefined) {
+            return false;
+        }
+
+        project.sections = project.sections.slice(0, sectionIndex).concat(project.sections.slice(sectionIndex + 1));
+
+        return true;
+    };
+
+    const deleteProject = projectName => {
+        const projectIndex = todoObject.projects.findIndex(project => project.name === projectName);
+        if (projectIndex === undefined) {
+            return false;
+        }
+
+        todoObject.projects = todoObject.projects.slice(0, projectIndex).concat(todoObject.projects.slice(projectIndex + 1));
+
+        return true;
+    };
+
+    return { getTodoObject, addProject, addSection, addTodoItem, deleteTodoItem, deleteSection, deleteProject };
 })();
 
 export default todoManager;

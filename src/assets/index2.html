@@ -53,9 +53,9 @@
         <main>
             <div class="page">
                 <div class="pg-top-section">
-                    <h1 class="project-name">Study</h1>
-                    <p class="project-desc">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Earum at consequuntur ipsam deserunt velit placeat, autem debitis accusantium libero beatae, ipsa obcaecati sapiente maxime, rem porro molestias reprehenderit tenetur architecto.</p>
-                    <div class="project-buttons">
+                    <h1 class="project-name">Today</h1>
+                    <p class="project-desc" style="display: none;">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Earum at consequuntur ipsam deserunt velit placeat, autem debitis accusantium libero beatae, ipsa obcaecati sapiente maxime, rem porro molestias reprehenderit tenetur architecto.</p>
+                    <div class="project-buttons" style="display: none;">
                         <button class="project-edit">
                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><title>pencil-outline</title><path d="M14.06,9L15,9.94L5.92,19H5V18.08L14.06,9M17.66,3C17.41,3 17.15,3.1 16.96,3.29L15.13,5.12L18.88,8.87L20.71,7.04C21.1,6.65 21.1,6 20.71,5.63L18.37,3.29C18.17,3.09 17.92,3 17.66,3M14.06,6.19L3,17.25V21H6.75L17.81,9.94L14.06,6.19Z" /></svg>
                             Edit Project
@@ -71,8 +71,21 @@
                     </div>
                 </div>
 
+                <div class="empty">
+                    Woah! You seem to have finished all your tasks for today. Good Job!
+                </div>
 
-                <div class="section" id="unlisted">
+                <div class="corner-popup-container">
+                    <div class="corner-popup success">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><title>information-outline</title><path d="M11,9H13V7H11M12,20C7.59,20 4,16.41 4,12C4,7.59 7.59,4 12,4C16.41,4 20,7.59 20,12C20,16.41 16.41,20 12,20M12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12A10,10 0 0,0 12,2M11,17H13V11H11V17Z" /></svg>
+                        Added a new task
+                        <button class="close-alert">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><title>window-close</title><path d="M13.46,12L19,17.54V19H17.54L12,13.46L6.46,19H5V17.54L10.54,12L5,6.46V5H6.46L12,10.54L17.54,5H19V6.46L13.46,12Z" /></svg>
+                        </button>
+                    </div>
+                </div>
+
+                <div class="section" id="unlisted" style="display: none;">
                     <div class="todo-items">
                         <!-- store a dataset.index with associator -->
                         <div class="todo-item" data-attribute="1">
@@ -101,8 +114,29 @@
                     </div>
                 </div>
 
-               <div class="popup overlay">
-                    <div class="dialog">
+               <div class="popup overlay" style="display: none">
+                    <div class="dialog confirmation">
+                        <div class="top-header">
+                            <span class="project-name">Remove To-Do</span>
+                            <button class="close-popup" id="close-popup-modal">
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><title>window-close</title><path d="M13.46,12L19,17.54V19H17.54L12,13.46L6.46,19H5V17.54L10.54,12L5,6.46V5H6.46L12,10.54L17.54,5H19V6.46L13.46,12Z" /></svg>
+                            </button>
+                        </div>
+
+                        <div class="popup-body">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><title>information-outline</title><path d="M11,9H13V7H11M12,20C7.59,20 4,16.41 4,12C4,7.59 7.59,4 12,4C16.41,4 20,7.59 20,12C20,16.41 16.41,20 12,20M12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12A10,10 0 0,0 12,2M11,17H13V11H11V17Z" /></svg>
+                            <p class="confirmation-text">
+                                Are you sure you want to delete the To-Do "<span class="name">do the laundry</span>"? This is an irreversible action.
+                            </p>
+                            <div class="buttons">
+                                <button class="confirmation-button" id="confirm-no">Cancel</button>
+                                <button class="confirmation-button yes" id="confirm-yes">Yes</button>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <div class="dialog" style="display: none">
                         <div class="top-header">
                             <span class="project-name">Study</span>
                             <button class="close-popup" id="close-popup-modal">

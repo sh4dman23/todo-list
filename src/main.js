@@ -1,9 +1,7 @@
 import todoManager from "./todo-manager.js";
-import { domAssociatorObject, pageLoader, modalManager, DOMAdderRemover } from "./ui-manager.js";
+import { domAssociatorObject, pageLoader, modalManager, DOMAdderRemover, collapseSection, alertManager } from "./ui-manager.js";
 import { parse, isValid } from 'date-fns';
 import './assets/style.css';
-
-window.todoManager = todoManager;
 
 todoManager.addProject('HOme', 'asjdhasdaosadsa');
 todoManager.addProject('Study', 'lorem * 5');
@@ -47,20 +45,74 @@ const eventListenersObject = (function() {
 
                 pageLoader.projectPageLoader(project);
                 return;
+            } else if (target.id === 'add-project-button') {
+                // Open and manage popup modal for *adding projects*
+                managePopupModal('add', target, 'project');
             }
         });
     };
 
     function setUpMain() {
+        const itemType = 'item', sectionType = 'section', projectType = 'project';
         main.addEventListener('click', event => {
             const target = event.target;
 
+            /*
+                Note that, the project currently supports the following actions:
+                    1. To-do Items: CRUD,
+                    2. Sections: CRD,
+                    3. Projects: CRUD;
+            */
             if (target.classList.contains('todo-item') || target.classList.contains('todo-edit')) {
                 // Open and manage popup modal for *editing items*
-                managePopupModal('edit', target, 'item');
+                managePopupModal('edit', target, itemType);
             } else if (target.classList.contains('add-todo')) {
                 // Open and manage popup modal for *adding items*
-                managePopupModal('add', target, 'item');
+                managePopupModal('add', target, itemType);
+            } else if (target.classList.contains('todo-delete')) {
+                // Open and manage popup modal for *deleting items*
+                manageConfirmationModel(target, itemType);
+
+            } else if (target.classList.contains('project-add-section')) {
+                // Open and manage popup modal for *adding sections*
+                managePopupModal('add', target, sectionType);
+            } else if (target.classList.contains('delete-section')) {
+                // Open and manage popup modal for *deleting sections*
+                manageConfirmationModel(target, sectionType);
+
+            } else if (target.classList.contains('project-edit')) {
+                // Open and manage popup modal for *editing projects*
+                managePopupModal('edit', target, projectType);
+            } else if (target.classList.contains('project-delete')) {
+                // Open and manage popup modal for *deleting projects*
+                manageConfirmationModel(target, projectType);
+            }
+
+            // update status via checkbox
+            else if (target.classList.contains('todo-checkbox')) {
+                const todoElement = target.parentNode.parentNode;
+
+                const todoIndex = todoElement.dataset.index;
+
+                if (!todoIndex) {
+                    createDOMMessAlert();
+                    return;
+                }
+
+                const todoItem = domAssociatorObject.getItem(todoIndex);
+
+                if (!todoItem) {
+                    createDOMMessAlert();
+                    return;
+                }
+
+                todoItem.update(...Array(4), target.checked);
+            }
+
+            // collapse section
+            else if (target.classList.contains('collapse-section')) {
+                const section = target.parentNode.parentNode;
+                collapseSection(section);
             }
         });
     };
@@ -73,14 +125,50 @@ const eventListenersObject = (function() {
     return { setUp };
 })();
 
+function createDOMMessAlert() {
+    createErrorAlert('Messed with the DOM, have you?');
+}
+
+function createSuccessAlert(message) {
+    const alert = alertManager.success(message);
+    manageAlert(alert);
+}
+
+function createErrorAlert(message) {
+    const alert = alertManager.error(message);
+    manageAlert(alert);
+}
+
+function manageAlert(alert) {
+    const timeOut = setTimeout(() => {
+        alert.parentNode.removeChild(alert);
+    }, 6000);
+
+    alert.querySelector('button.close-alert').addEventListener('click', () => {
+        clearTimeout(timeOut);
+        alert.parentNode.removeChild(alert);
+    });
+}
+
 // Load popup modal and add event listeners to it
 function managePopupModal(mode = 'edit', targetElement, targetType = 'item') {
-    let selectedTodoElement, selectedTodoItem, section, projectName;
+    let selectedTodoElement, selectedTodoItem, section, projectName, project;
 
     if (mode === 'edit' && targetType === 'item') {
         [selectedTodoElement, selectedTodoItem] = manageEditItemModalLoad(targetElement);
     } else if (mode === 'add' && targetType === 'item') {
         [section, projectName] = manageAddItemModalLoad(targetElement);
+    } else if (mode === 'add' && targetType === 'section') {
+        projectName = manageAddSectionModalLoad();
+    } else if (mode === 'add' && targetType === 'project') {
+        manageAddProjectModalLoad();
+    } else if (mode === 'edit' && targetType === 'project') {
+        project = manageEditProjectModalLoad();
+
+        if (project === false) {
+            createDOMMessAlert();
+            return;
+        }
     }
 
     const dialog = document.querySelector('.dialog');
@@ -102,28 +190,66 @@ function managePopupModal(mode = 'edit', targetElement, targetType = 'item') {
         event.preventDefault();
 
         if (!checkModalForm()) {
-            // EDIT: will add corner popup here
+            createErrorAlert('Please fill up the form properly!');
             return;
         }
 
-        const title = popupForm.querySelector('#edit-todo-title').value;
-        const description = popupForm.querySelector('#edit-todo-desc').value;
-        const dueDate = popupForm.querySelector('#edit-todo-date').value;
-        let priority = popupForm.querySelector('.priority-button.selected').dataset.priority;
-        priority = ['low', 'medium', 'high'].includes(priority) ? priority : 'low';
+        let title = popupForm.querySelector('#edit-title').value;
+
+        let description, dueDate, priority;
+        if (targetType !== 'section') {
+            description = popupForm.querySelector('#edit-desc').value;
+
+            if (targetType === 'item') {
+                dueDate = popupForm.querySelector('#edit-todo-date').value;
+                priority = popupForm.querySelector('.priority-button.selected').dataset.priority;
+                priority = ['low', 'medium', 'high'].includes(priority) ? priority : 'low';
+            }
+        }
 
         if (mode === 'edit' && targetType === 'item') {
             const status = popupForm.querySelector('#edit-todo-checkbox').checked;
             selectedTodoItem.update(title, description, processDate(dueDate), priority, status);
+            pageLoader.refreshPage();
             modalManager.closeModal();
-            pageLoader.refreshItem(selectedTodoElement, selectedTodoItem);
 
         } else if (mode === 'add' && targetType === 'item') {
             const sectionName = section.dataset.name;
             const newTodoItem = todoManager.addTodoItem(title, description, processDate(dueDate), priority, projectName, sectionName);
             DOMAdderRemover.addItem(section, newTodoItem);
             modalManager.closeModal();
-            // Why do we not use a refresh page here? because, we are already adding the element using the add item method
+        } else if (mode === 'add' && targetType === 'section') {
+            const newSection = todoManager.addSection(title, projectName);
+
+            // Check sectionName for doubles
+            if (newSection === false) {
+                createErrorAlert('A section by this name already exists!');
+                return;
+            }
+
+            DOMAdderRemover.addSection(newSection);
+            modalManager.closeModal();
+        } else if (mode === 'add' && targetType === 'project') {
+            const newProject = todoManager.addProject(title, description);
+
+            if (newProject === false) {
+                createErrorAlert('A project by this name already exists!');
+                return;
+            }
+
+            DOMAdderRemover.addProject(newProject);
+            modalManager.closeModal();
+        } else if (mode === 'edit' && targetType === 'project') {
+            const success = project.update(title, description);
+
+            if (success === false) {
+                createErrorAlert('A project by this name already exists!');
+                return;
+            }
+
+            pageLoader.loadSideBar();
+            pageLoader.projectPageLoader(project);
+            modalManager.closeModal();
         }
     });
 }
@@ -163,24 +289,128 @@ function manageAddItemModalLoad(target) {
     // First parent is button div, second is item list container and the third is the section div
     const section = target.parentNode.parentNode.parentNode;
 
-    const pageName = pageLoader.getCurrentPage();
-
-    let projectName;
-    if (pageName.startsWith('project-')) {
-        projectName = pageName.slice('project-'.length);
-    } else {
-        projectName = 'default';
-    }
+    const projectName = getProjectName();
 
     modalManager.loadAddItemModal(projectName === 'default' ? 'Inbox' : projectName, section.dataset.name);
 
     return [section, projectName];
 }
 
+function manageAddSectionModalLoad() {
+    // First parent is button div, second is item list container and the third is the section div
+    const projectName = getProjectName();
+
+    modalManager.loadAddSectionModal(projectName !== 'default' ? projectName : 'Inbox');
+
+    return projectName;
+}
+
+function manageAddProjectModalLoad() {
+    modalManager.loadAddProjectModal();
+}
+
+function manageEditProjectModalLoad() {
+    const projectName = getProjectName();
+    const project = todoManager.getTodoObject().findProject(projectName);
+
+    if (project === undefined) {
+        return false;
+    }
+
+    modalManager.loadEditProjectModal(project);
+    return project;
+}
+
 function manageConfirmationModel(target, targetType) {
-    // load modal with args (targetType)
-    // add event listener to delete from both memory and dom if yes is clicked
-    // add event listener to close popup if cancel is clicked
+    const page = pageLoader.getCurrentPage();
+    let todoItem, sectionName, projectName;
+
+    if (targetType === 'item') {
+        // The target is the delete button whose first parent is the buttons div, the second is the todo element
+        const todoElement = target.parentNode.parentNode;
+
+        if (todoElement.dataset.index === undefined) {
+            createDOMMessAlert();
+            return;
+        }
+
+        todoItem = domAssociatorObject.getItem(todoElement.dataset.index);
+
+        modalManager.loadConfirmationModal('To-Do', todoItem.title);
+    } else if (targetType === 'section') {
+        if (page === 'inbox') {
+            projectName = 'default';
+        } else {
+            projectName = page.slice('project-'.length);
+        }
+
+        // First parent is header div, second is second element
+        const section = target.parentNode.parentNode;
+        if (section.id === 'unlisted') {
+            window.location.reload();
+        }
+
+        sectionName = section.dataset.name;
+
+        // null section is the unlisted items which cannot be deleted;
+        if (projectName === undefined || sectionName === undefined || sectionName === null) {
+            createDOMMessAlert();
+            return;
+        }
+
+        modalManager.loadConfirmationModal('Section', sectionName);
+    } else if (targetType === 'project') {
+        if (page === 'inbox') {
+            createDOMMessAlert();
+            return;
+        }
+
+        projectName = page.slice('project-'.length);
+
+        modalManager.loadConfirmationModal('Project', projectName);
+    }
+
+    const dialog = document.querySelector('.dialog');
+
+    dialog.addEventListener('click', event => {
+        const target = event.target;
+
+        if (target.id === 'close-popup-modal' || target.id === 'confirm-no') {
+            modalManager.closeModal();
+        } else if (target.id === 'confirm-yes') {
+            if (targetType === 'item') {
+                const success = todoManager.deleteTodoItem(todoItem);
+
+                if (success === false) {
+                    createErrorAlert('Could not delete item!');
+                    return;
+                }
+
+                modalManager.closeModal();
+                pageLoader.refreshPage();
+            } else if (targetType === 'section') {
+                const success = todoManager.deleteSection(projectName, sectionName);
+
+                if (success === false) {
+                    createErrorAlert('Could not delete section!');
+                    return;
+                }
+
+                modalManager.closeModal();
+                pageLoader.refreshPage();
+            } else if (targetType === 'project') {
+                const success = todoManager.deleteProject(projectName);
+
+                if (success === false) {
+                    createErrorAlert('Could not delete project');
+                    return;
+                }
+
+                modalManager.closeModal();
+                pageLoader.defaultLoader();
+            }
+        }
+    });
 }
 
 // Does a light check to see if one of the priority buttons are selected or not, since they are required and are not native HTML input elements
@@ -209,27 +439,21 @@ function processDate(date) {
     return new Date(date);
 }
 
-function getProjectAndSectionName(todoItem) {
-    return [todoItem.projectName, todoItem.sectionName];
-}
+function getProjectName() {
+    const pageName = pageLoader.getCurrentPage();
 
-function refreshPage() {
-    const currentPage = pageLoader.getCurrentPage();
-
-    let foundPage = false;
-    pageLoader.defaultPages.forEach(page => {
-        if (page.id === currentPage) {
-            foundPage = true;
-            page.switchTo();
-            return;
-        }
-    });
-    if (foundPage) {
-        return;
+    let projectName;
+    if (pageName.startsWith('project-')) {
+        projectName = pageName.slice('project-'.length);
+    } else {
+        projectName = 'default';
     }
 
-    const projectName = currentPage.slice('project-'.length);
-    pageLoader.projectPageLoader(projectName);
+    return projectName;
+}
+
+function getProjectAndSectionName(todoItem) {
+    return [todoItem.projectName, todoItem.sectionName];
 }
 
 eventListenersObject.setUp();
