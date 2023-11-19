@@ -1,15 +1,9 @@
 import todoManager from "./todo-manager.js";
 import { domAssociatorObject, pageLoader, modalManager, DOMAdderRemover, collapseSection, alertManager } from "./ui-manager.js";
+import * as cookieManager from './cookie-manager.js';
 import { parse, isValid } from 'date-fns';
+import './cookie-manager.js';
 import './assets/style.css';
-
-todoManager.addProject('HOme', 'asjdhasdaosadsa');
-todoManager.addProject('Study', 'lorem * 5');
-todoManager.addProject('Work');
-
-todoManager.addSection('homework');
-const item = todoManager.addTodoItem('laundry', 'must do today', new Date('2023-11-17'), 'low', 'default', 'homework');
-todoManager.addTodoItem('laundry22', 'must do today too', new Date('2023-11-18'), 'high', 'HOme');
 
 pageLoader.defaultLoader();
 
@@ -227,6 +221,7 @@ function managePopupModal(mode = 'edit', targetElement, targetType = 'item') {
                 return;
             }
 
+            cookieManager.saveSection(projectName, newSection);
             DOMAdderRemover.addSection(newSection);
             modalManager.closeModal();
         } else if (mode === 'add' && targetType === 'project') {
@@ -237,9 +232,12 @@ function managePopupModal(mode = 'edit', targetElement, targetType = 'item') {
                 return;
             }
 
+            cookieManager.saveProject(newProject);
             DOMAdderRemover.addProject(newProject);
             modalManager.closeModal();
         } else if (mode === 'edit' && targetType === 'project') {
+            const oldName = project.name;
+
             const success = project.update(title, description);
 
             if (success === false) {
@@ -247,6 +245,7 @@ function managePopupModal(mode = 'edit', targetElement, targetType = 'item') {
                 return;
             }
 
+            cookieManager.editProject(oldName, project);
             pageLoader.loadSideBar();
             pageLoader.projectPageLoader(project);
             modalManager.closeModal();
@@ -396,6 +395,7 @@ function manageConfirmationModel(target, targetType) {
                     return;
                 }
 
+                cookieManager.deleteSection(projectName, sectionName);
                 modalManager.closeModal();
                 pageLoader.refreshPage();
             } else if (targetType === 'project') {
@@ -406,6 +406,7 @@ function manageConfirmationModel(target, targetType) {
                     return;
                 }
 
+                cookieManager.deleteProject(projectName);
                 modalManager.closeModal();
                 pageLoader.defaultLoader();
             }

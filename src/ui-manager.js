@@ -16,6 +16,8 @@ function createElementWithClass(classProperty = '', tag = 'div') {
 function dateFormatter(date) {
     if (date === null) {
         return 'No Due Date';
+    } else if (!(date instanceof Date)) {
+        date = new Date(date);
     }
     return format(date, 'd MMM');
 }
@@ -300,7 +302,7 @@ const pageLoader = (function() {
             const page = createElementWithClass('page');
             page.dataset.page = 'week';
 
-            page.appendChild(createTopBar('Week'));
+            page.appendChild(createTopBar('This Week'));
 
             const itemList = createElementWithClass('todo-items');
 
@@ -603,9 +605,9 @@ const modalManager = (function() {
 
         overlay.appendChild(dialog);
 
-        page.appendChild(overlay);
-
         disableBody();
+
+        page.appendChild(overlay);
     }
 
     const loadEditItemModal = (projectName = '', sectionName = null, todoItem) => {
@@ -621,9 +623,9 @@ const modalManager = (function() {
 
         overlay.appendChild(dialog);
 
-        page.appendChild(overlay);
-
         disableBody();
+
+        page.appendChild(overlay);
     };
 
     const loadAddSectionModal = projectName => {
@@ -639,9 +641,9 @@ const modalManager = (function() {
 
         overlay.appendChild(dialog);
 
-        page.appendChild(overlay);
-
         disableBody();
+
+        page.appendChild(overlay);
     };
 
     const loadAddProjectModal = () => {
@@ -657,9 +659,9 @@ const modalManager = (function() {
 
         overlay.appendChild(dialog);
 
-        page.appendChild(overlay);
-
         disableBody();
+
+        page.appendChild(overlay);
     };
 
     const loadEditProjectModal = project => {
@@ -675,9 +677,9 @@ const modalManager = (function() {
 
         overlay.appendChild(dialog);
 
-        page.appendChild(overlay);
-
         disableBody();
+
+        page.appendChild(overlay);
     };
 
     const loadConfirmationModal = (targetType, targetName) => {
@@ -721,14 +723,18 @@ const modalManager = (function() {
         dialog.appendChild(popupBody);
         overlay.appendChild(dialog);
 
-        page.appendChild(overlay);
-
         disableBody();
+
+        page.appendChild(overlay);
     };
 
+    let elementsToBeMadeUnfocusable = [ document.body ];
     function disableBody() {
         // Disable the body so that the user cannot interact with it
         document.body.classList.add('disabled');
+
+        elementsToBeMadeUnfocusable = document.body.querySelectorAll( 'a, button, input, textarea, select, details, [tabindex]:not([tabindex="-1"])');
+        elementsToBeMadeUnfocusable.forEach(element => element.tabIndex = '-1');
     }
 
     const closeModal = () => {
@@ -740,6 +746,7 @@ const modalManager = (function() {
         }
 
         document.body.classList.remove('disabled');
+        elementsToBeMadeUnfocusable.forEach(element => element.tabIndex = '0');
     };
 
     const switchPriority = priority => {

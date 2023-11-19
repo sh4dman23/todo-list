@@ -1,5 +1,28 @@
 import { format, parse, isValid } from 'date-fns';
 
+export function updateTodoItem(newTitle, newDescription, newDueDate, newPriority, newStatus) {
+    this.title = newTitle !== undefined ? newTitle : this.title;
+    this.description = newDescription !== undefined ? newDescription : this.description;
+    this.dueDate = newDueDate !== undefined ? newDueDate : this.dueDate;
+    this.priority = newPriority !== undefined ? newPriority : this.priority;
+    this.status = newStatus !== undefined ? newStatus : this.status;
+};
+
+// Finds section by name
+export function findSection(sectionName) {
+    return this.sections.find(section => section.name === sectionName);
+}
+
+// While To-Dos may have the same name, projects cannot. So, we need to perform a check
+export function updateProject(newName, newDescription) {
+    if (todoManager.getTodoObject().findProject(newName) !== undefined && newName !== this.name) {
+        return false;
+    }
+
+    this.name = newName !== undefined ? newName : this.name;
+    this.description = newDescription !== undefined ? newDescription : this.description;
+}
+
 /*
     The first 3 functions below are responsible for creating and
     returning Todo items, sections and projects respectively
@@ -17,15 +40,8 @@ function createTodoItem(title, description = '', dueDate = null, priority = 'low
         projectName,
         sectionName,
     };
-    const update = (newTitle, newDescription, newDueDate, newPriority, newStatus) => {
-        todo.title = newTitle !== undefined ? newTitle : todo.title;
-        todo.description = newDescription !== undefined ? newDescription : todo.description;
-        todo.dueDate = newDueDate !== undefined ? newDueDate : todo.dueDate;
-        todo.priority = newPriority !== undefined ? newPriority : todo.priority;
-        todo.status = newStatus !== undefined ? newStatus : todo.status;
-    };
 
-    return Object.assign(todo, { update });
+    return Object.assign(todo, { update: updateTodoItem });
 }
 
 function createSection(name) {
@@ -34,11 +50,7 @@ function createSection(name) {
         items: [],
     };
 
-    const update = newName => {
-        section.name = newName !== undefined ? newName : section.name;
-    };
-
-    return Object.assign(section, { update });
+    return section;
 }
 
 function createProject(name, description = '') {
@@ -49,20 +61,7 @@ function createProject(name, description = '') {
         sections: [],
     };
 
-    // Finds section by name
-    const findSection = sectionName => project.sections.find(section => section.name === sectionName);
-
-    // While To-Dos may have the same name, projects cannot. So, we need to perform a check
-    const update = (newName, newDescription) => {
-        if (todoManager.getTodoObject().findProject(newName) !== undefined && newName !== project.name) {
-            return false;
-        }
-
-        project.name = newName !== undefined ? newName : project.name;
-        project.description = newDescription !== undefined ? newDescription : project.description;
-    }
-
-    return Object.assign(project, { findSection, update });
+    return Object.assign(project, { findSection, update: updateProject });
 }
 
 function checkForEmpty(...args) {
