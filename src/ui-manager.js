@@ -196,7 +196,6 @@ function setActivePage(pageId = 'inbox') {
 /* This object keeps track of dom todo items */
 const domAssociatorObject = (function() {
     let assArray = [];
-    const getAssArray = () => assArray;
 
     const getItem = itemIndex => assArray[itemIndex];
     const getIndex = todoItem => assArray.findIndex(item => item === todoItem);
@@ -217,7 +216,7 @@ const domAssociatorObject = (function() {
         assArray[indexToRemove] = undefined;
     };
 
-    return { getAssArray, getItem, getIndex, reset, addObj, removeObj }
+    return { getItem, getIndex, reset, addObj, removeObj }
 })();
 
 
