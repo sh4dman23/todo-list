@@ -23,7 +23,6 @@ function dateFormatter(date) {
 
 function clearPage() {
     main.innerHTML = '';
-    domAssociatorObject.reset();
 }
 
 function createProjectButton(project) {
@@ -75,9 +74,6 @@ function createTopBar(title, hasExtra = false, projectDescription = '', isInbox 
 
 function createItemElement(item) {
     const itemDiv = createElementWithClass('todo-item');
-
-    // EDIT
-    itemDiv.dataset.index = domAssociatorObject.addObj(item);
 
     itemDiv.dataset.uid = item.uid;
     itemDiv.dataset.pr = item.projectName;
@@ -198,32 +194,6 @@ function setActivePage(pageId = 'inbox') {
     document.querySelector(`.sidebar-item#${pageId}`).classList.add('active');
     pageLoader.setCurrentPage(pageId);
 }
-
-/* This object keeps track of dom todo items */
-const domAssociatorObject = (function() {
-    let assArray = [];
-
-    const getItem = itemIndex => assArray[itemIndex];
-    const getIndex = todoItem => assArray.findIndex(item => item === todoItem);
-
-    // Reset the associator when we change pages
-    const reset = () => {
-        assArray = [];
-    };
-
-    // Add object to keep track of it
-    const addObj = (todoItem) => {
-        // .push returns the length, taking one from it gives the index
-        return assArray.push(todoItem) - 1;
-    };
-
-    // Remove object from tracking
-    const removeObj = indexToRemove => {
-        assArray[indexToRemove] = undefined;
-    };
-
-    return { getItem, getIndex, reset, addObj, removeObj }
-})();
 
 
 /* The following objects and functions are responsible for loading pages */
@@ -876,4 +846,4 @@ const alertManager = (function() {
     return { success, error };
 })();
 
-export { domAssociatorObject, pageLoader, modalManager, DOMAdderRemover, collapseSection, alertManager };
+export { pageLoader, modalManager, DOMAdderRemover, collapseSection, alertManager };

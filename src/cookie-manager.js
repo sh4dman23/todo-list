@@ -182,22 +182,66 @@ function saveTodo(todoItem) {
     setLocal(projectsArray);
 }
 
-// Change the whole item list, because otherwise we won't be able to allow users to have duplicate todos
-function changeTodoList(projectName, sectionName) {
+function editTodo(todoItem) {
     const projectsArray = getProjectsArray();
 
-    const projectInMemory = todoObject.findProject(projectName);
+    const project = projectsArray.find(localProject => localProject.name === todoItem.projectName);
+    if (!project) {
+        return false;
+    }
 
-    const project = projectsArray.find(localProject => localProject.name === projectName);
-
-    if (sectionName === null) {
-        project.unlistedItems = projectInMemory.unlistedItems;
+    let localTodoItem;
+    if (todoItem.sectionName === null) {
+        localTodoItem = project.unlistedItems.find(item => item.uid === todoItem.uid);
     } else {
-        const sectionInMemory = projectInMemory.findSection(sectionName);
+        const section = project.sections.find(localSection => localSection.name === todoItem.sectionName);
+        if (!section) {
+            return false;
+        }
 
-        const section = project.sections.find(localSection => localSection.name === sectionName);
+        localTodoItem = section.items.find(item => item.uid === todoItem.uid);
+    }
 
-        section.items = sectionInMemory.items;
+    if (!localTodoItem) {
+        return false;
+    }
+
+    localTodoItem.title = todoItem.title;
+    localTodoItem.description = todoItem.description;
+    localTodoItem.dueDate = todoItem.dueDate;
+    localTodoItem.priority = todoItem.priority;
+    localTodoItem.status = todoItem.status;
+
+    setLocal(projectsArray);
+}
+
+function removeTodo(todoItem) {
+    const projectsArray = getProjectsArray();
+
+    const project = projectsArray.find(localProject => localProject.name === todoItem.projectName);
+    if (!project) {
+        return false;
+    }
+
+    if (todoItem.sectionName === null) {
+        const localTodoItemIndex = project.unlistedItems.findIndex(item => item.uid === todoItem.uid);
+        if (localTodoItemIndex === -1) {
+            return false;
+        }
+
+        project.unlistedItems = project.unlistedItems.slice(0, localTodoItemIndex).concat(project.unlistedItems.slice(localTodoItemIndex + 1));
+    } else {
+        const section = project.sections.find(localSection => localSection.name === todoItem.sectionName);
+        if (!section) {
+            return false;
+        }
+
+        const localTodoItemIndex = section.items.findIndex(item => item.uid === todoItem.uid);
+        if (localTodoItemIndex === -1) {
+            return false;
+        }
+
+        section.items = section.items.slice(0, localTodoItemIndex).concat(section.items.slice(localTodoItemIndex + 1));
     }
 
     setLocal(projectsArray);
@@ -211,4 +255,4 @@ function setLocal(projectsArray) {
     localStorage.setItem('projects', JSON.stringify(projectsArray));
 }
 
-export { saveProject, editProject, deleteProject, saveSection, deleteSection, saveTodo, changeTodoList };
+export { saveProject, editProject, deleteProject, saveSection, deleteSection, saveTodo, editTodo, removeTodo };

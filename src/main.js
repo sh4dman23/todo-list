@@ -1,5 +1,5 @@
 import todoManager from "./todo-manager.js";
-import { domAssociatorObject, pageLoader, modalManager, DOMAdderRemover, collapseSection, alertManager } from "./ui-manager.js";
+import { pageLoader, modalManager, DOMAdderRemover, collapseSection, alertManager } from "./ui-manager.js";
 import * as cookieManager from './cookie-manager.js';
 import { parse, isValid } from 'date-fns';
 import './assets/style.css';
@@ -96,7 +96,7 @@ const eventListenersObject = (function() {
                 }
 
                 todoItem.update(...Array(4), target.checked);
-                cookieManager.changeTodoList(todoItem.projectName, todoItem.sectionName);
+                cookieManager.editTodo(todoItem);
             }
 
             // collapse section
@@ -201,7 +201,7 @@ function managePopupModal(mode = 'edit', targetElement, targetType = 'item') {
             const status = popupForm.querySelector('#edit-todo-checkbox').checked;
             selectedTodoItem.update(title, description, processDate(dueDate), priority, status);
 
-            cookieManager.changeTodoList(selectedTodoItem.projectName, selectedTodoItem.sectionName);
+            cookieManager.editTodo(selectedTodoItem);
             DOMAdderRemover.editItem(selectedTodoElement, selectedTodoItem);
             modalManager.closeModal();
 
@@ -393,7 +393,7 @@ function manageConfirmationModel(target, targetType) {
                     return;
                 }
 
-                cookieManager.changeTodoList(todoItem.projectName, todoItem.sectionName);
+                cookieManager.removeTodo(todoItem);
                 DOMAdderRemover.remove(todoElement);
                 modalManager.closeModal();
             } else if (targetType === 'section') {
