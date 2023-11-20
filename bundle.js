@@ -7165,6 +7165,233 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./src/cookie-manager.js":
+/*!*******************************!*\
+  !*** ./src/cookie-manager.js ***!
+  \*******************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   changeTodoList: () => (/* binding */ changeTodoList),
+/* harmony export */   deleteProject: () => (/* binding */ deleteProject),
+/* harmony export */   deleteSection: () => (/* binding */ deleteSection),
+/* harmony export */   editProject: () => (/* binding */ editProject),
+/* harmony export */   saveProject: () => (/* binding */ saveProject),
+/* harmony export */   saveSection: () => (/* binding */ saveSection),
+/* harmony export */   saveTodo: () => (/* binding */ saveTodo)
+/* harmony export */ });
+/* harmony import */ var _todo_manager__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./todo-manager */ "./src/todo-manager.js");
+
+const todoObject = _todo_manager__WEBPACK_IMPORTED_MODULE_0__["default"].getTodoObject();
+
+if (!localStorage.getItem('projects')) {
+    populateLocalStorage();
+} else {
+    fillTodoObject();
+}
+
+function populateLocalStorage() {
+    // This fills the todoManager object with demo projects, assignments and todos
+    createDemoTodoObject();
+
+    // we fill up the array with everything except the methods
+    let projects = [];
+    for (const project of todoObject.projects) {
+        const unlistedItems = [];
+        for (const item of project.unlistedItems) {
+            unlistedItems.push(item);
+        }
+
+        const sections = [];
+        for (const section of project.sections) {
+            const itemList = [];
+            for (const item of section.items) {
+                itemList.push(item);
+            }
+
+            sections.push({
+                name: section.name,
+                items: itemList,
+            });
+        }
+
+        projects.push({
+            name: project.name,
+            unlistedItems,
+            sections
+        });
+    }
+
+    setLocal(projects);
+}
+
+function fillTodoObject() {
+    const projects = [];
+    const projectsArrayFromLocal = JSON.parse(localStorage.getItem('projects'));
+
+    if (!(projectsArrayFromLocal[0].name === 'default' && projectsArrayFromLocal[0].hasOwnProperty('unlistedItems') && projectsArrayFromLocal[0].hasOwnProperty('sections'))) {
+        populateLocalStorage();
+    }
+
+    for (const project of projectsArrayFromLocal) {
+        for (const item of project.unlistedItems) {
+            item.dueDate = item.dueDate === null ? null : new Date(item.dueDate);
+            Object.assign(item, { update: _todo_manager__WEBPACK_IMPORTED_MODULE_0__.updateTodoItem });
+        }
+
+        for (const section of project.sections) {
+            for (const item of section.items) {
+                item.dueDate = item.dueDate === null ? null : new Date(item.dueDate);
+                Object.assign(item, { update: _todo_manager__WEBPACK_IMPORTED_MODULE_0__.updateTodoItem });
+            }
+        }
+
+        Object.assign(project, { findSection: _todo_manager__WEBPACK_IMPORTED_MODULE_0__.findSection, update: _todo_manager__WEBPACK_IMPORTED_MODULE_0__.updateProject });
+    }
+
+    todoObject.projects = projectsArrayFromLocal;
+}
+
+function createDemoTodoObject() {
+    (_todo_manager__WEBPACK_IMPORTED_MODULE_0__["default"].addTodoItem('laundry', undefined, new Date('2023-11-17'), 'medium')).update(...Array(4), true);
+    (_todo_manager__WEBPACK_IMPORTED_MODULE_0__["default"].addTodoItem('leg day', 'just go', new Date('2023-11-18'), 'low')).update(...Array(4), true);
+    _todo_manager__WEBPACK_IMPORTED_MODULE_0__["default"].addTodoItem('brush teeth');
+
+    _todo_manager__WEBPACK_IMPORTED_MODULE_0__["default"].addSection('weekly shopping');
+    _todo_manager__WEBPACK_IMPORTED_MODULE_0__["default"].addTodoItem('buy new shoes', 'must', new Date('2023-11-25'), 'high', 'default', 'weekly shopping');
+    _todo_manager__WEBPACK_IMPORTED_MODULE_0__["default"].addTodoItem('buy food', 'also must', new Date('2023-11-25'), 'high', 'default', 'weekly shopping');
+
+    _todo_manager__WEBPACK_IMPORTED_MODULE_0__["default"].addProject('Home', 'Small stuff I just gotta do');
+
+    _todo_manager__WEBPACK_IMPORTED_MODULE_0__["default"].addTodoItem('clean the living room', 'haven\'t done this in a while', new Date('2023-11-26'), 'medium', 'Home');
+    (_todo_manager__WEBPACK_IMPORTED_MODULE_0__["default"].addTodoItem('water the plants', 'when free', undefined, 'high', 'Home')).update(...Array(4), true);
+
+    _todo_manager__WEBPACK_IMPORTED_MODULE_0__["default"].addProject('Study', 'Gotta finish these before vacation');
+    _todo_manager__WEBPACK_IMPORTED_MODULE_0__["default"].addSection('homework', 'Study');
+    _todo_manager__WEBPACK_IMPORTED_MODULE_0__["default"].addSection('exams', 'Study');
+
+    _todo_manager__WEBPACK_IMPORTED_MODULE_0__["default"].addTodoItem('math exercise 3.2', 'finish before monday', new Date('2023-11-20'), 'low', 'Study', 'homework');
+    _todo_manager__WEBPACK_IMPORTED_MODULE_0__["default"].addTodoItem('biology-2 pg: 201-227', 'revise for test', new Date('2023-11-21'), 'medium', 'Study', 'homework');
+
+    _todo_manager__WEBPACK_IMPORTED_MODULE_0__["default"].addTodoItem('physics-1', 'on chapter 4', new Date('2023-11-19'), 'high', 'Study', 'exams');
+    _todo_manager__WEBPACK_IMPORTED_MODULE_0__["default"].addTodoItem('biology-2', 'on chapter 3', new Date('2023-11-22'), 'high', 'Study', 'exams')
+
+
+    _todo_manager__WEBPACK_IMPORTED_MODULE_0__["default"].addProject('Work', 'When does vacation start');
+
+    (_todo_manager__WEBPACK_IMPORTED_MODULE_0__["default"].addTodoItem('play cod with the bois', 'i dont work :D', undefined, 'high', 'Work')).update(...Array(4), true);
+}
+
+function saveProject(newProject) {
+    const projectCopy = Object.assign({}, newProject);
+
+    delete projectCopy.findSection;
+    delete projectCopy.update;
+
+    const projectsArray = getProjectsArray();
+
+    projectsArray.push(projectCopy);
+
+    setLocal(projectsArray);
+}
+
+function editProject(oldName, project) {
+    const projectsArray = getProjectsArray()
+
+    const foundProject = projectsArray.find(localProject => localProject.name === oldName);
+
+    foundProject.name = project.name;
+    foundProject.description = project.description;
+
+    setLocal(projectsArray);
+}
+
+function deleteProject(projectName) {
+    let projectsArray = getProjectsArray();
+
+    const projectIndex = projectsArray.findIndex(localProject => localProject.name === projectName);
+
+    projectsArray = projectsArray.slice(0, projectIndex).concat(projectsArray.slice(projectIndex + 1));
+
+    setLocal(projectsArray);
+}
+
+function saveSection(projectName, newSection) {
+    const sectionCopy = Object.assign({}, newSection);
+
+    const projectsArray = getProjectsArray()
+
+    const project = projectsArray.find(localProject => localProject.name === projectName);
+
+    project.sections.push(sectionCopy);
+
+    setLocal(projectsArray);
+}
+
+function deleteSection(projectName, sectionName) {
+    const projectsArray = getProjectsArray();
+
+    const project = projectsArray.find(localProject => localProject.name === projectName);
+
+    const sectionIndex = project.sections.findIndex(localSection => localSection.name === sectionName);
+
+    project.sections = project.sections.slice(0, sectionIndex).concat(project.sections.slice(sectionIndex + 1));
+
+    setLocal(projectsArray);
+}
+
+function saveTodo(todoItem) {
+    const todoItemCopy = Object.assign({}, todoItem);
+    delete todoItemCopy.update;
+
+    const projectsArray = getProjectsArray();
+
+    const project = projectsArray.find(localProject => localProject.name === todoItem.projectName);
+
+    if (todoItem.sectionName === null) {
+        project.unlistedItems.push(todoItem);
+    } else {
+        const section = project.sections.find(localSection => localSection.name === todoItem.sectionName);
+        section.items.push(todoItem);
+    }
+
+    setLocal(projectsArray);
+}
+
+// Change the whole item list, because otherwise we won't be able to allow users to have duplicate todos
+function changeTodoList(projectName, sectionName) {
+    const projectsArray = getProjectsArray();
+
+    const projectInMemory = todoObject.findProject(projectName);
+
+    const project = projectsArray.find(localProject => localProject.name === projectName);
+
+    if (sectionName === null) {
+        project.unlistedItems = projectInMemory.unlistedItems;
+    } else {
+        const sectionInMemory = projectInMemory.findSection(sectionName);
+        
+        const section = project.sections.find(localSection => localSection.name === sectionName);
+
+        section.items = sectionInMemory.items;
+    }
+
+    setLocal(projectsArray);
+}
+
+function getProjectsArray() {
+    return JSON.parse(localStorage.getItem('projects'));
+}
+
+function setLocal(projectsArray) {
+    localStorage.setItem('projects', JSON.stringify(projectsArray));
+}
+
+
+
+/***/ }),
+
 /***/ "./src/svg-manager.js":
 /*!****************************!*\
   !*** ./src/svg-manager.js ***!
@@ -7198,9 +7425,35 @@ const SVGObject = {
 
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__),
+/* harmony export */   findSection: () => (/* binding */ findSection),
+/* harmony export */   updateProject: () => (/* binding */ updateProject),
+/* harmony export */   updateTodoItem: () => (/* binding */ updateTodoItem)
 /* harmony export */ });
 
+
+function updateTodoItem(newTitle, newDescription, newDueDate, newPriority, newStatus) {
+    this.title = newTitle !== undefined ? newTitle : this.title;
+    this.description = newDescription !== undefined ? newDescription : this.description;
+    this.dueDate = newDueDate !== undefined ? newDueDate : this.dueDate;
+    this.priority = newPriority !== undefined ? newPriority : this.priority;
+    this.status = newStatus !== undefined ? newStatus : this.status;
+};
+
+// Finds section by name
+function findSection(sectionName) {
+    return this.sections.find(section => section.name === sectionName);
+}
+
+// While To-Dos may have the same name, projects cannot. So, we need to perform a check
+function updateProject(newName, newDescription) {
+    if (todoManager.getTodoObject().findProject(newName) !== undefined && newName !== this.name) {
+        return false;
+    }
+
+    this.name = newName !== undefined ? newName : this.name;
+    this.description = newDescription !== undefined ? newDescription : this.description;
+}
 
 /*
     The first 3 functions below are responsible for creating and
@@ -7219,15 +7472,8 @@ function createTodoItem(title, description = '', dueDate = null, priority = 'low
         projectName,
         sectionName,
     };
-    const update = (newTitle, newDescription, newDueDate, newPriority, newStatus) => {
-        todo.title = newTitle !== undefined ? newTitle : todo.title;
-        todo.description = newDescription !== undefined ? newDescription : todo.description;
-        todo.dueDate = newDueDate !== undefined ? newDueDate : todo.dueDate;
-        todo.priority = newPriority !== undefined ? newPriority : todo.priority;
-        todo.status = newStatus !== undefined ? newStatus : todo.status;
-    };
 
-    return Object.assign(todo, { update });
+    return Object.assign(todo, { update: updateTodoItem });
 }
 
 function createSection(name) {
@@ -7236,11 +7482,7 @@ function createSection(name) {
         items: [],
     };
 
-    const update = newName => {
-        section.name = newName !== undefined ? newName : section.name;
-    };
-
-    return Object.assign(section, { update });
+    return section;
 }
 
 function createProject(name, description = '') {
@@ -7251,20 +7493,7 @@ function createProject(name, description = '') {
         sections: [],
     };
 
-    // Finds section by name
-    const findSection = sectionName => project.sections.find(section => section.name === sectionName);
-
-    // While To-Dos may have the same name, projects cannot. So, we need to perform a check
-    const update = (newName, newDescription) => {
-        if (todoManager.getTodoObject().findProject(newName) !== undefined && newName !== project.name) {
-            return false;
-        }
-
-        project.name = newName !== undefined ? newName : project.name;
-        project.description = newDescription !== undefined ? newDescription : project.description;
-    }
-
-    return Object.assign(project, { findSection, update });
+    return Object.assign(project, { findSection, update: updateProject });
 }
 
 function checkForEmpty(...args) {
@@ -7488,6 +7717,8 @@ function createElementWithClass(classProperty = '', tag = 'div') {
 function dateFormatter(date) {
     if (date === null) {
         return 'No Due Date';
+    } else if (!(date instanceof Date)) {
+        date = new Date(date);
     }
     return (0,date_fns__WEBPACK_IMPORTED_MODULE_2__["default"])(date, 'd MMM');
 }
@@ -7572,7 +7803,21 @@ function createItemElement(item) {
         date.classList.add('expired');
     }
 
-    // ADD LOGIC FOR PRIORITY MANAGEMENT HERE
+    const priorityDiv = createElementWithClass('todo-priority');
+    switch(item.priority) {
+        case 'low':
+            priorityDiv.classList.add('low');
+            priorityDiv.textContent = 'Low';
+            break;
+        case 'medium':
+            priorityDiv.classList.add('mid');
+            priorityDiv.textContent = 'Medium';
+            break;
+        case 'high':
+            priorityDiv.classList.add('high');
+            priorityDiv.textContent = 'High';
+            break;
+    }
 
     const buttons = createElementWithClass('todo-buttons');
 
@@ -7589,6 +7834,7 @@ function createItemElement(item) {
     itemDiv.appendChild(title);
     itemDiv.appendChild(desc);
     itemDiv.appendChild(date);
+    itemDiv.appendChild(priorityDiv);
     itemDiv.appendChild(buttons);
 
     return itemDiv;
@@ -7657,7 +7903,8 @@ const domAssociatorObject = (function() {
     let assArray = [];
     const getAssArray = () => assArray;
 
-    const getItem = itemIndex => assArray[itemIndex].todoItem;
+    const getItem = itemIndex => assArray[itemIndex];
+    const getIndex = todoItem => assArray.findIndex(item => item === todoItem);
 
     // Reset the associator when we change pages
     const reset = () => {
@@ -7667,10 +7914,7 @@ const domAssociatorObject = (function() {
 
     // Add object to keep track of it
     const addObj = (todoItem) => {
-        assArray.push({
-            index,
-            todoItem,
-        });
+        assArray.push(todoItem);
 
         return index++;
     };
@@ -7680,7 +7924,7 @@ const domAssociatorObject = (function() {
         assArray[indexToRemove] = undefined;
     };
 
-    return { getAssArray, getItem, reset, addObj, removeObj }
+    return { getAssArray, getItem, getIndex, reset, addObj, removeObj }
 })();
 
 
@@ -7740,13 +7984,13 @@ const pageLoader = (function() {
 
             for (const project of todoObject.projects) {
                 for (const unlistedItem of project.unlistedItems) {
-                    if (unlistedItem.dueDate !== null && ((0,date_fns__WEBPACK_IMPORTED_MODULE_4__["default"])(unlistedItem.dueDate) || (0,date_fns__WEBPACK_IMPORTED_MODULE_2__["default"])(new Date(), 'yyyy-MM-dd') === (0,date_fns__WEBPACK_IMPORTED_MODULE_2__["default"])(unlistedItem.dueDate, 'yyyy-MM-dd'))) {
+                    if (unlistedItem.dueDate !== null && unlistedItem.status === false && ((0,date_fns__WEBPACK_IMPORTED_MODULE_4__["default"])(unlistedItem.dueDate) || (0,date_fns__WEBPACK_IMPORTED_MODULE_2__["default"])(new Date(), 'yyyy-MM-dd') === (0,date_fns__WEBPACK_IMPORTED_MODULE_2__["default"])(unlistedItem.dueDate, 'yyyy-MM-dd'))) {
                         itemList.appendChild(createItemElement(unlistedItem));
                     }
                 }
                 for (const section of project.sections) {
                     for (const item of section.items) {
-                        if (item.dueDate !== null && ((0,date_fns__WEBPACK_IMPORTED_MODULE_4__["default"])(item.dueDate) || (0,date_fns__WEBPACK_IMPORTED_MODULE_2__["default"])(new Date(), 'yyyy-MM-dd') === (0,date_fns__WEBPACK_IMPORTED_MODULE_2__["default"])(item.dueDate, 'yyyy-MM-dd'))) {
+                        if (item.dueDate !== null && item.status === false && ((0,date_fns__WEBPACK_IMPORTED_MODULE_4__["default"])(item.dueDate) || (0,date_fns__WEBPACK_IMPORTED_MODULE_2__["default"])(new Date(), 'yyyy-MM-dd') === (0,date_fns__WEBPACK_IMPORTED_MODULE_2__["default"])(item.dueDate, 'yyyy-MM-dd'))) {
                             itemList.appendChild(createItemElement(item));
                         }
                     }
@@ -7772,19 +8016,19 @@ const pageLoader = (function() {
             const page = createElementWithClass('page');
             page.dataset.page = 'week';
 
-            page.appendChild(createTopBar('Week'));
+            page.appendChild(createTopBar('This Week'));
 
             const itemList = createElementWithClass('todo-items');
 
             for (const project of todoObject.projects) {
                 for (const unlistedItem of project.unlistedItems) {
-                    if (unlistedItem.dueDate !== null && (0,date_fns__WEBPACK_IMPORTED_MODULE_6__["default"])(unlistedItem.dueDate, { weekStartsOn: 0 }) && (0,date_fns__WEBPACK_IMPORTED_MODULE_5__["default"])(unlistedItem.dueDate)) {
+                    if (unlistedItem.dueDate !== null && unlistedItem.status === false && (0,date_fns__WEBPACK_IMPORTED_MODULE_6__["default"])(unlistedItem.dueDate, { weekStartsOn: 0 }) && (0,date_fns__WEBPACK_IMPORTED_MODULE_5__["default"])(unlistedItem.dueDate)) {
                         itemList.appendChild(createItemElement(unlistedItem));
                     }
                 }
                 for (const section of project.sections) {
                     for (const item of section.items) {
-                        if (item.dueDate !== null && (0,date_fns__WEBPACK_IMPORTED_MODULE_6__["default"])(item.dueDate, { weekStartsOn: 0 }) && (0,date_fns__WEBPACK_IMPORTED_MODULE_5__["default"])(item.dueDate)) {
+                        if (item.dueDate !== null && item.status === false && (0,date_fns__WEBPACK_IMPORTED_MODULE_6__["default"])(item.dueDate, { weekStartsOn: 0 }) && (0,date_fns__WEBPACK_IMPORTED_MODULE_5__["default"])(item.dueDate)) {
                             itemList.appendChild(createItemElement(item));
                         }
                     }
@@ -8075,9 +8319,9 @@ const modalManager = (function() {
 
         overlay.appendChild(dialog);
 
-        page.appendChild(overlay);
-
         disableBody();
+
+        page.appendChild(overlay);
     }
 
     const loadEditItemModal = (projectName = '', sectionName = null, todoItem) => {
@@ -8093,9 +8337,9 @@ const modalManager = (function() {
 
         overlay.appendChild(dialog);
 
-        page.appendChild(overlay);
-
         disableBody();
+
+        page.appendChild(overlay);
     };
 
     const loadAddSectionModal = projectName => {
@@ -8111,9 +8355,9 @@ const modalManager = (function() {
 
         overlay.appendChild(dialog);
 
-        page.appendChild(overlay);
-
         disableBody();
+
+        page.appendChild(overlay);
     };
 
     const loadAddProjectModal = () => {
@@ -8129,9 +8373,9 @@ const modalManager = (function() {
 
         overlay.appendChild(dialog);
 
-        page.appendChild(overlay);
-
         disableBody();
+
+        page.appendChild(overlay);
     };
 
     const loadEditProjectModal = project => {
@@ -8147,9 +8391,9 @@ const modalManager = (function() {
 
         overlay.appendChild(dialog);
 
-        page.appendChild(overlay);
-
         disableBody();
+
+        page.appendChild(overlay);
     };
 
     const loadConfirmationModal = (targetType, targetName) => {
@@ -8193,14 +8437,18 @@ const modalManager = (function() {
         dialog.appendChild(popupBody);
         overlay.appendChild(dialog);
 
-        page.appendChild(overlay);
-
         disableBody();
+
+        page.appendChild(overlay);
     };
 
+    let elementsToBeMadeUnfocusable = [ document.body ];
     function disableBody() {
         // Disable the body so that the user cannot interact with it
         document.body.classList.add('disabled');
+
+        elementsToBeMadeUnfocusable = document.body.querySelectorAll( 'a, button, input, textarea, select, details, [tabindex]:not([tabindex="-1"])');
+        elementsToBeMadeUnfocusable.forEach(element => element.tabIndex = '-1');
     }
 
     const closeModal = () => {
@@ -8212,6 +8460,7 @@ const modalManager = (function() {
         }
 
         document.body.classList.remove('disabled');
+        elementsToBeMadeUnfocusable.forEach(element => element.tabIndex = '0');
     };
 
     const switchPriority = priority => {
@@ -8259,9 +8508,23 @@ const DOMAdderRemover = (function() {
         const projectButton = createProjectButton(project);
 
         projectsList.insertBefore(projectButton, projectsList.lastElementChild);
-    }
+    };
 
-    return { addItem, addSection, addProject };
+    const editItem = (previousItemDiv, todoItem) => {
+        const newDiv = createItemElement(todoItem);
+
+        const parent = previousItemDiv.parentNode;
+
+        parent.insertBefore(newDiv, previousItemDiv.nextElementSibling);
+
+        parent.removeChild(previousItemDiv);
+    };
+
+    const remove = element => {
+        element.parentNode.removeChild(element);
+    };
+
+    return { addItem, addSection, addProject, editItem, remove };
 })();
 
 const collapseSection = sectionDiv => {
@@ -8809,21 +9072,16 @@ var __webpack_exports__ = {};
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _todo_manager_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./todo-manager.js */ "./src/todo-manager.js");
 /* harmony import */ var _ui_manager_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./ui-manager.js */ "./src/ui-manager.js");
-/* harmony import */ var date_fns__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! date-fns */ "./node_modules/date-fns/esm/parse/index.js");
-/* harmony import */ var date_fns__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! date-fns */ "./node_modules/date-fns/esm/isValid/index.js");
-/* harmony import */ var _assets_style_css__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./assets/style.css */ "./src/assets/style.css");
+/* harmony import */ var _cookie_manager_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./cookie-manager.js */ "./src/cookie-manager.js");
+/* harmony import */ var date_fns__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! date-fns */ "./node_modules/date-fns/esm/parse/index.js");
+/* harmony import */ var date_fns__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! date-fns */ "./node_modules/date-fns/esm/isValid/index.js");
+/* harmony import */ var _assets_style_css__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./assets/style.css */ "./src/assets/style.css");
 
 
 
 
 
-_todo_manager_js__WEBPACK_IMPORTED_MODULE_0__["default"].addProject('HOme', 'asjdhasdaosadsa');
-_todo_manager_js__WEBPACK_IMPORTED_MODULE_0__["default"].addProject('Study', 'lorem * 5');
-_todo_manager_js__WEBPACK_IMPORTED_MODULE_0__["default"].addProject('Work');
 
-_todo_manager_js__WEBPACK_IMPORTED_MODULE_0__["default"].addSection('homework');
-const item = _todo_manager_js__WEBPACK_IMPORTED_MODULE_0__["default"].addTodoItem('laundry', 'must do today', new Date('2023-11-17'), 'low', 'default', 'homework');
-_todo_manager_js__WEBPACK_IMPORTED_MODULE_0__["default"].addTodoItem('laundry22', 'must do today too', new Date('2023-11-18'), 'high', 'HOme');
 
 _ui_manager_js__WEBPACK_IMPORTED_MODULE_1__.pageLoader.defaultLoader();
 
@@ -8921,6 +9179,7 @@ const eventListenersObject = (function() {
                 }
 
                 todoItem.update(...Array(4), target.checked);
+                _cookie_manager_js__WEBPACK_IMPORTED_MODULE_2__.changeTodoList(todoItem.projectName, todoItem.sectionName);
             }
 
             // collapse section
@@ -8956,7 +9215,7 @@ function createErrorAlert(message) {
 function manageAlert(alert) {
     const timeOut = setTimeout(() => {
         alert.parentNode.removeChild(alert);
-    }, 6000);
+    }, 3000);
 
     alert.querySelector('button.close-alert').addEventListener('click', () => {
         clearTimeout(timeOut);
@@ -9024,12 +9283,17 @@ function managePopupModal(mode = 'edit', targetElement, targetType = 'item') {
         if (mode === 'edit' && targetType === 'item') {
             const status = popupForm.querySelector('#edit-todo-checkbox').checked;
             selectedTodoItem.update(title, description, processDate(dueDate), priority, status);
-            _ui_manager_js__WEBPACK_IMPORTED_MODULE_1__.pageLoader.refreshPage();
+
+            _cookie_manager_js__WEBPACK_IMPORTED_MODULE_2__.changeTodoList(selectedTodoItem.projectName, selectedTodoItem.sectionName);
+            _ui_manager_js__WEBPACK_IMPORTED_MODULE_1__.DOMAdderRemover.editItem(selectedTodoElement, selectedTodoItem);
             _ui_manager_js__WEBPACK_IMPORTED_MODULE_1__.modalManager.closeModal();
 
         } else if (mode === 'add' && targetType === 'item') {
             const sectionName = section.dataset.name;
+
             const newTodoItem = _todo_manager_js__WEBPACK_IMPORTED_MODULE_0__["default"].addTodoItem(title, description, processDate(dueDate), priority, projectName, sectionName);
+
+            _cookie_manager_js__WEBPACK_IMPORTED_MODULE_2__.saveTodo(newTodoItem);
             _ui_manager_js__WEBPACK_IMPORTED_MODULE_1__.DOMAdderRemover.addItem(section, newTodoItem);
             _ui_manager_js__WEBPACK_IMPORTED_MODULE_1__.modalManager.closeModal();
         } else if (mode === 'add' && targetType === 'section') {
@@ -9041,6 +9305,7 @@ function managePopupModal(mode = 'edit', targetElement, targetType = 'item') {
                 return;
             }
 
+            _cookie_manager_js__WEBPACK_IMPORTED_MODULE_2__.saveSection(projectName, newSection);
             _ui_manager_js__WEBPACK_IMPORTED_MODULE_1__.DOMAdderRemover.addSection(newSection);
             _ui_manager_js__WEBPACK_IMPORTED_MODULE_1__.modalManager.closeModal();
         } else if (mode === 'add' && targetType === 'project') {
@@ -9051,9 +9316,12 @@ function managePopupModal(mode = 'edit', targetElement, targetType = 'item') {
                 return;
             }
 
+            _cookie_manager_js__WEBPACK_IMPORTED_MODULE_2__.saveProject(newProject);
             _ui_manager_js__WEBPACK_IMPORTED_MODULE_1__.DOMAdderRemover.addProject(newProject);
             _ui_manager_js__WEBPACK_IMPORTED_MODULE_1__.modalManager.closeModal();
         } else if (mode === 'edit' && targetType === 'project') {
+            const oldName = project.name;
+
             const success = project.update(title, description);
 
             if (success === false) {
@@ -9061,6 +9329,7 @@ function managePopupModal(mode = 'edit', targetElement, targetType = 'item') {
                 return;
             }
 
+            _cookie_manager_js__WEBPACK_IMPORTED_MODULE_2__.editProject(oldName, project);
             _ui_manager_js__WEBPACK_IMPORTED_MODULE_1__.pageLoader.loadSideBar();
             _ui_manager_js__WEBPACK_IMPORTED_MODULE_1__.pageLoader.projectPageLoader(project);
             _ui_manager_js__WEBPACK_IMPORTED_MODULE_1__.modalManager.closeModal();
@@ -9137,11 +9406,11 @@ function manageEditProjectModalLoad() {
 
 function manageConfirmationModel(target, targetType) {
     const page = _ui_manager_js__WEBPACK_IMPORTED_MODULE_1__.pageLoader.getCurrentPage();
-    let todoItem, sectionName, projectName;
+    let todoItem, todoElement, sectionName, section, projectName;
 
     if (targetType === 'item') {
         // The target is the delete button whose first parent is the buttons div, the second is the todo element
-        const todoElement = target.parentNode.parentNode;
+        todoElement = target.parentNode.parentNode;
 
         if (todoElement.dataset.index === undefined) {
             createDOMMessAlert();
@@ -9159,7 +9428,7 @@ function manageConfirmationModel(target, targetType) {
         }
 
         // First parent is header div, second is second element
-        const section = target.parentNode.parentNode;
+        section = target.parentNode.parentNode;
         if (section.id === 'unlisted') {
             window.location.reload();
         }
@@ -9200,8 +9469,9 @@ function manageConfirmationModel(target, targetType) {
                     return;
                 }
 
+                _cookie_manager_js__WEBPACK_IMPORTED_MODULE_2__.changeTodoList(todoItem.projectName, todoItem.sectionName);
+                _ui_manager_js__WEBPACK_IMPORTED_MODULE_1__.DOMAdderRemover.remove(todoElement);
                 _ui_manager_js__WEBPACK_IMPORTED_MODULE_1__.modalManager.closeModal();
-                _ui_manager_js__WEBPACK_IMPORTED_MODULE_1__.pageLoader.refreshPage();
             } else if (targetType === 'section') {
                 const success = _todo_manager_js__WEBPACK_IMPORTED_MODULE_0__["default"].deleteSection(projectName, sectionName);
 
@@ -9210,8 +9480,9 @@ function manageConfirmationModel(target, targetType) {
                     return;
                 }
 
+                _cookie_manager_js__WEBPACK_IMPORTED_MODULE_2__.deleteSection(projectName, sectionName);
+                _ui_manager_js__WEBPACK_IMPORTED_MODULE_1__.DOMAdderRemover.remove(section);
                 _ui_manager_js__WEBPACK_IMPORTED_MODULE_1__.modalManager.closeModal();
-                _ui_manager_js__WEBPACK_IMPORTED_MODULE_1__.pageLoader.refreshPage();
             } else if (targetType === 'project') {
                 const success = _todo_manager_js__WEBPACK_IMPORTED_MODULE_0__["default"].deleteProject(projectName);
 
@@ -9220,6 +9491,7 @@ function manageConfirmationModel(target, targetType) {
                     return;
                 }
 
+                _cookie_manager_js__WEBPACK_IMPORTED_MODULE_2__.deleteProject(projectName);
                 _ui_manager_js__WEBPACK_IMPORTED_MODULE_1__.modalManager.closeModal();
                 _ui_manager_js__WEBPACK_IMPORTED_MODULE_1__.pageLoader.defaultLoader();
             }
@@ -9243,9 +9515,9 @@ function processDate(date) {
     }
 
     // Check for validity
-    const parsedDate = (0,date_fns__WEBPACK_IMPORTED_MODULE_3__["default"])(date, 'yyyy-MM-dd', new Date());
+    const parsedDate = (0,date_fns__WEBPACK_IMPORTED_MODULE_4__["default"])(date, 'yyyy-MM-dd', new Date());
 
-    if (!(0,date_fns__WEBPACK_IMPORTED_MODULE_4__["default"])(parsedDate)) {
+    if (!(0,date_fns__WEBPACK_IMPORTED_MODULE_5__["default"])(parsedDate)) {
         return null;
     }
 
