@@ -659,3 +659,7 @@ textarea.todo-desc {
 .corner-popup svg {
     fill: #fff;
 }
+
+.corner-popup + .corner-popup {
+    margin-top: 1rem;
+}

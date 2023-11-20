@@ -75,7 +75,13 @@ function createTopBar(title, hasExtra = false, projectDescription = '', isInbox 
 
 function createItemElement(item) {
     const itemDiv = createElementWithClass('todo-item');
+
+    // EDIT
     itemDiv.dataset.index = domAssociatorObject.addObj(item);
+
+    itemDiv.dataset.uid = item.uid;
+    itemDiv.dataset.pr = item.projectName;
+    itemDiv.dataset.sec = item.sectionName;
 
     const checkboxContainer = createElementWithClass('checkbox-container');
 

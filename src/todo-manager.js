@@ -32,6 +32,7 @@ export function updateProject(newName, newDescription) {
 
 function createTodoItem(title, description = '', dueDate = null, priority = 'low', projectName = 'default', sectionName = null) {
     const todo = {
+        uid: crypto.randomUUID(),
         title,
         description,
         dueDate,
@@ -99,7 +100,6 @@ const todoManager = (function() {
                 '',
             ),
         ],
-
         // Finds project by name
         findProject(projectName) {
             return this.projects.find(project => project.name === projectName);
@@ -107,6 +107,31 @@ const todoManager = (function() {
     };
 
     const getTodoObject = () => todoObject;
+
+    const getItem = (projectName, sectionName, uid) => {
+        if (!projectName || (!sectionName && sectionName !== null) || !uid) {
+            return false;
+        }
+
+        const project = todoObject.findProject(projectName);
+        if (project === undefined) {
+            return false;
+        }
+
+        let itemList;
+        if (sectionName === null || sectionName === 'null') {
+            itemList = project.unlistedItems;
+        } else {
+            const section = project.findSection(sectionName);
+            if (section === undefined) {
+                return false;
+            }
+
+            itemList = section.items;
+        }
+
+        return itemList.find(item => item.uid === uid);
+    };
 
     // Create the new project and return it
     const addProject = (name, description) => {
@@ -238,7 +263,7 @@ const todoManager = (function() {
         return true;
     };
 
-    return { getTodoObject, addProject, addSection, addTodoItem, deleteTodoItem, deleteSection, deleteProject };
+    return { getTodoObject, getItem, addProject, addSection, addTodoItem, deleteTodoItem, deleteSection, deleteProject };
 })();
 
 export default todoManager;

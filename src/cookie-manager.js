@@ -27,7 +27,6 @@ function populateLocalStorage() {
         for (const section of project.sections) {
             const itemList = [];
             for (const item of section.items) {
-                // backwards compatibility for when items did not have uids in this project
                 if (!('uid' in item)) {
                     item.uid = crypto.randomUUID();
                 }

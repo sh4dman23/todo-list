@@ -85,16 +85,12 @@ const eventListenersObject = (function() {
             else if (target.classList.contains('todo-checkbox')) {
                 const todoElement = target.parentNode.parentNode;
 
-                const todoIndex = todoElement.dataset.index;
+                let [projectName, sectionName, itemUid] = [todoElement.dataset.pr, todoElement.dataset.sec, todoElement.dataset.uid];
 
-                if (!todoIndex) {
-                    createDOMMessAlert();
-                    return;
-                }
-
-                const todoItem = domAssociatorObject.getItem(todoIndex);
+                const todoItem = todoManager.getItem(projectName, sectionName, itemUid);
 
                 if (!todoItem) {
+                    event.preventDefault();
                     createDOMMessAlert();
                     return;
                 }
@@ -218,6 +214,11 @@ function managePopupModal(mode = 'edit', targetElement, targetType = 'item') {
             DOMAdderRemover.addItem(section, newTodoItem);
             modalManager.closeModal();
         } else if (mode === 'add' && targetType === 'section') {
+            if (title === 'null') {
+                createErrorAlert('You can\'t create a section by this name, buddy.');
+                return;
+            }
+
             const newSection = todoManager.addSection(title, projectName);
 
             // Check sectionName for doubles
@@ -270,22 +271,22 @@ function manageEditItemModalLoad(target) {
         todoElement = target.parentNode.parentNode;
     }
 
-    const itemIndex = todoElement.dataset.index;
+    let [projectName, sectionName, itemUid] = [todoElement.dataset.pr, todoElement.dataset.sec, todoElement.dataset.uid];
 
-    if (itemIndex === undefined) {
+    const todoItem = todoManager.getItem(projectName, sectionName, itemUid);
+
+    if (!todoItem) {
+        createDOMMessAlert();
         return;
     }
 
-    const todoItem = domAssociatorObject.getItem(itemIndex);
-
     const section = todoElement.parentNode.parentNode;
 
-    let [projectName, sectionName] = getProjectAndSectionName(todoItem);
     if (projectName === 'default') {
         projectName = 'Inbox';
     }
 
-    modalManager.loadEditItemModal(projectName, sectionName, todoItem);
+    modalManager.loadEditItemModal(projectName, sectionName === 'null' ? null : sectionName, todoItem);
     return [todoElement, todoItem];
 }
 
@@ -333,12 +334,14 @@ function manageConfirmationModel(target, targetType) {
         // The target is the delete button whose first parent is the buttons div, the second is the todo element
         todoElement = target.parentNode.parentNode;
 
-        if (todoElement.dataset.index === undefined) {
+        let [projectName, sectionName, itemUid] = [todoElement.dataset.pr, todoElement.dataset.sec, todoElement.dataset.uid];
+
+        todoItem = todoManager.getItem(projectName, sectionName, itemUid);
+
+        if (!todoItem) {
             createDOMMessAlert();
             return;
         }
-
-        todoItem = domAssociatorObject.getItem(todoElement.dataset.index);
 
         modalManager.loadConfirmationModal('To-Do', todoItem.title);
     } else if (targetType === 'section') {
