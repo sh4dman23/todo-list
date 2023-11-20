@@ -471,9 +471,6 @@ function setActivePage(pageId = 'inbox') {
 
 /* This object keeps track of dom todo items */
 const domAssociatorObject = (function() {
-    // Keep track of dom object
-    let index = 0;
-
     let assArray = [];
     const getAssArray = () => assArray;
 
@@ -482,15 +479,13 @@ const domAssociatorObject = (function() {
 
     // Reset the associator when we change pages
     const reset = () => {
-        index = 0;
         assArray = [];
     };
 
     // Add object to keep track of it
     const addObj = (todoItem) => {
-        assArray.push(todoItem);
-
-        return index++;
+        // .push returns the length, taking one from it gives the index
+        return assArray.push(todoItem) - 1;
     };
 
     // Remove object from tracking
@@ -798,7 +793,7 @@ const modalManager = (function() {
         const desc = createElementWithClass('todo-desc', 'textarea');
         desc.id = 'edit-desc';
         desc.spellcheck = false;
-        desc.placeholder = 'A neat description for your ToDo e.g. "must finish them by tomorrow, else I won\'t have clean clothes next week!"';
+        desc.placeholder = 'A neat description for your To-Do e.g. "must finish them by tomorrow, else I won\'t have clean clothes next week!"';
 
         const dateDiv = createElementWithClass('date');
 
