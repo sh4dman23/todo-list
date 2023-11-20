@@ -1,15 +1,13 @@
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
-const CssMinimizerPlugin = require('css-minimizer-webpack-plugin');
 
 module.exports = {
-    mode: 'development',
     entry: './src/main.js',
     output: {
-        filename: 'bundle.js',
+        filename: '[name].[contenthash].js',
         path: path.resolve(__dirname, 'dist'),
-        assetModuleFilename: 'assets/[hash][ext][query]',
+        assetModuleFilename: 'assets/[contenthash][ext][query]',
         clean: true,
     },
     plugins: [
@@ -17,14 +15,9 @@ module.exports = {
             template: './src/assets/index.html',
         }),
         new MiniCssExtractPlugin({
-            filename: '[name][hash].css',
+            filename: '[name].[contenthash].css',
         }),
     ],
-    optimization: {
-        minimizer: [
-            new CssMinimizerPlugin(),
-        ],
-    },
     module: {
         rules: [
             {

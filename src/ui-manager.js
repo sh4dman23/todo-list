@@ -1,7 +1,6 @@
 import todoManager from "./todo-manager.js";
 import { format, isToday, isThisWeek, isFuture, isValid } from "date-fns";
 import SVGObject from "./svg-manager.js";
-import { de } from "date-fns/locale";
 
 const main = document.querySelector('main');
 

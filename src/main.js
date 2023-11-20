@@ -2,7 +2,6 @@ import todoManager from "./todo-manager.js";
 import { domAssociatorObject, pageLoader, modalManager, DOMAdderRemover, collapseSection, alertManager } from "./ui-manager.js";
 import * as cookieManager from './cookie-manager.js';
 import { parse, isValid } from 'date-fns';
-import './cookie-manager.js';
 import './assets/style.css';
 
 pageLoader.defaultLoader();
