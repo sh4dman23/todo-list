@@ -522,7 +522,7 @@ const modalManager = (function() {
         const desc = createElementWithClass('todo-desc', 'textarea');
         desc.id = 'edit-desc';
         desc.spellcheck = false;
-        desc.placeholder = 'A neat description for your ToDo e.g. "must finish them by tomorrow, else I won\'t have clean clothes next week!"';
+        desc.placeholder = 'A neat description for your To-Do e.g. "must finish them by tomorrow, else I won\'t have clean clothes next week!"';
 
         const dateDiv = createElementWithClass('date');
 
