@@ -5,6 +5,21 @@ A task manager app made using HTML, CSS and JavaScript.
 
 A live preview of the app can be found [here](https://sh4dman23.github.io/todo-list).
 
+## Installation and Usage
+If you want to use this project, first clone this repository in your local machine. Then, run the following command
+in the project directory to install dependencies:
+```bash
+npm install
+```
+Now, run either of the following commands to reproduce the distribution files or start a live server, respectively:
+```bash
+# Reproduce distribution files
+npm run build
+
+# Start a live server
+npm run start
+```
+
 ## Features
 ### Projects
 Besides Inbox, users are able to create custom projects where they can save their To-Do items. Each project allows

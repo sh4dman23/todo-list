@@ -40,6 +40,7 @@ function updateProject(newName, newDescription) {
 
 function createTodoItem(title, description = '', dueDate = null, priority = 'low', projectName = 'default', sectionName = null) {
     const todo = {
+        uid: crypto.randomUUID(),
         title,
         description,
         dueDate,
@@ -107,7 +108,6 @@ const todoManager = (function() {
                 '',
             ),
         ],
-
         // Finds project by name
         findProject(projectName) {
             return this.projects.find(project => project.name === projectName);
@@ -115,6 +115,31 @@ const todoManager = (function() {
     };
 
     const getTodoObject = () => todoObject;
+
+    const getItem = (projectName, sectionName, uid) => {
+        if (!projectName || (!sectionName && sectionName !== null) || !uid) {
+            return false;
+        }
+
+        const project = todoObject.findProject(projectName);
+        if (project === undefined) {
+            return false;
+        }
+
+        let itemList;
+        if (sectionName === null || sectionName === 'null') {
+            itemList = project.unlistedItems;
+        } else {
+            const section = project.findSection(sectionName);
+            if (section === undefined) {
+                return false;
+            }
+
+            itemList = section.items;
+        }
+
+        return itemList.find(item => item.uid === uid);
+    };
 
     // Create the new project and return it
     const addProject = (name, description) => {
@@ -246,7 +271,7 @@ const todoManager = (function() {
         return true;
     };
 
-    return { getTodoObject, addProject, addSection, addTodoItem, deleteTodoItem, deleteSection, deleteProject };
+    return { getTodoObject, getItem, addProject, addSection, addTodoItem, deleteTodoItem, deleteSection, deleteProject };
 })();
 
 /* harmony default export */ const todo_manager = (todoManager);
@@ -299,7 +324,6 @@ function dateFormatter(date) {
 
 function clearPage() {
     main.innerHTML = '';
-    domAssociatorObject.reset();
 }
 
 function createProjectButton(project) {
@@ -351,7 +375,10 @@ function createTopBar(title, hasExtra = false, projectDescription = '', isInbox 
 
 function createItemElement(item) {
     const itemDiv = createElementWithClass('todo-item');
-    itemDiv.dataset.index = domAssociatorObject.addObj(item);
+
+    itemDiv.dataset.uid = item.uid;
+    itemDiv.dataset.pr = item.projectName;
+    itemDiv.dataset.sec = item.sectionName;
 
     const checkboxContainer = createElementWithClass('checkbox-container');
 
@@ -468,33 +495,6 @@ function setActivePage(pageId = 'inbox') {
     document.querySelector(`.sidebar-item#${pageId}`).classList.add('active');
     pageLoader.setCurrentPage(pageId);
 }
-
-/* This object keeps track of dom todo items */
-const domAssociatorObject = (function() {
-    let assArray = [];
-    const getAssArray = () => assArray;
-
-    const getItem = itemIndex => assArray[itemIndex];
-    const getIndex = todoItem => assArray.findIndex(item => item === todoItem);
-
-    // Reset the associator when we change pages
-    const reset = () => {
-        assArray = [];
-    };
-
-    // Add object to keep track of it
-    const addObj = (todoItem) => {
-        // .push returns the length, taking one from it gives the index
-        return assArray.push(todoItem) - 1;
-    };
-
-    // Remove object from tracking
-    const removeObj = indexToRemove => {
-        assArray[indexToRemove] = undefined;
-    };
-
-    return { getAssArray, getItem, getIndex, reset, addObj, removeObj }
-})();
 
 
 /* The following objects and functions are responsible for loading pages */
@@ -1167,6 +1167,10 @@ function populateLocalStorage() {
     for (const project of cookie_manager_todoObject.projects) {
         const unlistedItems = [];
         for (const item of project.unlistedItems) {
+            // backwards compatibility for when items did not have uids in this project
+            if (!('uid' in item)) {
+                item.uid = crypto.randomUUID();
+            }
             unlistedItems.push(item);
         }
 
@@ -1174,6 +1178,9 @@ function populateLocalStorage() {
         for (const section of project.sections) {
             const itemList = [];
             for (const item of section.items) {
+                if (!('uid' in item)) {
+                    item.uid = crypto.randomUUID();
+                }
                 itemList.push(item);
             }
 
@@ -1326,22 +1333,66 @@ function saveTodo(todoItem) {
     setLocal(projectsArray);
 }
 
-// Change the whole item list, because otherwise we won't be able to allow users to have duplicate todos
-function changeTodoList(projectName, sectionName) {
+function editTodo(todoItem) {
     const projectsArray = getProjectsArray();
 
-    const projectInMemory = cookie_manager_todoObject.findProject(projectName);
+    const project = projectsArray.find(localProject => localProject.name === todoItem.projectName);
+    if (!project) {
+        return false;
+    }
 
-    const project = projectsArray.find(localProject => localProject.name === projectName);
-
-    if (sectionName === null) {
-        project.unlistedItems = projectInMemory.unlistedItems;
+    let localTodoItem;
+    if (todoItem.sectionName === null) {
+        localTodoItem = project.unlistedItems.find(item => item.uid === todoItem.uid);
     } else {
-        const sectionInMemory = projectInMemory.findSection(sectionName);
-        
-        const section = project.sections.find(localSection => localSection.name === sectionName);
+        const section = project.sections.find(localSection => localSection.name === todoItem.sectionName);
+        if (!section) {
+            return false;
+        }
 
-        section.items = sectionInMemory.items;
+        localTodoItem = section.items.find(item => item.uid === todoItem.uid);
+    }
+
+    if (!localTodoItem) {
+        return false;
+    }
+
+    localTodoItem.title = todoItem.title;
+    localTodoItem.description = todoItem.description;
+    localTodoItem.dueDate = todoItem.dueDate;
+    localTodoItem.priority = todoItem.priority;
+    localTodoItem.status = todoItem.status;
+
+    setLocal(projectsArray);
+}
+
+function removeTodo(todoItem) {
+    const projectsArray = getProjectsArray();
+
+    const project = projectsArray.find(localProject => localProject.name === todoItem.projectName);
+    if (!project) {
+        return false;
+    }
+
+    if (todoItem.sectionName === null) {
+        const localTodoItemIndex = project.unlistedItems.findIndex(item => item.uid === todoItem.uid);
+        if (localTodoItemIndex === -1) {
+            return false;
+        }
+
+        project.unlistedItems = project.unlistedItems.slice(0, localTodoItemIndex).concat(project.unlistedItems.slice(localTodoItemIndex + 1));
+    } else {
+        const section = project.sections.find(localSection => localSection.name === todoItem.sectionName);
+        if (!section) {
+            return false;
+        }
+
+        const localTodoItemIndex = section.items.findIndex(item => item.uid === todoItem.uid);
+        if (localTodoItemIndex === -1) {
+            return false;
+        }
+
+        section.items = section.items.slice(0, localTodoItemIndex).concat(section.items.slice(localTodoItemIndex + 1));
     }
 
     setLocal(projectsArray);
@@ -1446,22 +1497,18 @@ const eventListenersObject = (function() {
             else if (target.classList.contains('todo-checkbox')) {
                 const todoElement = target.parentNode.parentNode;
 
-                const todoIndex = todoElement.dataset.index;
+                let [projectName, sectionName, itemUid] = [todoElement.dataset.pr, todoElement.dataset.sec, todoElement.dataset.uid];
 
-                if (!todoIndex) {
-                    createDOMMessAlert();
-                    return;
-                }
-
-                const todoItem = domAssociatorObject.getItem(todoIndex);
+                const todoItem = todo_manager.getItem(projectName, sectionName, itemUid);
 
                 if (!todoItem) {
+                    event.preventDefault();
                     createDOMMessAlert();
                     return;
                 }
 
                 todoItem.update(...Array(4), target.checked);
-                changeTodoList(todoItem.projectName, todoItem.sectionName);
+                editTodo(todoItem);
             }
 
             // collapse section
@@ -1566,7 +1613,7 @@ function managePopupModal(mode = 'edit', targetElement, targetType = 'item') {
             const status = popupForm.querySelector('#edit-todo-checkbox').checked;
             selectedTodoItem.update(title, description, processDate(dueDate), priority, status);
 
-            changeTodoList(selectedTodoItem.projectName, selectedTodoItem.sectionName);
+            editTodo(selectedTodoItem);
             DOMAdderRemover.editItem(selectedTodoElement, selectedTodoItem);
             modalManager.closeModal();
 
@@ -1579,6 +1626,11 @@ function managePopupModal(mode = 'edit', targetElement, targetType = 'item') {
             DOMAdderRemover.addItem(section, newTodoItem);
             modalManager.closeModal();
         } else if (mode === 'add' && targetType === 'section') {
+            if (title === 'null') {
+                createErrorAlert('You can\'t create a section by this name, buddy.');
+                return;
+            }
+
             const newSection = todo_manager.addSection(title, projectName);
 
             // Check sectionName for doubles
@@ -1631,22 +1683,22 @@ function manageEditItemModalLoad(target) {
         todoElement = target.parentNode.parentNode;
     }
 
-    const itemIndex = todoElement.dataset.index;
+    let [projectName, sectionName, itemUid] = [todoElement.dataset.pr, todoElement.dataset.sec, todoElement.dataset.uid];
 
-    if (itemIndex === undefined) {
+    const todoItem = todo_manager.getItem(projectName, sectionName, itemUid);
+
+    if (!todoItem) {
+        createDOMMessAlert();
         return;
     }
 
-    const todoItem = domAssociatorObject.getItem(itemIndex);
-
     const section = todoElement.parentNode.parentNode;
 
-    let [projectName, sectionName] = getProjectAndSectionName(todoItem);
     if (projectName === 'default') {
         projectName = 'Inbox';
     }
 
-    modalManager.loadEditItemModal(projectName, sectionName, todoItem);
+    modalManager.loadEditItemModal(projectName, sectionName === 'null' ? null : sectionName, todoItem);
     return [todoElement, todoItem];
 }
 
@@ -1694,12 +1746,14 @@ function manageConfirmationModel(target, targetType) {
         // The target is the delete button whose first parent is the buttons div, the second is the todo element
         todoElement = target.parentNode.parentNode;
 
-        if (todoElement.dataset.index === undefined) {
+        let [projectName, sectionName, itemUid] = [todoElement.dataset.pr, todoElement.dataset.sec, todoElement.dataset.uid];
+
+        todoItem = todo_manager.getItem(projectName, sectionName, itemUid);
+
+        if (!todoItem) {
             createDOMMessAlert();
             return;
         }
-
-        todoItem = domAssociatorObject.getItem(todoElement.dataset.index);
 
         modalManager.loadConfirmationModal('To-Do', todoItem.title);
     } else if (targetType === 'section') {
@@ -1751,7 +1805,7 @@ function manageConfirmationModel(target, targetType) {
                     return;
                 }
 
-                changeTodoList(todoItem.projectName, todoItem.sectionName);
+                removeTodo(todoItem);
                 DOMAdderRemover.remove(todoElement);
                 modalManager.closeModal();
             } else if (targetType === 'section') {
