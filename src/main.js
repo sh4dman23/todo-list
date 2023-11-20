@@ -101,6 +101,7 @@ const eventListenersObject = (function() {
                 }
 
                 todoItem.update(...Array(4), target.checked);
+                cookieManager.changeTodoList(todoItem.projectName, todoItem.sectionName);
             }
 
             // collapse section
@@ -136,7 +137,7 @@ function createErrorAlert(message) {
 function manageAlert(alert) {
     const timeOut = setTimeout(() => {
         alert.parentNode.removeChild(alert);
-    }, 6000);
+    }, 3000);
 
     alert.querySelector('button.close-alert').addEventListener('click', () => {
         clearTimeout(timeOut);
@@ -204,12 +205,17 @@ function managePopupModal(mode = 'edit', targetElement, targetType = 'item') {
         if (mode === 'edit' && targetType === 'item') {
             const status = popupForm.querySelector('#edit-todo-checkbox').checked;
             selectedTodoItem.update(title, description, processDate(dueDate), priority, status);
-            pageLoader.refreshPage();
+
+            cookieManager.changeTodoList(selectedTodoItem.projectName, selectedTodoItem.sectionName);
+            DOMAdderRemover.editItem(selectedTodoElement, selectedTodoItem);
             modalManager.closeModal();
 
         } else if (mode === 'add' && targetType === 'item') {
             const sectionName = section.dataset.name;
+
             const newTodoItem = todoManager.addTodoItem(title, description, processDate(dueDate), priority, projectName, sectionName);
+
+            cookieManager.saveTodo(newTodoItem);
             DOMAdderRemover.addItem(section, newTodoItem);
             modalManager.closeModal();
         } else if (mode === 'add' && targetType === 'section') {
@@ -322,11 +328,11 @@ function manageEditProjectModalLoad() {
 
 function manageConfirmationModel(target, targetType) {
     const page = pageLoader.getCurrentPage();
-    let todoItem, sectionName, projectName;
+    let todoItem, todoElement, sectionName, section, projectName;
 
     if (targetType === 'item') {
         // The target is the delete button whose first parent is the buttons div, the second is the todo element
-        const todoElement = target.parentNode.parentNode;
+        todoElement = target.parentNode.parentNode;
 
         if (todoElement.dataset.index === undefined) {
             createDOMMessAlert();
@@ -344,7 +350,7 @@ function manageConfirmationModel(target, targetType) {
         }
 
         // First parent is header div, second is second element
-        const section = target.parentNode.parentNode;
+        section = target.parentNode.parentNode;
         if (section.id === 'unlisted') {
             window.location.reload();
         }
@@ -385,8 +391,9 @@ function manageConfirmationModel(target, targetType) {
                     return;
                 }
 
+                cookieManager.changeTodoList(todoItem.projectName, todoItem.sectionName);
+                DOMAdderRemover.remove(todoElement);
                 modalManager.closeModal();
-                pageLoader.refreshPage();
             } else if (targetType === 'section') {
                 const success = todoManager.deleteSection(projectName, sectionName);
 
@@ -396,8 +403,8 @@ function manageConfirmationModel(target, targetType) {
                 }
 
                 cookieManager.deleteSection(projectName, sectionName);
+                DOMAdderRemover.remove(section);
                 modalManager.closeModal();
-                pageLoader.refreshPage();
             } else if (targetType === 'project') {
                 const success = todoManager.deleteProject(projectName);
 

@@ -102,7 +102,21 @@ function createItemElement(item) {
         date.classList.add('expired');
     }
 
-    // ADD LOGIC FOR PRIORITY MANAGEMENT HERE
+    const priorityDiv = createElementWithClass('todo-priority');
+    switch(item.priority) {
+        case 'low':
+            priorityDiv.classList.add('low');
+            priorityDiv.textContent = 'Low';
+            break;
+        case 'medium':
+            priorityDiv.classList.add('mid');
+            priorityDiv.textContent = 'Medium';
+            break;
+        case 'high':
+            priorityDiv.classList.add('high');
+            priorityDiv.textContent = 'High';
+            break;
+    }
 
     const buttons = createElementWithClass('todo-buttons');
 
@@ -119,6 +133,7 @@ function createItemElement(item) {
     itemDiv.appendChild(title);
     itemDiv.appendChild(desc);
     itemDiv.appendChild(date);
+    itemDiv.appendChild(priorityDiv);
     itemDiv.appendChild(buttons);
 
     return itemDiv;
@@ -187,7 +202,8 @@ const domAssociatorObject = (function() {
     let assArray = [];
     const getAssArray = () => assArray;
 
-    const getItem = itemIndex => assArray[itemIndex].todoItem;
+    const getItem = itemIndex => assArray[itemIndex];
+    const getIndex = todoItem => assArray.findIndex(item => item === todoItem);
 
     // Reset the associator when we change pages
     const reset = () => {
@@ -197,10 +213,7 @@ const domAssociatorObject = (function() {
 
     // Add object to keep track of it
     const addObj = (todoItem) => {
-        assArray.push({
-            index,
-            todoItem,
-        });
+        assArray.push(todoItem);
 
         return index++;
     };
@@ -210,7 +223,7 @@ const domAssociatorObject = (function() {
         assArray[indexToRemove] = undefined;
     };
 
-    return { getAssArray, getItem, reset, addObj, removeObj }
+    return { getAssArray, getItem, getIndex, reset, addObj, removeObj }
 })();
 
 
@@ -270,13 +283,13 @@ const pageLoader = (function() {
 
             for (const project of todoObject.projects) {
                 for (const unlistedItem of project.unlistedItems) {
-                    if (unlistedItem.dueDate !== null && (isToday(unlistedItem.dueDate) || format(new Date(), 'yyyy-MM-dd') === format(unlistedItem.dueDate, 'yyyy-MM-dd'))) {
+                    if (unlistedItem.dueDate !== null && unlistedItem.status === false && (isToday(unlistedItem.dueDate) || format(new Date(), 'yyyy-MM-dd') === format(unlistedItem.dueDate, 'yyyy-MM-dd'))) {
                         itemList.appendChild(createItemElement(unlistedItem));
                     }
                 }
                 for (const section of project.sections) {
                     for (const item of section.items) {
-                        if (item.dueDate !== null && (isToday(item.dueDate) || format(new Date(), 'yyyy-MM-dd') === format(item.dueDate, 'yyyy-MM-dd'))) {
+                        if (item.dueDate !== null && item.status === false && (isToday(item.dueDate) || format(new Date(), 'yyyy-MM-dd') === format(item.dueDate, 'yyyy-MM-dd'))) {
                             itemList.appendChild(createItemElement(item));
                         }
                     }
@@ -308,13 +321,13 @@ const pageLoader = (function() {
 
             for (const project of todoObject.projects) {
                 for (const unlistedItem of project.unlistedItems) {
-                    if (unlistedItem.dueDate !== null && isThisWeek(unlistedItem.dueDate, { weekStartsOn: 0 }) && isFuture(unlistedItem.dueDate)) {
+                    if (unlistedItem.dueDate !== null && unlistedItem.status === false && isThisWeek(unlistedItem.dueDate, { weekStartsOn: 0 }) && isFuture(unlistedItem.dueDate)) {
                         itemList.appendChild(createItemElement(unlistedItem));
                     }
                 }
                 for (const section of project.sections) {
                     for (const item of section.items) {
-                        if (item.dueDate !== null && isThisWeek(item.dueDate, { weekStartsOn: 0 }) && isFuture(item.dueDate)) {
+                        if (item.dueDate !== null && item.status === false && isThisWeek(item.dueDate, { weekStartsOn: 0 }) && isFuture(item.dueDate)) {
                             itemList.appendChild(createItemElement(item));
                         }
                     }
@@ -794,9 +807,23 @@ const DOMAdderRemover = (function() {
         const projectButton = createProjectButton(project);
 
         projectsList.insertBefore(projectButton, projectsList.lastElementChild);
-    }
+    };
 
-    return { addItem, addSection, addProject };
+    const editItem = (previousItemDiv, todoItem) => {
+        const newDiv = createItemElement(todoItem);
+
+        const parent = previousItemDiv.parentNode;
+
+        parent.insertBefore(newDiv, previousItemDiv.nextElementSibling);
+
+        parent.removeChild(previousItemDiv);
+    };
+
+    const remove = element => {
+        element.parentNode.removeChild(element);
+    };
+
+    return { addItem, addSection, addProject, editItem, remove };
 })();
 
 const collapseSection = sectionDiv => {

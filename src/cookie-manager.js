@@ -39,7 +39,7 @@ function populateLocalStorage() {
         });
     }
 
-    localStorage.setItem('projects', JSON.stringify(projects));
+    setLocal(projects);
 }
 
 function fillTodoObject() {
@@ -105,48 +105,48 @@ function saveProject(newProject) {
     delete projectCopy.findSection;
     delete projectCopy.update;
 
-    const projectsArray = JSON.parse(localStorage.getItem('projects'));
+    const projectsArray = getProjectsArray();
 
     projectsArray.push(projectCopy);
 
-    localStorage.setItem('projects', JSON.stringify(projectsArray));
+    setLocal(projectsArray);
 }
 
 function editProject(oldName, project) {
-    const projectsArray = JSON.parse(localStorage.getItem('projects'));
+    const projectsArray = getProjectsArray()
 
     const foundProject = projectsArray.find(localProject => localProject.name === oldName);
 
     foundProject.name = project.name;
     foundProject.description = project.description;
 
-    localStorage.setItem('projects', JSON.stringify(projectsArray));
+    setLocal(projectsArray);
 }
 
 function deleteProject(projectName) {
-    let projectsArray = JSON.parse(localStorage.getItem('projects'));
+    let projectsArray = getProjectsArray();
 
     const projectIndex = projectsArray.findIndex(localProject => localProject.name === projectName);
 
     projectsArray = projectsArray.slice(0, projectIndex).concat(projectsArray.slice(projectIndex + 1));
 
-    localStorage.setItem('projects', JSON.stringify(projectsArray));
+    setLocal(projectsArray);
 }
 
 function saveSection(projectName, newSection) {
     const sectionCopy = Object.assign({}, newSection);
 
-    const projectsArray = JSON.parse(localStorage.getItem('projects'));
+    const projectsArray = getProjectsArray()
 
     const project = projectsArray.find(localProject => localProject.name === projectName);
 
     project.sections.push(sectionCopy);
 
-    localStorage.setItem('projects', JSON.stringify(projectsArray));
+    setLocal(projectsArray);
 }
 
 function deleteSection(projectName, sectionName) {
-    const projectsArray = JSON.parse(localStorage.getItem('projects'));
+    const projectsArray = getProjectsArray();
 
     const project = projectsArray.find(localProject => localProject.name === projectName);
 
@@ -154,7 +154,54 @@ function deleteSection(projectName, sectionName) {
 
     project.sections = project.sections.slice(0, sectionIndex).concat(project.sections.slice(sectionIndex + 1));
 
+    setLocal(projectsArray);
+}
+
+function saveTodo(todoItem) {
+    const todoItemCopy = Object.assign({}, todoItem);
+    delete todoItemCopy.update;
+
+    const projectsArray = getProjectsArray();
+
+    const project = projectsArray.find(localProject => localProject.name === todoItem.projectName);
+
+    if (todoItem.sectionName === null) {
+        project.unlistedItems.push(todoItem);
+    } else {
+        const section = project.sections.find(localSection => localSection.name === todoItem.sectionName);
+        section.items.push(todoItem);
+    }
+
+    setLocal(projectsArray);
+}
+
+// Change the whole item list, because otherwise we won't be able to allow users to have duplicate todos
+function changeTodoList(projectName, sectionName) {
+    const projectsArray = getProjectsArray();
+
+    const projectInMemory = todoObject.findProject(projectName);
+
+    const project = projectsArray.find(localProject => localProject.name === projectName);
+
+    if (sectionName === null) {
+        project.unlistedItems = projectInMemory.unlistedItems;
+    } else {
+        const sectionInMemory = projectInMemory.findSection(sectionName);
+        
+        const section = project.sections.find(localSection => localSection.name === sectionName);
+
+        section.items = sectionInMemory.items;
+    }
+
+    setLocal(projectsArray);
+}
+
+function getProjectsArray() {
+    return JSON.parse(localStorage.getItem('projects'));
+}
+
+function setLocal(projectsArray) {
     localStorage.setItem('projects', JSON.stringify(projectsArray));
 }
 
-export { saveProject, editProject, deleteProject, saveSection, deleteSection };
+export { saveProject, editProject, deleteProject, saveSection, deleteSection, saveTodo, changeTodoList };

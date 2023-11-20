@@ -206,10 +206,6 @@ main .pg-top-section {
     padding: 0.8rem;
 }
 
-/* .todo-item + .todo-item {
-    padding-top: 1rem;
-} */
-
 .todo-checkbox {
     display: block;
     grid-template: 1 / 2;
@@ -271,7 +267,22 @@ main .pg-top-section {
 }
 
 .todo-date:not(input) {
+    grid-row: 3 / 4;
     margin-top: 0.25rem;
+    align-self: center;
+}
+
+.todo-priority {
+    font-size: 0.7rem;
+    grid-row: 3 / 4;
+    grid-column: 3 / -1;
+    justify-self: end;
+    padding: 0.1rem 0.5rem;
+    border-radius: 4px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 3px;
 }
 
 .checkbox-container {
@@ -561,7 +572,7 @@ textarea.todo-desc {
     gap: 0.7rem;
 }
 
-.priority-button {
+.priority-button, .todo-priority {
     background-color: inherit;
     --font-color: #fff;
     --theme-color: #f0f0f0;
@@ -648,4 +659,4 @@ textarea.todo-desc {
     fill: #fff;
 }
 
-/*# sourceMappingURL=main48ac760f53462a7e3136.css.map*/
+/*# sourceMappingURL=maind584d74e156cc9f33c9e.css.map*/
