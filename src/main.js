@@ -85,9 +85,9 @@ const eventListenersObject = (function() {
             else if (target.classList.contains('todo-checkbox')) {
                 const todoElement = target.parentNode.parentNode;
 
-                let [projectName, sectionName, itemUid] = [todoElement.dataset.pr, todoElement.dataset.sec, todoElement.dataset.uid];
+                let [projectName, itemUid] = [todoElement.dataset.pr, todoElement.dataset.uid];
 
-                const todoItem = todoManager.getItem(projectName, sectionName, itemUid);
+                const todoItem = todoManager.getItem(projectName, itemUid);
 
                 if (!todoItem) {
                     event.preventDefault();
@@ -271,9 +271,9 @@ function manageEditItemModalLoad(target) {
         todoElement = target.parentNode.parentNode;
     }
 
-    let [projectName, sectionName, itemUid] = [todoElement.dataset.pr, todoElement.dataset.sec, todoElement.dataset.uid];
+    let [projectName, itemUid] = [todoElement.dataset.pr, todoElement.dataset.uid];
 
-    const todoItem = todoManager.getItem(projectName, sectionName, itemUid);
+    const todoItem = todoManager.getItem(projectName, itemUid);
 
     if (!todoItem) {
         createDOMMessAlert();
@@ -286,7 +286,7 @@ function manageEditItemModalLoad(target) {
         projectName = 'Inbox';
     }
 
-    modalManager.loadEditItemModal(projectName, sectionName === 'null' ? null : sectionName, todoItem);
+    modalManager.loadEditItemModal(projectName, section.dataset.name, todoItem);
     return [todoElement, todoItem];
 }
 
@@ -334,9 +334,9 @@ function manageConfirmationModel(target, targetType) {
         // The target is the delete button whose first parent is the buttons div, the second is the todo element
         todoElement = target.parentNode.parentNode;
 
-        let [projectName, sectionName, itemUid] = [todoElement.dataset.pr, todoElement.dataset.sec, todoElement.dataset.uid];
+        let [projectName, itemUid] = [todoElement.dataset.pr, todoElement.dataset.uid];
 
-        todoItem = todoManager.getItem(projectName, sectionName, itemUid);
+        todoItem = todoManager.getItem(projectName, itemUid);
 
         if (!todoItem) {
             createDOMMessAlert();

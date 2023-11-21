@@ -77,7 +77,6 @@ function createItemElement(item) {
 
     itemDiv.dataset.uid = item.uid;
     itemDiv.dataset.pr = item.projectName;
-    itemDiv.dataset.sec = item.sectionName;
 
     const checkboxContainer = createElementWithClass('checkbox-container');
 
@@ -104,20 +103,9 @@ function createItemElement(item) {
     }
 
     const priorityDiv = createElementWithClass('todo-priority');
-    switch(item.priority) {
-        case 'low':
-            priorityDiv.classList.add('low');
-            priorityDiv.textContent = 'Low';
-            break;
-        case 'medium':
-            priorityDiv.classList.add('mid');
-            priorityDiv.textContent = 'Medium';
-            break;
-        case 'high':
-            priorityDiv.classList.add('high');
-            priorityDiv.textContent = 'High';
-            break;
-    }
+
+    priorityDiv.classList.add(item.priority || 'low');
+    priorityDiv.textContent = (item.priority.charAt(0).toUpperCase() + item.priority.slice(1)) || 'Low';
 
     const buttons = createElementWithClass('todo-buttons');
 
@@ -150,9 +138,9 @@ function createTodoButton() {
     return buttonContainer;
 }
 
-function createEmptyDiv() {
+function createEmptyDiv(text) {
     const emptyDiv = createElementWithClass('empty');
-    emptyDiv.textContent = 'Woah! You seem to have finished all your tasks for today. Good Job!';
+    emptyDiv.textContent = text;
     return emptyDiv;
 }
 
@@ -266,7 +254,7 @@ const pageLoader = (function() {
             }
 
             if (itemList.childElementCount === 0) {
-                itemList.appendChild(createEmptyDiv());
+                itemList.appendChild(createEmptyDiv('Woah! You seem to have finished all your tasks for today. Good Job!'));
             }
 
             page.appendChild(itemList);
@@ -304,7 +292,7 @@ const pageLoader = (function() {
             }
 
             if (itemList.childElementCount === 0) {
-                itemList.appendChild(createEmptyDiv());
+                itemList.appendChild(createEmptyDiv('Woah! You seem to have finished all your tasks for this week. Good Job!'));
             }
 
             page.appendChild(itemList);

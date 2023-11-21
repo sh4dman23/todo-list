@@ -108,8 +108,8 @@ const todoManager = (function() {
 
     const getTodoObject = () => todoObject;
 
-    const getItem = (projectName, sectionName, uid) => {
-        if (!projectName || (!sectionName && sectionName !== null) || !uid) {
+    const getItem = (projectName, uid) => {
+        if (!projectName || !uid) {
             return false;
         }
 
@@ -118,19 +118,14 @@ const todoManager = (function() {
             return false;
         }
 
-        let itemList;
-        if (sectionName === null || sectionName === 'null') {
-            itemList = project.unlistedItems;
-        } else {
-            const section = project.findSection(sectionName);
-            if (section === undefined) {
-                return false;
-            }
-
-            itemList = section.items;
+        let todoItem = project.unlistedItems.find(item => item.uid === uid);
+        if (!todoItem) {
+            project.sections.forEach(section => {
+                todoItem = section.items.find(item => item.uid === uid);
+            });
         }
 
-        return itemList.find(item => item.uid === uid);
+        return todoItem;
     };
 
     // Create the new project and return it

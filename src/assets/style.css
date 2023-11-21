@@ -201,10 +201,75 @@ main .pg-top-section {
     padding: 0.8rem;
 }
 
+.checkbox-container {
+    display: grid;
+    grid-template: 1fr / 1fr;
+    justify-content: center;
+    justify-items: center;
+    align-items: center;
+
+    position: relative;
+    font-size: 1rem;
+    padding: 0 1rem;
+}
+
+input[type="checkbox"], .checkmark {
+    width: 1em;
+    height: 1em;
+    grid-row: 1 / 2;
+    grid-column: 1 / 2;
+}
+
+input[type="checkbox"] {
+    height: 1.2em;
+    width: 1.2em;
+    position: relative;
+    cursor: pointer;
+    appearance: none;
+    border: 1px solid #212427;
+    border-radius: 2px;
+}
+
 .todo-checkbox {
     display: block;
     grid-template: 1 / 2;
-    margin: 0 1rem;
+}
+
+input[type="checkbox"]:checked {
+    background-color: #212427;
+}
+
+.checkmark, .checkmark *, .checkmark::after {
+    pointer-events: none;
+    user-select: none;
+}
+
+.checkmark {
+    display: none;
+
+    justify-content: center;
+    align-items: center;
+}
+
+.checkmark::after {
+    position: relative;
+    z-index: 1;
+    display: none;
+    content: "✓";
+    color: #ffffff;
+    font-weight: bold;
+}
+
+input[type="checkbox"]:active, input[type="checkbox"]:active + .checkmark::after {
+    transform: scale(90%);
+}
+
+input[type="checkbox"]:checked + .checkmark {
+    display: flex;
+}
+
+input[type="checkbox"]:checked + .checkmark::after {
+    display: inline;
 }
 
 .todo-title {
@@ -278,57 +343,6 @@ main .pg-top-section {
     justify-content: center;
     align-items: center;
     margin-top: 3px;
-}
-
-.checkbox-container {
-    display: flex;
-    align-items: center;
-    position: relative;
-}
-
-input[type="checkbox"] {
-    position: relative;
-    cursor: pointer;
-    appearance: none;
-    width: 1rem;
-    height: 1rem;
-    border: 1px solid #212427;
-    border-radius: 2px;
-}
-
-input[type="checkbox"]:checked {
-    background-color: #212427;
-}
-
-.checkmark, .checkmark *, .checkmark::after {
-    pointer-events: none;
-    user-select: none;
-}
-
-.checkmark {
-    position: absolute;
-    top: -0.168rem;
-    left: 1.1rem;
-    display: none;
-    height: 25px;
-    width: 25px;
-}
-
-.checkmark::after {
-    position: absolute;
-    display: none;
-    content: "✓";
-    top: 0.3rem;
-    color: #ffffff;
-    font-weight: bold;
-}
-
-input[type="checkbox"]:active, input[type="checkbox"]:active + .checkmark::after {
-    transform: scale(90%);
-}
-
-input[type="checkbox"]:checked + .checkmark::after, input[type="checkbox"]:checked + .checkmark {
-    display: inline;
 }
 
 button.add-todo {
@@ -487,6 +501,7 @@ button.close-popup:hover {
 
 .popup-body > .todo-desc {
     white-space: initial;
+    font-size: 1rem;
 }
 
 .popup-body {
@@ -513,8 +528,8 @@ button.close-popup:hover {
 }
 
 .popup-body .checkmark {
-    left: 0.1rem;
-    top: -0.2rem;
+    /* left: 0.1rem; */
+    /* top: -0.2rem; */
 }
 
 .popup-body .todo-desc, .popup-body .date, .popup-body .buttons {
@@ -585,7 +600,7 @@ textarea.todo-desc {
     --theme-color: #336f96;
 }
 
-.mid {
+.mid, .medium {
     --theme-color: #30b04d;
 }
 
