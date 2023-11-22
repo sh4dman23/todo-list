@@ -130,6 +130,9 @@ const todoManager = (function() {
         if (!todoItem) {
             project.sections.forEach(section => {
                 todoItem = section.items.find(item => item.uid === uid);
+                if (todoItem) {
+                    return;
+                }
             });
         }
 
@@ -1610,11 +1613,6 @@ function managePopupModal(mode = 'edit', targetElement, targetType = 'item') {
             DOMAdderRemover.addItem(section, newTodoItem);
             modalManager.closeModal();
         } else if (mode === 'add' && targetType === 'section') {
-            if (title === 'null') {
-                createErrorAlert('You can\'t create a section by this name, buddy.');
-                return;
-            }
-
             const newSection = todo_manager.addSection(title, projectName);
 
             // Check sectionName for doubles
