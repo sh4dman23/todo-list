@@ -122,6 +122,9 @@ const todoManager = (function() {
         if (!todoItem) {
             project.sections.forEach(section => {
                 todoItem = section.items.find(item => item.uid === uid);
+                if (todoItem) {
+                    return;
+                }
             });
         }
 
