@@ -214,11 +214,6 @@ function managePopupModal(mode = 'edit', targetElement, targetType = 'item') {
             DOMAdderRemover.addItem(section, newTodoItem);
             modalManager.closeModal();
         } else if (mode === 'add' && targetType === 'section') {
-            if (title === 'null') {
-                createErrorAlert('You can\'t create a section by this name, buddy.');
-                return;
-            }
-
             const newSection = todoManager.addSection(title, projectName);
 
             // Check sectionName for doubles
