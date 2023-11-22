@@ -161,8 +161,12 @@ function managePopupModal(mode = 'edit', targetElement, targetType = 'item') {
     if (mode === 'edit' && targetType === 'item') {
         [selectedTodoElement, selectedTodoItem] =
             manageEditItemModalLoad(targetElement);
+
+        if (!selectedTodoElement || !selectedTodoItem) return;
     } else if (mode === 'add' && targetType === 'item') {
         [section, projectName] = manageAddItemModalLoad(targetElement);
+
+        if (!section || !projectName) return;
     } else if (mode === 'add' && targetType === 'section') {
         projectName = manageAddSectionModalLoad();
     } else if (mode === 'add' && targetType === 'project') {
@@ -310,7 +314,7 @@ function manageEditItemModalLoad(target) {
 
     if (!todoItem) {
         createDOMMessAlert();
-        return;
+        return [undefined, undefined];
     }
 
     if (projectName === 'default') {

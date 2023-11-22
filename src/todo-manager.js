@@ -133,11 +133,14 @@ const todoManager = (function () {
             return false;
         }
 
+
         let todoItem = project.unlistedItems.find((item) => item.uid === uid);
+
         if (!todoItem) {
             project.sections.forEach((section) => {
-                todoItem = section.items.find((item) => item.uid === uid);
-                if (todoItem) {
+                const item = section.items.find((item) => item.uid === uid);
+                if (item) {
+                    todoItem = item;
                     return;
                 }
             });

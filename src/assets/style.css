@@ -63,6 +63,10 @@ header svg, button.sidebar-item svg {
     top: -0.05em;
 }
 
+.sidebar-item, .todo-item, button {
+    -webkit-tap-highlight-color: transparent !important;
+}
+
 .sidebar {
     grid-row: 2 / 3;
     grid-column: 1 / 2;
