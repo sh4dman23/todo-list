@@ -116,8 +116,8 @@ const todoManager = (function() {
 
     const getTodoObject = () => todoObject;
 
-    const getItem = (projectName, sectionName, uid) => {
-        if (!projectName || (!sectionName && sectionName !== null) || !uid) {
+    const getItem = (projectName, uid) => {
+        if (!projectName || !uid) {
             return false;
         }
 
@@ -126,19 +126,14 @@ const todoManager = (function() {
             return false;
         }
 
-        let itemList;
-        if (sectionName === null || sectionName === 'null') {
-            itemList = project.unlistedItems;
-        } else {
-            const section = project.findSection(sectionName);
-            if (section === undefined) {
-                return false;
-            }
-
-            itemList = section.items;
+        let todoItem = project.unlistedItems.find(item => item.uid === uid);
+        if (!todoItem) {
+            project.sections.forEach(section => {
+                todoItem = section.items.find(item => item.uid === uid);
+            });
         }
 
-        return itemList.find(item => item.uid === uid);
+        return todoItem;
     };
 
     // Create the new project and return it
@@ -378,7 +373,6 @@ function createItemElement(item) {
 
     itemDiv.dataset.uid = item.uid;
     itemDiv.dataset.pr = item.projectName;
-    itemDiv.dataset.sec = item.sectionName;
 
     const checkboxContainer = createElementWithClass('checkbox-container');
 
@@ -405,20 +399,9 @@ function createItemElement(item) {
     }
 
     const priorityDiv = createElementWithClass('todo-priority');
-    switch(item.priority) {
-        case 'low':
-            priorityDiv.classList.add('low');
-            priorityDiv.textContent = 'Low';
-            break;
-        case 'medium':
-            priorityDiv.classList.add('mid');
-            priorityDiv.textContent = 'Medium';
-            break;
-        case 'high':
-            priorityDiv.classList.add('high');
-            priorityDiv.textContent = 'High';
-            break;
-    }
+
+    priorityDiv.classList.add(item.priority || 'low');
+    priorityDiv.textContent = (item.priority.charAt(0).toUpperCase() + item.priority.slice(1)) || 'Low';
 
     const buttons = createElementWithClass('todo-buttons');
 
@@ -451,9 +434,9 @@ function createTodoButton() {
     return buttonContainer;
 }
 
-function createEmptyDiv() {
+function createEmptyDiv(text) {
     const emptyDiv = createElementWithClass('empty');
-    emptyDiv.textContent = 'Woah! You seem to have finished all your tasks for today. Good Job!';
+    emptyDiv.textContent = text;
     return emptyDiv;
 }
 
@@ -567,7 +550,7 @@ const pageLoader = (function() {
             }
 
             if (itemList.childElementCount === 0) {
-                itemList.appendChild(createEmptyDiv());
+                itemList.appendChild(createEmptyDiv('Woah! You seem to have finished all your tasks for today. Good Job!'));
             }
 
             page.appendChild(itemList);
@@ -605,7 +588,7 @@ const pageLoader = (function() {
             }
 
             if (itemList.childElementCount === 0) {
-                itemList.appendChild(createEmptyDiv());
+                itemList.appendChild(createEmptyDiv('Woah! You seem to have finished all your tasks for this week. Good Job!'));
             }
 
             page.appendChild(itemList);
@@ -1148,6 +1131,7 @@ const ui_manager_alertManager = (function() {
 })();
 
 
+
 ;// CONCATENATED MODULE: ./src/cookie-manager.js
 
 const cookie_manager_todoObject = todo_manager.getTodoObject();
@@ -1497,9 +1481,9 @@ const eventListenersObject = (function() {
             else if (target.classList.contains('todo-checkbox')) {
                 const todoElement = target.parentNode.parentNode;
 
-                let [projectName, sectionName, itemUid] = [todoElement.dataset.pr, todoElement.dataset.sec, todoElement.dataset.uid];
+                let [projectName, itemUid] = [todoElement.dataset.pr, todoElement.dataset.uid];
 
-                const todoItem = todo_manager.getItem(projectName, sectionName, itemUid);
+                const todoItem = todo_manager.getItem(projectName, itemUid);
 
                 if (!todoItem) {
                     event.preventDefault();
@@ -1683,9 +1667,9 @@ function manageEditItemModalLoad(target) {
         todoElement = target.parentNode.parentNode;
     }
 
-    let [projectName, sectionName, itemUid] = [todoElement.dataset.pr, todoElement.dataset.sec, todoElement.dataset.uid];
+    let [projectName, itemUid] = [todoElement.dataset.pr, todoElement.dataset.uid];
 
-    const todoItem = todo_manager.getItem(projectName, sectionName, itemUid);
+    const todoItem = todo_manager.getItem(projectName, itemUid);
 
     if (!todoItem) {
         createDOMMessAlert();
@@ -1698,7 +1682,7 @@ function manageEditItemModalLoad(target) {
         projectName = 'Inbox';
     }
 
-    modalManager.loadEditItemModal(projectName, sectionName === 'null' ? null : sectionName, todoItem);
+    modalManager.loadEditItemModal(projectName, section.dataset.name, todoItem);
     return [todoElement, todoItem];
 }
 
@@ -1746,9 +1730,9 @@ function manageConfirmationModel(target, targetType) {
         // The target is the delete button whose first parent is the buttons div, the second is the todo element
         todoElement = target.parentNode.parentNode;
 
-        let [projectName, sectionName, itemUid] = [todoElement.dataset.pr, todoElement.dataset.sec, todoElement.dataset.uid];
+        let [projectName, itemUid] = [todoElement.dataset.pr, todoElement.dataset.uid];
 
-        todoItem = todo_manager.getItem(projectName, sectionName, itemUid);
+        todoItem = todo_manager.getItem(projectName, itemUid);
 
         if (!todoItem) {
             createDOMMessAlert();
