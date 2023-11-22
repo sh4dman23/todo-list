@@ -1,5 +1,11 @@
-import todoManager from "./todo-manager.js";
-import { pageLoader, modalManager, DOMAdderRemover, collapseSection, alertManager } from "./ui-manager.js";
+import todoManager from './todo-manager.js';
+import {
+    pageLoader,
+    modalManager,
+    DOMAdderRemover,
+    collapseSection,
+    alertManager,
+} from './ui-manager.js';
 import * as cookieManager from './cookie-manager.js';
 import { parse, isValid } from 'date-fns';
 import './assets/style.css';
@@ -7,17 +13,19 @@ import './assets/style.css';
 pageLoader.defaultLoader();
 
 // Set up event listeners; all functions of this module called here are written down below
-const eventListenersObject = (function() {
+const eventListenersObject = (function () {
     const todoObject = todoManager.getTodoObject();
 
     const sidebar = document.querySelector('.sidebar');
     const main = document.querySelector('main');
 
-    function setUpSidebar () {
-        sidebar.addEventListener('click', event => {
+    function setUpSidebar() {
+        sidebar.addEventListener('click', (event) => {
             const target = event.target;
 
-            const page = pageLoader.defaultPages.find(page => page.id === target.id);
+            const page = pageLoader.defaultPages.find(
+                (page) => page.id === target.id,
+            );
             if (page !== undefined) {
                 page.switchTo();
                 return;
@@ -43,11 +51,13 @@ const eventListenersObject = (function() {
                 managePopupModal('add', target, 'project');
             }
         });
-    };
+    }
 
     function setUpMain() {
-        const itemType = 'item', sectionType = 'section', projectType = 'project';
-        main.addEventListener('click', event => {
+        const itemType = 'item',
+            sectionType = 'section',
+            projectType = 'project';
+        main.addEventListener('click', (event) => {
             const target = event.target;
 
             /*
@@ -56,7 +66,10 @@ const eventListenersObject = (function() {
                     2. Sections: CRD,
                     3. Projects: CRUD;
             */
-            if (target.classList.contains('todo-item') || target.classList.contains('todo-edit')) {
+            if (
+                target.classList.contains('todo-item') ||
+                target.classList.contains('todo-edit')
+            ) {
                 // Open and manage popup modal for *editing items*
                 managePopupModal('edit', target, itemType);
             } else if (target.classList.contains('add-todo')) {
@@ -65,14 +78,12 @@ const eventListenersObject = (function() {
             } else if (target.classList.contains('todo-delete')) {
                 // Open and manage popup modal for *deleting items*
                 manageConfirmationModel(target, itemType);
-
             } else if (target.classList.contains('project-add-section')) {
                 // Open and manage popup modal for *adding sections*
                 managePopupModal('add', target, sectionType);
             } else if (target.classList.contains('delete-section')) {
                 // Open and manage popup modal for *deleting sections*
                 manageConfirmationModel(target, sectionType);
-
             } else if (target.classList.contains('project-edit')) {
                 // Open and manage popup modal for *editing projects*
                 managePopupModal('edit', target, projectType);
@@ -85,7 +96,10 @@ const eventListenersObject = (function() {
             else if (target.classList.contains('todo-checkbox')) {
                 const todoElement = target.parentNode.parentNode;
 
-                let [projectName, itemUid] = [todoElement.dataset.pr, todoElement.dataset.uid];
+                let [projectName, itemUid] = [
+                    todoElement.dataset.pr,
+                    todoElement.dataset.uid,
+                ];
 
                 const todoItem = todoManager.getItem(projectName, itemUid);
 
@@ -105,7 +119,7 @@ const eventListenersObject = (function() {
                 collapseSection(section);
             }
         });
-    };
+    }
 
     const setUp = () => {
         setUpSidebar();
@@ -145,7 +159,8 @@ function managePopupModal(mode = 'edit', targetElement, targetType = 'item') {
     let selectedTodoElement, selectedTodoItem, section, projectName, project;
 
     if (mode === 'edit' && targetType === 'item') {
-        [selectedTodoElement, selectedTodoItem] = manageEditItemModalLoad(targetElement);
+        [selectedTodoElement, selectedTodoItem] =
+            manageEditItemModalLoad(targetElement);
     } else if (mode === 'add' && targetType === 'item') {
         [section, projectName] = manageAddItemModalLoad(targetElement);
     } else if (mode === 'add' && targetType === 'section') {
@@ -164,19 +179,24 @@ function managePopupModal(mode = 'edit', targetElement, targetType = 'item') {
     const dialog = document.querySelector('.dialog');
     const popupForm = document.querySelector('.dialog form');
 
-    dialog.parentNode.addEventListener('click', () => modalManager.closeModal());
+    dialog.parentNode.addEventListener('click', () =>
+        modalManager.closeModal(),
+    );
 
-    dialog.addEventListener('click', event => {
+    dialog.addEventListener('click', (event) => {
         event.stopPropagation();
         const target = event.target;
-        if (targetType === 'item' && target.classList.contains('priority-button')) {
+        if (
+            targetType === 'item' &&
+            target.classList.contains('priority-button')
+        ) {
             modalManager.switchPriority(target.dataset.priority);
         } else if (target.id === 'close-popup-modal') {
             modalManager.closeModal();
         }
     });
 
-    popupForm.addEventListener('submit', event => {
+    popupForm.addEventListener('submit', (event) => {
         event.preventDefault();
 
         if (!checkModalForm()) {
@@ -192,23 +212,40 @@ function managePopupModal(mode = 'edit', targetElement, targetType = 'item') {
 
             if (targetType === 'item') {
                 dueDate = popupForm.querySelector('#edit-todo-date').value;
-                priority = popupForm.querySelector('.priority-button.selected').dataset.priority;
-                priority = ['low', 'medium', 'high'].includes(priority) ? priority : 'low';
+                priority = popupForm.querySelector('.priority-button.selected')
+                    .dataset.priority;
+                priority = ['low', 'medium', 'high'].includes(priority)
+                    ? priority
+                    : 'low';
             }
         }
 
         if (mode === 'edit' && targetType === 'item') {
-            const status = popupForm.querySelector('#edit-todo-checkbox').checked;
-            selectedTodoItem.update(title, description, processDate(dueDate), priority, status);
+            const status = popupForm.querySelector(
+                '#edit-todo-checkbox',
+            ).checked;
+            selectedTodoItem.update(
+                title,
+                description,
+                processDate(dueDate),
+                priority,
+                status,
+            );
 
             cookieManager.editTodo(selectedTodoItem);
             DOMAdderRemover.editItem(selectedTodoElement, selectedTodoItem);
             modalManager.closeModal();
-
         } else if (mode === 'add' && targetType === 'item') {
             const sectionName = section.dataset.name;
 
-            const newTodoItem = todoManager.addTodoItem(title, description, processDate(dueDate), priority, projectName, sectionName);
+            const newTodoItem = todoManager.addTodoItem(
+                title,
+                description,
+                processDate(dueDate),
+                priority,
+                projectName,
+                sectionName,
+            );
 
             cookieManager.saveTodo(newTodoItem);
             DOMAdderRemover.addItem(section, newTodoItem);
@@ -255,8 +292,6 @@ function managePopupModal(mode = 'edit', targetElement, targetType = 'item') {
 }
 
 function manageEditItemModalLoad(target) {
-    const todoObject = todoManager.getTodoObject();
-
     let todoElement;
 
     if (target.classList.contains('todo-item')) {
@@ -266,7 +301,10 @@ function manageEditItemModalLoad(target) {
         todoElement = target.parentNode.parentNode;
     }
 
-    let [projectName, itemUid] = [todoElement.dataset.pr, todoElement.dataset.uid];
+    let [projectName, itemUid] = [
+        todoElement.dataset.pr,
+        todoElement.dataset.uid,
+    ];
 
     const todoItem = todoManager.getItem(projectName, itemUid);
 
@@ -274,8 +312,6 @@ function manageEditItemModalLoad(target) {
         createDOMMessAlert();
         return;
     }
-
-    const section = todoElement.parentNode.parentNode;
 
     if (projectName === 'default') {
         projectName = 'Inbox';
@@ -291,7 +327,10 @@ function manageAddItemModalLoad(target) {
 
     const projectName = getProjectName();
 
-    modalManager.loadAddItemModal(projectName === 'default' ? 'Inbox' : projectName, section.dataset.name);
+    modalManager.loadAddItemModal(
+        projectName === 'default' ? 'Inbox' : projectName,
+        section.dataset.name,
+    );
 
     return [section, projectName];
 }
@@ -300,7 +339,9 @@ function manageAddSectionModalLoad() {
     // First parent is button div, second is item list container and the third is the section div
     const projectName = getProjectName();
 
-    modalManager.loadAddSectionModal(projectName !== 'default' ? projectName : 'Inbox');
+    modalManager.loadAddSectionModal(
+        projectName !== 'default' ? projectName : 'Inbox',
+    );
 
     return projectName;
 }
@@ -329,7 +370,10 @@ function manageConfirmationModel(target, targetType) {
         // The target is the delete button whose first parent is the buttons div, the second is the todo element
         todoElement = target.parentNode.parentNode;
 
-        let [projectName, itemUid] = [todoElement.dataset.pr, todoElement.dataset.uid];
+        let [projectName, itemUid] = [
+            todoElement.dataset.pr,
+            todoElement.dataset.uid,
+        ];
 
         todoItem = todoManager.getItem(projectName, itemUid);
 
@@ -355,7 +399,11 @@ function manageConfirmationModel(target, targetType) {
         sectionName = section.dataset.name;
 
         // null section is the unlisted items which cannot be deleted;
-        if (projectName === undefined || sectionName === undefined || sectionName === null) {
+        if (
+            projectName === undefined ||
+            sectionName === undefined ||
+            sectionName === null
+        ) {
             createDOMMessAlert();
             return;
         }
@@ -374,7 +422,7 @@ function manageConfirmationModel(target, targetType) {
 
     const dialog = document.querySelector('.dialog');
 
-    dialog.addEventListener('click', event => {
+    dialog.addEventListener('click', (event) => {
         const target = event.target;
 
         if (target.id === 'close-popup-modal' || target.id === 'confirm-no') {
@@ -392,7 +440,10 @@ function manageConfirmationModel(target, targetType) {
                 DOMAdderRemover.remove(todoElement);
                 modalManager.closeModal();
             } else if (targetType === 'section') {
-                const success = todoManager.deleteSection(projectName, sectionName);
+                const success = todoManager.deleteSection(
+                    projectName,
+                    sectionName,
+                );
 
                 if (success === false) {
                     createErrorAlert('Could not delete section!');
@@ -421,7 +472,10 @@ function manageConfirmationModel(target, targetType) {
 // Does a light check to see if one of the priority buttons are selected or not, since they are required and are not native HTML input elements
 // The only other required field is the title, which is checked automatically due to the required attribute
 function checkModalForm() {
-    if (document.querySelector('.popup.overlay') === undefined || document.querySelector('.priority-button.selected') === undefined) {
+    if (
+        document.querySelector('.popup.overlay') === undefined ||
+        document.querySelector('.priority-button.selected') === undefined
+    ) {
         return false;
     }
 
@@ -455,10 +509,6 @@ function getProjectName() {
     }
 
     return projectName;
-}
-
-function getProjectAndSectionName(todoItem) {
-    return [todoItem.projectName, todoItem.sectionName];
 }
 
 eventListenersObject.setUp();
