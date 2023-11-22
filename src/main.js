@@ -281,7 +281,7 @@ function manageEditItemModalLoad(target) {
         projectName = 'Inbox';
     }
 
-    modalManager.loadEditItemModal(projectName, section.dataset.name, todoItem);
+    modalManager.loadEditItemModal(todoItem);
     return [todoElement, todoItem];
 }
 

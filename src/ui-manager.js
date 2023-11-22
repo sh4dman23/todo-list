@@ -580,12 +580,13 @@ const modalManager = (function() {
         page.appendChild(overlay);
     }
 
-    const loadEditItemModal = (projectName = '', sectionName = null, todoItem) => {
+    const loadEditItemModal = (todoItem) => {
         const page = document.querySelector('.page');
 
         closeModal();
 
-        const [ overlay, dialog ] = modalLoader(projectName + (sectionName !== null ? ` > ${sectionName}` : ''));
+        const [ overlay, dialog ] = modalLoader(todoItem.projectName === 'default' ? 'Inbox' : todoItem.projectName
+                                                + (todoItem.sectionName !== null ? ` > ${todoItem.sectionName}` : ''));
 
         const popupForm = createPopupForm(todoItem);
 

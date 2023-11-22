@@ -523,13 +523,12 @@ button.close-popup:hover {
     font-weight: 700;
 }
 
-.popup-body .todo-checkbox {
-    margin-left: 0;
+.popup-body .checkbox-container {
+    padding-left: 0;
 }
 
-.popup-body .checkmark {
-    /* left: 0.1rem; */
-    /* top: -0.2rem; */
+.popup-body .todo-checkbox {
+    margin-left: 0;
 }
 
 .popup-body .todo-desc, .popup-body .date, .popup-body .buttons {
