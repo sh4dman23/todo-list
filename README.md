@@ -41,7 +41,7 @@ Hovering over a section will give users the option to delete them.
 
 Users can create To-Do items in Inbox or in their own projects and are able to set the following properties on them:
 
-1. A title
+1. A title (required)
 2. A description (optional)
 3. A due date (optional), with items not having a due dates showing 'No Due Date' in their date section
 4. A priority ('Low' / 'Medium' / 'High') (required), which is 'Low' by default
