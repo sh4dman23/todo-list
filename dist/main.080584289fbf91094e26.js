@@ -1,7 +1,7 @@
 "use strict";
 (self["webpackChunktodo_list"] = self["webpackChunktodo_list"] || []).push([[179],{
 
-/***/ 162:
+/***/ 363:
 /***/ ((__unused_webpack_module, __unused_webpack___webpack_exports__, __webpack_require__) => {
 
 
@@ -324,27 +324,34 @@ const todoManager = (function () {
 
 /* harmony default export */ const todo_manager = (todoManager);
 
-;// CONCATENATED MODULE: ./src/ui/common.js
-function common_createElementWithClass(classProperty = '', tag = 'div') {
-    const element = document.createElement(tag);
-    element.setAttribute('class', classProperty);
-    return element;
-}
+;// CONCATENATED MODULE: ./src/ui/svg-manager.js
+const SVGObject = {
+    edit: '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><title>pencil-outline</title><path d="M14.06,9L15,9.94L5.92,19H5V18.08L14.06,9M17.66,3C17.41,3 17.15,3.1 16.96,3.29L15.13,5.12L18.88,8.87L20.71,7.04C21.1,6.65 21.1,6 20.71,5.63L18.37,3.29C18.17,3.09 17.92,3 17.66,3M14.06,6.19L3,17.25V21H6.75L17.81,9.94L14.06,6.19Z" /></svg>',
+    info: '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><title>information-outline</title><path d="M11,9H13V7H11M12,20C7.59,20 4,16.41 4,12C4,7.59 7.59,4 12,4C16.41,4 20,7.59 20,12C20,16.41 16.41,20 12,20M12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12A10,10 0 0,0 12,2M11,17H13V11H11V17Z" /></svg>',
+    delete: '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><title>delete-outline</title><path d="M6,19A2,2 0 0,0 8,21H16A2,2 0 0,0 18,19V7H6V19M8,9H16V19H8V9M15.5,4L14.5,3H9.5L8.5,4H5V6H19V4H15.5Z" /></svg>',
+    add: '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><title>plus</title><path d="M19,13H13V19H11V13H5V11H11V5H13V11H19V13Z" /></svg>',
+    arrowUp:
+        '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><title>chevron-right</title><path d="M8.59,16.58L13.17,12L8.59,7.41L10,6L16,12L10,18L8.59,16.58Z" /></svg>',
+    arrowDown:
+        '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><title>chevron-down</title><path d="M7.41,8.58L12,13.17L16.59,8.58L18,10L12,16L6,10L7.41,8.58Z" /></svg>',
+    project:
+        '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><title>format-list-checks</title><path d="M3,5H9V11H3V5M5,7V9H7V7H5M11,7H21V9H11V7M11,15H21V17H11V15M5,20L1.5,16.5L2.91,15.09L5,17.17L9.59,12.59L11,14L5,20Z" /></svg>',
+    close: '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><title>window-close</title><path d="M13.46,12L19,17.54V19H17.54L12,13.46L6.46,19H5V17.54L10.54,12L5,6.46V5H6.46L12,10.54L17.54,5H19V6.46L13.46,12Z" /></svg>',
+};
+
+/* harmony default export */ const svg_manager = (SVGObject);
+
+// EXTERNAL MODULE: ./node_modules/date-fns/esm/format/index.js + 4 modules
+var format = __webpack_require__(546);
 // EXTERNAL MODULE: ./node_modules/date-fns/esm/isValid/index.js + 1 modules
 var isValid = __webpack_require__(599);
 // EXTERNAL MODULE: ./node_modules/date-fns/esm/isToday/index.js + 2 modules
 var isToday = __webpack_require__(767);
-// EXTERNAL MODULE: ./node_modules/date-fns/esm/isThisWeek/index.js + 2 modules
-var isThisWeek = __webpack_require__(694);
-;// CONCATENATED MODULE: ./src/ui/page-loader.js
+// EXTERNAL MODULE: ./node_modules/date-fns/esm/isFuture/index.js
+var isFuture = __webpack_require__(644);
+;// CONCATENATED MODULE: ./src/ui/common.js
 
 
-
-
-
-const main = document.querySelector('main');
-
-const todoObject = todo_manager.getTodoObject();
 
 function dateFormatter(date) {
     if (date === null) {
@@ -352,66 +359,83 @@ function dateFormatter(date) {
     } else if (!(date instanceof Date)) {
         date = new Date(date);
     }
-    return format(date, 'd MMM');
+    return (0,format/* default */.Z)(date, 'd MMM');
 }
 
-function clearPage() {
-    main.innerHTML = '';
+function createElementWithClass(
+    classProperty = '',
+    tag = 'div',
+) {
+    const element = document.createElement(tag);
+    element.setAttribute('class', classProperty);
+    return element;
 }
 
-function page_loader_createItemElement(item) {
-    const itemDiv = common_createElementWithClass('todo-item');
+function createProjectButton(project) {
+    const projectButton = createElementWithClass(
+        'sidebar-item project',
+        'button',
+    );
+    projectButton.id = `project-${project.name}`;
+    projectButton.dataset.name = project.name;
+    projectButton.innerHTML = svg_manager.project + project.name;
+
+    return projectButton;
+}
+
+function createItemElement(item) {
+    const itemDiv = createElementWithClass('todo-item');
 
     itemDiv.dataset.uid = item.uid;
     itemDiv.dataset.pr = item.projectName;
 
-    const checkboxContainer = common_createElementWithClass('checkbox-container');
+    const checkboxContainer = createElementWithClass('checkbox-container');
 
-    const checkbox = common_createElementWithClass('todo-checkbox', 'input');
+    const checkbox = createElementWithClass('todo-checkbox', 'input');
     checkbox.type = 'checkbox';
     checkbox.checked = item.status;
 
-    const checkmark = common_createElementWithClass('checkmark', 'span');
+    const checkmark = createElementWithClass('checkmark', 'span');
 
     checkboxContainer.appendChild(checkbox);
     checkboxContainer.appendChild(checkmark);
 
-    const title = common_createElementWithClass('todo-title', 'span');
+    const title = createElementWithClass('todo-title', 'span');
     title.textContent = item.title;
 
-    const desc = common_createElementWithClass('todo-desc', 'p');
+    const desc = createElementWithClass('todo-desc', 'p');
     desc.textContent = item.description;
 
-    const date = common_createElementWithClass('todo-date', 'p');
+    const date = createElementWithClass('todo-date', 'p');
     date.textContent = dateFormatter(item.dueDate);
 
     if (
         (0,isValid/* default */.Z)(item.dueDate) &&
         !(0,isToday/* default */.Z)(item.dueDate) &&
-        !isFuture(item.dueDate)
+        !(0,isFuture/* default */.Z)(item.dueDate)
     ) {
         date.classList.add('expired');
     }
 
-    const priorityDiv = common_createElementWithClass('todo-priority');
+    const priorityDiv = createElementWithClass('todo-priority');
 
     priorityDiv.classList.add(item.priority || 'low');
     priorityDiv.textContent =
         item.priority.charAt(0).toUpperCase() + item.priority.slice(1) || 'Low';
 
-    const buttons = common_createElementWithClass('todo-buttons');
+    const buttons = createElementWithClass('todo-buttons');
 
-    const editButton = common_createElementWithClass(
+    const editButton = createElementWithClass(
         'icon-button todo-edit',
         'button',
     );
-    editButton.innerHTML = SVGObject.edit;
+    editButton.innerHTML = svg_manager.edit;
 
-    const deleteButton = common_createElementWithClass(
+    const deleteButton = createElementWithClass(
         'icon-button todo-delete',
         'button',
     );
-    deleteButton.innerHTML = SVGObject.delete;
+    deleteButton.innerHTML = svg_manager.delete;
 
     buttons.appendChild(editButton);
     buttons.appendChild(deleteButton);
@@ -427,46 +451,46 @@ function page_loader_createItemElement(item) {
 }
 
 function createTodoButton() {
-    const buttonContainer = common_createElementWithClass('add-todo-button');
+    const buttonContainer = createElementWithClass('add-todo-button');
 
-    const button = common_createElementWithClass('add-todo', 'button');
-    button.innerHTML = SVGObject.add + 'Add Task';
+    const button = createElementWithClass('add-todo', 'button');
+    button.innerHTML = svg_manager.add + 'Add Task';
 
     buttonContainer.appendChild(button);
     return buttonContainer;
 }
 
 function createEmptyDiv(text) {
-    const emptyDiv = common_createElementWithClass('empty');
+    const emptyDiv = createElementWithClass('empty');
     emptyDiv.textContent = text;
     return emptyDiv;
 }
 
-function page_loader_createSectionElement(section) {
-    const sectionDiv = common_createElementWithClass('section');
+function createSectionElement(section) {
+    const sectionDiv = createElementWithClass('section');
     sectionDiv.dataset.name = section.name;
 
-    const sectionHeader = common_createElementWithClass('section-header');
+    const sectionHeader = createElementWithClass('section-header');
 
-    const collapseSection = common_createElementWithClass(
+    const collapseSection = createElementWithClass(
         'collapse-section',
         'button',
     );
-    collapseSection.innerHTML = SVGObject.arrowDown;
+    collapseSection.innerHTML = svg_manager.arrowDown;
 
-    const sectionName = common_createElementWithClass('section-name', 'span');
+    const sectionName = createElementWithClass('section-name', 'span');
     sectionName.textContent = section.name;
 
-    const deleteSection = common_createElementWithClass('delete-section', 'button');
-    deleteSection.innerHTML = SVGObject.delete;
+    const deleteSection = createElementWithClass('delete-section', 'button');
+    deleteSection.innerHTML = svg_manager.delete;
 
     sectionHeader.appendChild(collapseSection);
     sectionHeader.appendChild(sectionName);
     sectionHeader.appendChild(deleteSection);
 
-    const itemList = common_createElementWithClass('todo-items');
+    const itemList = createElementWithClass('todo-items');
     for (const item of section.items) {
-        itemList.appendChild(page_loader_createItemElement(item));
+        itemList.appendChild(createItemElement(item));
     }
 
     itemList.appendChild(createTodoButton());
@@ -477,13 +501,45 @@ function page_loader_createSectionElement(section) {
     return sectionDiv;
 }
 
+function collapseSection(sectionDiv) {
+    if (sectionDiv.id === 'unlisted') {
+        return;
+    }
+
+    const collapseButton = sectionDiv.querySelector('button.collapse-section');
+
+    if (sectionDiv.classList.contains('collapsed')) {
+        sectionDiv.classList.remove('collapsed');
+        collapseButton.innerHTML = svg_manager.arrowDown;
+    } else {
+        sectionDiv.classList.add('collapsed');
+        collapseButton.innerHTML = svg_manager.arrowUp;
+    }
+}
+
+// EXTERNAL MODULE: ./node_modules/date-fns/esm/isThisWeek/index.js + 2 modules
+var isThisWeek = __webpack_require__(694);
+;// CONCATENATED MODULE: ./src/ui/page-loader.js
+
+
+
+
+
+const main = document.querySelector('main');
+
+const todoObject = todo_manager.getTodoObject();
+
+function clearPage() {
+    main.innerHTML = '';
+}
+
 function setActivePage(pageId = 'inbox') {
     document
         .querySelectorAll('.sidebar-item.active')
         .forEach((item) => item.classList.remove('active'));
 
     document.querySelector(`.sidebar-item#${pageId}`).classList.add('active');
-    pageLoader.setCurrentPage(pageId);
+    setCurrentPage(pageId);
 }
 
 let currentPage = 'inbox';
@@ -491,25 +547,77 @@ let currentPage = 'inbox';
 const getCurrentPage = () => currentPage;
 const setCurrentPage = (newPage) => (currentPage = newPage);
 
+function createTopBar(
+    title,
+    hasExtra = false,
+    projectDescription = '',
+    isInbox = false,
+) {
+    const topBar = createElementWithClass('pg-top-section');
+
+    const topBarHeader = createElementWithClass(
+        hasExtra ? 'project-name' : '',
+        'h1',
+    );
+    topBarHeader.textContent = title;
+
+    topBar.appendChild(topBarHeader);
+
+    if (hasExtra) {
+        const desc = createElementWithClass('project-desc');
+        desc.textContent = projectDescription;
+
+        const buttons = createElementWithClass('project-buttons');
+
+        if (!isInbox) {
+            const editButton = createElementWithClass('project-edit', 'button');
+            editButton.innerHTML = svg_manager.edit + 'Edit Project';
+            buttons.appendChild(editButton);
+        }
+
+        const addSection = createElementWithClass(
+            'project-add-section',
+            'button',
+        );
+        addSection.innerHTML = svg_manager.add + 'Add Section';
+
+        buttons.appendChild(addSection);
+
+        if (!isInbox) {
+            const deleteProject = createElementWithClass(
+                'project-delete',
+                'button',
+            );
+            deleteProject.innerHTML = svg_manager.delete + 'Delete Project';
+            buttons.appendChild(deleteProject);
+        }
+
+        topBar.appendChild(desc);
+        topBar.appendChild(buttons);
+    }
+
+    return topBar;
+}
+
 const inboxPage = {
     id: 'inbox',
     switchTo() {
         clearPage();
 
-        const page = common_createElementWithClass('page');
+        const page = createElementWithClass('page');
         page.dataset.page = 'inbox';
 
         page.appendChild(createTopBar('Inbox', true, '', true)); // ..., hasExtra, projectDescription(not req here), isInbox
 
         const inboxProject = todoObject.findProject('default');
 
-        const unlistedSection = common_createElementWithClass('section');
+        const unlistedSection = createElementWithClass('section');
         unlistedSection.id = 'unlisted';
 
-        const itemList = common_createElementWithClass('todo-items');
+        const itemList = createElementWithClass('todo-items');
 
         for (const item of inboxProject.unlistedItems) {
-            itemList.appendChild(page_loader_createItemElement(item));
+            itemList.appendChild(createItemElement(item));
         }
 
         itemList.appendChild(createTodoButton());
@@ -518,7 +626,7 @@ const inboxPage = {
         page.appendChild(unlistedSection);
 
         for (const section of inboxProject.sections) {
-            page.appendChild(page_loader_createSectionElement(section));
+            page.appendChild(createSectionElement(section));
         }
 
         main.appendChild(page);
@@ -531,12 +639,12 @@ const todayPage = {
     switchTo() {
         clearPage();
 
-        const page = common_createElementWithClass('page');
+        const page = createElementWithClass('page');
         page.dataset.page = 'today';
 
         page.appendChild(createTopBar('Today'));
 
-        const itemList = common_createElementWithClass('todo-items');
+        const itemList = createElementWithClass('todo-items');
 
         for (const project of todoObject.projects) {
             for (const unlistedItem of project.unlistedItems) {
@@ -544,10 +652,10 @@ const todayPage = {
                     unlistedItem.dueDate !== null &&
                     unlistedItem.status === false &&
                     ((0,isToday/* default */.Z)(unlistedItem.dueDate) ||
-                        format(new Date(), 'yyyy-MM-dd') ===
-                            format(unlistedItem.dueDate, 'yyyy-MM-dd'))
+                        (0,format/* default */.Z)(new Date(), 'yyyy-MM-dd') ===
+                            (0,format/* default */.Z)(unlistedItem.dueDate, 'yyyy-MM-dd'))
                 ) {
-                    itemList.appendChild(page_loader_createItemElement(unlistedItem));
+                    itemList.appendChild(createItemElement(unlistedItem));
                 }
             }
             for (const section of project.sections) {
@@ -556,10 +664,10 @@ const todayPage = {
                         item.dueDate !== null &&
                         item.status === false &&
                         ((0,isToday/* default */.Z)(item.dueDate) ||
-                            format(new Date(), 'yyyy-MM-dd') ===
-                                format(item.dueDate, 'yyyy-MM-dd'))
+                            (0,format/* default */.Z)(new Date(), 'yyyy-MM-dd') ===
+                                (0,format/* default */.Z)(item.dueDate, 'yyyy-MM-dd'))
                     ) {
-                        itemList.appendChild(page_loader_createItemElement(item));
+                        itemList.appendChild(createItemElement(item));
                     }
                 }
             }
@@ -585,12 +693,12 @@ const weekPage = {
     switchTo() {
         clearPage();
 
-        const page = common_createElementWithClass('page');
+        const page = createElementWithClass('page');
         page.dataset.page = 'week';
 
         page.appendChild(createTopBar('This Week'));
 
-        const itemList = common_createElementWithClass('todo-items');
+        const itemList = createElementWithClass('todo-items');
 
         for (const project of todoObject.projects) {
             for (const unlistedItem of project.unlistedItems) {
@@ -598,9 +706,9 @@ const weekPage = {
                     unlistedItem.dueDate !== null &&
                     unlistedItem.status === false &&
                     (0,isThisWeek/* default */.Z)(unlistedItem.dueDate, { weekStartsOn: 0 }) &&
-                    isFuture(unlistedItem.dueDate)
+                    (0,isFuture/* default */.Z)(unlistedItem.dueDate)
                 ) {
-                    itemList.appendChild(page_loader_createItemElement(unlistedItem));
+                    itemList.appendChild(createItemElement(unlistedItem));
                 }
             }
             for (const section of project.sections) {
@@ -609,9 +717,9 @@ const weekPage = {
                         item.dueDate !== null &&
                         item.status === false &&
                         (0,isThisWeek/* default */.Z)(item.dueDate, { weekStartsOn: 0 }) &&
-                        isFuture(item.dueDate)
+                        (0,isFuture/* default */.Z)(item.dueDate)
                     ) {
-                        itemList.appendChild(page_loader_createItemElement(item));
+                        itemList.appendChild(createItemElement(item));
                     }
                 }
             }
@@ -636,18 +744,18 @@ const defaultPages = [inboxPage, todayPage, weekPage];
 const projectPageLoader = (project) => {
     clearPage();
 
-    const page = common_createElementWithClass('page');
+    const page = createElementWithClass('page');
     page.dataset.page = `project-${project.name}`;
 
     page.appendChild(createTopBar(project.name, true, project.description));
 
-    const unlistedSection = common_createElementWithClass('section');
+    const unlistedSection = createElementWithClass('section');
     unlistedSection.id = 'unlisted';
 
-    const itemList = common_createElementWithClass('todo-items');
+    const itemList = createElementWithClass('todo-items');
 
     for (const item of project.unlistedItems) {
-        itemList.appendChild(page_loader_createItemElement(item));
+        itemList.appendChild(createItemElement(item));
     }
 
     itemList.appendChild(createTodoButton());
@@ -656,7 +764,7 @@ const projectPageLoader = (project) => {
     page.appendChild(unlistedSection);
 
     for (const section of project.sections) {
-        page.appendChild(page_loader_createSectionElement(section));
+        page.appendChild(createSectionElement(section));
     }
 
     main.appendChild(page);
@@ -694,7 +802,7 @@ const refreshPage = () => {
     const currentPage = getCurrentPage();
 
     let foundPage = false;
-    pageLoader.defaultPages.forEach((page) => {
+    defaultPages.forEach((page) => {
         if (page.id === currentPage) {
             foundPage = true;
             page.switchTo();
@@ -713,588 +821,461 @@ const refreshPage = () => {
 
 
 
-// EXTERNAL MODULE: ./node_modules/date-fns/esm/format/index.js + 4 modules
-var esm_format = __webpack_require__(546);
-// EXTERNAL MODULE: ./node_modules/date-fns/esm/isFuture/index.js
-var esm_isFuture = __webpack_require__(644);
-;// CONCATENATED MODULE: ./src/svg-manager.js
-const svg_manager_SVGObject = {
-    edit: '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><title>pencil-outline</title><path d="M14.06,9L15,9.94L5.92,19H5V18.08L14.06,9M17.66,3C17.41,3 17.15,3.1 16.96,3.29L15.13,5.12L18.88,8.87L20.71,7.04C21.1,6.65 21.1,6 20.71,5.63L18.37,3.29C18.17,3.09 17.92,3 17.66,3M14.06,6.19L3,17.25V21H6.75L17.81,9.94L14.06,6.19Z" /></svg>',
-    info: '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><title>information-outline</title><path d="M11,9H13V7H11M12,20C7.59,20 4,16.41 4,12C4,7.59 7.59,4 12,4C16.41,4 20,7.59 20,12C20,16.41 16.41,20 12,20M12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12A10,10 0 0,0 12,2M11,17H13V11H11V17Z" /></svg>',
-    delete: '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><title>delete-outline</title><path d="M6,19A2,2 0 0,0 8,21H16A2,2 0 0,0 18,19V7H6V19M8,9H16V19H8V9M15.5,4L14.5,3H9.5L8.5,4H5V6H19V4H15.5Z" /></svg>',
-    add: '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><title>plus</title><path d="M19,13H13V19H11V13H5V11H11V5H13V11H19V13Z" /></svg>',
-    arrowUp:
-        '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><title>chevron-right</title><path d="M8.59,16.58L13.17,12L8.59,7.41L10,6L16,12L10,18L8.59,16.58Z" /></svg>',
-    arrowDown:
-        '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><title>chevron-down</title><path d="M7.41,8.58L12,13.17L16.59,8.58L18,10L12,16L6,10L7.41,8.58Z" /></svg>',
-    project:
-        '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><title>format-list-checks</title><path d="M3,5H9V11H3V5M5,7V9H7V7H5M11,7H21V9H11V7M11,15H21V17H11V15M5,20L1.5,16.5L2.91,15.09L5,17.17L9.59,12.59L11,14L5,20Z" /></svg>',
-    close: '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><title>window-close</title><path d="M13.46,12L19,17.54V19H17.54L12,13.46L6.46,19H5V17.54L10.54,12L5,6.46V5H6.46L12,10.54L17.54,5H19V6.46L13.46,12Z" /></svg>',
-};
-
-/* harmony default export */ const svg_manager = (svg_manager_SVGObject);
-
-;// CONCATENATED MODULE: ./src/ui-manager.js
+;// CONCATENATED MODULE: ./src/ui/modal-manager.js
 
 
 
 
+function modalLoader(topBarText) {
+    const overlay = createElementWithClass('popup overlay');
 
+    const dialog = createElementWithClass('dialog');
 
-function ui_manager_createProjectButton(project) {
-    const projectButton = common_createElementWithClass(
-        'sidebar-item project',
-        'button',
-    );
-    projectButton.id = `project-${project.name}`;
-    projectButton.dataset.name = project.name;
-    projectButton.innerHTML = svg_manager.project + project.name;
+    const topHeader = createElementWithClass('top-header');
 
-    return projectButton;
+    const headerText = createElementWithClass('project-name', 'span');
+    headerText.textContent = topBarText;
+
+    const closeButton = createElementWithClass('close-popup', 'button');
+    closeButton.id = 'close-popup-modal';
+    closeButton.innerHTML = svg_manager.close;
+
+    topHeader.appendChild(headerText);
+    topHeader.appendChild(closeButton);
+
+    dialog.appendChild(topHeader);
+
+    return [overlay, dialog];
 }
 
-function ui_manager_createTopBar(
-    title,
-    hasExtra = false,
-    projectDescription = '',
-    isInbox = false,
-) {
-    const topBar = createElementWithClass('pg-top-section');
+// itemObject may be the section or the project
+function createSmallPopupForm(targetType, itemObject) {
+    const popupForm = createElementWithClass('popup-body', 'form');
 
-    const topBarHeader = createElementWithClass(
-        hasExtra ? 'project-name' : '',
-        'h1',
-    );
-    topBarHeader.textContent = title;
+    const title = createElementWithClass('todo-title', 'input');
+    title.type = 'text';
+    title.id = 'edit-title';
+    title.spellcheck = false;
+    title.autocomplete = 'off';
+    title.required = true;
+    title.placeholder = `A name for your ${targetType}, e.g. "${
+        targetType === 'Section' ? 'classes' : 'Study'
+    }" (required)`;
 
-    topBar.appendChild(topBarHeader);
-
-    if (hasExtra) {
-        const desc = createElementWithClass('project-desc');
-        desc.textContent = projectDescription;
-
-        const buttons = createElementWithClass('project-buttons');
-
-        if (!isInbox) {
-            const editButton = createElementWithClass('project-edit', 'button');
-            editButton.innerHTML = SVGObject.edit + 'Edit Project';
-            buttons.appendChild(editButton);
-        }
-
-        const addSection = createElementWithClass(
-            'project-add-section',
-            'button',
-        );
-        addSection.innerHTML = SVGObject.add + 'Add Section';
-
-        buttons.appendChild(addSection);
-
-        if (!isInbox) {
-            const deleteProject = createElementWithClass(
-                'project-delete',
-                'button',
-            );
-            deleteProject.innerHTML = SVGObject.delete + 'Delete Project';
-            buttons.appendChild(deleteProject);
-        }
-
-        topBar.appendChild(desc);
-        topBar.appendChild(buttons);
+    if (itemObject) {
+        title.value = itemObject.name;
     }
 
-    return topBar;
-}
+    popupForm.appendChild(title);
 
-const modalManager = (function () {
-    function modalLoader(topBarText) {
-        const overlay = common_createElementWithClass('popup overlay');
-
-        const dialog = common_createElementWithClass('dialog');
-
-        const topHeader = common_createElementWithClass('top-header');
-
-        const headerText = common_createElementWithClass('project-name', 'span');
-        headerText.textContent = topBarText;
-
-        const closeButton = common_createElementWithClass('close-popup', 'button');
-        closeButton.id = 'close-popup-modal';
-        closeButton.innerHTML = svg_manager.close;
-
-        topHeader.appendChild(headerText);
-        topHeader.appendChild(closeButton);
-
-        dialog.appendChild(topHeader);
-
-        return [overlay, dialog];
-    }
-
-    // itemObject may be the section or the project
-    function createSmallPopupForm(targetType, itemObject) {
-        const popupForm = common_createElementWithClass('popup-body', 'form');
-
-        const title = common_createElementWithClass('todo-title', 'input');
-        title.type = 'text';
-        title.id = 'edit-title';
-        title.spellcheck = false;
-        title.autocomplete = 'off';
-        title.required = true;
-        title.placeholder = `A name for your ${targetType}, e.g. "${
-            targetType === 'Section' ? 'classes' : 'Study'
-        }" (required)`;
-
-        if (itemObject) {
-            title.value = itemObject.name;
-        }
-
-        popupForm.appendChild(title);
-
-        if (targetType === 'Project') {
-            const desc = common_createElementWithClass('todo-desc', 'textarea');
-            desc.id = 'edit-desc';
-            desc.spellcheck = false;
-            desc.placeholder =
-                'A neat description for your Project e.g. "stuff to do before vacation ends"';
-
-            if (itemObject) {
-                desc.textContent = itemObject.description;
-            }
-
-            popupForm.appendChild(desc);
-        }
-
-        const buttons = common_createElementWithClass('buttons right');
-
-        const confirmButton = common_createElementWithClass('confirm', 'button');
-        confirmButton.textContent = 'Confirm';
-        confirmButton.type = 'submit';
-
-        buttons.appendChild(confirmButton);
-        popupForm.appendChild(buttons);
-
-        return popupForm;
-    }
-
-    function createPopupForm(todoItem) {
-        const popupForm = common_createElementWithClass('popup-body', 'form');
-
-        // Checkbox will only exist for editing items
-        if (todoItem) {
-            const checkboxContainer =
-                common_createElementWithClass('checkbox-container');
-
-            const checkbox = common_createElementWithClass('todo-checkbox', 'input');
-            checkbox.type = 'checkbox';
-            checkbox.id = 'edit-todo-checkbox';
-            checkbox.checked = todoItem.status;
-
-            const checkmark = common_createElementWithClass('checkmark', 'span');
-
-            checkboxContainer.appendChild(checkbox);
-            checkboxContainer.appendChild(checkmark);
-            popupForm.appendChild(checkboxContainer);
-        }
-
-        const title = common_createElementWithClass('todo-title', 'input');
-        title.type = 'text';
-        title.id = 'edit-title';
-        title.spellcheck = false;
-        title.autocomplete = 'off';
-        title.required = true;
-        title.placeholder =
-            'Title for your To-Do, e.g. "do the laundry" (required)';
-
-        const desc = common_createElementWithClass('todo-desc', 'textarea');
+    if (targetType === 'Project') {
+        const desc = createElementWithClass('todo-desc', 'textarea');
         desc.id = 'edit-desc';
         desc.spellcheck = false;
         desc.placeholder =
-            'A neat description for your To-Do e.g. "must finish them by tomorrow, else I won\'t have clean clothes next week!"';
+            'A neat description for your Project e.g. "stuff to do before vacation ends"';
 
-        const dateDiv = common_createElementWithClass('date');
-
-        const dateLabel = common_createElementWithClass('', 'label');
-        dateLabel.setAttribute('for', 'edit-todo-date');
-        dateLabel.textContent = 'Due Date: ';
-
-        const date = common_createElementWithClass('todo-date', 'input');
-        date.type = 'date';
-        date.id = 'edit-todo-date';
-
-        date.min = (0,esm_format/* default */.Z)(new Date(), 'yyyy-MM-dd');
-
-        dateDiv.appendChild(dateLabel);
-        dateDiv.appendChild(date);
-
-        const buttons = common_createElementWithClass('buttons');
-
-        const selectButtons = common_createElementWithClass('select-buttons');
-
-        const low = common_createElementWithClass('priority-button low', 'button');
-        low.textContent = 'Low';
-        low.dataset.priority = 'low';
-        low.type = 'button';
-
-        const mid = common_createElementWithClass('priority-button mid', 'button');
-        mid.textContent = 'Medium';
-        mid.dataset.priority = 'medium';
-        mid.type = 'button';
-
-        const high = common_createElementWithClass('priority-button high', 'button');
-        high.textContent = 'High';
-        high.dataset.priority = 'high';
-        high.type = 'button';
-
-        selectButtons.appendChild(low);
-        selectButtons.appendChild(mid);
-        selectButtons.appendChild(high);
-
-        const confirmButton = common_createElementWithClass('confirm', 'button');
-        confirmButton.textContent = 'Confirm';
-        confirmButton.type = 'submit';
-
-        buttons.appendChild(selectButtons);
-        buttons.appendChild(confirmButton);
-
-        // Set their values (if it's an edit modal)
-        if (todoItem) {
-            title.value = todoItem.title;
-            desc.textContent = todoItem.description;
-
-            date.value =
-                todoItem.dueDate === null
-                    ? ''
-                    : (0,esm_format/* default */.Z)(todoItem.dueDate, 'yyyy-MM-dd');
-            if (date.value !== '' && !(0,esm_isFuture/* default */.Z)(todoItem.dueDate)) {
-                date.min = date.value;
-            }
-
-            switch (todoItem.priority) {
-                case 'low':
-                    low.classList.add('selected');
-                    break;
-                case 'medium':
-                    mid.classList.add('selected');
-                    break;
-                case 'high':
-                    high.classList.add('selected');
-                    break;
-            }
-
-            confirmButton.textContent = 'Confirm Edit';
-        } else {
-            low.classList.add('selected');
+        if (itemObject) {
+            desc.textContent = itemObject.description;
         }
 
-        popupForm.appendChild(title);
         popupForm.appendChild(desc);
-        popupForm.appendChild(dateDiv);
-        popupForm.appendChild(buttons);
-
-        return popupForm;
     }
 
-    const loadAddItemModal = (projectName = '', sectionName = null) => {
-        const page = document.querySelector('.page');
+    const buttons = createElementWithClass('buttons right');
 
-        closeModal();
+    const confirmButton = createElementWithClass('confirm', 'button');
+    confirmButton.textContent = 'Confirm';
+    confirmButton.type = 'submit';
 
-        const [overlay, dialog] = modalLoader(
-            projectName + (sectionName !== null ? ` > ${sectionName}` : ''),
-        );
+    buttons.appendChild(confirmButton);
+    popupForm.appendChild(buttons);
 
-        const popupForm = createPopupForm();
+    return popupForm;
+}
 
-        dialog.appendChild(popupForm);
+function createPopupForm(todoItem) {
+    const popupForm = createElementWithClass('popup-body', 'form');
 
-        overlay.appendChild(dialog);
+    // Checkbox will only exist for editing items
+    if (todoItem) {
+        const checkboxContainer = createElementWithClass('checkbox-container');
 
-        disableBody();
+        const checkbox = createElementWithClass('todo-checkbox', 'input');
+        checkbox.type = 'checkbox';
+        checkbox.id = 'edit-todo-checkbox';
+        checkbox.checked = todoItem.status;
 
-        page.appendChild(overlay);
-    };
+        const checkmark = createElementWithClass('checkmark', 'span');
 
-    const loadEditItemModal = (todoItem) => {
-        const page = document.querySelector('.page');
-
-        closeModal();
-
-        const [overlay, dialog] = modalLoader(
-            todoItem.projectName === 'default'
-                ? 'Inbox'
-                : todoItem.projectName +
-                      (todoItem.sectionName !== null
-                          ? ` > ${todoItem.sectionName}`
-                          : ''),
-        );
-
-        const popupForm = createPopupForm(todoItem);
-
-        dialog.appendChild(popupForm);
-
-        overlay.appendChild(dialog);
-
-        disableBody();
-
-        page.appendChild(overlay);
-    };
-
-    const loadAddSectionModal = (projectName) => {
-        const page = document.querySelector('.page');
-
-        closeModal();
-
-        const [overlay, dialog] = modalLoader(
-            projectName + ': Add New Section',
-        );
-
-        const popupForm = createSmallPopupForm('Section');
-
-        dialog.appendChild(popupForm);
-
-        overlay.appendChild(dialog);
-
-        disableBody();
-
-        page.appendChild(overlay);
-    };
-
-    const loadAddProjectModal = () => {
-        const page = document.querySelector('.page');
-
-        closeModal();
-
-        const [overlay, dialog] = modalLoader('Add New Project');
-
-        const popupForm = createSmallPopupForm('Project');
-
-        dialog.appendChild(popupForm);
-
-        overlay.appendChild(dialog);
-
-        disableBody();
-
-        page.appendChild(overlay);
-    };
-
-    const loadEditProjectModal = (project) => {
-        const page = document.querySelector('.page');
-
-        closeModal();
-
-        const [overlay, dialog] = modalLoader(`${project.name}: Edit Project`);
-
-        const popupForm = createSmallPopupForm('Project', project);
-
-        dialog.appendChild(popupForm);
-
-        overlay.appendChild(dialog);
-
-        disableBody();
-
-        page.appendChild(overlay);
-    };
-
-    const loadConfirmationModal = (targetType, targetName) => {
-        const page = document.querySelector('.page');
-
-        closeModal();
-
-        const [overlay, dialog] = modalLoader(`Remove ${targetType}`);
-        dialog.classList.add('confirmation');
-
-        const popupBody = common_createElementWithClass('popup-body');
-
-        popupBody.innerHTML = svg_manager.info;
-
-        const text = common_createElementWithClass('confirmation-text', 'p');
-        text.textContent = `Are you sure you want to delete the ${targetType} "`;
-
-        const nameSpan = common_createElementWithClass('name', 'span');
-        nameSpan.textContent = targetName;
-
-        text.appendChild(nameSpan);
-
-        text.innerHTML += '"? This is an irreversible action.';
-
-        const buttons = common_createElementWithClass('buttons');
-
-        const cancel = common_createElementWithClass('confirmation-button', 'button');
-        cancel.id = 'confirm-no';
-        cancel.textContent = 'No';
-
-        const confirm = common_createElementWithClass(
-            'confirmation-button yes',
-            'button',
-        );
-        confirm.id = 'confirm-yes';
-        confirm.textContent = 'Yes';
-
-        buttons.appendChild(cancel);
-        buttons.appendChild(confirm);
-
-        popupBody.appendChild(text);
-        popupBody.appendChild(buttons);
-
-        dialog.appendChild(popupBody);
-        overlay.appendChild(dialog);
-
-        disableBody();
-
-        page.appendChild(overlay);
-    };
-
-    let elementsToBeMadeUnfocusable = [document.body];
-    function disableBody() {
-        // Disable the body so that the user cannot interact with it
-        document.body.classList.add('disabled');
-
-        elementsToBeMadeUnfocusable = document.body.querySelectorAll(
-            'a, button, input, textarea, select, details, [tabindex]:not([tabindex="-1"])',
-        );
-        elementsToBeMadeUnfocusable.forEach(
-            (element) => (element.tabIndex = '-1'),
-        );
+        checkboxContainer.appendChild(checkbox);
+        checkboxContainer.appendChild(checkmark);
+        popupForm.appendChild(checkboxContainer);
     }
 
-    const closeModal = () => {
-        const page = document.querySelector('.page');
-        const popupOverlay = document.querySelector('.popup.overlay');
+    const title = createElementWithClass('todo-title', 'input');
+    title.type = 'text';
+    title.id = 'edit-title';
+    title.spellcheck = false;
+    title.autocomplete = 'off';
+    title.required = true;
+    title.placeholder =
+        'Title for your To-Do, e.g. "do the laundry" (required)';
 
-        if (popupOverlay) {
-            page.removeChild(popupOverlay);
+    const desc = createElementWithClass('todo-desc', 'textarea');
+    desc.id = 'edit-desc';
+    desc.spellcheck = false;
+    desc.placeholder =
+        'A neat description for your To-Do e.g. "must finish them by tomorrow, else I won\'t have clean clothes next week!"';
+
+    const dateDiv = createElementWithClass('date');
+
+    const dateLabel = createElementWithClass('', 'label');
+    dateLabel.setAttribute('for', 'edit-todo-date');
+    dateLabel.textContent = 'Due Date: ';
+
+    const date = createElementWithClass('todo-date', 'input');
+    date.type = 'date';
+    date.id = 'edit-todo-date';
+
+    date.min = (0,format/* default */.Z)(new Date(), 'yyyy-MM-dd');
+
+    dateDiv.appendChild(dateLabel);
+    dateDiv.appendChild(date);
+
+    const buttons = createElementWithClass('buttons');
+
+    const selectButtons = createElementWithClass('select-buttons');
+
+    const low = createElementWithClass('priority-button low', 'button');
+    low.textContent = 'Low';
+    low.dataset.priority = 'low';
+    low.type = 'button';
+
+    const mid = createElementWithClass('priority-button mid', 'button');
+    mid.textContent = 'Medium';
+    mid.dataset.priority = 'medium';
+    mid.type = 'button';
+
+    const high = createElementWithClass('priority-button high', 'button');
+    high.textContent = 'High';
+    high.dataset.priority = 'high';
+    high.type = 'button';
+
+    selectButtons.appendChild(low);
+    selectButtons.appendChild(mid);
+    selectButtons.appendChild(high);
+
+    const confirmButton = createElementWithClass('confirm', 'button');
+    confirmButton.textContent = 'Confirm';
+    confirmButton.type = 'submit';
+
+    buttons.appendChild(selectButtons);
+    buttons.appendChild(confirmButton);
+
+    // Set their values (if it's an edit modal)
+    if (todoItem) {
+        title.value = todoItem.title;
+        desc.textContent = todoItem.description;
+
+        date.value =
+            todoItem.dueDate === null
+                ? ''
+                : (0,format/* default */.Z)(todoItem.dueDate, 'yyyy-MM-dd');
+        if (date.value !== '' && !(0,isFuture/* default */.Z)(todoItem.dueDate)) {
+            date.min = date.value;
         }
 
-        document.body.classList.remove('disabled');
-        elementsToBeMadeUnfocusable.forEach(
-            (element) => (element.tabIndex = '0'),
-        );
-    };
-
-    const switchPriority = (priority) => {
-        const buttons = document.querySelectorAll('.priority-button');
-        if (buttons === undefined) {
-            return;
+        switch (todoItem.priority) {
+            case 'low':
+                low.classList.add('selected');
+                break;
+            case 'medium':
+                mid.classList.add('selected');
+                break;
+            case 'high':
+                high.classList.add('selected');
+                break;
         }
 
-        buttons.forEach((button) => {
-            if (button.dataset.priority === priority) {
-                button.classList.add('selected');
-            } else {
-                button.classList.remove('selected');
-            }
-        });
-    };
+        confirmButton.textContent = 'Confirm Edit';
+    } else {
+        low.classList.add('selected');
+    }
 
-    return {
-        loadAddItemModal,
-        loadEditItemModal,
-        loadAddSectionModal,
-        loadAddProjectModal,
-        loadEditProjectModal,
-        loadConfirmationModal,
-        closeModal,
-        switchPriority,
-    };
-})();
+    popupForm.appendChild(title);
+    popupForm.appendChild(desc);
+    popupForm.appendChild(dateDiv);
+    popupForm.appendChild(buttons);
 
-const DOMAdderRemover = (function () {
-    const addItem = (sectionElement, todoItem) => {
-        if (sectionElement === undefined) {
-            return false;
-        }
+    return popupForm;
+}
 
-        const itemDiv = createItemElement(todoItem);
+const loadAddItemModal = (projectName = '', sectionName = null) => {
+    const page = document.querySelector('.page');
 
-        const todoItemsList = sectionElement.querySelector('.todo-items');
-        todoItemsList.insertBefore(itemDiv, todoItemsList.lastElementChild);
-    };
+    closeModal();
 
-    const addSection = (section) => {
-        const page = document.querySelector('.page');
+    const [overlay, dialog] = modalLoader(
+        projectName + (sectionName !== null ? ` > ${sectionName}` : ''),
+    );
 
-        const sectionDiv = createSectionElement(section);
+    const popupForm = createPopupForm();
 
-        page.appendChild(sectionDiv);
-    };
+    dialog.appendChild(popupForm);
 
-    const addProject = (project) => {
-        const projectsList = document.querySelector(
-            '.sidebar-list.project-list',
-        );
+    overlay.appendChild(dialog);
 
-        const projectButton = ui_manager_createProjectButton(project);
+    disableBody();
 
-        projectsList.insertBefore(projectButton, projectsList.lastElementChild);
-    };
+    page.appendChild(overlay);
+};
 
-    const editItem = (previousItemDiv, todoItem) => {
-        const newDiv = createItemElement(todoItem);
+const loadEditItemModal = (todoItem) => {
+    const page = document.querySelector('.page');
 
-        const parent = previousItemDiv.parentNode;
+    closeModal();
 
-        parent.insertBefore(newDiv, previousItemDiv.nextElementSibling);
+    const [overlay, dialog] = modalLoader(
+        todoItem.projectName === 'default'
+            ? 'Inbox'
+            : todoItem.projectName +
+                  (todoItem.sectionName !== null
+                      ? ` > ${todoItem.sectionName}`
+                      : ''),
+    );
 
-        parent.removeChild(previousItemDiv);
-    };
+    const popupForm = createPopupForm(todoItem);
 
-    const remove = (element) => {
-        element.parentNode.removeChild(element);
-    };
+    dialog.appendChild(popupForm);
 
-    return { addItem, addSection, addProject, editItem, remove };
-})();
+    overlay.appendChild(dialog);
 
-const collapseSection = (sectionDiv) => {
-    if (sectionDiv.id === 'unlisted') {
+    disableBody();
+
+    page.appendChild(overlay);
+};
+
+const loadAddSectionModal = (projectName) => {
+    const page = document.querySelector('.page');
+
+    closeModal();
+
+    const [overlay, dialog] = modalLoader(projectName + ': Add New Section');
+
+    const popupForm = createSmallPopupForm('Section');
+
+    dialog.appendChild(popupForm);
+
+    overlay.appendChild(dialog);
+
+    disableBody();
+
+    page.appendChild(overlay);
+};
+
+const loadAddProjectModal = () => {
+    const page = document.querySelector('.page');
+
+    closeModal();
+
+    const [overlay, dialog] = modalLoader('Add New Project');
+
+    const popupForm = createSmallPopupForm('Project');
+
+    dialog.appendChild(popupForm);
+
+    overlay.appendChild(dialog);
+
+    disableBody();
+
+    page.appendChild(overlay);
+};
+
+const loadEditProjectModal = (project) => {
+    const page = document.querySelector('.page');
+
+    closeModal();
+
+    const [overlay, dialog] = modalLoader(`${project.name}: Edit Project`);
+
+    const popupForm = createSmallPopupForm('Project', project);
+
+    dialog.appendChild(popupForm);
+
+    overlay.appendChild(dialog);
+
+    disableBody();
+
+    page.appendChild(overlay);
+};
+
+const loadConfirmationModal = (targetType, targetName) => {
+    const page = document.querySelector('.page');
+
+    closeModal();
+
+    const [overlay, dialog] = modalLoader(`Remove ${targetType}`);
+    dialog.classList.add('confirmation');
+
+    const popupBody = createElementWithClass('popup-body');
+
+    popupBody.innerHTML = svg_manager.info;
+
+    const text = createElementWithClass('confirmation-text', 'p');
+    text.textContent = `Are you sure you want to delete the ${targetType} "`;
+
+    const nameSpan = createElementWithClass('name', 'span');
+    nameSpan.textContent = targetName;
+
+    text.appendChild(nameSpan);
+
+    text.innerHTML += '"? This is an irreversible action.';
+
+    const buttons = createElementWithClass('buttons');
+
+    const cancel = createElementWithClass('confirmation-button', 'button');
+    cancel.id = 'confirm-no';
+    cancel.textContent = 'No';
+
+    const confirm = createElementWithClass('confirmation-button yes', 'button');
+    confirm.id = 'confirm-yes';
+    confirm.textContent = 'Yes';
+
+    buttons.appendChild(cancel);
+    buttons.appendChild(confirm);
+
+    popupBody.appendChild(text);
+    popupBody.appendChild(buttons);
+
+    dialog.appendChild(popupBody);
+    overlay.appendChild(dialog);
+
+    disableBody();
+
+    page.appendChild(overlay);
+};
+
+let elementsToBeMadeUnfocusable = [document.body];
+function disableBody() {
+    // Disable the body so that the user cannot interact with it
+    document.body.classList.add('disabled');
+
+    elementsToBeMadeUnfocusable = document.body.querySelectorAll(
+        'a, button, input, textarea, select, details, [tabindex]:not([tabindex="-1"])',
+    );
+    elementsToBeMadeUnfocusable.forEach((element) => (element.tabIndex = '-1'));
+}
+
+const closeModal = () => {
+    const page = document.querySelector('.page');
+    const popupOverlay = document.querySelector('.popup.overlay');
+
+    if (popupOverlay) {
+        page.removeChild(popupOverlay);
+    }
+
+    document.body.classList.remove('disabled');
+    elementsToBeMadeUnfocusable.forEach((element) => (element.tabIndex = '0'));
+};
+
+const switchPriority = (priority) => {
+    const buttons = document.querySelectorAll('.priority-button');
+    if (buttons === undefined) {
         return;
     }
 
-    const collapseButton = sectionDiv.querySelector('button.collapse-section');
-
-    if (sectionDiv.classList.contains('collapsed')) {
-        sectionDiv.classList.remove('collapsed');
-        collapseButton.innerHTML = svg_manager.arrowDown;
-    } else {
-        sectionDiv.classList.add('collapsed');
-        collapseButton.innerHTML = svg_manager.arrowUp;
-    }
+    buttons.forEach((button) => {
+        if (button.dataset.priority === priority) {
+            button.classList.add('selected');
+        } else {
+            button.classList.remove('selected');
+        }
+    });
 };
 
-const ui_manager_alertManager = (function () {
-    const cornerPopupContainer = document.querySelector(
-        '.corner-popup-container',
-    );
 
-    function createAlertElement(message) {
-        const alert = common_createElementWithClass('corner-popup');
-        alert.innerHTML = svg_manager.info;
-        alert.appendChild(document.createTextNode(message));
 
-        const closeButton = common_createElementWithClass('close-alert', 'button');
-        closeButton.innerHTML = svg_manager.close;
+;// CONCATENATED MODULE: ./src/ui/dom-adder-remover.js
 
-        alert.appendChild(closeButton);
 
-        return alert;
+const addItem = (sectionElement, todoItem) => {
+    if (sectionElement === undefined) {
+        return false;
     }
 
-    const success = (message) => {
-        const alert = createAlertElement(message);
-        alert.classList.add('success');
-        cornerPopupContainer.appendChild(alert);
+    const itemDiv = createItemElement(todoItem);
 
-        return alert;
-    };
+    const todoItemsList = sectionElement.querySelector('.todo-items');
+    todoItemsList.insertBefore(itemDiv, todoItemsList.lastElementChild);
+};
 
-    const error = (message) => {
-        const alert = createAlertElement(message);
-        alert.classList.add('error');
-        cornerPopupContainer.appendChild(alert);
+const addSection = (section) => {
+    const page = document.querySelector('.page');
 
-        return alert;
-    };
+    const sectionDiv = createSectionElement(section);
 
-    return { success, error };
-})();
+    page.appendChild(sectionDiv);
+};
+
+const addProject = (project) => {
+    const projectsList = document.querySelector('.sidebar-list.project-list');
+
+    const projectButton = createProjectButton(project);
+
+    projectsList.insertBefore(projectButton, projectsList.lastElementChild);
+};
+
+const editItem = (previousItemDiv, todoItem) => {
+    const newDiv = createItemElement(todoItem);
+
+    const parent = previousItemDiv.parentNode;
+
+    parent.insertBefore(newDiv, previousItemDiv.nextElementSibling);
+
+    parent.removeChild(previousItemDiv);
+};
+
+const remove = (element) => {
+    element.parentNode.removeChild(element);
+};
+
+
+
+;// CONCATENATED MODULE: ./src/ui/alert-manager.js
+
+
+
+const cornerPopupContainer = document.querySelector('.corner-popup-container');
+
+function createAlertElement(message) {
+    const alert = createElementWithClass('corner-popup');
+    alert.innerHTML = svg_manager.info;
+    alert.appendChild(document.createTextNode(message));
+
+    const closeButton = createElementWithClass('close-alert', 'button');
+    closeButton.innerHTML = svg_manager.close;
+
+    alert.appendChild(closeButton);
+
+    return alert;
+}
+
+const success = (message) => {
+    const alert = createAlertElement(message);
+    alert.classList.add('success');
+    cornerPopupContainer.appendChild(alert);
+
+    return alert;
+};
+
+const error = (message) => {
+    const alert = createAlertElement(message);
+    alert.classList.add('error');
+    cornerPopupContainer.appendChild(alert);
+
+    return alert;
+};
 
 
 
@@ -1672,6 +1653,12 @@ var parse = __webpack_require__(111);
 
 
 
+
+
+
+
+
+
 defaultLoader();
 
 // Set up event listeners; all functions of this module called here are written down below
@@ -1801,7 +1788,7 @@ function createSuccessAlert(message) {
 }
 
 function createErrorAlert(message) {
-    const alert = ui_manager_alertManager.error(message);
+    const alert = error(message);
     manageAlert(alert);
 }
 
@@ -1846,7 +1833,7 @@ function managePopupModal(mode = 'edit', targetElement, targetType = 'item') {
     const popupForm = document.querySelector('.dialog form');
 
     dialog.parentNode.addEventListener('click', () =>
-        modalManager.closeModal(),
+        closeModal(),
     );
 
     dialog.addEventListener('click', (event) => {
@@ -1856,9 +1843,9 @@ function managePopupModal(mode = 'edit', targetElement, targetType = 'item') {
             targetType === 'item' &&
             target.classList.contains('priority-button')
         ) {
-            modalManager.switchPriority(target.dataset.priority);
+            switchPriority(target.dataset.priority);
         } else if (target.id === 'close-popup-modal') {
-            modalManager.closeModal();
+            closeModal();
         }
     });
 
@@ -1899,8 +1886,8 @@ function managePopupModal(mode = 'edit', targetElement, targetType = 'item') {
             );
 
             editTodo(selectedTodoItem);
-            DOMAdderRemover.editItem(selectedTodoElement, selectedTodoItem);
-            modalManager.closeModal();
+            editItem(selectedTodoElement, selectedTodoItem);
+            closeModal();
         } else if (mode === 'add' && targetType === 'item') {
             const sectionName = section.dataset.name;
 
@@ -1914,8 +1901,8 @@ function managePopupModal(mode = 'edit', targetElement, targetType = 'item') {
             );
 
             saveTodo(newTodoItem);
-            DOMAdderRemover.addItem(section, newTodoItem);
-            modalManager.closeModal();
+            addItem(section, newTodoItem);
+            closeModal();
         } else if (mode === 'add' && targetType === 'section') {
             const newSection = todo_manager.addSection(title, projectName);
 
@@ -1926,8 +1913,8 @@ function managePopupModal(mode = 'edit', targetElement, targetType = 'item') {
             }
 
             saveSection(projectName, newSection);
-            DOMAdderRemover.addSection(newSection);
-            modalManager.closeModal();
+            addSection(newSection);
+            closeModal();
         } else if (mode === 'add' && targetType === 'project') {
             const newProject = todo_manager.addProject(title, description);
 
@@ -1937,8 +1924,8 @@ function managePopupModal(mode = 'edit', targetElement, targetType = 'item') {
             }
 
             saveProject(newProject);
-            DOMAdderRemover.addProject(newProject);
-            modalManager.closeModal();
+            addProject(newProject);
+            closeModal();
         } else if (mode === 'edit' && targetType === 'project') {
             const oldName = project.name;
 
@@ -1952,7 +1939,7 @@ function managePopupModal(mode = 'edit', targetElement, targetType = 'item') {
             editProject(oldName, project);
             loadSideBar();
             projectPageLoader(project);
-            modalManager.closeModal();
+            closeModal();
         }
     });
 }
@@ -1983,7 +1970,7 @@ function manageEditItemModalLoad(target) {
         projectName = 'Inbox';
     }
 
-    modalManager.loadEditItemModal(todoItem);
+    loadEditItemModal(todoItem);
     return [todoElement, todoItem];
 }
 
@@ -1993,7 +1980,7 @@ function manageAddItemModalLoad(target) {
 
     const projectName = getProjectName();
 
-    modalManager.loadAddItemModal(
+    loadAddItemModal(
         projectName === 'default' ? 'Inbox' : projectName,
         section.dataset.name,
     );
@@ -2005,7 +1992,7 @@ function manageAddSectionModalLoad() {
     // First parent is button div, second is item list container and the third is the section div
     const projectName = getProjectName();
 
-    modalManager.loadAddSectionModal(
+    loadAddSectionModal(
         projectName !== 'default' ? projectName : 'Inbox',
     );
 
@@ -2013,7 +2000,7 @@ function manageAddSectionModalLoad() {
 }
 
 function manageAddProjectModalLoad() {
-    modalManager.loadAddProjectModal();
+    loadAddProjectModal();
 }
 
 function manageEditProjectModalLoad() {
@@ -2024,7 +2011,7 @@ function manageEditProjectModalLoad() {
         return false;
     }
 
-    modalManager.loadEditProjectModal(project);
+    loadEditProjectModal(project);
     return project;
 }
 
@@ -2048,7 +2035,7 @@ function manageConfirmationModel(target, targetType) {
             return;
         }
 
-        modalManager.loadConfirmationModal('To-Do', todoItem.title);
+        loadConfirmationModal('To-Do', todoItem.title);
     } else if (targetType === 'section') {
         if (page === 'inbox') {
             projectName = 'default';
@@ -2074,7 +2061,7 @@ function manageConfirmationModel(target, targetType) {
             return;
         }
 
-        modalManager.loadConfirmationModal('Section', sectionName);
+        loadConfirmationModal('Section', sectionName);
     } else if (targetType === 'project') {
         if (page === 'inbox') {
             createDOMMessAlert();
@@ -2083,7 +2070,7 @@ function manageConfirmationModel(target, targetType) {
 
         projectName = page.slice('project-'.length);
 
-        modalManager.loadConfirmationModal('Project', projectName);
+        loadConfirmationModal('Project', projectName);
     }
 
     const dialog = document.querySelector('.dialog');
@@ -2092,7 +2079,7 @@ function manageConfirmationModel(target, targetType) {
         const target = event.target;
 
         if (target.id === 'close-popup-modal' || target.id === 'confirm-no') {
-            modalManager.closeModal();
+            closeModal();
         } else if (target.id === 'confirm-yes') {
             if (targetType === 'item') {
                 const success = todo_manager.deleteTodoItem(todoItem);
@@ -2103,8 +2090,8 @@ function manageConfirmationModel(target, targetType) {
                 }
 
                 removeTodo(todoItem);
-                DOMAdderRemover.remove(todoElement);
-                modalManager.closeModal();
+                remove(todoElement);
+                closeModal();
             } else if (targetType === 'section') {
                 const success = todo_manager.deleteSection(
                     projectName,
@@ -2117,8 +2104,8 @@ function manageConfirmationModel(target, targetType) {
                 }
 
                 deleteSection(projectName, sectionName);
-                DOMAdderRemover.remove(section);
-                modalManager.closeModal();
+                remove(section);
+                closeModal();
             } else if (targetType === 'project') {
                 const success = todo_manager.deleteProject(projectName);
 
@@ -2128,7 +2115,7 @@ function manageConfirmationModel(target, targetType) {
                 }
 
                 deleteProject(projectName);
-                modalManager.closeModal();
+                closeModal();
                 defaultLoader();
             }
         }
@@ -2185,7 +2172,7 @@ eventListenersObject.setUp();
 },
 /******/ __webpack_require__ => { // webpackRuntimeModules
 /******/ var __webpack_exec__ = (moduleId) => (__webpack_require__(__webpack_require__.s = moduleId))
-/******/ __webpack_require__.O(0, [115], () => (__webpack_exec__(162)));
+/******/ __webpack_require__.O(0, [115], () => (__webpack_exec__(363)));
 /******/ var __webpack_exports__ = __webpack_require__.O();
 /******/ }
 ]);
