@@ -1,14 +1,15 @@
+import './assets/style.css';
+
 import todoManager from './todo-manager.js';
-import {
-    pageLoader,
-    modalManager,
-    DOMAdderRemover,
-    collapseSection,
-    alertManager,
-} from './ui-manager.js';
+
+import * as pageLoader from './ui/page-loader.js';
+import * as modalManager from './ui/modal-manager.js';
+import * as DOMAdderRemover from './ui/dom-adder-remover.js';
+import * as alertManager from './ui/alert-manager.js';
+import { collapseSection } from './ui/common.js';
+
 import * as cookieManager from './cookie-manager.js';
 import { parse, isValid } from 'date-fns';
-import './assets/style.css';
 
 pageLoader.defaultLoader();
 
