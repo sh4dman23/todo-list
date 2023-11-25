@@ -23,7 +23,11 @@ function setActivePage(pageId = 'inbox') {
         .querySelectorAll('.sidebar-item.active')
         .forEach((item) => item.classList.remove('active'));
 
-    document.querySelector(`.sidebar-item#${pageId}`).classList.add('active');
+    const pageButton =
+        document.querySelector(`.sidebar-item#${pageId}`) ||
+        document.querySelector(`.sidebar-item[data-name="${pageId.slice('project-'.length)}"]`);
+
+    pageButton.classList.add('active');
     setCurrentPage(pageId);
 }
 

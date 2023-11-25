@@ -252,6 +252,11 @@ function managePopupModal(mode = 'edit', targetElement, targetType = 'item') {
                 sectionName,
             );
 
+            if (!newTodoItem) {
+                createErrorAlert('You can\'t create a To-Do by that name!');
+                return;
+            }
+
             cookieManager.saveTodo(newTodoItem);
             DOMAdderRemover.addItem(section, newTodoItem);
             modalManager.closeModal();
@@ -260,7 +265,9 @@ function managePopupModal(mode = 'edit', targetElement, targetType = 'item') {
 
             // Check sectionName for doubles
             if (newSection === false) {
-                createErrorAlert('A section by this name already exists!');
+                createErrorAlert(
+                    "You can't create a new section by this name!",
+                );
                 return;
             }
 
@@ -271,7 +278,9 @@ function managePopupModal(mode = 'edit', targetElement, targetType = 'item') {
             const newProject = todoManager.addProject(title, description);
 
             if (newProject === false) {
-                createErrorAlert('A project by this name already exists!');
+                createErrorAlert(
+                    "You can't create a new project by this name!",
+                );
                 return;
             }
 
@@ -284,7 +293,9 @@ function managePopupModal(mode = 'edit', targetElement, targetType = 'item') {
             const success = project.update(title, description);
 
             if (success === false) {
-                createErrorAlert('A project by this name already exists!');
+                createErrorAlert(
+                    "You can't create a new project by this name!",
+                );
                 return;
             }
 
@@ -462,7 +473,7 @@ function manageConfirmationModel(target, targetType) {
                 const success = todoManager.deleteProject(projectName);
 
                 if (success === false) {
-                    createErrorAlert('Could not delete project');
+                    createErrorAlert('Could not delete project!');
                     return;
                 }
 

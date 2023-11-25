@@ -5,7 +5,7 @@ export function updateTodoItem(
     newPriority,
     newStatus,
 ) {
-    this.title = newTitle !== undefined ? newTitle : this.title;
+    this.title = newTitle !== undefined ? newTitle.trim() : this.title;
     this.description =
         newDescription !== undefined ? newDescription : this.description;
     this.dueDate = newDueDate !== undefined ? newDueDate : this.dueDate;
@@ -15,19 +15,22 @@ export function updateTodoItem(
 
 // Finds section by name
 export function findSection(sectionName) {
-    return this.sections.find((section) => section.name === sectionName);
+    return this.sections.find(
+        (section) => section.name.trim() === sectionName.trim(),
+    );
 }
 
 // While To-Dos may have the same name, projects cannot. So, we need to perform a check
 export function updateProject(newName, newDescription) {
     if (
         todoManager.getTodoObject().findProject(newName) !== undefined &&
-        newName !== this.name
+        newName !== this.name &&
+        checkForEmpty(newName)
     ) {
         return false;
     }
 
-    this.name = newName !== undefined ? newName : this.name;
+    this.name = newName !== undefined ? newName.trim() : this.name;
     this.description =
         newDescription !== undefined ? newDescription : this.description;
 }
@@ -48,14 +51,14 @@ function createTodoItem(
     sectionName = null,
 ) {
     const todo = {
-        uid: crypto.randomUUID(),
-        title,
+        title: title.trim(),
         description,
         dueDate,
         priority,
-        status: false, // status = false means this todo has not been completed
         projectName,
         sectionName,
+        status: false, // status = false means this todo has not been completed
+        uid: crypto.randomUUID(),
     };
 
     return Object.assign(todo, { update: updateTodoItem });
@@ -63,7 +66,7 @@ function createTodoItem(
 
 function createSection(name) {
     const section = {
-        name,
+        name: name.trim(),
         items: [],
     };
 
@@ -72,7 +75,7 @@ function createSection(name) {
 
 function createProject(name, description = '') {
     const project = {
-        name,
+        name: name.trim(),
         description,
         unlistedItems: [],
         sections: [],
@@ -82,13 +85,14 @@ function createProject(name, description = '') {
 }
 
 function checkForEmpty(...args) {
+    let isEmpty = false;
     args.forEach((arg) => {
-        if (arg === undefined || arg === null || arg === '') {
-            return true;
+        if (arg == null || arg.trim() === '') {
+            isEmpty = true;
         }
     });
 
-    return false;
+    return isEmpty;
 }
 
 /*
@@ -116,7 +120,7 @@ const todoManager = (function () {
         // Finds project by name
         findProject(projectName) {
             return this.projects.find(
-                (project) => project.name === projectName,
+                (project) => project.name.trim() === projectName.trim(),
             );
         },
     };
@@ -132,7 +136,6 @@ const todoManager = (function () {
         if (project === undefined) {
             return false;
         }
-
 
         let todoItem = project.unlistedItems.find((item) => item.uid === uid);
 
