@@ -13,7 +13,7 @@ function updateTodoItem(
     newPriority,
     newStatus,
 ) {
-    this.title = newTitle !== undefined ? newTitle : this.title;
+    this.title = newTitle !== undefined ? newTitle.trim() : this.title;
     this.description =
         newDescription !== undefined ? newDescription : this.description;
     this.dueDate = newDueDate !== undefined ? newDueDate : this.dueDate;
@@ -23,19 +23,22 @@ function updateTodoItem(
 
 // Finds section by name
 function findSection(sectionName) {
-    return this.sections.find((section) => section.name === sectionName);
+    return this.sections.find(
+        (section) => section.name.trim() === sectionName.trim(),
+    );
 }
 
 // While To-Dos may have the same name, projects cannot. So, we need to perform a check
 function updateProject(newName, newDescription) {
     if (
         todoManager.getTodoObject().findProject(newName) !== undefined &&
-        newName !== this.name
+        newName !== this.name &&
+        checkForEmpty(newName)
     ) {
         return false;
     }
 
-    this.name = newName !== undefined ? newName : this.name;
+    this.name = newName !== undefined ? newName.trim() : this.name;
     this.description =
         newDescription !== undefined ? newDescription : this.description;
 }
@@ -56,14 +59,14 @@ function createTodoItem(
     sectionName = null,
 ) {
     const todo = {
-        uid: crypto.randomUUID(),
-        title,
+        title: title.trim(),
         description,
         dueDate,
         priority,
-        status: false, // status = false means this todo has not been completed
         projectName,
         sectionName,
+        status: false, // status = false means this todo has not been completed
+        uid: crypto.randomUUID(),
     };
 
     return Object.assign(todo, { update: updateTodoItem });
@@ -71,7 +74,7 @@ function createTodoItem(
 
 function createSection(name) {
     const section = {
-        name,
+        name: name.trim(),
         items: [],
     };
 
@@ -80,7 +83,7 @@ function createSection(name) {
 
 function createProject(name, description = '') {
     const project = {
-        name,
+        name: name.trim(),
         description,
         unlistedItems: [],
         sections: [],
@@ -90,13 +93,14 @@ function createProject(name, description = '') {
 }
 
 function checkForEmpty(...args) {
+    let isEmpty = false;
     args.forEach((arg) => {
-        if (arg === undefined || arg === null || arg === '') {
-            return true;
+        if (arg == null || arg.trim() === '') {
+            isEmpty = true;
         }
     });
 
-    return false;
+    return isEmpty;
 }
 
 /*
@@ -124,7 +128,7 @@ const todoManager = (function () {
         // Finds project by name
         findProject(projectName) {
             return this.projects.find(
-                (project) => project.name === projectName,
+                (project) => project.name.trim() === projectName.trim(),
             );
         },
     };
@@ -140,7 +144,6 @@ const todoManager = (function () {
         if (project === undefined) {
             return false;
         }
-
 
         let todoItem = project.unlistedItems.find((item) => item.uid === uid);
 
@@ -538,7 +541,11 @@ function setActivePage(pageId = 'inbox') {
         .querySelectorAll('.sidebar-item.active')
         .forEach((item) => item.classList.remove('active'));
 
-    document.querySelector(`.sidebar-item#${pageId}`).classList.add('active');
+    const pageButton =
+        document.querySelector(`.sidebar-item#${pageId}`) ||
+        document.querySelector(`.sidebar-item[data-name="${pageId.slice('project-'.length)}"]`);
+
+    pageButton.classList.add('active');
     setCurrentPage(pageId);
 }
 
@@ -1900,6 +1907,11 @@ function managePopupModal(mode = 'edit', targetElement, targetType = 'item') {
                 sectionName,
             );
 
+            if (!newTodoItem) {
+                createErrorAlert('You can\'t create a To-Do by that name!');
+                return;
+            }
+
             saveTodo(newTodoItem);
             addItem(section, newTodoItem);
             closeModal();
@@ -1908,7 +1920,9 @@ function managePopupModal(mode = 'edit', targetElement, targetType = 'item') {
 
             // Check sectionName for doubles
             if (newSection === false) {
-                createErrorAlert('A section by this name already exists!');
+                createErrorAlert(
+                    "You can't create a new section by this name!",
+                );
                 return;
             }
 
@@ -1919,7 +1933,9 @@ function managePopupModal(mode = 'edit', targetElement, targetType = 'item') {
             const newProject = todo_manager.addProject(title, description);
 
             if (newProject === false) {
-                createErrorAlert('A project by this name already exists!');
+                createErrorAlert(
+                    "You can't create a new project by this name!",
+                );
                 return;
             }
 
@@ -1932,7 +1948,9 @@ function managePopupModal(mode = 'edit', targetElement, targetType = 'item') {
             const success = project.update(title, description);
 
             if (success === false) {
-                createErrorAlert('A project by this name already exists!');
+                createErrorAlert(
+                    "You can't create a new project by this name!",
+                );
                 return;
             }
 
@@ -2110,7 +2128,7 @@ function manageConfirmationModel(target, targetType) {
                 const success = todo_manager.deleteProject(projectName);
 
                 if (success === false) {
-                    createErrorAlert('Could not delete project');
+                    createErrorAlert('Could not delete project!');
                     return;
                 }
 
